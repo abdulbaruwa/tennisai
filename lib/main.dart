@@ -1,6 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import './tabs/home.dart' as _firstTab;
+import './tabs/dashboard.dart' as _secondTab;
+import './tabs/settings.dart' as _thirdTab;
 
-void main() => runApp(new MyApp());
+
+void main() => runApp(new MaterialApp(
+  title: 'Tennis Ai',
+  theme: new ThemeData(primarySwatch: Colors.blueGrey, scaffoldBackgroundColor: Colors.white,primaryColor: Colors.blueGrey,backgroundColor: Colors.white
+),
+home: new Tabs(),
+onGenerateRoute: (RouteSettings settings){
+  switch(settings.name){
+    case '/about': return new FromRightToLeft(builder: (_) => new _aboutPage.About(),settings: settings,);
+    case '/support': return new FromRightToLeft(builder: (_) => new _supportPage.Support(), settings: settings)
+  }
+},);
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
