@@ -3,19 +3,82 @@ import 'package:flutter/cupertino.dart';
 import './tabs/home.dart' as _firstTab;
 import './tabs/dashboard.dart' as _secondTab;
 import './tabs/settings.dart' as _thirdTab;
+import './pages/about.dart' as _aboutPage;
+import './pages/support.dart' as _supportPage;
 
 
 void main() => runApp(new MaterialApp(
   title: 'Tennis Ai',
-  theme: new ThemeData(primarySwatch: Colors.blueGrey, scaffoldBackgroundColor: Colors.white,primaryColor: Colors.blueGrey,backgroundColor: Colors.white
-),
-home: new Tabs(),
+  theme: new ThemeData(primarySwatch: Colors.blueGrey, scaffoldBackgroundColor: Colors.white,primaryColor: Colors.blueGrey,backgroundColor: Colors.white),
+  home: new Tabs(),
 onGenerateRoute: (RouteSettings settings){
   switch(settings.name){
     case '/about': return new FromRightToLeft(builder: (_) => new _aboutPage.About(),settings: settings,);
-    case '/support': return new FromRightToLeft(builder: (_) => new _supportPage.Support(), settings: settings)
+    case '/support': return new FromRightToLeft(builder: (_) => new _supportPage.Support(), settings: settings);
   }
-},);
+},
+));
+
+
+class Tabs extends StatefulElement{
+  @override
+  TabsState createStat() => new TabState();
+}
+
+class TabsState extends State<Tabs>{
+
+  PageController _tabController
+  var _title_app = null;
+  int _tab = 0;
+
+  @override
+  void initState(){
+    super.initState();
+    _tabController = new PageController();
+    this._title_app = TabItems[0].title;
+  }
+
+@override 
+void dispose(){
+  super.dispose();
+  _tabController.dispose();
+
+}
+
+@override
+Widget build (BuildContext buildcontext) => new Scaffold(
+    //App Bar
+    appBar: new AppBar(
+      title: new Text(
+        _title_app, 
+        style: new TextStyle(
+          fontSize: Theme.of(context).platform == TargetPlatform.iOS ? 17.0 : 20.0,
+        ),
+      ),
+      elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
+    ),
+
+  body: new PageView(
+    controller: _tabController,
+    onPageChanged: onTabChanged,
+    children: <Widget>[
+      new _firstTab.Home(),
+      new _secondTab.Dashboard(),
+      new _thirdTab.Settings()
+    ],
+  ),
+
+  // Tabs
+  bottomNavigationBar: Theme.of(context).platform == TargetPlatform.iOS ? new CupertinoTabBar(
+    activeColor: Colors.blueGrey,
+    currentIndex: _tab,
+    onTap: onTap,
+    items: TabItems.map((TabItem){
+      return new BottomNavigationBarItem(title: new Text(TabItem.title),icon: new Icon(TabItem.icon),);
+    }).toList(),
+  ):new BottomNavigationBar(currentIndex: _tab,onTap: onTap,items: TabItems.map((TabItem){return new BottomNavigationBarItem(title: new Text(TabItem.title),icon:new Icon(TabItem.icon));}).toList(),),
+); 
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -122,3 +185,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
+class TabItem {
+  const TabItem({ this.title, this.icon });
+  final String title;
+  final IconData icon;
+}
+
+const List<TabItem> TabItems = const <TabItem>[
+  const TabItem(title: 'Home', icon: Icons.home),
+  const TabItem(title: 'Dashboard', icon: Icons.dashboard),
+  const TabItem(title: 'Settings', icon: Icons.settings)
+];
