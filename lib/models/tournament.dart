@@ -40,13 +40,13 @@ class Entrant {
   final int ltaNumber;
 }
 
-const List<Tournament> tournaments = const <Tournament>[
-  const Tournament(
+List<Tournament> tournaments =  <Tournament>[
+  new Tournament(
       name: 'Sutton Super Series 1',
       location: 'Sutton Tennis Academy',
       grade: '2',
-      endDate: new DateTime(2018, 8, 6),
-      startDate: new DateTime(2018, 8, 4),
+      endDate: new DateTime(2018, 7, 6),
+      startDate:new DateTime(2018, 7, 9),
       site: 'www.sherbornetennis.com',
       organiserName: 'David Freeman',
       organiserPhone: '44776639393',
@@ -63,7 +63,7 @@ const List<Tournament> tournaments = const <Tournament>[
         const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
         const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
       ]),
-  const Tournament(
+  new Tournament(
       name: 'Horsham Open',
       location: '',
       grade: '1',
@@ -81,7 +81,7 @@ const List<Tournament> tournaments = const <Tournament>[
         const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
         const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
       ]),
-  const Tournament(
+  new Tournament(
       name: 'Salem Cup ',
       location: '',
       grade: '1',
@@ -99,7 +99,7 @@ const List<Tournament> tournaments = const <Tournament>[
         const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
         const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
       ]),
-  const Tournament(
+ new Tournament(
       name: 'Surrey Open Champion Ships',
       location: '2',
       grade: '1',
@@ -107,7 +107,7 @@ const List<Tournament> tournaments = const <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 18,
       highestPlayerRating: '1.1'),
-  const Tournament(
+  new Tournament(
       name: 'Valencia Junior cup',
       location: '3',
       grade: '3',
@@ -125,12 +125,12 @@ const List<Tournament> tournaments = const <Tournament>[
         const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
         const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
       ]),
-  const Tournament(
+  new Tournament(
       name: 'Surrey Open',
       location: '',
       grade: '4',
-      endDate: DateTime.Parse('17 August 2018'),
-      startDate: DateTime.Parse('19 August 2018'),
+      endDate:new DateTime(2018, 8, 1),
+      startDate: new DateTime(2018, 8, 6),
       numberOfEntrants: 7,
       highestPlayerRating: '3.2',
       entrants: const <Entrant>[
@@ -143,15 +143,15 @@ const List<Tournament> tournaments = const <Tournament>[
         const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
         const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
       ]),
-  const Tournament(
+  new Tournament(
       name: 'Nike Boys U16',
       location: 'Liverpool Indoor Arena',
       grade: '2',
-      endDate: DateTime.Parse('2 Nov 2017'),
-      startDate: DateTime.Parse('9 Nov 2017'),
+      endDate: new DateTime(2018, 8, 2),
+      startDate: new DateTime(2018, 8, 6),
       numberOfEntrants: 44,
       highestPlayerRating: '2.2'),
-  const Tournament(
+  new Tournament(
       name: 'David Lloyds U18',
       location: 'Raynes Park London',
       grade: '3',
@@ -169,7 +169,7 @@ const List<Tournament> tournaments = const <Tournament>[
         const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
         const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
       ]),
-  const Tournament(
+  new Tournament(
       name: 'Fast Four Super Series',
       location: 'Sutton Tennis Academy',
       grade: '3',
@@ -177,7 +177,7 @@ const List<Tournament> tournaments = const <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 91,
       highestPlayerRating: '4.1'),
-  const Tournament(
+  new Tournament(
       name: 'Kalkuta Open',
       location: 'Kalkuta India ',
       grade: '3',
@@ -195,7 +195,7 @@ const List<Tournament> tournaments = const <Tournament>[
         const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
         const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
       ]),
-  const Tournament(
+  new Tournament(
       name: 'Compete Mens Open',
       location: 'University Of Bath',
       grade: '3',
