@@ -57,7 +57,8 @@ class FromRightToLeft<T> extends MaterialPageRoute<T>{
           parent: animation, 
           curve: Curves.fastOutSlowIn)),);
 
-    @override Duration get transitionDuration => const Duration(milliseconds: 400);
+    @override 
+    Duration get transitionDuration => const Duration(milliseconds: 400);
   }
 }
 

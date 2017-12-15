@@ -132,11 +132,11 @@ void showTournamentDetailsPage(BuildContext context, Tournament recipe) {
   Navigator.push(
       context,
       new MaterialPageRoute<Null>(
-        settings: const RouteSettings(name: '/pesto/recipe'),
+        settings: const RouteSettings(name: '/tournament/details'),
         builder: (BuildContext context) {
           return new Theme(
             data: _kTheme.copyWith(platform: Theme.of(context).platform),
-            //child: new RecipePage(recipe: recipe),
+            child: new TournamentDetailsPage(recipe: recipe),
           );
         },
       ));
@@ -159,7 +159,7 @@ class TournamentCard extends StatelessWidget {
     //return new GestureDetector(
     var tournamentDate =
         "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
-    return new Card(
+    return new GestureDetector(onTap: onTap, child:new Card(
       child: new Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -188,6 +188,7 @@ class TournamentCard extends StatelessWidget {
           )
         ],
       ),
+    ),
     );
   }
 }
