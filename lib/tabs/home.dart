@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
 import '../models/tournament.dart';
 import '../models/tournament.dart' as _tournamentModels;
+import "package:intl/intl.dart";
 
 class Home extends StatelessWidget {
   @override
@@ -11,8 +11,10 @@ class Home extends StatelessWidget {
 
 //const double _kAppBarHeight = 128.0;
 const double _kAppBarHeight = 128.0;
-const double _kFabHalfSize =   28.0; // TODO(mpcomplete): needs to adapt to screen size
+const double _kFabHalfSize =
+    28.0; // TODO(mpcomplete): needs to adapt to screen size
 const double _kRecipePageMaxWidth = 500.0;
+final DateFormat _dateFormatter = new DateFormat.MEd('en_UK');
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
@@ -57,7 +59,7 @@ class SimpleHome extends StatelessWidget {
 class Landing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var values =  _tournamentModels.tournaments;
+    var values = _tournamentModels.tournaments;
     return new TournamentGridPage(tournaments: values);
   }
 }
@@ -142,70 +144,76 @@ void showTournamentDetailsPage(BuildContext context, Tournament recipe) {
 
 // A card to display tournament details
 class TournamentCard extends StatelessWidget {
-  final TextStyle titleStyle = const PestoStyle(fontSize: 24.0, fontWeight: FontWeight.w600);
-  final TextStyle authorStyle = const PestoStyle(fontWeight: FontWeight.w500, color: Colors.black54);
-
+  final TextStyle titleStyle =
+      const PestoStyle(fontSize: 24.0, fontWeight: FontWeight.w600);
+  final TextStyle authorStyle =
+      const PestoStyle(fontWeight: FontWeight.w500, color: Colors.black54);
   const TournamentCard({Key key, this.tournament, this.onTap})
       : super(key: key);
 
   final Tournament tournament;
   final VoidCallback onTap;
-
+//  String tournamentDate;
   @override
   Widget build(BuildContext context) {
     //return new GestureDetector(
- return  new Card(
-   child: new Column(
-     mainAxisSize: MainAxisSize.min,
-     children: <Widget>[
-       const ListTile(
-         leading: const Icon(Icons.album),
-         title: const Text('The Enchanted Nightingale'),
-         subtitle: const Text('Music by Julie Gable. Lyrics by Sidney Stein.'),
-       ),
-       new ButtonTheme.bar( // make buttons use the appropriate styles for cards
-         child: new ButtonBar(
-           children: <Widget>[
-             new FlatButton(
-               child: const Text('BUY TICKETS'),
-               onPressed: () { /* ... */ },
-             ),
-             new FlatButton(
-               child: const Text('LISTEN'),
-               onPressed: () { /* ... */ },
-             ),
-           ],
-         ),
-       ),
-     ],
-   ),
- );
-      // child: new Card(
-      //   child: new Column(
-      //     crossAxisAlignment: CrossAxisAlignment.start,
-      //     children: <Widget>[
-      //       new Expanded(
-      //         child: new Row(
-      //           children: <Widget>[
-      //             //new Padding(padding: const EdgeInsets.all(16.0),child: new Image.asset("",width: 48.0, height: 48.0,),),
-      //             new Expanded(
-      //                 child: new Column(
-      //               crossAxisAlignment: CrossAxisAlignment.start,
-      //               mainAxisAlignment: MainAxisAlignment.center,
-      //               children: <Widget>[
-      //                 new Text(tournament.name,
-      //                     style: titleStyle,
-      //                     softWrap: false,
-      //                     overflow: TextOverflow.ellipsis),
-      //                 new Text(tournament.grade, style: authorStyle)
-      //               ],
-      //             ))
-      //           ],
-      //         ),
-      //       )
-      //     ],
-      //   ),
-      // ),
-   // );
+    var tournamentDate = "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
+    return new Card(
+      child: new Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          new ListTile(
+            leading: const Icon(Icons.album),
+            title: new Text(tournament.name),
+            subtitle: new Text(tournament.location),
+          ),
+          //new Text(new DateFormat("yMMMEd").format(new DateTime.now())),
+          new Text(tournamentDate),
+          new Text("Grade 3"),
+          new ButtonTheme.bar(
+            // make buttons use the appropriate styles for cards
+            child: new ButtonBar(
+              children: <Widget>[
+                new FlatButton(
+                  child: new Text('Grade ${tournament.grade}'),
+                  onPressed: () {/* ... */},
+                ),
+                new FlatButton(
+                  child: new Text('Entrants (${tournament.numberOfEntrants})'),
+                  onPressed: () {/* ... */},
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+    // child: new Card(
+    //   child: new Column(
+    //     crossAxisAlignment: CrossAxisAlignment.start,
+    //     children: <Widget>[
+    //       new Expanded(
+    //         child: new Row(
+    //           children: <Widget>[
+    //             //new Padding(padding: const EdgeInsets.all(16.0),child: new Image.asset("",width: 48.0, height: 48.0,),),
+    //             new Expanded(
+    //                 child: new Column(
+    //               crossAxisAlignment: CrossAxisAlignment.start,
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               children: <Widget>[
+    //                 new Text(tournament.name,
+    //                     style: titleStyle,
+    //                     softWrap: false,
+    //                     overflow: TextOverflow.ellipsis),
+    //                 new Text(tournament.grade, style: authorStyle)
+    //               ],
+    //             ))
+    //           ],
+    //         ),
+    //       )
+    //     ],
+    //   ),
+    // ),
+    // );
   }
 }
