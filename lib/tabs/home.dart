@@ -157,63 +157,37 @@ class TournamentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //return new GestureDetector(
-    var tournamentDate = "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
+    var tournamentDate =
+        "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
     return new Card(
       child: new Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          new ListTile(
-            leading: const Icon(Icons.album),
-            title: new Text(tournament.name),
-            subtitle: new Text(tournament.location),
-          ),
-          //new Text(new DateFormat("yMMMEd").format(new DateTime.now())),
-          new Text(tournamentDate),
-          new Text("Grade 3"),
-          new ButtonTheme.bar(
-            // make buttons use the appropriate styles for cards
-            child: new ButtonBar(
-              children: <Widget>[
-                new FlatButton(
-                  child: new Text('Grade ${tournament.grade}'),
-                  onPressed: () {/* ... */},
-                ),
-                new FlatButton(
-                  child: new Text('Entrants (${tournament.numberOfEntrants})'),
-                  onPressed: () {/* ... */},
-                ),
-              ],
+          new Padding(
+            child: new ListTile(
+              leading: const Icon(const IconData(0xe091, fontFamily: 'MaterialIcons')),
+              title: new Text(tournament.name),
+              subtitle: new Text(tournament.location),
             ),
+            padding: const EdgeInsets.only(left: 1.0, right: 1.0, top: 1.0, bottom: 1.0),
           ),
+          new Padding(
+          child: new Text(tournamentDate, textAlign: TextAlign.left, textScaleFactor: 1.0, style: authorStyle,),
+          padding: const EdgeInsets.only(left: 10.0),),
+          new SizedBox(
+            height: 30.0,
+          ),
+          new Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              new Padding(child: new Text("Grade ${tournament.grade}"), padding: const EdgeInsets.only(left:10.0),),
+              new Expanded(child: new Padding(child:  new Text("Entrants ${tournament.numberOfEntrants}", textAlign: TextAlign.end,), padding: const EdgeInsets.only(right: 10.0),))
+            ], 
+          )
         ],
       ),
     );
-    // child: new Card(
-    //   child: new Column(
-    //     crossAxisAlignment: CrossAxisAlignment.start,
-    //     children: <Widget>[
-    //       new Expanded(
-    //         child: new Row(
-    //           children: <Widget>[
-    //             //new Padding(padding: const EdgeInsets.all(16.0),child: new Image.asset("",width: 48.0, height: 48.0,),),
-    //             new Expanded(
-    //                 child: new Column(
-    //               crossAxisAlignment: CrossAxisAlignment.start,
-    //               mainAxisAlignment: MainAxisAlignment.center,
-    //               children: <Widget>[
-    //                 new Text(tournament.name,
-    //                     style: titleStyle,
-    //                     softWrap: false,
-    //                     overflow: TextOverflow.ellipsis),
-    //                 new Text(tournament.grade, style: authorStyle)
-    //               ],
-    //             ))
-    //           ],
-    //         ),
-    //       )
-    //     ],
-    //   ),
-    // ),
-    // );
   }
 }
