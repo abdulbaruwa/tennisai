@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../models/tournament.dart';
 import '../models/tournament.dart' as _tournamentModels;
+import '../pages/touranmentDetails.dart';
 import "package:intl/intl.dart";
 
 class Home extends StatelessWidget {
@@ -136,7 +137,7 @@ void showTournamentDetailsPage(BuildContext context, Tournament recipe) {
         builder: (BuildContext context) {
           return new Theme(
             data: _kTheme.copyWith(platform: Theme.of(context).platform),
-            child: new TournamentDetailsPage(recipe: recipe),
+            child: new TournamentDetailsPage(),
           );
         },
       ));
