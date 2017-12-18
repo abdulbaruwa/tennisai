@@ -15,8 +15,7 @@ class _TournamentDetails extends StatelessWidget {
     final BoxDecoration underlineDecoration = new BoxDecoration(
         border:
             new Border(bottom: new BorderSide(color: themeData.accentColor)));
-    return new Container(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
+    return new Container(padding: const EdgeInsets.symmetric(vertical: 6.0),
       decoration: new BoxDecoration(
           border: new Border(
               bottom: new BorderSide(color: themeData.dividerColor))),
@@ -30,7 +29,8 @@ class _TournamentDetails extends StatelessWidget {
               width: 31.0,
               child: new Icon(icon, color: themeData.primaryColor),
             ),
-            new Expanded(child: new Column(children: children))
+            new Container(padding: const EdgeInsets.only(top: 30.0), child: new Text('Location Of Tournamenst', style: themeData.textTheme.title)), 
+            //new Expanded(child: new Column(children: children))
           ],
         ),
       ),
@@ -50,18 +50,20 @@ class _IconTextItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Container(
-            width: 31.0,
+            padding: const EdgeInsets.only(left: 27.0), 
+            width: 30.0,
             child: new Icon(
               icon,
               color: Theme.of(context).primaryColor,
             ),
           ),
-          new Expanded(child: new Text(line))
+         new Container(padding: const EdgeInsets.only(top: 3.0, left: 25.0), child: new Text(line)),
         ],
       ),
     ));
   }
 }
+
 
 class _HeaderItem extends StatelessWidget {
   _HeaderItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})
