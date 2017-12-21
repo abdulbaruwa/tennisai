@@ -30,7 +30,7 @@ class _TournamentDetails extends StatelessWidget {
               child: new Icon(icon, color: themeData.primaryColor),
             ),
             new Container(padding: const EdgeInsets.only(top: 30.0), child: new Text('Location Of Tournamenst', style: themeData.textTheme.title)), 
-            //new Expanded(child: new Column(children: children))
+           // new Expanded(child: new Column(children: children))
           ],
         ),
       ),
@@ -50,10 +50,11 @@ class _IconTextItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Container(
-            padding: const EdgeInsets.only(left: 27.0), 
+            padding: const EdgeInsets.only(left: 29.0, top: 5.0), 
             width: 30.0,
             child: new Icon(
               icon,
+              size: 14.0,
               color: Theme.of(context).primaryColor,
             ),
           ),
@@ -225,7 +226,9 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
                     // new _IconTextItem(icon: Icons.email, line: "David.F@mail.com")
                   ],
                 ),
-                new _IconTextItem(icon: Icons.email, line: "David.F@mail.com",),
+                new _IconTextItem(icon: Icons.email, line: "Davids.F@mail.com",),
+                new _IconTextItem(icon: Icons.phone, line: "077558585555",),
+                new Text('07766494944')
               ]),
             ),
           ],
