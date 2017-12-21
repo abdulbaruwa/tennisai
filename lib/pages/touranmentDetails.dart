@@ -15,7 +15,8 @@ class _TournamentDetails extends StatelessWidget {
     final BoxDecoration underlineDecoration = new BoxDecoration(
         border:
             new Border(bottom: new BorderSide(color: themeData.accentColor)));
-    return new Container(padding: const EdgeInsets.symmetric(vertical: 6.0),
+    return new Container(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
       decoration: new BoxDecoration(
           border: new Border(
               bottom: new BorderSide(color: themeData.dividerColor))),
@@ -29,12 +30,49 @@ class _TournamentDetails extends StatelessWidget {
               width: 31.0,
               child: new Icon(icon, color: themeData.primaryColor),
             ),
-            new Container(padding: const EdgeInsets.only(top: 30.0), child: new Text('Location Of Tournamenst', style: themeData.textTheme.title)), 
-           // new Expanded(child: new Column(children: children))
+            new Container(
+                padding: const EdgeInsets.only(top: 30.0),
+                child: new Text('Location Of Tournamenst',
+                    style: themeData.textTheme.title)),
           ],
         ),
       ),
     );
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({Key key, this.icon, this.text}) : super(key: key);
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData themedata = Theme.of(context);
+    final Row textRow = new Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        new Container(
+            padding: const EdgeInsets.only(top: 30.0, right: 0.0),
+            width: 31.0,
+            child: new Icon(icon, color: themedata.primaryColor)),
+        new Container(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: new Text(
+              text,
+              style: themedata.textTheme.title,
+            ))
+      ],
+    );
+
+    final BoxDecoration underlineDecoration = new BoxDecoration(
+        border:
+            new Border(bottom: new BorderSide(color: themedata.accentColor)));
+    return new Container(
+        padding: const EdgeInsets.symmetric(vertical: 6.0),
+        decoration: underlineDecoration,
+        child: new DefaultTextStyle(
+            style: themedata.textTheme.subhead, child: textRow));
   }
 }
 
@@ -50,7 +88,7 @@ class _IconTextItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           new Container(
-            padding: const EdgeInsets.only(left: 29.0, top: 5.0), 
+            padding: const EdgeInsets.only(left: 29.0, top: 5.0),
             width: 30.0,
             child: new Icon(
               icon,
@@ -58,13 +96,14 @@ class _IconTextItem extends StatelessWidget {
               color: Theme.of(context).primaryColor,
             ),
           ),
-         new Container(padding: const EdgeInsets.only(top: 3.0, left: 25.0), child: new Text(line)),
+          new Container(
+              padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+              child: new Text(line)),
         ],
       ),
     ));
   }
 }
-
 
 class _HeaderItem extends StatelessWidget {
   _HeaderItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})
@@ -114,52 +153,14 @@ class _HeaderItem extends StatelessWidget {
   }
 }
 
-class _ContactItem extends StatelessWidget {
-  _ContactItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})
-      : assert(lines.length > 0),
-        super(key: key);
-
-  final IconData icon;
-  final List<String> lines;
-  final String tooltip;
-  final VoidCallback onPressed;
-
+class _TextItem extends StatelessWidget {
+  const _TextItem({Key key, this.text}) : super(key: key);
+  final String text;
   @override
   Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final List<Widget> columnChildren = new List<Widget>();
-    columnChildren.add(new Text(lines.first, style: themeData.textTheme.title));
-    columnChildren.addAll(lines
-        .sublist(1, lines.length - 1)
-        .map((String line) => new Text(
-              line,
-              style: themeData.textTheme.subhead,
-            ))
-        .toList());
-    columnChildren.add(new Text(lines.last, style: themeData.textTheme.body1));
-    //columnChildren.add(new _IconTextItem(icon: Icons.email, line: 'Hello'));
-
-    final List<Widget> rowChildren = <Widget>[
-      new Expanded(
-          child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: columnChildren))
-    ];
-    if (icon != null) {
-      rowChildren.add(new SizedBox(
-          width: 72.0,
-          child: new IconButton(
-              icon: new Icon(icon),
-              color: themeData.primaryColor,
-              onPressed: onPressed)));
-    }
-    return new MergeSemantics(
-      child: new Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: rowChildren)),
-    );
+    return new Container(
+        padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+        child: new Text(text));
   }
 }
 
@@ -217,18 +218,52 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
             ),
             new SliverList(
               delegate: new SliverChildListDelegate(<Widget>[
-                new _TournamentDetails(
-                  icon: Icons.location_on,
-                  children: <Widget>[
-                    new _ContactItem(lines: [
-                      'Location of Tournaments',''
+                new _Header(icon: Icons.grade, text: "Tournament Info"),
+                new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      new Row(
+                        children: <Widget>[
+                          new _TextItem(text: 'Grade'),
+                          new Container(
+                            padding: const EdgeInsets.only(left: 16.0, top: 5.0),
+                            child: new CircleAvatar(
+                                radius: 12.0, child: new Text("2", style: Theme.of(context).primaryTextTheme.body1 )),
+                          )
+                        ],
+                      )
                     ]),
-                    // new _IconTextItem(icon: Icons.email, line: "David.F@mail.com")
+                new _Header(icon: Icons.account_balance, text: 'Organiser'),
+                new Column(
+                  children: <Widget>[
+                    new _IconTextItem(
+                      icon: Icons.email,
+                      line: "Davids.F@mail.com",
+                    ),
+                    new _IconTextItem(
+                      icon: Icons.phone,
+                      line: "077558585555",
+                    ),
                   ],
                 ),
-                new _IconTextItem(icon: Icons.email, line: "Davids.F@mail.com",),
-                new _IconTextItem(icon: Icons.phone, line: "077558585555",),
-                new Text('07766494944')
+                // Tournament Location
+                new _Header(icon: Icons.location_city, text: 'Location'),
+                new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      new _TextItem(text: '22 Winston Harvey street'),
+                      new _TextItem(text: 'London'),
+                      new _TextItem(text: 'London')
+                    ]),
+                new _Header(
+                    icon: Icons., text: 'Dates and Times'),
+                new Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      new _TextItem(
+                          text: 'Sat, 21-Mar-2018 - Sun, 22-Mar-2018'),
+                      new _TextItem(text: 'Entry closes on Mon, 14-Mar-2018'),
+                    ])
               ]),
             ),
           ],
