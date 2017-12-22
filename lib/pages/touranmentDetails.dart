@@ -226,12 +226,29 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
                         children: <Widget>[
                           new _TextItem(text: 'Grade'),
                           new Container(
-                            padding: const EdgeInsets.only(left: 16.0, top: 5.0),
+                            padding: const EdgeInsets.only(left: 30.0, top: 5.0),
                             child: new CircleAvatar(
                                 radius: 12.0, child: new Text("2", style: Theme.of(context).primaryTextTheme.body1 )),
                           )
                         ],
-                      )
+                      ),
+                        new Row(
+                        children: <Widget>[
+                          new _TextItem(text: 'Entrants'),
+                          new Container(
+                            padding: const EdgeInsets.only(left: 16.0, top: 5.0),
+                            child: new CircleAvatar(
+                                radius: 12.0, child: new Text("18", style: Theme.of(context).primaryTextTheme.body1 )),
+                          ),
+                          new Expanded(child:
+                          new Container( 
+                           alignment: Alignment.bottomRight,
+                           //padding: const EdgeInsets.only(top: 10.0),
+                          child: new FlatButton(textTheme: ButtonTextTheme.accent, child: new Text('ENTRANTS'), onPressed:()  {
+                            // Place holder for event handling
+                          }))),
+                        ],
+                      ),
                     ]),
                 new _Header(icon: Icons.account_balance, text: 'Organiser'),
                 new Column(
@@ -256,7 +273,7 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
                       new _TextItem(text: 'London')
                     ]),
                 new _Header(
-                    icon: Icons., text: 'Dates and Times'),
+                    icon: Icons.calendar_view_day, text: 'Dates and Times'),
                 new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
