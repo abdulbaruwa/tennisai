@@ -129,7 +129,7 @@ class _TournamentGridPageState extends State<TournamentGridPage> {
   }
 }
 
-void showTournamentDetailsPage(BuildContext context, Tournament recipe) {
+void showTournamentDetailsPage(BuildContext context, Tournament tournament) {
   Navigator.push(
       context,
       new MaterialPageRoute<Null>(
@@ -137,7 +137,7 @@ void showTournamentDetailsPage(BuildContext context, Tournament recipe) {
         builder: (BuildContext context) {
           return new Theme(
             data: _kTheme.copyWith(platform: Theme.of(context).platform),
-            child: new TournamentDetailsPage(),
+            child: new TournamentDetailsPage(tournament: tournament),
           );
         },
       ));

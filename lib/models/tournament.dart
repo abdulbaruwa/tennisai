@@ -33,11 +33,12 @@ class Tournament {
 }
 
 class Entrant {
-  const Entrant({this.name, this.ranking, this.rating, this.ltaNumber});
+  const Entrant({this.name, this.ranking, this.rating, this.ltaNumber, this.status});
   final String name;
   final int ranking;
   final String rating;
   final int ltaNumber;
+  final String status;
 }
 
 List<Tournament> tournaments =  <Tournament>[
@@ -53,15 +54,15 @@ List<Tournament> tournaments =  <Tournament>[
       organiserEmail: 'DavidFreeman@Mail.com',
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
-      entrants: const <Entrant>[
-        const Entrant(name: 'Archie Duncan', rating: '7.2', ranking: 124),
-        const Entrant(name: 'Ben Dean', rating: '5.2', ranking: 104),
-        const Entrant(name: 'Ben Dean', rating: '3.2', ranking: 12),
-        const Entrant(name: 'Willie Nelsom', rating: '1.2', ranking: 16),
-        const Entrant(name: 'Marvin Ashana', rating: '2.2', ranking: 84),
-        const Entrant(name: 'Giva Lukman', rating: '2.1', ranking: 2),
-        const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
-        const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
+      entrants:  <Entrant>[
+        const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(name: 'Willie Nelsom', status: 'pending', rating: '1.2', ranking: 16),
+        const Entrant(name: 'Marvin Ashana', status: 'pending', rating: '2.2', ranking: 84),
+        const Entrant(name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(name: 'Navas Jesus', status: 'pending', rating: '8.2', ranking: 1233),
+        const Entrant(name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
       ]),
   new Tournament(
       name: 'Horsham Open',
@@ -71,15 +72,15 @@ List<Tournament> tournaments =  <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 23,
       highestPlayerRating: '1.1',
-      entrants: const <Entrant>[
-        const Entrant(name: 'Archie Duncan', rating: '7.2', ranking: 124),
-        const Entrant(name: 'Ben Dean', rating: '5.2', ranking: 104),
-        const Entrant(name: 'Ben Dean', rating: '3.2', ranking: 12),
-        const Entrant(name: 'Willie Nelsom', rating: '1.2', ranking: 16),
-        const Entrant(name: 'Marvin Ashana', rating: '2.2', ranking: 84),
-        const Entrant(name: 'Giva Lukman', rating: '2.1', ranking: 2),
-        const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
-        const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
+      entrants:  <Entrant>[
+        const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(name: 'Willie Nelsom', status: 'pending', rating: '1.2', ranking: 16),
+        const Entrant(name: 'Marvin Ashana', status: 'pending', rating: '2.2', ranking: 84),
+        const Entrant(name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(name: 'Navas Jesus', status: 'pending', rating: '8.2', ranking: 1233),
+        const Entrant(name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
       ]),
   new Tournament(
       name: 'Salem Cup ',
@@ -90,14 +91,14 @@ List<Tournament> tournaments =  <Tournament>[
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
       entrants: const <Entrant>[
-        const Entrant(name: 'Archie Duncan', rating: '7.2', ranking: 124),
-        const Entrant(name: 'Ben Dean', rating: '5.2', ranking: 104),
-        const Entrant(name: 'Ben Dean', rating: '3.2', ranking: 12),
-        const Entrant(name: 'Willie Nelsom', rating: '1.2', ranking: 16),
-        const Entrant(name: 'Marvin Ashana', rating: '2.2', ranking: 84),
-        const Entrant(name: 'Giva Lukman', rating: '2.1', ranking: 2),
-        const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
-        const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
+        const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(name: 'Willie Nelsom', status: 'pending', rating: '1.2', ranking: 16),
+        const Entrant(name: 'Marvin Ashana', status: 'pending', rating: '2.2', ranking: 84),
+        const Entrant(name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(name: 'Navas Jesus', status: 'pending', rating: '8.2', ranking: 1233),
+        const Entrant(name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
       ]),
  new Tournament(
       name: 'Surrey Open Champion Ships',
@@ -116,14 +117,14 @@ List<Tournament> tournaments =  <Tournament>[
       numberOfEntrants: 8,
       highestPlayerRating: '2.1',
       entrants: const <Entrant>[
-        const Entrant(name: 'Archie Duncan', rating: '7.2', ranking: 124),
-        const Entrant(name: 'Ben Dean', rating: '5.2', ranking: 104),
-        const Entrant(name: 'Ben Dean', rating: '3.2', ranking: 12),
-        const Entrant(name: 'Willie Nelsom', rating: '1.2', ranking: 16),
-        const Entrant(name: 'Marvin Ashana', rating: '2.2', ranking: 84),
-        const Entrant(name: 'Giva Lukman', rating: '2.1', ranking: 2),
-        const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
-        const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
+        const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(name: 'Willie Nelsom', status: 'pending', rating: '1.2', ranking: 16),
+        const Entrant(name: 'Marvin Ashana', status: 'pending', rating: '2.2', ranking: 84),
+        const Entrant(name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(name: 'Navas Jesus', status: 'pending', rating: '8.2', ranking: 1233),
+        const Entrant(name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
       ]),
   new Tournament(
       name: 'Surrey Open',
@@ -134,14 +135,14 @@ List<Tournament> tournaments =  <Tournament>[
       numberOfEntrants: 7,
       highestPlayerRating: '3.2',
       entrants: const <Entrant>[
-        const Entrant(name: 'Archie Duncan', rating: '7.2', ranking: 124),
-        const Entrant(name: 'Ben Dean', rating: '5.2', ranking: 104),
-        const Entrant(name: 'Ben Dean', rating: '3.2', ranking: 12),
-        const Entrant(name: 'Willie Nelsom', rating: '1.2', ranking: 16),
-        const Entrant(name: 'Marvin Ashana', rating: '2.2', ranking: 84),
-        const Entrant(name: 'Giva Lukman', rating: '2.1', ranking: 2),
-        const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
-        const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
+        const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(name: 'Willie Nelsom', status: 'pending', rating: '1.2', ranking: 16),
+        const Entrant(name: 'Marvin Ashana', status: 'pending', rating: '2.2', ranking: 84),
+        const Entrant(name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(name: 'Navas Jesus', status: 'pending', rating: '8.2', ranking: 1233),
+        const Entrant(name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
       ]),
   new Tournament(
       name: 'Nike Boys U16',
@@ -160,14 +161,14 @@ List<Tournament> tournaments =  <Tournament>[
       numberOfEntrants: 9,
       highestPlayerRating: '3.1',
       entrants: const <Entrant>[
-        const Entrant(name: 'Archie Duncan', rating: '7.2', ranking: 124),
-        const Entrant(name: 'Ben Dean', rating: '5.2', ranking: 104),
-        const Entrant(name: 'Ben Dean', rating: '3.2', ranking: 12),
-        const Entrant(name: 'Willie Nelsom', rating: '1.2', ranking: 16),
-        const Entrant(name: 'Marvin Ashana', rating: '2.2', ranking: 84),
-        const Entrant(name: 'Giva Lukman', rating: '2.1', ranking: 2),
-        const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
-        const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
+        const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(name: 'Willie Nelsom', status: 'pending', rating: '1.2', ranking: 16),
+        const Entrant(name: 'Marvin Ashana', status: 'pending', rating: '2.2', ranking: 84),
+        const Entrant(name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(name: 'Navas Jesus', status: 'pending', rating: '8.2', ranking: 1233),
+        const Entrant(name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
       ]),
   new Tournament(
       name: 'Fast Four Super Series',
@@ -186,14 +187,14 @@ List<Tournament> tournaments =  <Tournament>[
       highestPlayerRating: '3.1',
       numberOfEntrants: 6,
       entrants: const <Entrant>[
-        const Entrant(name: 'Archie Duncan', rating: '7.2', ranking: 124),
-        const Entrant(name: 'Ben Dean', rating: '5.2', ranking: 104),
-        const Entrant(name: 'Ben Dean', rating: '3.2', ranking: 12),
-        const Entrant(name: 'Willie Nelsom', rating: '1.2', ranking: 16),
-        const Entrant(name: 'Marvin Ashana', rating: '2.2', ranking: 84),
-        const Entrant(name: 'Giva Lukman', rating: '2.1', ranking: 2),
-        const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
-        const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
+        const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(name: 'Willie Nelsom', status: 'pending', rating: '1.2', ranking: 16),
+        const Entrant(name: 'Marvin Ashana', status: 'pending', rating: '2.2', ranking: 84),
+        const Entrant(name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(name: 'Navas Jesus', status: 'pending', rating: '8.2', ranking: 1233),
+        const Entrant(name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
       ]),
   new Tournament(
       name: 'Compete Mens Open',
@@ -204,13 +205,13 @@ List<Tournament> tournaments =  <Tournament>[
       numberOfEntrants: 33,
       highestPlayerRating: '3.1',
       entrants: const <Entrant>[
-        const Entrant(name: 'Archie Duncan', rating: '7.2', ranking: 124),
-        const Entrant(name: 'Ben Dean', rating: '5.2', ranking: 104),
-        const Entrant(name: 'Ben Dean', rating: '3.2', ranking: 12),
-        const Entrant(name: 'Willie Nelsom', rating: '1.2', ranking: 16),
-        const Entrant(name: 'Marvin Ashana', rating: '2.2', ranking: 84),
-        const Entrant(name: 'Giva Lukman', rating: '2.1', ranking: 2),
-        const Entrant(name: 'Navas Jesus', rating: '8.2', ranking: 1233),
-        const Entrant(name: 'Obi Mikaiel', rating: '1.2', ranking: 2),
+        const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(name: 'Willie Nelsom', status: 'pending', rating: '1.2', ranking: 16),
+        const Entrant(name: 'Marvin Ashana', status: 'pending', rating: '2.2', ranking: 84),
+        const Entrant(name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(name: 'Navas Jesus', status: 'pending', rating: '8.2', ranking: 1233),
+        const Entrant(name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
       ])
 ];

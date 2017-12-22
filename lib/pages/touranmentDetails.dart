@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/tournament.dart';
-
+import '../pages/entrants.dart';
 class _Header extends StatelessWidget {
   const _Header({Key key, this.icon, this.text}) : super(key: key);
   final IconData icon;
@@ -125,13 +125,14 @@ class _TextItem extends StatelessWidget {
 }
 
 class TournamentDetailsPage extends StatefulWidget {
+  const TournamentDetailsPage({Key key, this.tournament}) : super(key: key);
+  final Tournament tournament;
   @override
   TournamentDetailsPageState createState() => new TournamentDetailsPageState();
 }
 
 class TournamentDetailsPageState extends State<TournamentDetailsPage> {
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
 
   @override
@@ -220,6 +221,7 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
                                       textTheme: ButtonTextTheme.accent,
                                       child: new Text('ENTRANTS'),
                                       onPressed: () {
+                                        showTournamentEntrantsPage(context, widget.tournament);
                                         // Place holder for event handling
                                       }))),
                         ],
@@ -273,5 +275,19 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
       ),
     );
   }
+  void showTournamentEntrantsPage(BuildContext context, Tournament tournament) {
+  Navigator.push(
+      context,
+      new MaterialPageRoute<Null>(
+        settings: const RouteSettings(name: '/tournament/entrants'),
+        builder: (BuildContext context) {
+          return new Theme(
+            data: Theme.of(context),
+            child: new EntrantsPage(tournament: tournament),
+          );
+        },
+      ));
+}
+
 }
 
