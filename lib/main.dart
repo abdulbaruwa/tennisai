@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import './tabs/home.dart' as _firstTab;
 import './tabs/dashboard.dart' as _secondTab;
 import './tabs/settings.dart' as _thirdTab;
+import './tabs/search.dart' as _forthTab;
 import './pages/about.dart' as _aboutPage;
 import './pages/support.dart' as _supportPage;
 
@@ -104,7 +105,8 @@ class TabsState extends State<Tabs> {
         children: <Widget>[
           new _firstTab.Home(),
           new _secondTab.Dashboard(),
-          new _thirdTab.Settings()
+          new _thirdTab.Settings(),
+          new _forthTab.Search()
         ],
       ),
 
@@ -124,10 +126,11 @@ class TabsState extends State<Tabs> {
           : new BottomNavigationBar(
               currentIndex: _tab,
               onTap: onTap,
+              type: BottomNavigationBarType.shifting,
               items: TabItems.map((TabItem) {
                 return new BottomNavigationBarItem(
-                    title: new Text(TabItem.title),
-                    icon: new Icon(TabItem.icon));
+                    title: new Text(TabItem.title, style: new TextStyle(color: Colors.black),),
+                    icon: new Icon(TabItem.icon, color: Colors.black,));
               }).toList(),
             ),
 
@@ -190,6 +193,9 @@ class TabsState extends State<Tabs> {
         break;
       case 2:
         this._title_app = TabItems[2].title;
+        break;
+      case 3:
+        this._title_app = TabItems[3].title;
         break;
     }
   }
@@ -310,5 +316,6 @@ class TabItem {
 const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Home', icon: Icons.home),
   const TabItem(title: 'Dashboard', icon: Icons.dashboard),
-  const TabItem(title: 'Settings', icon: Icons.settings)
+  const TabItem(title: 'Settings', icon: Icons.settings),
+  const TabItem(title: 'Find', icon: Icons.settings)
 ];

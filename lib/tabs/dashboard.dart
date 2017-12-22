@@ -7,8 +7,8 @@ class Dashboard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              new Icon(Icons.dashboard, size: 150.0, color: Colors.black12),
-              new Text('Dashboard Tab content')
+              new Icon(Icons.shopping_basket, size: 150.0, color: Colors.black12),
+              new Text('Basket')
             ]),
       );
 }
