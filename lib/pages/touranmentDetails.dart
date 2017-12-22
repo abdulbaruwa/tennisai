@@ -1,45 +1,5 @@
 import 'package:flutter/material.dart';
-
 import '../models/tournament.dart';
-
-class _TournamentDetails extends StatelessWidget {
-  const _TournamentDetails({Key key, this.icon, this.children})
-      : super(key: key);
-
-  final IconData icon;
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final BoxDecoration underlineDecoration = new BoxDecoration(
-        border:
-            new Border(bottom: new BorderSide(color: themeData.accentColor)));
-    return new Container(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
-      decoration: new BoxDecoration(
-          border: new Border(
-              bottom: new BorderSide(color: themeData.dividerColor))),
-      child: new DefaultTextStyle(
-        style: Theme.of(context).textTheme.subhead,
-        child: new Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            new Container(
-              padding: const EdgeInsets.only(top: 30.0, right: 0.0),
-              width: 31.0,
-              child: new Icon(icon, color: themeData.primaryColor),
-            ),
-            new Container(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: new Text('Location Of Tournamenst',
-                    style: themeData.textTheme.title)),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class _Header extends StatelessWidget {
   const _Header({Key key, this.icon, this.text}) : super(key: key);
@@ -315,27 +275,3 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
   }
 }
 
-class _TournamentItem extends StatelessWidget {
-  _TournamentItem(
-      {Key key, this.icon, this.lines, this.tooltip, this.onPressed})
-      : assert(lines.length > 0),
-        super(key: key);
-
-  final IconData icon;
-  final List<String> lines;
-  final String tooltip;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final List<Widget> columnChildren = lines
-        .sublist(0, lines.length - 1)
-        .map((String line) => new Text(line))
-        .toList();
-    columnChildren.add(new Text(
-      lines.last,
-      style: themeData.textTheme.caption,
-    ));
-  }
-}
