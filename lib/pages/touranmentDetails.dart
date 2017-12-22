@@ -226,27 +226,42 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
                         children: <Widget>[
                           new _TextItem(text: 'Grade'),
                           new Container(
-                            padding: const EdgeInsets.only(left: 30.0, top: 5.0),
+                            padding:
+                                const EdgeInsets.only(left: 30.0, top: 5.0),
                             child: new CircleAvatar(
-                                radius: 12.0, child: new Text("2", style: Theme.of(context).primaryTextTheme.body1 )),
+                                radius: 12.0,
+                                child: new Text("2",
+                                    style: Theme
+                                        .of(context)
+                                        .primaryTextTheme
+                                        .body1)),
                           )
                         ],
                       ),
-                        new Row(
+                      new Row(
                         children: <Widget>[
                           new _TextItem(text: 'Entrants'),
                           new Container(
-                            padding: const EdgeInsets.only(left: 16.0, top: 5.0),
+                            padding:
+                                const EdgeInsets.only(left: 16.0, top: 5.0),
                             child: new CircleAvatar(
-                                radius: 12.0, child: new Text("18", style: Theme.of(context).primaryTextTheme.body1 )),
+                                radius: 12.0,
+                                child: new Text("18",
+                                    style: Theme
+                                        .of(context)
+                                        .primaryTextTheme
+                                        .body1)),
                           ),
-                          new Expanded(child:
-                          new Container( 
-                           alignment: Alignment.bottomRight,
-                           //padding: const EdgeInsets.only(top: 10.0),
-                          child: new FlatButton(textTheme: ButtonTextTheme.accent, child: new Text('ENTRANTS'), onPressed:()  {
-                            // Place holder for event handling
-                          }))),
+                          new Expanded(
+                              child: new Container(
+                                  alignment: Alignment.bottomRight,
+                                  //padding: const EdgeInsets.only(top: 10.0),
+                                  child: new FlatButton(
+                                      textTheme: ButtonTextTheme.accent,
+                                      child: new Text('ENTRANTS'),
+                                      onPressed: () {
+                                        // Place holder for event handling
+                                      }))),
                         ],
                       ),
                     ]),
@@ -280,7 +295,10 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
                       new _TextItem(
                           text: 'Sat, 21-Mar-2018 - Sun, 22-Mar-2018'),
                       new _TextItem(text: 'Entry closes on Mon, 14-Mar-2018'),
-                    ])
+                    ]),
+                new SizedBox(
+                  height: 50.0,
+                )
               ]),
             ),
           ],
