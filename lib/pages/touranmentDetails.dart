@@ -303,6 +303,13 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
             ),
           ],
         ),
+        floatingActionButton: new FloatingActionButton(
+          onPressed: () {
+            //TODO Add handler to add to basket
+          },
+          tooltip: 'Add to Basket',
+          child: new Icon(Icons.shopping_basket),
+        ),
       ),
     );
   }
