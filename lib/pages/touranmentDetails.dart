@@ -156,7 +156,8 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
                   fit: StackFit.expand,
                   children: <Widget>[
                     new Image.asset(
-                      'images/ali_connors.jpeg',
+                      'images/ali_connors.jpg',
+                     
                       fit: BoxFit.cover,
                       height: _appBarHeight,
                     ),
