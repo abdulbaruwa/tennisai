@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
 
-class Search extends StatelessWidget {
+class SearchTab extends StatefulWidget{
+  SearchTab ({Key key}) : super(key: key);  
+  @override
+  SearchTabState createState() => new SearchTabState();
+} 
+
+class SearchTabState extends State<SearchTab> {
+    static final GlobalKey<ScaffoldState> _scaffoldKey =
+      new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) => new Container(
           child: new Column(

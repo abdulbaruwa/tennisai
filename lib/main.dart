@@ -104,9 +104,9 @@ class TabsState extends State<Tabs> {
         onPageChanged: onTabChanged,
         children: <Widget>[
           new _firstTab.Home(),
+          new _forthTab.SearchTab(),
           new _secondTab.Dashboard(),
-          new _thirdTab.Settings(),
-          new _forthTab.Search()
+          new _thirdTab.SettingsTab(),
         ],
       ),
 
@@ -315,7 +315,7 @@ class TabItem {
 
 const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Home', icon: Icons.home),
+  const TabItem(title: 'Tournaments', icon: Icons.search),
   const TabItem(title: 'Dashboard', icon: Icons.dashboard),
   const TabItem(title: 'Settings', icon: Icons.settings),
-  const TabItem(title: 'Find', icon: Icons.settings)
 ];
