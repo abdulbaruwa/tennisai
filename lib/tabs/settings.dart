@@ -130,9 +130,8 @@ class UserProfileEditState extends State<UserProfileEdit> {
               })
         ]),
         body: new Form(
-          child: new Container(child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
+          child: new ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
           children: <Widget>[
             new SizedBox(
               height: 96.0,
@@ -170,6 +169,6 @@ class UserProfileEditState extends State<UserProfileEdit> {
             new Icon(Icons.search, size: 150.0, color: Colors.black12),
             new Text('Edit Profile & Settings tab content')
           ],
-        ))));
+        )));
   }
 }
