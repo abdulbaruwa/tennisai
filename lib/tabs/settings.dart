@@ -6,6 +6,12 @@ final ThemeData _kTheme = new ThemeData(
   accentColor: Colors.redAccent,
 );
 
+enum DismissDialogAction {
+  cancel,
+  discard,
+  save,
+}
+
 class SettingsTab extends StatefulWidget {
   SettingsTab({Key key}) : super(key: key);
   @override
@@ -24,9 +30,15 @@ class SettingsTabState extends State<SettingsTab> {
             floatingActionButton: new FloatingActionButton(
               child: const Icon(Icons.edit),
               onPressed: () {
-                scaffoldKey.currentState.showSnackBar(const SnackBar(
-                  content: const Text('Not supported.'),
-                ));
+
+                 Navigator.push(context, new MaterialPageRoute<DismissDialogAction>(
+                builder: (BuildContext context) => new UserProfileEdit(),
+                fullscreenDialog: true,
+              ));
+
+                // scaffoldKey.currentState.showSnackBar(const SnackBar(
+                //   content: const Text('Not supported.'),
+                // ));
               },
             ),
             body: new Container(
@@ -104,14 +116,27 @@ class UserProfileEditState extends State<UserProfileEdit> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
   @override
-  Widget build(BuildContext context) => new Container(
-          child: new Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          new _ProfileSection(),
-          new Icon(Icons.search, size: 150.0, color: Colors.black12),
-          new Text('Edit Profile & Settings tab content')
-        ],
-      ));
+  Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+
+    return new Scaffold(
+        appBar: new AppBar(title: const Text('Edit Profile'), actions: <Widget>[
+          new FlatButton(
+              child: new Text('SAVE',
+                  style: theme.textTheme.body1.copyWith(color: Colors.white)),
+              onPressed: () {
+                Navigator.pop(context, DismissDialogAction.save);
+              })
+        ]),
+        body: new Container(
+            child: new Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            new _ProfileSection(),
+            new Icon(Icons.search, size: 150.0, color: Colors.black12),
+            new Text('Edit Profile & Settings tab content')
+          ],
+        )));
+  }
 }
