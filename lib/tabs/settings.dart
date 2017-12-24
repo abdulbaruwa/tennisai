@@ -30,11 +30,12 @@ class SettingsTabState extends State<SettingsTab> {
             floatingActionButton: new FloatingActionButton(
               child: const Icon(Icons.edit),
               onPressed: () {
-
-                 Navigator.push(context, new MaterialPageRoute<DismissDialogAction>(
-                builder: (BuildContext context) => new UserProfileEdit(),
-                fullscreenDialog: true,
-              ));
+                Navigator.push(
+                    context,
+                    new MaterialPageRoute<DismissDialogAction>(
+                      builder: (BuildContext context) => new UserProfileEdit(),
+                      fullscreenDialog: true,
+                    ));
 
                 // scaffoldKey.currentState.showSnackBar(const SnackBar(
                 //   content: const Text('Not supported.'),
@@ -128,15 +129,47 @@ class UserProfileEditState extends State<UserProfileEdit> {
                 Navigator.pop(context, DismissDialogAction.save);
               })
         ]),
-        body: new Container(
-            child: new Column(
+        body: new Form(
+          child: new Container(child: new Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            new _ProfileSection(),
+            new SizedBox(
+              height: 96.0,
+              child: new Row(
+                children: <Widget>[
+                  new CircleAvatar(
+                    radius: 36.0,
+                    backgroundImage: const AssetImage('images/ademola.jpg'),
+                  ),
+                  const SizedBox(width: 8.0),
+                  new Expanded(
+                    child: new Padding(
+                        padding: const EdgeInsets.only(
+                            left: 2.0, top: 10.0, right: 15.0),
+                        child: new Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            new TextFormField(
+                              decoration: const InputDecoration(
+                                  hintText: 'First name *', isDense: true),
+                              keyboardType: TextInputType.text,
+                            ),
+                            new TextFormField(
+                              decoration: const InputDecoration(
+                                  hintText: 'Last name *', isDense: true),
+                              keyboardType: TextInputType.text,
+                            ),
+                          ],
+                        )),
+                  )
+                ],
+              ),
+            ),
             new Icon(Icons.search, size: 150.0, color: Colors.black12),
             new Text('Edit Profile & Settings tab content')
           ],
-        )));
+        ))));
   }
 }
