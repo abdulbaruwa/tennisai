@@ -116,6 +116,9 @@ class UserProfileEdit extends StatefulWidget {
 class UserProfileEditState extends State<UserProfileEdit> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
+  int quantity = 0;
+  final ValueChanged<int> onChanged;
+
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
@@ -166,6 +169,40 @@ class UserProfileEditState extends State<UserProfileEdit> {
                 ],
               ),
             ),
+            new Container(
+              padding: const EdgeInsets.only(top: 5.0),
+              child:
+            new Column(
+                 children: [
+                            new TextFormField(
+                              decoration: const InputDecoration(
+                                  hintText: 'Lta Number *', isDense: true),
+                              keyboardType: TextInputType.number,
+                            ),
+                            new DropdownButtonHideUnderline(
+            child: new Container(
+              decoration: new BoxDecoration(
+                border: new Border.all(
+                  color: const Color(0xFFD9D9D9),
+                ),
+              ),
+              child: new DropdownButton<int>(
+                items: <int>[0, 1].map((int value) {
+                  return new DropdownMenuItem<int>(
+                    value: value,
+                    child: new Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: new Text(value == 1? 'Male' : 'Female'),
+                    ),
+                  );
+                }).toList(),
+                value: quantity,
+                onChanged: (int value) { quantity = value;},
+              ),
+            ),
+          ),
+                          ],
+            )),
             new Icon(Icons.search, size: 150.0, color: Colors.black12),
             new Text('Edit Profile & Settings tab content')
           ],
