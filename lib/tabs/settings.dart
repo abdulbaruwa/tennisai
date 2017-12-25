@@ -132,6 +132,46 @@ class UserProfileEdit extends StatefulWidget {
   UserProfileEditState createState() => new UserProfileEditState();
 }
 
+class _LabelTextFormEdit extends StatefulWidget {
+  _LabelTextFormEdit({Key key, this.label, this.inputType}) : super(key: key);
+  String label;
+  TextInputType inputType = TextInputType.text;
+
+  @override
+  _LabelTextFormEditState createState() => new _LabelTextFormEditState();
+}
+
+class _LabelTextFormEditState extends State<_LabelTextFormEdit> {
+  @override
+  void initState() {
+    super.initState();
+    //result = widget.output;
+  }
+
+  Widget build(BuildContext context) {
+    return new Container(
+        color: Colors.white,
+        padding: const EdgeInsets.only(top: 5.0, left: 10.0),
+        child: new Column(
+          children: [
+            new Row(
+              children: <Widget>[
+                new Text(widget.label),
+                new Expanded(
+                    child: new Container(
+                        padding: const EdgeInsets.only(right: 5.0, left: 10.0),
+                        alignment: Alignment.bottomRight,
+                        child: new TextFormField(
+                          keyboardType: TextInputType.text,
+                          textAlign: TextAlign.end,
+                        )))
+              ],
+            )
+          ],
+        ));
+  }
+}
+
 class _LabelIntDropDownItem extends StatefulWidget {
   _LabelIntDropDownItem(
       {Key key,
@@ -265,7 +305,10 @@ class UserProfileEditState extends State<UserProfileEdit> {
             // lta info header
             new Container(
                 padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
-                child: new Text('Lta Info')),
+                child: new Text('Lta information')),
+            new _LabelTextFormEdit(label: 'Address'),
+            new _LabelTextFormEdit(label: 'County'),
+            new _LabelTextFormEdit(label: 'Post Code'),
             new Container(
                 color: Colors.white,
                 padding: const EdgeInsets.only(top: 5.0, left: 10.0),
@@ -276,10 +319,13 @@ class UserProfileEditState extends State<UserProfileEdit> {
                         new Text('Lta Number'),
                         new Expanded(
                             child: new Container(
-                                padding: const EdgeInsets.only(right: 5.0, left:10.0),
+                                padding: const EdgeInsets.only(
+                                    right: 5.0, left: 10.0),
                                 alignment: Alignment.bottomRight,
-                                child: new TextFormField(keyboardType: TextInputType.number, textAlign: TextAlign.end, )
-                                ))
+                                child: new TextFormField(
+                                  keyboardType: TextInputType.number,
+                                  textAlign: TextAlign.end,
+                                )))
                       ],
                     )
                   ],
