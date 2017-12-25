@@ -271,7 +271,6 @@ class UserProfileEditState extends State<UserProfileEdit> {
                         label: 'Distance',
                         output: selectedMiles,
                         displayFunc: (int i) => '$i miles'),
-
                     //  tournament Grade
                     new _LabelIntDropDownItem(
                         displayIntItems: _grades,
