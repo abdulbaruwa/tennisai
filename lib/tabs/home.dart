@@ -19,9 +19,11 @@ final DateFormat _dateFormatter = new DateFormat.MEd('en_UK');
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
-  primarySwatch: Colors.teal,
+  primarySwatch: Colors.indigo,
   accentColor: Colors.redAccent,
+ //  platform: Theme.of(context).platform
 );
+
 
 class PestoStyle extends TextStyle {
   const PestoStyle({

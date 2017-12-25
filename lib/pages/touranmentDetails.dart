@@ -156,7 +156,7 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
                   fit: StackFit.expand,
                   children: <Widget>[
                     new Image.asset(
-                      'images/ali_connors.jpg',
+                      'images/tennisacademy.jpg',
                      
                       fit: BoxFit.cover,
                       height: _appBarHeight,
@@ -271,7 +271,7 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
             //TODO Add handler to add to basket
           },
           tooltip: 'Add to Basket',
-          child: new Icon(Icons.shopping_basket),
+          child: new Icon(Icons.add_shopping_cart),
         ),
       ),
     );

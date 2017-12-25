@@ -10,9 +10,9 @@ import './pages/support.dart' as _supportPage;
 void main() => runApp(new MaterialApp(
       title: 'Tennis Ai',
       theme: new ThemeData(
-          primarySwatch: Colors.blueGrey,
+          primarySwatch: Colors.indigo,
           scaffoldBackgroundColor: Colors.white,
-          primaryColor: Colors.blueGrey,
+          primaryColor: Colors.indigo,
           backgroundColor: Colors.white),
       home: new Tabs(),
       onGenerateRoute: (RouteSettings settings) {

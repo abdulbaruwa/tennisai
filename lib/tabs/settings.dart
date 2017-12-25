@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
-  primarySwatch: Colors.teal,
+  primarySwatch: Colors.indigo,
   accentColor: Colors.redAccent,
 );
 

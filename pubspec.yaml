@@ -29,6 +29,7 @@ flutter:
   assets:
     - images/ali_connors.jpg
     - images/ademola.jpg
+    - images/tennisacademy.jpg
   #  - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
