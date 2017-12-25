@@ -132,7 +132,7 @@ class UserProfileEdit extends StatefulWidget {
   UserProfileEditState createState() => new UserProfileEditState();
 }
 
-class _LabelIntDropDownItem extends StatelessWidget {
+class _LabelIntDropDownItem extends StatefulWidget {
   _LabelIntDropDownItem(
       {Key key,
       this.displayFunc,
@@ -144,30 +144,40 @@ class _LabelIntDropDownItem extends StatelessWidget {
   final label;
   List<int> displayIntItems;
   int output;
+
   @override
+  _LabelIntDropDownItemState createState() => new _LabelIntDropDownItemState();
+}
+
+class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem> {
+  int result;
+
   Widget build(BuildContext context) {
-    return new Row(
+   return new Row(
       children: <Widget>[
-        new Text(label),
+        new Text(widget.label),
         new Expanded(
             child: new Container(
                 alignment: Alignment.bottomRight,
                 child: new DropdownButtonHideUnderline(
                   child: new Container(
-                    // decoration: _underlineBoxDecoration,
                     child: new DropdownButton<int>(
-                      items: displayIntItems.map((int value) {
+                      items: widget.displayIntItems.map((int value) {
                         return new DropdownMenuItem<int>(
                           value: value,
                           child: new Padding(
                             padding: const EdgeInsets.only(left: 8.0),
-                            child: new Text(displayFunc(value)),
+                            child: new Text(widget.displayFunc(value)),
                           ),
                         );
                       }).toList(),
-                      value: output,
+                      value: result,
                       onChanged: (int value) {
-                        output = value;
+                        setState(() {
+                          print(value);
+                          result = value;
+                          print(widget.output);
+                        });
                       },
                     ),
                   ),
@@ -176,40 +186,6 @@ class _LabelIntDropDownItem extends StatelessWidget {
     );
   }
 }
-
-// class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem>{
-//   @override
-//   Widget build(BuildContext context) {
-//     return new Row(
-//       children: <Widget>[
-//         new Text(label),
-//         new Expanded(
-//             child: new Container(
-//                 alignment: Alignment.bottomRight,
-//                 child: new DropdownButtonHideUnderline(
-//                   child: new Container(
-//                     // decoration: _underlineBoxDecoration,
-//                     child: new DropdownButton<int>(
-//                       items: displayIntItems.map((int value) {
-//                         return new DropdownMenuItem<int>(
-//                           value: value,
-//                           child: new Padding(
-//                             padding: const EdgeInsets.only(left: 8.0),
-//                             child: new Text(displayFunc(value)),
-//                           ),
-//                         );
-//                       }).toList(),
-//                       value: output,
-//                       onChanged: (int value) {
-//                         output = value;
-//                       },
-//                     ),
-//                   ),
-//                 )))
-//       ],
-//     );
-//   }
-// }
 
 class UserProfileEditState extends State<UserProfileEdit> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
@@ -226,12 +202,12 @@ class UserProfileEditState extends State<UserProfileEdit> {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-      var tournamentGroup = new _LabelIntDropDownItem(
-                        displayIntItems: _ageGroups,
-                        label: 'Age Group',
-                        output: selectedAgeGroup,
-                        displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
-      selectedAgeGroup = tournamentGroup.output;
+    var tournamentGroup = new _LabelIntDropDownItem(
+        displayIntItems: _ageGroups,
+        label: 'Age Group',
+        output: selectedAgeGroup,
+        displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
+    //selectedAgeGroup = tournamentGroup.output;
     return new Scaffold(
         // backgroundColor: Colors.white70,
         appBar: new AppBar(title: const Text('Edit Profile'), actions: <Widget>[
@@ -321,8 +297,7 @@ class UserProfileEditState extends State<UserProfileEdit> {
                         output: selectedGrade,
                         displayFunc: (int i) => 'Grade $i'),
                     //  tournament group
-                   tournamentGroup,
-                        
+                    tournamentGroup,
                   ],
                 )),
           ],
