@@ -151,7 +151,11 @@ class _LabelIntDropDownItem extends StatefulWidget {
 
 class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem> {
   int result;
-
+  @override
+  void initState() {
+    super.initState();
+    result = widget.output;
+  }
   Widget build(BuildContext context) {
    return new Row(
       children: <Widget>[
