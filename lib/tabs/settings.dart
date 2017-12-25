@@ -21,6 +21,8 @@ final BoxDecoration _topBottomBoxDecoration = new BoxDecoration(
 
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
 
+final List<int> _ageGroups = [12, 14, 16, 18, 100];
+
 final List<int> _grades = [1, 2, 3, 4, 5, 6];
 
 enum DismissDialogAction {
@@ -175,6 +177,40 @@ class _LabelIntDropDownItem extends StatelessWidget {
   }
 }
 
+// class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem>{
+//   @override
+//   Widget build(BuildContext context) {
+//     return new Row(
+//       children: <Widget>[
+//         new Text(label),
+//         new Expanded(
+//             child: new Container(
+//                 alignment: Alignment.bottomRight,
+//                 child: new DropdownButtonHideUnderline(
+//                   child: new Container(
+//                     // decoration: _underlineBoxDecoration,
+//                     child: new DropdownButton<int>(
+//                       items: displayIntItems.map((int value) {
+//                         return new DropdownMenuItem<int>(
+//                           value: value,
+//                           child: new Padding(
+//                             padding: const EdgeInsets.only(left: 8.0),
+//                             child: new Text(displayFunc(value)),
+//                           ),
+//                         );
+//                       }).toList(),
+//                       value: output,
+//                       onChanged: (int value) {
+//                         output = value;
+//                       },
+//                     ),
+//                   ),
+//                 )))
+//       ],
+//     );
+//   }
+// }
+
 class UserProfileEditState extends State<UserProfileEdit> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
@@ -183,12 +219,19 @@ class UserProfileEditState extends State<UserProfileEdit> {
   int miles = 30;
   int selectedMiles = 30;
   int selectedGrade = 3;
+  int selectedAgeGroup = 18;
+
   final ValueChanged<int> onChanged;
 
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-
+      var tournamentGroup = new _LabelIntDropDownItem(
+                        displayIntItems: _ageGroups,
+                        label: 'Age Group',
+                        output: selectedAgeGroup,
+                        displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
+      selectedAgeGroup = tournamentGroup.output;
     return new Scaffold(
         // backgroundColor: Colors.white70,
         appBar: new AppBar(title: const Text('Edit Profile'), actions: <Widget>[
@@ -276,7 +319,10 @@ class UserProfileEditState extends State<UserProfileEdit> {
                         displayIntItems: _grades,
                         label: 'Grade',
                         output: selectedGrade,
-                        displayFunc: (int i) => 'Grade $i')
+                        displayFunc: (int i) => 'Grade $i'),
+                    //  tournament group
+                   tournamentGroup,
+                        
                   ],
                 )),
           ],
