@@ -151,7 +151,7 @@ class _LabelTextFormEditState extends State<_LabelTextFormEdit> {
   Widget build(BuildContext context) {
     return new Container(
         color: Colors.white,
-        padding: const EdgeInsets.only(top: 5.0, left: 10.0),
+        padding: const EdgeInsets.only(top: 0.0, left: 10.0),
         child: new Column(
           children: [
             new Row(
@@ -303,33 +303,25 @@ class UserProfileEditState extends State<UserProfileEdit> {
                   )),
             ),
             // lta info header
+            // FFAFAFA
             new Container(
-                padding: const EdgeInsets.only(left: 5.0, bottom: 5.0),
-                child: new Text('Lta information')),
-            new _LabelTextFormEdit(label: 'Address'),
+              color: const Color(0xFFF5F5F5),
+                padding: const EdgeInsets.all(10.0),
+                child: new Text('LTA INFO', style: theme.textTheme.caption,)),
+            new _LabelTextFormEdit(label: 'LTA Number', inputType: TextInputType.number),
+
+             new Container(
+              color: const Color(0xFFF5F5F5),
+                padding: const EdgeInsets.all(10.0),
+                child: new Text('ADDRESS', style: theme.textTheme.caption,)),
+            new _LabelTextFormEdit(label: 'Street Address'),
             new _LabelTextFormEdit(label: 'County'),
             new _LabelTextFormEdit(label: 'Post Code'),
-            new Container(
-                color: Colors.white,
-                padding: const EdgeInsets.only(top: 5.0, left: 10.0),
-                child: new Column(
-                  children: [
-                    new Row(
-                      children: <Widget>[
-                        new Text('Lta Number'),
-                        new Expanded(
-                            child: new Container(
-                                padding: const EdgeInsets.only(
-                                    right: 5.0, left: 10.0),
-                                alignment: Alignment.bottomRight,
-                                child: new TextFormField(
-                                  keyboardType: TextInputType.number,
-                                  textAlign: TextAlign.end,
-                                )))
-                      ],
-                    )
-                  ],
-                )),
+     
+         new Container(
+              color: const Color(0xFFF5F5F5),
+                padding: const EdgeInsets.all(10.0),
+                child: new Text('TOURNAMENT SEARCH PREFERENCES', style: theme.textTheme.caption,)),
             new Container(
                 padding: const EdgeInsets.only(top: 5.0, left: 10.0),
                 decoration: _topBottomBoxDecoration,
