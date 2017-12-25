@@ -156,8 +156,9 @@ class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem> {
     super.initState();
     result = widget.output;
   }
+
   Widget build(BuildContext context) {
-   return new Row(
+    return new Row(
       children: <Widget>[
         new Text(widget.label),
         new Expanded(
@@ -270,11 +271,17 @@ class UserProfileEditState extends State<UserProfileEdit> {
                 padding: const EdgeInsets.only(top: 5.0, left: 10.0),
                 child: new Column(
                   children: [
-                    new TextFormField(
-                      decoration: const InputDecoration(
-                          hintText: 'Lta Number *', isDense: true),
-                      keyboardType: TextInputType.number,
-                    ),
+                    new Row(
+                      children: <Widget>[
+                        new Text('Lta Number'),
+                        new Expanded(
+                            child: new Container(
+                                padding: const EdgeInsets.only(right: 5.0, left:10.0),
+                                alignment: Alignment.bottomRight,
+                                child: new TextFormField(keyboardType: TextInputType.number, textAlign: TextAlign.end, )
+                                ))
+                      ],
+                    )
                   ],
                 )),
             new Container(
