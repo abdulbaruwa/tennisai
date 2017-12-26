@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../pages/profileEdit.dart';
 import '../pages/profile.dart';
+import '../models/enums.dart' as _enums;
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
@@ -13,12 +14,6 @@ final BoxDecoration _underlineBoxDecoration = new BoxDecoration(
     bottom: const BorderSide(color: const Color(0xFFD9D9D9)),
   ),
 );
-
-enum DismissDialogAction {
-  cancel,
-  discard,
-  save,
-}
 
 class SettingsTab extends StatefulWidget {
   SettingsTab({Key key}) : super(key: key);
@@ -38,9 +33,10 @@ class SettingsTabState extends State<SettingsTab> {
             floatingActionButton: new FloatingActionButton(
               child: const Icon(Icons.edit),
               onPressed: () {
+                print('pushing with context: ${context.widget.key}');
                 Navigator.push(
                     context,
-                    new MaterialPageRoute<DismissDialogAction>(
+                    new MaterialPageRoute<_enums.DismissDialogAction>(
                       builder: (BuildContext context) => new UserProfileEdit(),
                       fullscreenDialog: true,
                     ));
@@ -58,3 +54,4 @@ class SettingsTabState extends State<SettingsTab> {
             ))));
   }
 }
+

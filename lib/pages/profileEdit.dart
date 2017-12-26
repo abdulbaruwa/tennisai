@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import '../models/enums.dart' as _enums;
 
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
 
 final List<int> _ageGroups = [12, 14, 16, 18, 100];
 
 final List<int> _grades = [1, 2, 3, 4, 5, 6];
-
 
 class UserProfileEdit extends StatefulWidget {
   UserProfileEdit({Key key}) : super(key: key);
@@ -42,7 +42,8 @@ class UserProfileEditState extends State<UserProfileEdit> {
               child: new Text('SAVE',
                   style: theme.textTheme.body1.copyWith(color: Colors.white)),
               onPressed: () {
-                Navigator.pop(context, DismissDialogAction.save);
+                print('poping with context: ${context.widget.key}');
+                Navigator.pop(context, _enums.DismissDialogAction.save);
               })
         ]),
         body: new Form(
@@ -87,23 +88,33 @@ class UserProfileEditState extends State<UserProfileEdit> {
             // lta info header
             // FFAFAFA
             new Container(
-              color: const Color(0xFFF5F5F5),
+                color: const Color(0xFFF5F5F5),
                 padding: const EdgeInsets.all(10.0),
-                child: new Text('LTA INFO', style: theme.textTheme.caption,)),
-            new _LabelTextFormEdit(label: 'LTA Number', inputType: TextInputType.number),
+                child: new Text(
+                  'LTA INFO',
+                  style: theme.textTheme.caption,
+                )),
+            new _LabelTextFormEdit(
+                label: 'LTA Number', inputType: TextInputType.number),
 
-             new Container(
-              color: const Color(0xFFF5F5F5),
+            new Container(
+                color: const Color(0xFFF5F5F5),
                 padding: const EdgeInsets.all(10.0),
-                child: new Text('ADDRESS', style: theme.textTheme.caption,)),
+                child: new Text(
+                  'ADDRESS',
+                  style: theme.textTheme.caption,
+                )),
             new _LabelTextFormEdit(label: 'Street Address'),
             new _LabelTextFormEdit(label: 'County'),
             new _LabelTextFormEdit(label: 'Post Code'),
-     
-         new Container(
-              color: const Color(0xFFF5F5F5),
+
+            new Container(
+                color: const Color(0xFFF5F5F5),
                 padding: const EdgeInsets.all(10.0),
-                child: new Text('TOURNAMENT SEARCH PREFERENCES', style: theme.textTheme.caption,)),
+                child: new Text(
+                  'TOURNAMENT SEARCH PREFERENCES',
+                  style: theme.textTheme.caption,
+                )),
             new Container(
                 padding: const EdgeInsets.only(top: 5.0, left: 10.0),
                 decoration: _topBottomBoxDecoration,
