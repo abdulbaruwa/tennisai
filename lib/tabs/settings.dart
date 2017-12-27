@@ -42,16 +42,8 @@ class SettingsTabState extends State<SettingsTab> {
                     ));
               },
             ),
-            body: new Container(
-                child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                new ProfileSection(),
-                new Icon(Icons.search, size: 150.0, color: Colors.black12),
-                new Text('Profile & Settings tab content')
-              ],
-            ))));
+            body: new Profile()
+            ));
   }
 }
 
