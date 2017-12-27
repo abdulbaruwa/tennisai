@@ -89,16 +89,16 @@ class TabsState extends State<Tabs> {
   @override
   Widget build(BuildContext buildcontext) => new Scaffold(
       //App Bar
-      appBar: new AppBar(
-        title: new Text(
-          _title_app,
-          style: new TextStyle(
-            fontSize:
-                Theme.of(context).platform == TargetPlatform.iOS ? 17.0 : 20.0,
-          ),
-        ),
-        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-      ),
+      // appBar: new AppBar(
+      //   title: new Text(
+      //     _title_app,
+      //     style: new TextStyle(
+      //       fontSize:
+      //           Theme.of(context).platform == TargetPlatform.iOS ? 17.0 : 20.0,
+      //     ),
+      //   ),
+      //   elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
+      // ),
       body: new PageView(
         controller: _tabController,
         onPageChanged: onTabChanged,

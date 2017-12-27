@@ -29,6 +29,16 @@ class SettingsTabState extends State<SettingsTab> {
     return new Theme(
         data: _kTheme.copyWith(platform: Theme.of(context).platform),
         child: new Scaffold(
+                appBar: new AppBar(
+        title: new Text(
+          'Profile',
+          style: new TextStyle(
+            fontSize:
+                Theme.of(context).platform == TargetPlatform.iOS ? 17.0 : 20.0,
+          ),
+        ),
+        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
+      ),
             key: scaffoldKey,
             floatingActionButton: new FloatingActionButton(
               child: const Icon(Icons.edit),
