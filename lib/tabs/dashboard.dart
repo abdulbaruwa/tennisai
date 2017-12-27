@@ -16,7 +16,7 @@ class Dashboard extends StatelessWidget {
         child: new Scaffold(
             appBar: new AppBar(
               title: new Text(
-                'Tournament',
+                'Basket',
                 style: new TextStyle(
                   fontSize: Theme.of(context).platform == TargetPlatform.iOS
                       ? 17.0
