@@ -48,16 +48,13 @@ class TournamentCard extends StatelessWidget {
         "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
     return new GestureDetector(
       onTap: onTap,
-      child: new Card(
-        child: new Column(
+      child: new Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             new Padding(
               child: new ListTile(
-                leading: const Icon(
-                    const IconData(0xe091, fontFamily: 'MaterialIcons')),
                 title: new Text(tournament.name),
                 subtitle: new Text(tournament.location),
               ),
@@ -70,11 +67,11 @@ class TournamentCard extends StatelessWidget {
                 textAlign: TextAlign.left,
                 textScaleFactor: 1.0,
               ),
-              padding: const EdgeInsets.only(left: 10.0),
+              padding: const EdgeInsets.only(left: 15.0),
             ),
-            new SizedBox(
-              height: 30.0,
-            ),
+            // new SizedBox(
+            //   height: 30.0,
+            // ),
             new Row(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
@@ -94,7 +91,7 @@ class TournamentCard extends StatelessWidget {
             )
           ],
         ),
-      ),
+      
     );
   }
 }
