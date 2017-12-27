@@ -5,7 +5,7 @@ class ProfileSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => new Container(
-      color: Colors.amber,
+      color: const Color(0xFFFAFAFA),
       child: new SizedBox(
           height: 105.0,
           child: new Column(
@@ -60,13 +60,18 @@ class _LtaInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        new Container(
-            color: const Color(0xFFF5F5F5),
-            padding: const EdgeInsets.all(10.0),
-            child: new Text(
-             value,
-              style: theme.textTheme.caption,
-            )),
+        new Row(
+          children: <Widget>[
+            new Expanded(
+                child: new Container(
+                    color: const Color(0xFFF5F5F5),
+                    padding: const EdgeInsets.all(10.0),
+                    child: new Text(
+                      value,
+                      style: theme.textTheme.caption,
+                    )))
+          ],
+        ),
       ],
     );
   }
@@ -79,6 +84,7 @@ class _LabelTextRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final ThemeData theme = Theme.of(context);
     return new Container(
         color: Colors.white,
         padding: const EdgeInsets.only(top: 0.0, left: 10.0),
@@ -86,10 +92,11 @@ class _LabelTextRow extends StatelessWidget {
           children: [
             new Row(
               children: <Widget>[
-                new Text(label),
+                new Text(label, style: theme.textTheme.caption),
                 new Expanded(
                     child: new Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 12.0),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10.0, vertical: 12.0),
                         alignment: Alignment.bottomRight,
                         child: new Text(
                           value,
@@ -117,7 +124,7 @@ class Profile extends StatelessWidget {
         new _LabelTextRow(label: 'Gender', value: 'Female'),
         new _LabelTextRow(label: 'Distance', value: '30 miles'),
         new _LabelTextRow(label: 'Grade', value: '3'),
-        new _LabelTextRow(label: 'Age Group', value: '3'),
+        new _LabelTextRow(label: 'Age Group', value: 'U18'),
       ],
     ));
   }
