@@ -17,7 +17,7 @@ class TournamentSearchState extends State<TournamentSearch> {
     final List<Tournament> tournaments = _tournamentModels.tournaments;
     Iterable<Widget> listTiles = tournaments
         .map((Tournament item) => new TournamentCard(tournament: item));
-    listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
+    listTiles = ListTile.divideTiles(context: context, tiles: listTiles, color: Theme.of(context).primaryColor);
 
     final ThemeData themedata = Theme.of(context);
 
@@ -65,19 +65,19 @@ class TournamentCard extends StatelessWidget {
               child: new Text(
                 tournamentDate,
                 textAlign: TextAlign.left,
-                textScaleFactor: 1.0,
+                //textScaleFactor: 1.0,
               ),
-              padding: const EdgeInsets.only(left: 15.0),
+              padding: const EdgeInsets.only(left: 20.0),
             ),
-            // new SizedBox(
-            //   height: 30.0,
-            // ),
+            new SizedBox(
+              height: 5.0,
+            ),
             new Row(
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 new Padding(
                   child: new Text("Grade ${tournament.grade}"),
-                  padding: const EdgeInsets.only(left: 10.0),
+                  padding: const EdgeInsets.only(left: 20.0),
                 ),
                 new Expanded(
                     child: new Padding(
@@ -88,7 +88,8 @@ class TournamentCard extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10.0),
                 ))
               ],
-            )
+            ),
+            new SizedBox(height: 15.0,)
           ],
         ),
       
