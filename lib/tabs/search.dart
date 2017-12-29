@@ -17,6 +17,9 @@ class SearchTab extends StatefulWidget {
 class SearchTabState extends State<SearchTab> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
+
+  PersistentBottomSheetController<Null> _bottomSheet;
+
   @override
   Widget build(BuildContext context) {
     return new Theme(
@@ -25,11 +28,10 @@ class SearchTabState extends State<SearchTab> {
             appBar: new AppBar(
               actions: <Widget>[
                 new IconButton(
-                  icon: const Icon(Icons.vertical_align_bottom),
+                  icon: const Icon(Icons.more_vert),
                   tooltip: 'Sort by rating',
-                  onPressed: () {
-                    setState(() {});
-                  },
+                  onPressed:
+                      _bottomSheet == null ? _showConfigurationSheet : null,
                 ),
               ],
               title: new Text(
@@ -45,5 +47,55 @@ class SearchTabState extends State<SearchTab> {
             ),
             key: _scaffoldKey,
             body: new TournamentSearch()));
+  }
+
+  void _showConfigurationSheet() {
+    final PersistentBottomSheetController<Null> bottomSheet = _scaffoldKey
+        .currentState.showBottomSheet((BuildContext bottomSheetContext) {
+      return new Container(
+        decoration: const BoxDecoration(
+          color: Colors.blue,
+          border: const Border(top: const BorderSide(color: Colors.black26)),
+        ),
+        child: new ListView(
+          shrinkWrap: true,
+          primary: false,
+          children: <Widget>[
+            new MergeSemantics(
+              child: new ListTile(
+                dense: true,
+                title: const Text('One-line'),
+              ),
+              
+            ),
+             new MergeSemantics(
+              child: new ListTile(
+                dense: true,
+                title: const Text('Two-line'),
+              ),
+              
+            ),
+              new MergeSemantics(
+              child: new ListTile(
+                dense: true,
+                title: const Text('Three-line'),
+              ),
+              
+            ), ],
+        ),
+      );
+    });
+
+    setState(() {
+      _bottomSheet = bottomSheet;
+    });
+
+    _bottomSheet.closed.whenComplete(() {
+      if (mounted) {
+        setState(() {
+          _bottomSheet = null;
+        });
+      }
+    });
   }
 }

@@ -25,7 +25,6 @@ class TournamentSearchState extends State<TournamentSearch> {
         child: new ListView(
             padding: new EdgeInsets.symmetric(vertical: 4.0),
             children: listTiles.toList()));
-    //return new ListView(children: <Widget>[new Text('Tournament Search')]);
   }
 }
 
