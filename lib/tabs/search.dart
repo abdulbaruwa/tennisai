@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import '../pages/tournamentSearch.dart';
 import '../models/enums.dart' as _enums;
+import '../controls/usercontrols.dart';
+
+final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
+
+final List<int> _ageGroups = [12, 14, 16, 18, 100];
+
+final List<int> _grades = [1, 2, 3, 4, 5, 6];
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
@@ -52,36 +59,57 @@ class SearchTabState extends State<SearchTab> {
   void _showConfigurationSheet() {
     final PersistentBottomSheetController<Null> bottomSheet = _scaffoldKey
         .currentState.showBottomSheet((BuildContext bottomSheetContext) {
+      int selectedGender = 0;
+      int miles = 30;
+      int selectedMiles = 30;
+      int selectedGrade = 3;
+      int selectedAgeGroup = 18;
+
       return new Container(
         decoration: const BoxDecoration(
-          color: Colors.blue,
+          color: const Color(0xFFE8EAF6),
+          //color: const Color(0xFF9FA8DA),
           border: const Border(top: const BorderSide(color: Colors.black26)),
         ),
         child: new ListView(
           shrinkWrap: true,
           primary: false,
           children: <Widget>[
-            new MergeSemantics(
-              child: new ListTile(
-                dense: true,
-                title: const Text('One-line'),
+            new Container(
+              padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+              child: new Text('Filter options', style: Theme.of(context).textTheme.subhead)
               ),
-              
+            new Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: new LabelIntDropDownItem(
+                  displayIntItems: _ageGroups,
+                  label: 'Age Group',
+                  output: selectedAgeGroup,
+                  displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult'),
             ),
-             new MergeSemantics(
-              child: new ListTile(
-                dense: true,
-                title: const Text('Two-line'),
-              ),
-              
-            ),
-              new MergeSemantics(
-              child: new ListTile(
-                dense: true,
-                title: const Text('Three-line'),
-              ),
-              
-            ), ],
+            // new Container(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            //   child: new LabelIntDropDownItem(
+            //       displayIntItems: [0, 1],
+            //       label: 'Gender',
+            //       output: selectedGender,
+            //       displayFunc: (int i) => i == 0 ? 'Female' : 'Male'),
+            // ),
+            new Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: new LabelIntDropDownItem(
+                    displayIntItems: _distancesInMiles,
+                    label: 'Distance',
+                    output: selectedMiles,
+                    displayFunc: (int i) => '$i miles')),
+            new Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: new LabelIntDropDownItem(
+                    displayIntItems: _grades,
+                    label: 'Grade',
+                    output: selectedGrade,
+                    displayFunc: (int i) => 'Grade $i'))
+          ],
         ),
       );
     });
