@@ -3,7 +3,8 @@ import 'package:flutter/rendering.dart';
 import '../models/tournament.dart';
 import '../models/tournament.dart' as _tournamentModels;
 import '../pages/touranmentDetails.dart';
-import "package:intl/intl.dart";
+import 'package:intl/intl.dart';
+import 'dart:math' as math;
 
 class Home extends StatelessWidget {
   @override
@@ -21,9 +22,8 @@ final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.indigo,
   accentColor: Colors.redAccent,
- //  platform: Theme.of(context).platform
+  //  platform: Theme.of(context).platform
 );
-
 
 class PestoStyle extends TextStyle {
   const PestoStyle({
@@ -75,34 +75,94 @@ class TournamentGridPage extends StatefulWidget {
   _TournamentGridPageState createState() => new _TournamentGridPageState();
 }
 
-class _TournamentGridPageState extends State<TournamentGridPage> {
+class _TournamentGridPageState extends State<TournamentGridPage>
+    with TickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  AnimationController _controller;
+
+  static const List<IconData> icons = const [
+    Icons.sms,
+    Icons.mail,
+    Icons.phone
+  ];
+
+  @override
+  void initState() {
+    _controller = new AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    Color backgroundColor = Theme.of(context).cardColor;
+    Color foregroundColor = Theme.of(context).accentColor;
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return new Theme(
         data: _kTheme.copyWith(platform: Theme.of(context).platform),
         child: new Scaffold(
-                appBar: new AppBar(
-        title: new Text(
-          'Home',
-          style: new TextStyle(
-            fontSize:
-                Theme.of(context).platform == TargetPlatform.iOS ? 17.0 : 20.0,
+          appBar: new AppBar(
+            title: new Text(
+              'Home',
+              style: new TextStyle(
+                fontSize: Theme.of(context).platform == TargetPlatform.iOS
+                    ? 17.0
+                    : 20.0,
+              ),
+            ),
+            elevation:
+                Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
           ),
-        ),
-        elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-      ),
           key: scaffoldKey,
-          floatingActionButton: new FloatingActionButton(
-            child: const Icon(Icons.edit),
-            onPressed: () {
-              scaffoldKey.currentState.showSnackBar(const SnackBar(
-                content: const Text('Not supported.'),
-              ));
-            },
-          ),
+          // floatingActionButton: new Column(
+          //   mainAxisSize: MainAxisSize.min,
+          //   children: new List.generate(icons.length, (int index) {
+          //     Widget child = new Container(
+          //       height: 70.0,
+          //       width: 56.0,
+          //       alignment: FractionalOffset.topCenter,
+          //       child: new ScaleTransition(
+          //         scale: new CurvedAnimation(
+          //           parent: _controller,
+          //           curve: new Interval(0.0, 1.0 - index / icons.length / 2.0,
+          //               curve: Curves.easeOut),
+          //         ),
+          //         child: new FloatingActionButton(
+          //           backgroundColor: backgroundColor,
+          //           mini: true,
+          //           child: new Icon(icons[index], color: foregroundColor),
+          //           onPressed: () {},
+          //         ),
+          //       ),
+          //     );
+          //     return child;
+          //   }).toList()
+          //     ..add(
+          //       new FloatingActionButton(
+          //         child: new AnimatedBuilder(
+          //           animation: _controller,
+          //           builder: (BuildContext context, Widget child) {
+          //             return new Transform(
+          //               transform: new Matrix4.rotationZ(
+          //                   _controller.value * 0.5 * math.PI),
+          //               alignment: FractionalOffset.center,
+          //               child: new Icon(_controller.isDismissed
+          //                   ? Icons.share
+          //                   : Icons.close),
+          //             );
+          //           },
+          //         ),
+          //         onPressed: () {
+          //           if (_controller.isDismissed) {
+          //             _controller.forward();
+          //           } else {
+          //             _controller.reverse();
+          //           }
+          //         },
+          //       ),
+          //     ),
+          // ),
           body: new CustomScrollView(
             slivers: <Widget>[
               _buildBody(context, statusBarHeight),
@@ -172,36 +232,56 @@ class TournamentCard extends StatelessWidget {
     //return new GestureDetector(
     var tournamentDate =
         "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
-    return new GestureDetector(onTap: onTap, child:new Card(
-      child: new Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Padding(
-            child: new ListTile(
-              leading: const Icon(const IconData(0xe091, fontFamily: 'MaterialIcons')),
-              title: new Text(tournament.name),
-              subtitle: new Text(tournament.location),
+    return new GestureDetector(
+      onTap: onTap,
+      child: new Card(
+        child: new Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            new Padding(
+              child: new ListTile(
+                leading: const Icon(
+                    const IconData(0xe091, fontFamily: 'MaterialIcons')),
+                title: new Text(tournament.name),
+                subtitle: new Text(tournament.location),
+              ),
+              padding: const EdgeInsets.only(
+                  left: 1.0, right: 1.0, top: 1.0, bottom: 1.0),
             ),
-            padding: const EdgeInsets.only(left: 1.0, right: 1.0, top: 1.0, bottom: 1.0),
-          ),
-          new Padding(
-          child: new Text(tournamentDate, textAlign: TextAlign.left, textScaleFactor: 1.0, style: authorStyle,),
-          padding: const EdgeInsets.only(left: 10.0),),
-          new SizedBox(
-            height: 30.0,
-          ),
-          new Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              new Padding(child: new Text("Grade ${tournament.grade}"), padding: const EdgeInsets.only(left:10.0),),
-              new Expanded(child: new Padding(child:  new Text("Entrants ${tournament.numberOfEntrants}", textAlign: TextAlign.end,), padding: const EdgeInsets.only(right: 10.0),))
-            ], 
-          )
-        ],
+            new Padding(
+              child: new Text(
+                tournamentDate,
+                textAlign: TextAlign.left,
+                textScaleFactor: 1.0,
+                style: authorStyle,
+              ),
+              padding: const EdgeInsets.only(left: 10.0),
+            ),
+            new SizedBox(
+              height: 30.0,
+            ),
+            new Row(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                new Padding(
+                  child: new Text("Grade ${tournament.grade}"),
+                  padding: const EdgeInsets.only(left: 10.0),
+                ),
+                new Expanded(
+                    child: new Padding(
+                  child: new Text(
+                    "Entrants ${tournament.numberOfEntrants}",
+                    textAlign: TextAlign.end,
+                  ),
+                  padding: const EdgeInsets.only(right: 10.0),
+                ))
+              ],
+            )
+          ],
+        ),
       ),
-    ),
     );
   }
 }

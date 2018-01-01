@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/tournament.dart';
 import '../pages/entrants.dart';
+import 'dart:math' as math;
 
 class _Header extends StatelessWidget {
   const _Header({Key key, this.icon, this.text}) : super(key: key);
@@ -132,13 +133,78 @@ class TournamentDetailsPage extends StatefulWidget {
   TournamentDetailsPageState createState() => new TournamentDetailsPageState();
 }
 
-class TournamentDetailsPageState extends State<TournamentDetailsPage> {
+class TournamentDetailsPageState extends State<TournamentDetailsPage>
+    with TickerProviderStateMixin {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
+  AnimationController _controller;
+  static const List<IconData> icons = const [
+    Icons.add_shopping_cart,
+    Icons.flag,
+    //Icons.phone
+  ];
+
+  @override
+  void initState() {
+    _controller = new AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+    Color backgroundColor = Theme.of(context).cardColor;
+    Color foregroundColor = Theme.of(context).accentColor;
+    Widget floater = new Column(
+          mainAxisSize: MainAxisSize.min,
+          children: new List.generate(icons.length, (int index) {
+            Widget child = new Container(
+              height: 60.0,
+              width: 56.0,
+              alignment: FractionalOffset.topCenter,
+              child: new ScaleTransition(
+                scale: new CurvedAnimation(
+                  parent: _controller,
+                  curve: new Interval(0.0, 1.0 - index / icons.length / 2.0,
+                      curve: Curves.easeOut),
+                ),
+                child: new FloatingActionButton(
+                  backgroundColor: backgroundColor,
+                  heroTag: icons[index], // Specify herotag - to its icon name: Do this to avoid FloatingActionButton throwing 'Multiple heroes share the same tag exception'
+                  mini: true,
+                  child: new Icon(icons[index], color: foregroundColor),
+                  onPressed: () {},
+                ),
+              ),
+            );
+            return child;
+          }).toList()..add(
+              new FloatingActionButton(
+                heroTag: 'rootFloater',
+                child: new AnimatedBuilder(
+                  animation: _controller,
+                  builder: (BuildContext context, Widget child) {
+                    return new Transform(
+                      transform: new Matrix4.rotationZ(
+                          _controller.value * 0.5 * math.PI),
+                      alignment: FractionalOffset.center,
+                      child: new Icon(
+                          _controller.isDismissed ? Icons.share : Icons.close),
+                    );
+                  },
+                ),
+                onPressed: () {
+                  if (_controller.isDismissed) {
+                    _controller.forward();
+                  } else {
+                    _controller.reverse();
+                  }
+                },
+              ),
+            ),
+        );
     return new Theme(
       data: new ThemeData(
           brightness: Brightness.light,
@@ -268,13 +334,7 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage> {
             ),
           ],
         ),
-        floatingActionButton: new FloatingActionButton(
-          onPressed: () {
-            //TODO Add handler to add to basket
-          },
-          tooltip: 'Add to Basket',
-          child: new Icon(Icons.add_shopping_cart),
-        ),
+      floatingActionButton: floater,
       ),
     );
   }
