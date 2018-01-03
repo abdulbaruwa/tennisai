@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../pages/basket.dart';
+import '../models/tournament.dart' as _dart;
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
@@ -27,6 +29,6 @@ class Dashboard extends StatelessWidget {
                   Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
             ),
             key: _scaffoldKey,
-            body: new Text('Basket')));
+            body: new BasketPage(tournament: _dart.tournaments[0])));
   }
 }
