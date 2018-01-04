@@ -3,7 +3,6 @@ import '../models/tournament.dart';
 import '../pages/entrants.dart';
 import 'package:collection/collection.dart' show lowerBound;
 
-
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.indigo,
@@ -42,7 +41,7 @@ class BasketPageState extends State<BasketPage> {
             child: new Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-              new Text('Rating', style: new TextStyle(fontSize: 10.0)),
+              // new Text('Rating', style: new TextStyle(fontSize: 10.0)),
               new CircleAvatar(
                   radius: 16.0,
                   child: new Text(
@@ -56,7 +55,8 @@ class BasketPageState extends State<BasketPage> {
       ),
     );
   }
-   void handleUndo(Tournament item) {
+
+  void handleUndo(Tournament item) {
     final int insertionIndex = lowerBound(leaveBehindItems, item);
     setState(() {
       leaveBehindItems.insert(insertionIndex, item);
@@ -105,7 +105,7 @@ class BasketPageState extends State<BasketPage> {
                     child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                      new Text('Rating', style: new TextStyle(fontSize: 10.0)),
+                      // new Text('Rating', style: new TextStyle(fontSize: 10.0)),
                       new CircleAvatar(
                           radius: 16.0,
                           child: new Text(
@@ -122,51 +122,56 @@ class BasketPageState extends State<BasketPage> {
 
   Widget buildTotalRow(BuildContext context, double totalAmount) {
     return new Container(
-        color: Colors.lightBlue,
+        color: const Color(0xFFFC5CAE9),
         child: new Row(children: <Widget>[
           new Container(
               alignment: Alignment.topRight,
               child: new Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: const Text('TOTAL'))),
+                  child: new Text('TOTAL',
+                      style: Theme.of(context).textTheme.subhead))),
           new Expanded(
               child: new Container(
                   alignment: Alignment.topRight,
                   child: new Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: new Text('£$totalAmount')))),
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: new Text('£$totalAmount',
+                          style: Theme.of(context).textTheme.subhead)))),
         ]));
   }
 
   @override
   Widget build(BuildContext context) {
     List<Tournament> tournamentEntrants = widget.tournaments;
-    Iterable<Widget> listTiles = tournamentEntrants
-        .map((Tournament item) => buildDismisableItem(item));
+    Iterable<Widget> listTiles =
+        tournamentEntrants.map((Tournament item) => buildDismisableItem(item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
     return new Column(children: <Widget>[
-      new SizedBox(
-        height: 56.0,
-        child: new Row(children: <Widget>[
-          new CircleAvatar(
-            radius: 26.0,
-            backgroundImage: const AssetImage('images/ademola.jpg'),
-          ),
-          new Expanded(
-            child: new Padding(
-                padding: const EdgeInsets.only(left: 2.0, top: 5.0),
-                child: new Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    new Text('Ademola Baruwa'),
-                    new Text('LTA Number: 125587'),
-                    // new Text('KT21 2XX, Surrey')
-                  ],
-                )),
-          ),
-        ]),
-      ),
+      new Container(
+          padding: const EdgeInsets.all(5.0),
+          color: const Color(0xFFFC5CAE9),
+          child: new SizedBox(
+            height: 56.0,
+            child: new Row(children: <Widget>[
+              new CircleAvatar(
+                radius: 26.0,
+                backgroundImage: const AssetImage('images/ademola.jpg'),
+              ),
+              new Expanded(
+                child: new Padding(
+                    padding: const EdgeInsets.only(left: 5.0, top: 5.0),
+                    child: new Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        new Text('Ademola Baruwa'),
+                        new Text('LTA Number: 125587'),
+                        // new Text('KT21 2XX, Surrey')
+                      ],
+                    )),
+              ),
+            ]),
+          )),
       //new ListView(),
       new Expanded(
         child: new Scrollbar(
