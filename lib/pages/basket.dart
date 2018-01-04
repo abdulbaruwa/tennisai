@@ -9,8 +9,8 @@ final ThemeData _kTheme = new ThemeData(
 );
 
 class BasketPage extends StatefulWidget {
-  BasketPage({Key key, this.tournament}) : super(key: key);
-  Tournament tournament;
+  BasketPage({Key key, this.tournaments}) : super(key: key);
+  List<Tournament> tournaments;
 
   @override
   BasketPageState createState() => new BasketPageState();
@@ -20,8 +20,11 @@ class BasketPageState extends State<BasketPage> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
 
-  Widget buildListTile(BuildContext context, Entrant item) {
+  Widget buildListTile(BuildContext context, Tournament item) {
     Widget secondary;
+    print(item.name);
+    print(item.grade);
+    print(item.status);
 
     return new MergeSemantics(
       child: new ListTile(
@@ -34,7 +37,7 @@ class BasketPageState extends State<BasketPage> {
               new CircleAvatar(
                   radius: 16.0,
                   child: new Text(
-                    item.rating,
+                    item.grade,
                     style: Theme.of(context).primaryTextTheme.body1,
                   ))
             ])),
@@ -45,7 +48,7 @@ class BasketPageState extends State<BasketPage> {
           new Text('Ranking', style: new TextStyle(fontSize: 10.0)),
           new CircleAvatar(
             radius: 16.0,
-            child: new Text(item.ranking.toString(),
+            child: new Text(item.grade,
                 style: Theme.of(context).primaryTextTheme.body1),
           )
         ])),
@@ -73,9 +76,9 @@ class BasketPageState extends State<BasketPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<Entrant> tournamentEntrants = widget.tournament.entrants.sublist(1, 5);
-    Iterable<Widget> listTiles =
-        tournamentEntrants.map((Entrant item) => buildListTile(context, item));
+    List<Tournament> tournamentEntrants = widget.tournaments;
+    Iterable<Widget> listTiles = tournamentEntrants
+        .map((Tournament item) => buildListTile(context, item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
     return new Column(children: <Widget>[
       new SizedBox(
@@ -112,8 +115,10 @@ class BasketPageState extends State<BasketPage> {
                 buildTotalRow(context, 95.0),
                 new Expanded(
                     child: new FlatButton(
-                      onPressed: (){print('Send to LTA button clicked');},
-                      child: new Text('SEND TO LTA BASKET')))
+                        onPressed: () {
+                          print('Send to LTA button clicked');
+                        },
+                        child: new Text('SEND TO LTA BASKET')))
               ])),
     ]);
   }

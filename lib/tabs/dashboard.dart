@@ -29,6 +29,6 @@ class Dashboard extends StatelessWidget {
                   Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
             ),
             key: _scaffoldKey,
-            body: new BasketPage(tournament: _dart.tournaments[0])));
+            body: new BasketPage(tournaments: _dart.tournaments.sublist(0, 5))));
   }
 }

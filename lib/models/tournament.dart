@@ -14,7 +14,8 @@ class Tournament {
       this.status,
       this.site,
       this.highestPlayerRating,
-      this.entrants});
+      this.entrants,
+      this.cost});
   final String name;
   final String grade;
   final DateTime startDate;
@@ -28,6 +29,7 @@ class Tournament {
   final String code;
   final String status;
   final String site;
+  final double cost;
   final String highestPlayerRating;
   final List<Entrant> entrants;
 }
@@ -54,7 +56,7 @@ List<Tournament> tournaments =  <Tournament>[
       organiserEmail: 'DavidFreeman@Mail.com',
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
-      entrants:  <Entrant>[
+      status:'Accepting Entries', cost:25.0, entrants:  <Entrant>[
         const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
@@ -72,7 +74,7 @@ List<Tournament> tournaments =  <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 23,
       highestPlayerRating: '1.1',
-      entrants:  <Entrant>[
+      status:'Accepting Entries', cost:25.0, entrants:  <Entrant>[
         const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
@@ -90,7 +92,7 @@ List<Tournament> tournaments =  <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
-      entrants: const <Entrant>[
+      status:'Accepting Entries', cost:25.0, entrants: const <Entrant>[
         const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
@@ -107,7 +109,7 @@ List<Tournament> tournaments =  <Tournament>[
       endDate: new DateTime(2018, 8, 6),
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 18,
-      highestPlayerRating: '1.1'),
+      highestPlayerRating: '1.1', status:'Accepting Entries', cost:25.0),
   new Tournament(
       name: 'Valencia Junior cup',
       location: '3',
@@ -116,7 +118,7 @@ List<Tournament> tournaments =  <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 8,
       highestPlayerRating: '2.1',
-      entrants: const <Entrant>[
+      status:'Accepting Entries', cost:25.0, entrants: const <Entrant>[
         const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
@@ -134,7 +136,7 @@ List<Tournament> tournaments =  <Tournament>[
       startDate: new DateTime(2018, 8, 6),
       numberOfEntrants: 7,
       highestPlayerRating: '3.2',
-      entrants: const <Entrant>[
+     status:'Accepting Entries', cost:25.0, entrants: const <Entrant>[
         const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
@@ -160,7 +162,7 @@ List<Tournament> tournaments =  <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 9,
       highestPlayerRating: '3.1',
-      entrants: const <Entrant>[
+      status:'Accepting Entries', cost:25.0, entrants: const <Entrant>[
         const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
@@ -186,7 +188,7 @@ List<Tournament> tournaments =  <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       highestPlayerRating: '3.1',
       numberOfEntrants: 6,
-      entrants: const <Entrant>[
+      status:'Accepting Entries', cost:25.0, entrants: const <Entrant>[
         const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
@@ -204,7 +206,7 @@ List<Tournament> tournaments =  <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 33,
       highestPlayerRating: '3.1',
-      entrants: const <Entrant>[
+      status:'Accepting Entries', cost:25.0, entrants: const <Entrant>[
         const Entrant(name: 'Archie Duncan', status: 'pending', rating: '7.2', ranking: 124),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
         const Entrant(name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
