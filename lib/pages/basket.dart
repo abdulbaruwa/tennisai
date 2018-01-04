@@ -55,21 +55,20 @@ class BasketPageState extends State<BasketPage> {
 
   Widget buildTotalRow(BuildContext context, double totalAmount) {
     return new Container(
-      color: Colors.lightBlue,
-      child: new Row(children: <Widget>[
-      
-      new Container(
-          alignment: Alignment.topRight,
-          child: new Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: const Text('TOTAL'))),
-      new Expanded(
-          child: new Container(
+        color: Colors.lightBlue,
+        child: new Row(children: <Widget>[
+          new Container(
               alignment: Alignment.topRight,
               child: new Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: new Text('£$totalAmount')))),
-    ]));
+                  child: const Text('TOTAL'))),
+          new Expanded(
+              child: new Container(
+                  alignment: Alignment.topRight,
+                  child: new Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: new Text('£$totalAmount')))),
+        ]));
   }
 
   @override
@@ -105,7 +104,17 @@ class BasketPageState extends State<BasketPage> {
           children: listTiles.toList(),
         )),
       ),
-      new SizedBox(height: 86.0, child: new Column( children: <Widget>[buildTotalRow(context, 95.0), new RaisedButton(child: const Text('ADD TO LTA BASKET'))])),
+      new SizedBox(
+          height: 86.0,
+          child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                buildTotalRow(context, 95.0),
+                new Expanded(
+                    child: new FlatButton(
+                      onPressed: (){print('Send to LTA button clicked');},
+                      child: new Text('SEND TO LTA BASKET')))
+              ])),
     ]);
   }
 }
