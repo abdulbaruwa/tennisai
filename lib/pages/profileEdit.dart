@@ -183,9 +183,9 @@ class _LabelTextFormEditState extends State<_LabelTextFormEdit> {
                     child: new Container(
                         padding: const EdgeInsets.only(right: 5.0, left: 10.0),
                         alignment: Alignment.bottomRight,
-                        child: new TextFormField(
+                        child: new TextField(
                           keyboardType: TextInputType.text,
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.end
                         )))
               ],
             )
