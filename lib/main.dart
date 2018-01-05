@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import './tabs/home.dart' as _firstTab;
+//import './tabs/home.dart' as _firstTab;
+import './tabs/landingHome.dart' as _firstTab;
 import './tabs/dashboard.dart' as _secondTab;
 import './tabs/settings.dart' as _thirdTab;
 import './tabs/search.dart' as _forthTab;
@@ -10,9 +11,9 @@ import './pages/support.dart' as _supportPage;
 void main() => runApp(new MaterialApp(
       title: 'Tennis Ai',
       theme: new ThemeData(
-          primarySwatch: Colors.indigo,
+           primarySwatch: Colors.indigo,
           scaffoldBackgroundColor: Colors.white,
-          primaryColor: Colors.indigo,
+           //primaryColor: Colors.indigo,
           backgroundColor: Colors.white),
       home: new Tabs(),
       onGenerateRoute: (RouteSettings settings) {
@@ -88,22 +89,11 @@ class TabsState extends State<Tabs> {
 
   @override
   Widget build(BuildContext buildcontext) => new Scaffold(
-      //App Bar
-      // appBar: new AppBar(
-      //   title: new Text(
-      //     _title_app,
-      //     style: new TextStyle(
-      //       fontSize:
-      //           Theme.of(context).platform == TargetPlatform.iOS ? 17.0 : 20.0,
-      //     ),
-      //   ),
-      //   elevation: Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
-      // ),
       body: new PageView(
         controller: _tabController,
         onPageChanged: onTabChanged,
         children: <Widget>[
-          new _firstTab.Home(),
+          new  _firstTab.LandingHome(),
           new _forthTab.SearchTab(),
           new _secondTab.Dashboard(),
           new _thirdTab.SettingsTab(),
@@ -316,6 +306,6 @@ class TabItem {
 const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Home', icon: Icons.home),
   const TabItem(title: 'Tournaments', icon: Icons.search),
-  const TabItem(title: 'Dashboard', icon: Icons.dashboard),
+  const TabItem(title: 'Basket', icon: Icons.shopping_basket),
   const TabItem(title: 'Settings', icon: Icons.settings),
 ];
