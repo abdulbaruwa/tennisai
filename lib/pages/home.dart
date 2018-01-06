@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import '../models/tournament.dart';
 import '../models/tournament.dart' as _tournamentModels;
 import '../pages/touranmentDetails.dart';
+import '../services/tournamentServices.dart' as _services;
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
@@ -26,6 +27,10 @@ class LandingState extends State<Landing> {
       new _Page(label: 'UPCOMING'): widget.tournaments.sublist(0, 2).toList(),
       new _Page(label: 'WATCHED'): widget.tournaments.sublist(2, 5).toList()
     };
+
+    // // try talk to the server
+    // var service = new _services.TennisAiServices();
+    // service.GetTournaments();
 
     return new DefaultTabController(
       length: _allPages.length,

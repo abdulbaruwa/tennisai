@@ -8,6 +8,7 @@ import './tabs/search.dart' as _forthTab;
 import './pages/about.dart' as _aboutPage;
 import './pages/support.dart' as _supportPage;
 
+import './services/tournamentServices.dart' as _services;
 void main() => runApp(new MaterialApp(
       title: 'Tennis Ai',
       theme: new ThemeData(
@@ -77,6 +78,7 @@ class TabsState extends State<Tabs> {
   @override
   void initState() {
     super.initState();
+    var tours = new _services.TennisAiServices().GetTournaments();
     _tabController = new PageController();
     this._title_app = TabItems[0].title;
   }
