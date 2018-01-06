@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:async';
 import '../models/tournament.dart';
 
 class TennisAiServices {
@@ -23,7 +24,7 @@ class TennisAiServices {
     return entrants;
   }
 
-  Object GetTournaments() async {
+  Future<List<Tournament>> GetTournaments() async {
     var httpClient = new HttpClient();
     List<Tournament> tournaments = [];
     print('GetTournaments called');
@@ -46,6 +47,7 @@ class TennisAiServices {
           grade: jsonData[i]['grade'],
           location: jsonData[i]['location'],
           status: jsonData[i]['status'],
+          numberOfEntrants: int.parse(jsonData[i]['numberOfEntrants']),
           startDate: DateTime.parse(jsonData[i]['startDate']),
           endDate: DateTime.parse(jsonData[i]['endDate']),
           entrants: _decodeEntrants(jsonData[i]['entrantDtos']));
@@ -54,6 +56,6 @@ class TennisAiServices {
 
     print(tournaments[0].entrants[0].name);
     print('done');
-    return responseBody;
+    return tournaments;
   }
 }

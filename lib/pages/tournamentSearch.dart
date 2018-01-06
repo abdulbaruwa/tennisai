@@ -3,6 +3,7 @@ import '../models/tournament.dart';
 import 'package:flutter/rendering.dart';
 import '../models/tournament.dart' as _tournamentModels;
 import '../pages/touranmentDetails.dart';
+import '../services/tournamentServices.dart' as _tournamentServices;
 import "package:intl/intl.dart";
 
 final ThemeData _kTheme = new ThemeData(
@@ -19,9 +20,33 @@ class TournamentSearch extends StatefulWidget {
 }
 
 class TournamentSearchState extends State<TournamentSearch> {
+  List<Tournament> tournaments = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Fetch tournaments from the Server. 
+    // TODO: Loggin needed in Failure section of Return 'Future'
+    List<Tournament> latestTournaments = [];
+    new _tournamentServices.TennisAiServices()
+        .GetTournaments()
+        .then((value) => handleSuccess(value))
+        .catchError((error) => print('Error occured retrieving Tournaments from server, Error: ${error.toString()}'));
+
+    //print('fetched latest tournaments from server: ${latestTournament.le}')
+  
+  }
+  void handleSuccess(List<Tournament> value)
+  {
+    print('Recieved tournamnents ${value.length}');
+    setState(() => tournaments = value);
+  }
   @override
   Widget build(BuildContext context) {
-    final List<Tournament> tournaments = _tournamentModels.tournaments;
+    //final List<Tournament> tournaments =  tournaments;
+    // print('Building Widget with : ${tournaments.length} tournament records');
+
     Iterable<Widget> listTiles =
         tournaments.map((Tournament item) => new TournamentCard(
             tournament: item,
@@ -44,10 +69,6 @@ class TournamentSearchState extends State<TournamentSearch> {
 
 // A card to display tournament details
 class TournamentCard extends StatelessWidget {
-  // final TextStyle titleStyle =
-  //     const PestoStyle(fontSize: 24.0, fontWeight: FontWeight.w600);
-  // final TextStyle authorStyle =
-  //     const PestoStyle(fontWeight: FontWeight.w500, color: Colors.black54);
   const TournamentCard({Key key, this.tournament, this.onTap})
       : super(key: key);
 
