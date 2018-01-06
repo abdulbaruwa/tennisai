@@ -78,7 +78,7 @@ class TabsState extends State<Tabs> {
   @override
   void initState() {
     super.initState();
-    var tours = new _services.TennisAiServices().GetTournaments();
+    var tours = new _services.TennisAiServices().GetPlayer('12');
     _tabController = new PageController();
     this._title_app = TabItems[0].title;
   }

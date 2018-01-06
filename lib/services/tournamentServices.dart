@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:async';
 import '../models/tournament.dart';
+import '../models/player.dart';
 
 class TennisAiServices {
   String appName = "TennisAi";
@@ -14,12 +15,11 @@ class TennisAiServices {
     List<Entrant> entrants = [];
     for (int i = 0; i < jsonData.length; i++) {
       var entrant = new Entrant(
-        ltaNumber: int.parse(jsonData[i]['btmNumber']),
-        ranking: int.parse(jsonData[i]['ranking']),
-        rating: jsonData[i]['rating'],
-        name: jsonData[i]['name'],
-        status: jsonData[i]['status']
-      );
+          ltaNumber: int.parse(jsonData[i]['btmNumber']),
+          ranking: int.parse(jsonData[i]['ranking']),
+          rating: jsonData[i]['rating'],
+          name: jsonData[i]['name'],
+          status: jsonData[i]['status']);
       entrants.add(entrant);
     }
     return entrants;
@@ -58,5 +58,28 @@ class TennisAiServices {
     print(tournaments[0].entrants[0].name);
     print('done');
     return tournaments;
+  }
+
+  Future<Player> GetPlayer(String id) async {
+    var httpClient = new HttpClient();
+
+    var uri = new Uri.http('192.168.1.156:45455', '/api/players/${id}');
+    var request = await httpClient.getUrl(uri);
+    request.headers.add('zumo-api-version', '2.0.0');
+
+    var response = await request.close();
+    print('request closed');
+
+    var responseBody = await response.transform(UTF8.decoder).join();
+    print('response body transformed for PlayerDto');
+    var jsonData = JSON.decode(responseBody);
+
+    print(jsonData[0]['name']);
+
+    for (int i = 0; i < jsonData.length; i++) {
+      var player = new Player();
+      player.email = jsonData[i]['email'];
+      player.name = jsonData[i]['name'];
+    }
   }
 }

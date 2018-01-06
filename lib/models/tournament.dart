@@ -1,4 +1,4 @@
-class Tournament {
+class Tournament    {
   const Tournament(
       {this.name,
       this.grade,
