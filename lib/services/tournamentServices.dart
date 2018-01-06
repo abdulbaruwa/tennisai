@@ -2,18 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'dart:io';
+import '../models/tournament.dart';
 
 class TennisAiServices {
-
   String appName = "TennisAi";
   String appVersion = "0.1";
   String BASE_URL = 'http://localhost/TennisAiServiceService/api/tournaments';
 
+  List<Entrant> _decodeEntrants(dynamic jsonData) {
+    List<Entrant> entrants = [];
+    for (int i = 0; i < jsonData.length; i++) {
+      var entrant = new Entrant(
+        ltaNumber: int.parse(jsonData[i]['btmNumber']),
+        ranking: int.parse(jsonData[i]['ranking']),
+        rating: jsonData[i]['rating'],
+        name: jsonData[i]['name']
+      );
+      entrants.add(entrant);
+    }
+    return entrants;
+  }
+
   Object GetTournaments() async {
     var httpClient = new HttpClient();
-    
+    List<Tournament> tournaments = [];
     print('GetTournaments called');
-    var uri = new Uri.http('192.168.1.156:45455','/api/tournaments');
+    var uri = new Uri.http('192.168.1.156:45455', '/api/tournaments');
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
     print('Header set');
@@ -23,14 +37,22 @@ class TennisAiServices {
 
     var responseBody = await response.transform(UTF8.decoder).join();
     print('response body transformed');
+    var jsonData = JSON.decode(responseBody);
 
-    // Map<String, String> headers = new Map<String, String>();
-    // headers["zumo-api-version"] = "2.0.0";
+    for (int i = 0; i < jsonData.length; i++) {
+      var tournament = new Tournament(
+          code: jsonData[i]['code'],
+          name: jsonData[i]['name'],
+          grade: jsonData[i]['grade'],
+          location: jsonData[i]['location'],
+          status: jsonData[i]['status'],
+          startDate: DateTime.parse(jsonData[i]['startDate']),
+          endDate: DateTime.parse(jsonData[i]['endDate']),
+          entrants: _decodeEntrants(jsonData[i]['entrantDtos']));
+      tournaments.add(tournament);
+    }
 
-    // var response =
-    //     await http.read('${BASE_URL}', headers: headers);
-    // var jsonData = JSON.decode();
-    print(responseBody);
+    print(tournaments[0].entrants[0].name);
     print('done');
     return responseBody;
   }
