@@ -133,6 +133,7 @@ class TournamentCard extends StatelessWidget {
 }
 
 void showTournamentDetailsPage(BuildContext context, Tournament tournament) {
+  print('Showing tourmanet detail with ${tournament.entrants.length} entrants');
   Navigator.push(
       context,
       new MaterialPageRoute<Null>(

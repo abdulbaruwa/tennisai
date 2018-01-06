@@ -17,7 +17,8 @@ class TennisAiServices {
         ltaNumber: int.parse(jsonData[i]['btmNumber']),
         ranking: int.parse(jsonData[i]['ranking']),
         rating: jsonData[i]['rating'],
-        name: jsonData[i]['name']
+        name: jsonData[i]['name'],
+        status: jsonData[i]['status']
       );
       entrants.add(entrant);
     }
