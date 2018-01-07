@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-//import './tabs/home.dart' as _firstTab;
 import './tabs/landingHome.dart' as _firstTab;
 import './tabs/dashboard.dart' as _secondTab;
 import './tabs/settings.dart' as _thirdTab;
@@ -9,6 +8,10 @@ import './pages/about.dart' as _aboutPage;
 import './pages/support.dart' as _supportPage;
 
 import './services/tournamentServices.dart' as _services;
+
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+
 void main() => runApp(new MaterialApp(
       title: 'Tennis Ai',
       theme: new ThemeData(
@@ -31,6 +34,7 @@ void main() => runApp(new MaterialApp(
       },
     ));
 
+// class TennisAiApp extends StatelessWidget{final store = new Store<AppState>(appReducer,initialState: new AppState.loading(),middleWare: createTennisAiMiddleWare())};
 class FromRightToLeft<T> extends MaterialPageRoute<T>{
   FromRightToLeft({WidgetBuilder builder, RouteSettings settings}) : super(builder: builder, settings: settings);
 
