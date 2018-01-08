@@ -7,3 +7,11 @@ class UpdateTabAction {
 
   UpdateTabAction(this.newTab);
 }
+
+class PlayerNotLoadedAction {}
+
+class PlayerLoadedAction {
+  final List<Player> player;
+
+  PlayerLoadedAction(this.player);
+}

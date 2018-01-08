@@ -4,15 +4,16 @@ import 'models.dart';
 @immutable
 class AppState {
   final bool isLoading;
-  final Player player;
+  final List<Player> player;
   final AppTab activeTab;
 
   AppState(
-      {this.isLoading = false, this.player, this.activeTab = AppTab.dashboard});
+      {this.isLoading = false, this.player = const[], this.activeTab = AppTab.dashboard});
 
   factory AppState.loading() => new AppState(isLoading: true);
 
-  AppState copyWith({bool isLoading, Player player, AppTab activeTab}) {
+  AppState copyWith({bool isLoading, List<Player> player, AppTab activeTab}) {
+    print('CopyWith');
     return new AppState(
         isLoading: isLoading ?? this.isLoading,
         player: player ?? this.player,
@@ -33,6 +34,7 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading $isLoading, player:$player}';
+    print('toString');
+    return 'AppState{isLoading: $isLoading, player: $player, activeTab: $activeTab}';
   }
 }

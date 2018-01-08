@@ -19,7 +19,6 @@ class TabSelector extends StatelessWidget {
         Theme.of(context).platform == TargetPlatform.iOS
           ? new CupertinoTabBar(
               activeColor: Colors.blueGrey,
-           
               onTap: vm.onTabSelected,
               items: TabItems.map((TabItem) {
                 return new BottomNavigationBarItem(
@@ -41,7 +40,6 @@ class TabSelector extends StatelessWidget {
     );
   }
 }
-
 
 
 class _ViewModel {
