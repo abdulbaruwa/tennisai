@@ -6,13 +6,8 @@ import './tabs/settings.dart' as _thirdTab;
 import './tabs/search.dart' as _forthTab;
 import './pages/about.dart' as _aboutPage;
 import './pages/support.dart' as _supportPage;
-
 import './services/tournamentServices.dart' as _services;
 
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:redux/redux.dart';
-import 'models/models.dart';
-import 'reducers/app_state_reducer.dart';
 
 void main() => runApp(new MaterialApp(
       title: 'Tennis Ai',
@@ -211,18 +206,3 @@ const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Basket', icon: Icons.shopping_basket),
   const TabItem(title: 'Settings', icon: Icons.settings),
 ];
-
-
-class TennisAiApp extends StatelessWidget{
-  final store = new Store<AppState>(
-    appReducer,
-  initialState: new AppState.loading()
-);
-TennisAiApp();
-
-@override
-Widget build(BuildContext context){
-  return new StoreProvider();
-}
-
-}
