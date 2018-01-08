@@ -2,7 +2,7 @@ import 'dart:async';
 import '../models/models.dart';
 
 /// A class that is meant to represent a Client that would be used to call a Web
-/// Service. It is responsible for fetching and persisting Todos to and from the
+/// Service. It is responsible for fetching and persisting WatchedTournaments to and from the
 /// cloud.
 ///
 /// Since we're trying to keep this example simple, it doesn't communicate with
@@ -12,7 +12,7 @@ class WebClient {
 
   const WebClient([this.delay = const Duration(milliseconds: 3000)]);
 
-  /// Mock that "fetches" some Todos from a "web service" after a short delay
+  /// Mock that "fetches" some watchedTournament from a "web service" after a short delay
   Future<List<TournamentEntity>> fetchWatchedTournaments() async {
     List<TournamentEntity> tEntities= [];
     tournaments.forEach((f) => tEntities.add(f.toEntity()));

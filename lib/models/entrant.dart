@@ -36,6 +36,7 @@ class EntrantEntity {
     };
   }
 
+  Entrant fromEntity(){return new Entrant(name: name, ranking: ranking, ltaNumber: ltaNumber, rating: rating,status: status);}
   static EntrantEntity fromJson(Map<String, Object> json) {
     return new EntrantEntity(
       name: json['name'] as String,
@@ -59,4 +60,5 @@ class Entrant {
   final String status;
 
   EntrantEntity toEntity(){return new EntrantEntity(name: name, ranking: ranking, ltaNumber: ltaNumber, rating: rating,status: status);}
+  Entrant fromEntity(){return new Entrant(name: name, ranking: ranking, ltaNumber: ltaNumber, rating: rating,status: status);}
 }

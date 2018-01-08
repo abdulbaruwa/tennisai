@@ -4,7 +4,7 @@ import 'dart:io';
 import '../models/models.dart';
 
 
-/// Loads and saves a List of Todos using a text file stored on the device.
+/// Loads and saves a List of Tournament using a text file stored on the device.
 ///
 /// Note: This class has no direct dependencies on any Flutter dependencies.
 /// Instead, the `getDirectory` method should be injected. If you're calling
@@ -22,7 +22,7 @@ class FileStorage {
     final file = await _getLocalFile();
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
-    final watchedTournaments = (json['tournaments'] as List<Map<String, dynamic>>)
+    final watchedTournaments = (json['watchedTournaments'] as List<Map<String, dynamic>>)
         .map((tournament) => TournamentEntity.fromJson(tournament))
         .toList();
 
@@ -33,7 +33,7 @@ class FileStorage {
     final file = await _getLocalFile();
 
     return file.writeAsString(new JsonEncoder().convert({
-      'todos': watchedTournaments.map((t) => t.toJson()).toList(),
+      'watchedTournaments': watchedTournaments.map((t) => t.toJson()).toList(),
     }));
   }
 

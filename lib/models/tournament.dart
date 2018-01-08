@@ -211,6 +211,26 @@ class Tournament {
           highestPlayerRating == other.highestPlayerRating &&
           entrants == other.entrants;
 
+ static Tournament fromEntity(TournamentEntity entity) {
+    return new Tournament(
+          name: entity.name,
+        grade: entity.grade,
+        startDate: entity.startDate,
+        endDate: entity.endDate,
+        location: entity.location,
+        numberOfEntrants: entity.numberOfEntrants,
+        organiserName: entity.organiserName,
+        organiserPhone: entity.organiserPhone,
+        organiserEmail: entity.organiserEmail,
+        entryCloseDate: entity.entryCloseDate,
+        code: entity.code,
+        status: entity.status,
+        site: entity.site,
+        cost: entity.cost,
+        highestPlayerRating: entity.highestPlayerRating,
+    );
+  }
+
   TournamentEntity toEntity() {
     return new TournamentEntity(
         name: name,
@@ -235,6 +255,7 @@ class Tournament {
     List<EntrantEntity> entrantEntitys = [];
     entrants.forEach((f) => entrantEntitys.add(f.toEntity()));
   }
+
 }
 
 List<Tournament> tournaments = <Tournament>[
