@@ -28,6 +28,7 @@ class TabSelector extends StatelessWidget {
               }).toList(),
             )
           : new BottomNavigationBar(
+              currentIndex: AppTab.values.indexOf(vm.activeTab),
               onTap: vm.onTabSelected,
               type: BottomNavigationBarType.shifting,
               items: TabItems.map((TabItem) {

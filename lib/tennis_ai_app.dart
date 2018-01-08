@@ -27,14 +27,15 @@ class TennisAiApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
+    return new StoreProvider(
+        store: store,
         //   theme: new ThemeData.dark(),
-        title: 'Tennis Ai',
-        home: new StoreProvider(
+        child: new MaterialApp(
+            title: 'Tennis Ai',
             // Pass the store to the StoreProvider. Any ancestor `StoreConnector`
             // Widgets will find and use this value as the `Store`.
-            store: store,
-            child: new StoreBuilder<AppState>(builder: (context, store) {
+            routes: {TennisAiRoutes.about: (context){}},
+            home: new StoreBuilder<AppState>(builder: (context, store) {
               return new TennisAiHome();
             })));
   }
