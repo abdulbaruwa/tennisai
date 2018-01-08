@@ -169,9 +169,73 @@ class Tournament {
   final double cost;
   final String highestPlayerRating;
   final List<Entrant> entrants;
+
+  @override
+  int get hashCode =>
+      name.hashCode ^
+      grade.hashCode ^
+      startDate.hashCode ^
+      endDate.hashCode ^
+      location.hashCode ^
+      numberOfEntrants.hashCode ^
+      organiserName.hashCode ^
+      organiserPhone.hashCode ^
+      organiserEmail.hashCode ^
+      entryCloseDate.hashCode ^
+      code.hashCode ^
+      status.hashCode ^
+      site.hashCode ^
+      cost.hashCode ^
+      highestPlayerRating.hashCode ^
+      entrants.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Tournament &&
+          runtimeType == other.runtimeType &&
+          name == other.name &&
+          grade == other.grade &&
+          startDate == other.startDate &&
+          endDate == other.endDate &&
+          location == other.location &&
+          numberOfEntrants == other.numberOfEntrants &&
+          organiserName == other.organiserName &&
+          organiserPhone == other.organiserPhone &&
+          organiserEmail == other.organiserEmail &&
+          entryCloseDate == other.entryCloseDate &&
+          code == other.code &&
+          status == other.status &&
+          site == other.site &&
+          cost == other.cost &&
+          highestPlayerRating == other.highestPlayerRating &&
+          entrants == other.entrants;
+
+  TournamentEntity toEntity() {
+    return new TournamentEntity(
+        name: name,
+        grade: grade,
+        startDate: startDate,
+        endDate: endDate,
+        location: location,
+        numberOfEntrants: numberOfEntrants,
+        organiserName: organiserName,
+        organiserPhone: organiserPhone,
+        organiserEmail: organiserEmail,
+        entryCloseDate: entryCloseDate,
+        code: code,
+        status: status,
+        site: site,
+        cost: cost,
+        highestPlayerRating: highestPlayerRating,
+        entrants: _entrantEntitys(entrants));
+  }
+
+  List<EntrantEntity> _entrantEntitys(List<Entrant> entrants) {
+    List<EntrantEntity> entrantEntitys = [];
+    entrants.forEach((f) => entrantEntitys.add(f.toEntity()));
+  }
 }
-
-
 
 List<Tournament> tournaments = <Tournament>[
   new Tournament(

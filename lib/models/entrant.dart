@@ -57,4 +57,6 @@ class Entrant {
   final String rating;
   final int ltaNumber;
   final String status;
+
+  EntrantEntity toEntity(){return new EntrantEntity(name: name, ranking: ranking, ltaNumber: ltaNumber, rating: rating,status: status);}
 }
