@@ -5,13 +5,17 @@ import 'package:redux/redux.dart';
 
 import '../models/models.dart';
 import '../selectors/selectors.dart';
+import '../views/dashboard_view.dart';
 
 class Dashboard extends StatelessWidget {
   Dashboard({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return new Text('Dayo Baruwa');
+    return new StoreConnector<AppState, _ViewModel>(converter: _ViewModel.fromStore, builder: (context, vm){
+
+      return new DashboardView(enteredTournaments: vm.enteredTournaments, watchedTournaments: vm.watchedTournaments);
+    });
   }
 }
 

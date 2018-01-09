@@ -50,10 +50,10 @@ class TennisAiHome extends StatelessWidget {
     return new ActiveTab(
       builder: (BuildContext context, AppTab activeTab) {
         return new Scaffold(
-          appBar: new AppBar(
-            //title: new Text(TennisAiLocalizations.of(context).appTitle),
-            title: new Text('Tennis Ai'),
-          ),
+          // appBar: new AppBar(
+          //   //title: new Text(TennisAiLocalizations.of(context).appTitle),
+          //   title: new Text('Tennis Ai'),
+          // ),
           body: new Dashboard(),
           floatingActionButton: activeTab == AppTab.profile
               ? new FloatingActionButton(
