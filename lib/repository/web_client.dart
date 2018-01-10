@@ -25,6 +25,19 @@ class WebClient {
   Future<bool> postWatchedTournaments(List<TournamentEntity> watchedTournaments) async {
     return new Future.value(true);
   }
+
+  Future<List<TournamentEntity>> fetchEnteredTournaments() async {
+    List<TournamentEntity> tEntities= [];
+    tournaments.forEach((f) => tEntities.add(f.toEntity()));
+    print('before delayed ${tEntities.length}');
+    return new Future.delayed(delay, () => tEntities);
+  }
+
+  /// Mock that returns true or false for success or failure. In this case,
+  /// it will "Always Succeed"
+  Future<bool> postEnteredTournaments(List<TournamentEntity> enteredTournaments) async {
+    return new Future.value(true);
+  }
 }
 
 List<Tournament> tournaments = <Tournament>[

@@ -12,17 +12,17 @@ import 'web_client.dart';
 /// How and where it stores the entities should confined to this layer, and the
 /// Domain layer of your app should only access this repository, not a database
 /// or the web directly.
-class WatchedTournamentsRepository {
+class DashboardRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
 
-  const WatchedTournamentsRepository({
+  const DashboardRepository({
     @required this.fileStorage,
     this.webClient = const WebClient(),
   });
 
   /// Loads watched Tournaments first from File storage. If they don't exist or encounter an
-  /// error, it attempts to load the watchedTournament from a Web Client.
+  /// error, it attempts to load the watchedTournament from a Web Client
   Future<List<TournamentEntity>> loadWatchedTournaments() async {
     try {
       var res = await fileStorage.loadWatchedTournaments();
@@ -43,4 +43,28 @@ class WatchedTournamentsRepository {
       webClient.postWatchedTournaments(tournamentEntitys),
     ]);
   }
+
+  /// Loads entered Tournaments first from File storage. If they don't exist or encounter an
+  /// error, it attempts to load the enteredTournament from a Web Client.
+  Future<List<TournamentEntity>> loadEnteredTournaments() async {
+    try {
+      var res = await fileStorage.loadEnteredTournaments();
+      print('success ${res.length}');
+      return res;
+    } catch (e) {
+      print('Fetcher in error');
+      var result = webClient.fetchEnteredTournaments();
+      print('Fetched');
+      return result;
+    }
+  }
+
+  // Persists watchedTournament to local disk and the web
+  Future saveEnteredTournaments(List<TournamentEntity> tournamentEntitys) {
+    return Future.wait([
+      fileStorage.saveEnteredTournaments(tournamentEntitys),
+      webClient.postEnteredTournaments(tournamentEntitys),
+    ]);
+  }
+
 }
