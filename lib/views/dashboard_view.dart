@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 import 'tournament_item.dart';
+import '../containers/tournament_details.dart';
+
 class _Page {
   _Page({this.label});
   final String label;
@@ -57,9 +59,10 @@ class DashboardView extends StatelessWidget{
                         context: context,
                         tiles: _allPages[page].map((Tournament data) {
                           return new TournamentItem(tournament: data,
-                          onTap: () => {
+                          onTap: () => _onTap(context, data)
+
                             // TODO: Add logic to show details page.
-                          },);
+                          ,);
                         }).toList())
                     .toList(),
               );
@@ -68,5 +71,13 @@ class DashboardView extends StatelessWidget{
         ),
       ),
     );
+  }
+
+  void _onTap(BuildContext context, Tournament tournament){
+      Navigator
+        .of(context)
+        .push(new MaterialPageRoute(
+          builder: (_) => new TournamentDetailsPage(id: tournament.code, source: TournamentDetailsActionSource.watched),
+        ));
   }
 }

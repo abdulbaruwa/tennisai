@@ -7,5 +7,6 @@ AppState appReducer(AppState state, action) {
       player: playerReducer(state.player, action),
       watchedTournaments: dashboardReducer(state.watchedTournaments, action) ,
       enteredTournaments: dashboardReducer(state.enteredTournaments, action) ,
+      tournaments: dashboardReducer(state.tournaments, action) ,
       activeTab: tabsReducer(state.activeTab, action));
 }

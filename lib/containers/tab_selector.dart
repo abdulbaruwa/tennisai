@@ -42,7 +42,6 @@ class TabSelector extends StatelessWidget {
   }
 }
 
-
 class _ViewModel {
   final AppTab activeTab;
   final Function(int) onTabSelected;

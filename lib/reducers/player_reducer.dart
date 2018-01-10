@@ -7,7 +7,6 @@ final playerReducer = combineTypedReducers<List<Player>>([
   new ReducerBinding<List<Player>, PlayerNotLoadedAction>(_setNoPlayer),
 ]);
 
-
 List<Player> _setLoadedPlayer(List<Player> player, PlayerLoadedAction action) {
   return action.player;
 }

@@ -54,7 +54,7 @@ List<Tournament> tournaments = <Tournament>[
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
       status: 'Accepting Entries',
-      cost: 25.0,
+      code:'9', cost: 25.0,
       entrants: <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -94,7 +94,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 23,
       highestPlayerRating: '1.1',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code:'2', cost: 25.0,
       entrants: <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -134,7 +134,7 @@ List<Tournament> tournaments = <Tournament>[
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
       status: 'Accepting Entries',
-      cost: 25.0,
+      code:'3', cost: 25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -174,7 +174,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 18,
       highestPlayerRating: '1.1',
       status: 'Accepting Entries',
-      cost: 25.0),
+      code:'1', cost: 25.0),
   new Tournament(
       name: 'Valencia Junior cup',
       location: '3',
@@ -184,7 +184,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 8,
       highestPlayerRating: '2.1',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code:'5', cost: 25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -224,7 +224,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 7,
       highestPlayerRating: '3.2',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code:'6', cost: 25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -272,7 +272,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 9,
       highestPlayerRating: '3.1',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code:'7', cost: 25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -320,7 +320,7 @@ List<Tournament> tournaments = <Tournament>[
       highestPlayerRating: '3.1',
       numberOfEntrants: 6,
       status: 'Accepting Entries',
-      cost: 25.0,
+      code:'7', cost: 25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -360,7 +360,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 33,
       highestPlayerRating: '3.1',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code:'8', cost: 25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',

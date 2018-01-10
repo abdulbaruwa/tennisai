@@ -28,8 +28,6 @@ class _ViewModel {
       {@required this.loading, @required this.enteredTournaments, @required this.watchedTournaments});
 
   static _ViewModel fromStore(Store<AppState> store) {
-    print('Entered Vm');
-    print('Store State ${store.state}');
     return new _ViewModel(
         enteredTournaments: enteredTournamentSelector(store.state),
         watchedTournaments: watchedTournamentSelector(store.state),
