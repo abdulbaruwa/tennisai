@@ -15,7 +15,6 @@ class AppState {
   factory AppState.loading() => new AppState(isLoading: true);
 
   AppState copyWith({bool isLoading, List<Player> player, List<Tournament> enteredTournaments, List<Tournament> watchedTournaments, AppTab activeTab}) {
-    print('CopyWith');
     return new AppState(
         isLoading: isLoading ?? this.isLoading,
         player: player ?? this.player,
@@ -40,7 +39,6 @@ class AppState {
 
   @override
   String toString() {
-    print('toString');
     return 'AppState{isLoading: $isLoading, player: $player, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab}';
   }
 }

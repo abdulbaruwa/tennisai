@@ -25,9 +25,14 @@ class WatchedTournamentsRepository {
   /// error, it attempts to load the watchedTournament from a Web Client.
   Future<List<TournamentEntity>> loadWatchedTournaments() async {
     try {
-      return await fileStorage.loadWatchedTournaments();
+      var res = await fileStorage.loadWatchedTournaments();
+      print('success ${res.length}');
+      return res;
     } catch (e) {
-      return webClient.fetchWatchedTournaments();
+      print('Fetcher in error');
+      var result = webClient.fetchWatchedTournaments();
+      print('Fetched');
+      return result;
     }
   }
 

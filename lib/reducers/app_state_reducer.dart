@@ -5,5 +5,6 @@ AppState appReducer(AppState state, action) {
   return new AppState(
       isLoading: loadingReducer(state.isLoading, action),
       player: playerReducer(state.player, action),
+      watchedTournaments: watchedTournamentReducer(state.watchedTournaments, action) ,
       activeTab: tabsReducer(state.activeTab, action));
 }

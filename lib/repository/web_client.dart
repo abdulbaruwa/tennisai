@@ -16,6 +16,7 @@ class WebClient {
   Future<List<TournamentEntity>> fetchWatchedTournaments() async {
     List<TournamentEntity> tEntities= [];
     tournaments.forEach((f) => tEntities.add(f.toEntity()));
+    print('before delayed ${tEntities.length}');
     return new Future.delayed(delay, () => tEntities);
   }
 

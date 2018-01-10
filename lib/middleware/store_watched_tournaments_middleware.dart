@@ -6,41 +6,47 @@ import '../repository/repository.dart';
 import 'package:path_provider/path_provider.dart';
 
 List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
-WatchedTournamentsRepository repository = const WatchedTournamentsRepository(fileStorage: const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),),
-
-]){
-
+  WatchedTournamentsRepository repository = const WatchedTournamentsRepository(
+    fileStorage:
+        const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),
+  ),
+]) {
   final loadWatchedTournaments = _createLoadWatchedTournaments(repository);
   final saveWatchedTournaments = _createSaveWatchedTournaments(repository);
 
-  return combineTypedMiddleware(
-    [new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
+  return combineTypedMiddleware([
+    new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
     new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(saveWatchedTournaments),
-    ]
-  );
+    new MiddlewareBinding<AppState, WatchedTournamentsLoadedAction>(saveWatchedTournaments),
+  ]);
 }
 
-Middleware<AppState> _createSaveWatchedTournaments(WatchedTournamentsRepository repository) {
+Middleware<AppState> _createSaveWatchedTournaments(
+    WatchedTournamentsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
+    print('About to save');
     next(action);
-
-    repository.saveWatchedTournaments(
-      watchedTournamentSelector(store.state).map((watchedTournament) => watchedTournament.toEntity()).toList(),
-    );
+    var toSave = watchedTournamentSelector(store.state)
+        .map((watchedTournament) => watchedTournament.toEntity())
+        .toList();
+    print('To Save ${toSave.length}');
+    repository.saveWatchedTournaments(toSave);
   };
 }
 
-Middleware<AppState> _createLoadWatchedTournaments(WatchedTournamentsRepository repository) {
+Middleware<AppState> _createLoadWatchedTournaments(
+    WatchedTournamentsRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadWatchedTournaments().then(
       (watchedTournaments) {
+        var entities = watchedTournaments.map(Tournament.fromEntity).toList();
+        print('there ${watchedTournaments.length}');
         store.dispatch(
-          new WatchedTournamentsLoadedAction(
-            watchedTournaments.map(Tournament.fromEntity).toList(),
-          ),
+          new WatchedTournamentsLoadedAction(entities),
         );
       },
-    ).catchError((_) => store.dispatch(new WatchedTournamentsNotLoadedAction()));
+    ).catchError(
+        (_) => store.dispatch(new WatchedTournamentsNotLoadedAction()));
 
     next(action);
   };

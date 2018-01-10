@@ -22,11 +22,14 @@ class DashboardView extends StatelessWidget{
       new _Page(label: 'WATCHED'): watchedTournaments.toList()
     };
 
+    print('enteredTournaments ${enteredTournaments.length}');
+    print('watchedTournamens ${watchedTournaments.length}');
     // // try talk to the server
     // var service = new _services.TennisAiServices();
     // service.GetTournaments();
 
     return new DefaultTabController(
+      
       length: _allPages.length,
       child: new Scaffold(
         body: new NestedScrollView(

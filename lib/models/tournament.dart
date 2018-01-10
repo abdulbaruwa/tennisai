@@ -211,23 +211,23 @@ class Tournament {
           highestPlayerRating == other.highestPlayerRating &&
           entrants == other.entrants;
 
- static Tournament fromEntity(TournamentEntity entity) {
+  static Tournament fromEntity(TournamentEntity entity) {
     return new Tournament(
-          name: entity.name,
-        grade: entity.grade,
-        startDate: entity.startDate,
-        endDate: entity.endDate,
-        location: entity.location,
-        numberOfEntrants: entity.numberOfEntrants,
-        organiserName: entity.organiserName,
-        organiserPhone: entity.organiserPhone,
-        organiserEmail: entity.organiserEmail,
-        entryCloseDate: entity.entryCloseDate,
-        code: entity.code,
-        status: entity.status,
-        site: entity.site,
-        cost: entity.cost,
-        highestPlayerRating: entity.highestPlayerRating,
+      name: entity.name,
+      grade: entity.grade,
+      startDate: entity.startDate,
+      endDate: entity.endDate,
+      location: entity.location,
+      numberOfEntrants: entity.numberOfEntrants,
+      organiserName: entity.organiserName,
+      organiserPhone: entity.organiserPhone,
+      organiserEmail: entity.organiserEmail,
+      entryCloseDate: entity.entryCloseDate,
+      code: entity.code,
+      status: entity.status,
+      site: entity.site,
+      cost: entity.cost,
+      highestPlayerRating: entity.highestPlayerRating,
     );
   }
 
@@ -253,9 +253,11 @@ class Tournament {
 
   List<EntrantEntity> _entrantEntitys(List<Entrant> entrants) {
     List<EntrantEntity> entrantEntitys = [];
-    entrants.forEach((f) => entrantEntitys.add(f.toEntity()));
+    if (entrants != null) {
+      entrants.forEach((f) => entrantEntitys.add(f.toEntity()));
+    }
+    return entrantEntitys;
   }
-
 }
 
 List<Tournament> tournaments = <Tournament>[

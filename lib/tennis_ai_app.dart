@@ -10,6 +10,7 @@ import 'routes.dart';
 import 'keys/keys.dart';
 import 'containers/containers.dart';
 import 'localization.dart';
+import './middleware/store_watched_tournaments_middleware.dart';
 
 int counterReducer(int state, action) {
   if (action == Actions.Increment) {
@@ -21,7 +22,7 @@ int counterReducer(int state, action) {
 
 class TennisAiApp extends StatelessWidget {
   final store =
-      new Store<AppState>(appReducer, initialState: new AppState.loading());
+      new Store<AppState>(appReducer, initialState: new AppState.loading(), middleware: createStoreWatchedTournamentsMiddleware());
   //final store = new Store(counterReducer, initialState: 0);
   TennisAiApp();
 
@@ -35,7 +36,9 @@ class TennisAiApp extends StatelessWidget {
             // Pass the store to the StoreProvider. Any ancestor `StoreConnector`
             // Widgets will find and use this value as the `Store`.
             routes: {TennisAiRoutes.about: (context){}},
-            home: new StoreBuilder<AppState>(builder: (context, store) {
+            home: new StoreBuilder<AppState>(
+              onInit: (store) => store.dispatch(new LoadWatchedTournamentsAction()),
+              builder: (context, store) {
               return new TennisAiHome();
             })));
   }
@@ -46,7 +49,6 @@ class TennisAiHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('TennisAiHome build');
     return new ActiveTab(
       builder: (BuildContext context, AppTab activeTab) {
         return new Scaffold(
