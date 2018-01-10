@@ -82,8 +82,8 @@ class TournamentEntity {
     return {
       'name': name,
       'grade': grade,
-      'startDate': startDate,
-      'endDate': endDate,
+      'startDate': startDate.toIso8601String(),
+      'endDate': endDate.toIso8601String(),
       'location': location,
       'numberOfEntrants': location,
       'organiserName': organiserName,

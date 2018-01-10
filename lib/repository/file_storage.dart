@@ -31,9 +31,9 @@ class FileStorage {
 
   Future<File> saveWatchedTournaments(List<TournamentEntity> watchedTournaments) async {
     final file = await _getLocalFile();
-
+    var watchedTournamentsJson =  watchedTournaments.map((t) => t.toJson()).toList();
     return file.writeAsString(new JsonEncoder().convert({
-      'watchedTournaments': watchedTournaments.map((t) => t.toJson()).toList(),
+      'watchedTournaments': watchedTournamentsJson 
     }));
   }
 
