@@ -6,12 +6,9 @@ import '../actions/actions.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/tournament_details_view.dart';
-//import 'package:redux_sample/presentation/details_screen.dart';
 
-class TournamentDetails extends State<TournamentDetailsPage> with TickerProviderStateMixin{
-
+class TournamentDetailsWithTickerState extends State<TournamentDetails> with TickerProviderStateMixin{
   final String id;
-  final TournamentDetailsActionSource source;
   AnimationController _controller;
  @override
   void initState() {
@@ -37,19 +34,16 @@ class TournamentDetails extends State<TournamentDetailsPage> with TickerProvider
   }
 }
 
-class TournamentDetailsPage extends StatefulWidget {
+class TournamentDetails extends StatefulWidget {
    final String id;
    
   final TournamentDetailsActionSource source;
   //const TournamentDetailsPage({Key key, this.tournament}) : super(key: key);
-   const TournamentDetailsPage({Key key, @required this.id, @required this.source}): super(key:key);
+   const TournamentDetails({Key key, @required this.id, @required this.source}): super(key:key);
   final Tournament tournament;
   @override
-  TournamentDetails createState() => new TournamentDetails();
+  TournamentDetailsWithTickerState createState() => new TournamentDetailsWithTickerState();
 }
-
-// class TournamentDetailsPageState extends State<TournamentDetailsPage>
-//     with TickerProviderStateMixin {
 
 class _ViewModel {
   final Tournament tournament;

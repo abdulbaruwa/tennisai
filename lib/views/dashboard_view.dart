@@ -5,8 +5,9 @@ import 'tournament_item.dart';
 import '../containers/tournament_details.dart';
 
 class _Page {
-  _Page({this.label});
+  _Page({this.label, this.tabSource});
   final String label;
+  TournamentDetailsActionSource tabSource;
   String get id => label[0];
 }
 
@@ -20,12 +21,13 @@ class DashboardView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     final Map<_Page, List<Tournament>> _allPages = <_Page, List<Tournament>>{
-      new _Page(label: 'UPCOMING'): enteredTournaments.toList(),
-      new _Page(label: 'WATCHED'): watchedTournaments.toList()
+      new _Page(label: 'UPCOMING', tabSource: TournamentDetailsActionSource.entered): enteredTournaments.toList(),
+      new _Page(label: 'WATCHED', tabSource: TournamentDetailsActionSource.watched): watchedTournaments.toList()
     };
 
-    print('enteredTournaments ${enteredTournaments.length}');
-    print('watchedTournamens ${watchedTournaments.length}');
+    // print('enteredTournaments ${enteredTournaments.length}');
+    // print('watchedTournamens ${watchedTournaments.length}');
+
     // // try talk to the server
     // var service = new _services.TennisAiServices();
     // service.GetTournaments();
@@ -44,7 +46,7 @@ class DashboardView extends StatelessWidget{
                 forceElevated: innerBoxIsScrolled,
                 bottom: new TabBar(
                   tabs: _allPages.keys
-                      .map((_Page page) => new Tab(text: page.label))
+                      .map((_Page page) => new Tab(text:  page.label))
                       .toList(),
                 ),
               ),
@@ -59,7 +61,7 @@ class DashboardView extends StatelessWidget{
                         context: context,
                         tiles: _allPages[page].map((Tournament data) {
                           return new TournamentItem(tournament: data,
-                          onTap: () => _onTap(context, data)
+                          onTap: () => _onTap(context, data, page.tabSource)
 
                             // TODO: Add logic to show details page.
                           ,);
@@ -73,11 +75,11 @@ class DashboardView extends StatelessWidget{
     );
   }
 
-  void _onTap(BuildContext context, Tournament tournament){
+  void _onTap(BuildContext context, Tournament tournament, TournamentDetailsActionSource source){
       Navigator
         .of(context)
         .push(new MaterialPageRoute(
-          builder: (_) => new TournamentDetailsPage(id: tournament.code, source: TournamentDetailsActionSource.watched),
+          builder: (_) => new TournamentDetails(id: tournament.code, source: source),
         ));
   }
 }
