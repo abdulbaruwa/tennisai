@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 import '../models/tournament.dart';
-
-import 'dart:math' as math;
-import 'package:flutter/material.dart';
-import '../models/tournament.dart';
-import '../pages/entrants.dart';
 import '../models/models.dart';
 
 class TournamentEntrantsView extends StatelessWidget {
@@ -50,10 +45,7 @@ class TournamentEntrantsView extends StatelessWidget {
     );
   }
 
-  void _caller()
-  {
-    onSortSelected();
-  }
+
   @override
   Widget build(BuildContext context) {
     bool _reverseSort = false;
@@ -75,16 +67,7 @@ class TournamentEntrantsView extends StatelessWidget {
               new IconButton(
                 icon: const Icon(Icons.sort_by_alpha),
                 tooltip: 'Sort by rating',
-                onPressed:() {_caller();},
-               // onPressed: onSortSelected,
-                // onPressed: () {
-                //   //setState(() {
-                //   _reverseSort = !_reverseSort;
-                //   tournamentEntrants.sort((a, b) => _reverseSort
-                //       ? b.ranking.compareTo(a.ranking)
-                //       : a.ranking.compareTo(b.ranking));
-                //   //});
-                // },
+                onPressed:() {onSortSelected();},
               ),
             ],
           ),
