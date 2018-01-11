@@ -228,6 +228,7 @@ class Tournament {
       site: entity.site,
       cost: entity.cost,
       highestPlayerRating: entity.highestPlayerRating,
+      entrants: _entrants(entity.entrants)
     );
   }
 
@@ -257,6 +258,14 @@ class Tournament {
       entrants.forEach((f) => entrantEntitys.add(f.toEntity()));
     }
     return entrantEntitys;
+  }
+
+  static List<Entrant> _entrants(List<EntrantEntity> entrantEntitys) {
+    List<Entrant> entrants = [];
+    if (entrantEntitys != null) {
+      entrantEntitys.forEach((f) => entrants.add(f.fromEntity()));
+    }
+    return entrants;
   }
 }
 

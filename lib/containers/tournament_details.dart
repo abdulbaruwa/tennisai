@@ -8,7 +8,6 @@ import '../selectors/selectors.dart';
 import '../views/tournament_details_view.dart';
 
 class TournamentDetailsWithTickerState extends State<TournamentDetails> with TickerProviderStateMixin{
-  final String id;
   AnimationController _controller;
  @override
   void initState() {
@@ -23,7 +22,7 @@ class TournamentDetailsWithTickerState extends State<TournamentDetails> with Tic
     return new StoreConnector<AppState, _ViewModel>(
       //ignoreChange: (state) => tournamentSelector(state.tournaments, id, source).isNotPresent,
       converter: (Store<AppState> store) {
-        return new _ViewModel.from(store, id, widget.source);
+        return new _ViewModel.from(store, widget.id, widget.source);
       },
       builder: (context, vm) {
         return new TournamentDetailsView(
@@ -38,7 +37,6 @@ class TournamentDetails extends StatefulWidget {
    final String id;
    
   final TournamentDetailsActionSource source;
-  //const TournamentDetailsPage({Key key, this.tournament}) : super(key: key);
    const TournamentDetails({Key key, @required this.id, @required this.source}): super(key:key);
   final Tournament tournament;
   @override

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import '../models/tournament.dart';
 import '../pages/entrants.dart';
+import '../views/tournament_entrants_view.dart';
 
 class _Header extends StatelessWidget {
   const _Header({Key key, this.icon, this.text}) : super(key: key);
@@ -130,19 +131,19 @@ class TournamentDetailsView extends StatelessWidget
 //with TickerProviderStateMixin
 {
   final Tournament tournament;
-  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      new GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
-  final AnimationController controller;// =  new AnimationController(
+  final AnimationController controller; // =  new AnimationController(
 
   static final List<IconData> icons = const [
     Icons.add_shopping_cart,
     Icons.flag
   ];
 
-  TournamentDetailsView({Key key, this.tournament, this.controller}) : super(key: key);
+  TournamentDetailsView({Key key, this.tournament, this.controller})
+      : super(key: key);
   @override
- 
-
   @override
   Widget build(BuildContext context) {
     final Color backgroundColor = Theme.of(context).cardColor;
@@ -332,16 +333,21 @@ class TournamentDetailsView extends StatelessWidget
   }
 
   void showTournamentEntrantsPage(BuildContext context, Tournament tournament) {
-    Navigator.push(
-        context,
-        new MaterialPageRoute<Null>(
-          settings: const RouteSettings(name: '/tournament/entrants'),
-          builder: (BuildContext context) {
-            return new Theme(
-              data: Theme.of(context),
-              child: new EntrantsPage(tournament: tournament),
-            );
-          },
+      Navigator
+        .of(context)
+        .push(new MaterialPageRoute(
+          builder: (_) => new TournamentEntrantsView(tournament: tournament),
         ));
+    // Navigator.push(
+    //     context,
+    //     new MaterialPageRoute<Null>(
+    //       settings: const RouteSettings(name: '/tournament/entrants'),
+    //       builder: (BuildContext context) {
+    //         return new Theme(
+    //           data: Theme.of(context),
+    //           child: new EntrantsPage(tournament: tournament),
+    //         );
+    //       },
+    //     ));
   }
 }
