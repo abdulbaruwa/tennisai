@@ -1,8 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import '../models/tournament.dart';
-import '../pages/entrants.dart';
-import '../views/tournament_entrants_view.dart';
+import '../models/models.dart';
+import '../containers/tournament_entrants.dart';
 
 class _Header extends StatelessWidget {
   const _Header({Key key, this.icon, this.text}) : super(key: key);
@@ -131,8 +130,8 @@ class TournamentDetailsView extends StatelessWidget
 //with TickerProviderStateMixin
 {
   final Tournament tournament;
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
+  final TournamentDetailsActionSource source;
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
   final AnimationController controller; // =  new AnimationController(
 
@@ -141,7 +140,7 @@ class TournamentDetailsView extends StatelessWidget
     Icons.flag
   ];
 
-  TournamentDetailsView({Key key, this.tournament, this.controller})
+  TournamentDetailsView({Key key, this.tournament, this.controller, this.source})
       : super(key: key);
   @override
   @override
@@ -283,7 +282,7 @@ class TournamentDetailsView extends StatelessWidget
                                       child: new Text('ENTRANTS'),
                                       onPressed: () {
                                         showTournamentEntrantsPage(
-                                            context, tournament);
+                                            context, tournament, source);
                                         // Place holder for event handling
                                       }))),
                         ],
@@ -332,11 +331,11 @@ class TournamentDetailsView extends StatelessWidget
     );
   }
 
-  void showTournamentEntrantsPage(BuildContext context, Tournament tournament) {
+  void showTournamentEntrantsPage(BuildContext context, Tournament tournament, TournamentDetailsActionSource source) {
       Navigator
         .of(context)
         .push(new MaterialPageRoute(
-          builder: (_) => new TournamentEntrantsView(tournament: tournament),
+          builder: (_) => new TournamentEntrants(id: tournament.code, source: source),
         ));
     // Navigator.push(
     //     context,

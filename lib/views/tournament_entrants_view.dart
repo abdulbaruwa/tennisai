@@ -9,9 +9,12 @@ import '../models/models.dart';
 
 class TournamentEntrantsView extends StatelessWidget {
   final Tournament tournament;
+  final List<Entrant> entrants;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final bool activeEntrantSortOrder;
+  final Function() onSortSelected;
 
-  TournamentEntrantsView({this.tournament});
+  TournamentEntrantsView({this.tournament, this.entrants, this.onSortSelected, this.activeEntrantSortOrder});
 
   //bool _reverseSort = false;
   Widget buildListTile(BuildContext context, Entrant item) {
@@ -47,9 +50,14 @@ class TournamentEntrantsView extends StatelessWidget {
     );
   }
 
+  void _caller()
+  {
+    onSortSelected();
+  }
   @override
   Widget build(BuildContext context) {
-    List<Entrant> tournamentEntrants = tournament.entrants;
+    bool _reverseSort = false;
+    List<Entrant> tournamentEntrants = entrants;
     Iterable<Widget> listTiles =
         tournamentEntrants.map((Entrant item) => buildListTile(context, item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
@@ -61,23 +69,25 @@ class TournamentEntrantsView extends StatelessWidget {
           platform: Theme.of(context).platform,
         ),
         child: new Scaffold(
-          // appBar: new AppBar(
-          //   title: new Text(tournament.name),
-          //   actions: <Widget>[
-          //     new IconButton(
-          //       icon: const Icon(Icons.sort_by_alpha),
-          //       tooltip: 'Sort by rating',
-          //       onPressed: () {
-          //         setState(() {
-          //           _reverseSort = !_reverseSort;
-          //           tournamentEntrants.sort((a, b) => _reverseSort
-          //               ? b.ranking.compareTo(a.ranking)
-          //               : a.ranking.compareTo(b.ranking));
-          //         });
-          //       },
-          //     ),
-          //   ],
-          // ),
+          appBar: new AppBar(
+            title: new Text(tournament.name),
+            actions: <Widget>[
+              new IconButton(
+                icon: const Icon(Icons.sort_by_alpha),
+                tooltip: 'Sort by rating',
+                onPressed:() {_caller();},
+               // onPressed: onSortSelected,
+                // onPressed: () {
+                //   //setState(() {
+                //   _reverseSort = !_reverseSort;
+                //   tournamentEntrants.sort((a, b) => _reverseSort
+                //       ? b.ranking.compareTo(a.ranking)
+                //       : a.ranking.compareTo(b.ranking));
+                //   //});
+                // },
+              ),
+            ],
+          ),
           body: new Scrollbar(
               child: new ListView(
             padding: new EdgeInsets.symmetric(vertical: 4.0),

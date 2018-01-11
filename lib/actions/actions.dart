@@ -47,3 +47,13 @@ class AddEnteredTournamentsAction {
   final Tournament tournament;
   AddEnteredTournamentsAction(this.tournament);
 }
+
+class ToggleEntrantsSortAction {
+
+} 
+
+class UpdateEntrantSortOrderAction{
+  final bool order;
+  UpdateEntrantSortOrderAction(this.order);
+}
+

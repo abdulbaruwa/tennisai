@@ -8,5 +8,6 @@ AppState appReducer(AppState state, action) {
       watchedTournaments: dashboardReducer(state.watchedTournaments, action) ,
       enteredTournaments: dashboardReducer(state.enteredTournaments, action) ,
       tournaments: dashboardReducer(state.tournaments, action) ,
-      activeTab: tabsReducer(state.activeTab, action));
+      activeTab: tabsReducer(state.activeTab, action),
+      activeEntrantsSortOrder: entrantsSortReducer(state.activeEntrantsSortOrder, action));
 }

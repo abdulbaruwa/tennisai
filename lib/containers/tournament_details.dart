@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import '../actions/actions.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/tournament_details_view.dart';
@@ -26,7 +25,7 @@ class TournamentDetailsWithTickerState extends State<TournamentDetails> with Tic
       },
       builder: (context, vm) {
         return new TournamentDetailsView(
-          tournament: vm.tournament, controller:_controller,
+          tournament: vm.tournament, source: vm.source, controller:_controller,
         );
       },
     );
@@ -38,18 +37,20 @@ class TournamentDetails extends StatefulWidget {
    
   final TournamentDetailsActionSource source;
    const TournamentDetails({Key key, @required this.id, @required this.source}): super(key:key);
-  final Tournament tournament;
+  //final Tournament tournament;
   @override
   TournamentDetailsWithTickerState createState() => new TournamentDetailsWithTickerState();
 }
 
 class _ViewModel {
   final Tournament tournament;
+  final TournamentDetailsActionSource source;
   final Function onDelete;
   final Function(bool) toggleCompleted;
 
   _ViewModel({
     @required this.tournament,
+    this.source
     // @required this.onDelete,
     // @required this.toggleCompleted,
   });
@@ -59,6 +60,7 @@ class _ViewModel {
 
     return new _ViewModel(
       tournament: tournament,
+      source: source
       //onWatchUnWatch: () => store.dispatch(new DeleteTodoAction(todo.id)),
       // toggleCompleted: (isComplete) {
       //   store.dispatch(new UpdateTodoAction(
