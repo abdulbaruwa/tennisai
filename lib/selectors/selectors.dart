@@ -29,11 +29,19 @@ List<Entrant> tournamentEntrantsSelector(
     Tournament tournament, bool sortOrder) {
   var entrants = tournament.entrants;
 
-  entrants.sort((a, b) => sortOrder 
+  entrants.sort((a, b) => sortOrder
       ? b.ranking.compareTo(a.ranking)
       : a.ranking.compareTo(b.ranking));
 
   return entrants;
+}
+
+Optional<Player> playerSelector(AppState state) {
+  try {
+    return new Optional.of(state.player.first);
+  } catch (e) {
+    return new Optional.absent();
+  }
 }
 
 //List<Entrant> _getEntrant
@@ -44,4 +52,5 @@ bool isLoadingSelector(AppState state) => state.isLoading;
 bool isEntrantsViewItemsReversedSelector(AppState state) =>
     state.isEntrantsViewItemsReverseSorted;
 
-bool activeEntrantsSortOrderSelector(AppState state) => state.activeEntrantsSortOrder;
+bool activeEntrantsSortOrderSelector(AppState state) =>
+    state.activeEntrantsSortOrder;

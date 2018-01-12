@@ -39,8 +39,6 @@ main() {
       expect(tournamentSelector(tournaments, '3').value, tournament3);
     });
 
-//    test('', (){});
-
    test('should return entrants sorted by ranking if sortOrder is set', (){
      final entrants = [
        new Entrant(name: '', ranking: 3),

@@ -67,4 +67,27 @@ class DashboardRepository {
     ]);
   }
 
+  // Player Profile
+    /// Loads Player Profile first from File storage. If they don't exist or encounter an
+  /// error, it attempts to load the watchedTournament from a Web Client
+  Future<List<PlayerEntity>> loadPlayerProfile() async {
+    try {
+      var res = await fileStorage.loadPlayerProfile();
+      print('success ${res.length}');
+      return res;
+    } catch (e) {
+      print('Fetcher in error');
+      var result = webClient.fetchPlayerProfile();
+      print('Fetched');
+      return result;
+    }
+  }
+
+  // Persists PlayerProfile to local disk and the web
+  Future savePlayerProfile(PlayerEntity playerEntity) {
+    return Future.wait([
+      fileStorage.savePlayerProfile(playerEntity),
+      webClient.postPlayerProfile(playerEntity),
+    ]);
+  }
 }

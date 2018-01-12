@@ -1,6 +1,10 @@
 import '../models/models.dart';
 
 class LoadPlayerAction {}
+class AddPlayerAction {
+  final Player player;
+  AddPlayerAction(this.player);
+}
 
 class UpdateTabAction {
   final AppTab newTab;
