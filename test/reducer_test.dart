@@ -6,11 +6,10 @@ import 'package:tennisai/models/models.dart';
 import 'package:tennisai/reducers/app_state_reducer.dart';
 import 'package:tennisai/actions/actions.dart';
 import 'package:tennisai/models/app_tab.dart';
-
-
+import 'package:quiver/core.dart';
 main() {
   group('State Reducer', () {
-  test('should update the AppTab', () {
+    test('should update the AppTab', () {
       final store = new Store<AppState>(
         appReducer,
         initialState: new AppState(activeTab: AppTab.dashboard),
@@ -21,8 +20,9 @@ main() {
       expect(store.state.activeTab, AppTab.search);
     });
 
-test('place holder test', (){var answer =41; expect(answer, 41);})   
+    test('place holder test in', () {
+      var answer = 42;
+      expect(answer, 42);
+    });
   });
-
-
 }

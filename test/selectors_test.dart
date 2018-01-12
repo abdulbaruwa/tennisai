@@ -36,7 +36,7 @@ main() {
         final tournament4 =  new Tournament(name: 'T4', code: '4');
 
       final tournaments = [tournament1, tournament2, tournament3, tournament4];
-      expect(tournamentSelector(tournaments, '3'), tournament3);
+      expect(tournamentSelector(tournaments, '3').value, tournament3);
     });
 
 //    test('', (){});
@@ -52,11 +52,11 @@ main() {
        final tournament = new Tournament(code: '1', entrants: entrants);
 
        final result = tournamentEntrantsSelector(tournament, true);
-       expect(result[0].ranking,1);
-       expect(result[1].ranking,2);
+       expect(result[0].ranking,5);
+       expect(result[1].ranking,4);
        expect(result[2].ranking,3);
-       expect(result[3].ranking,4);
-       expect(result[4].ranking,5);
+       expect(result[3].ranking,2);
+       expect(result[4].ranking,1);
    });
   });
 }
