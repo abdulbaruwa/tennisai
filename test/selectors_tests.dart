@@ -25,7 +25,7 @@ main() {
           watchedTournaments: watchedTournaments);
 
       expect(
-          tournamentsSelector(appState, TournamentDetailsActionSource.watched),
+          tournamentsSelector(appState, TournamentDetailsActionSource.watching),
           watchedTournaments);
     });
 

@@ -4,4 +4,4 @@ enum DismissDialogAction {
   save,
 }
 
-enum TournamentDetailsActionSource{watched, entered, search}
+enum TournamentDetailsActionSource{watching, upcoming, search}

@@ -5,12 +5,21 @@ class TennisAiKeys {
   static final editProfile = const Key('__editProfile__');
   static final snackbar = const Key('__snackbar__');
 
-
   // Tabs
   static final tabs = const Key('__tabs__');
-  static final dashBoardTab = const Key('__dashboardTab__');
-  static final searchTab = const Key('__searchTab__');
-  static final basketTab = const Key('__basketTab__');
-  static final profileTab = const Key('__profileTab__');
+  static const dashBoardTab = const Key('__dashboardTab__');
+  static const searchTab = const Key('__searchTab__');
+  static const basketTab = const Key('__basketTab__');
+  static const settingsTab = const Key('__settingsTab__');
 
+  // Dashboard
+  static final dashboardList = const Key('__dashboardList__');
+  static final watchingSubTab = const Key('__watchingSubTab__');
+  static final upcomingSubTab = const Key('__upcomingSubTab__');
+
+    static final tournamentItemName = (String id, String source) => new Key('TournamentItemName__${id}__${source}');
+    static final tournamentItem = (String id, String source) => new Key('TournamentItem__${id}__${source}');
+  static final todoItemNote = (String id) => new Key('TodoItem__${id}__Note');
+
+  
 }

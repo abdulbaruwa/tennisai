@@ -34,7 +34,7 @@ class TabSelector extends StatelessWidget {
               items: TabItems.map((TabItem) {
                 return new BottomNavigationBarItem(
                     title: new Text(TabItem.title, style: new TextStyle(color: Colors.black),),
-                    icon: new Icon(TabItem.icon, color: Colors.black,));
+                    icon: new Icon(TabItem.icon, color: Colors.black, key: TabItem.key,));
               }).toList(),
             ); 
       },

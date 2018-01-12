@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import '../models/models.dart';
 import 'tournament_item.dart';
 import '../containers/tournament_details.dart';
+import '../keys/keys.dart';
 
 class _Page {
-  _Page({this.label, this.tabSource});
+  _Page({this.label, this.tabSource, this.key});
   final String label;
+  final Key key;
   TournamentDetailsActionSource tabSource;
   String get id => label[0];
 }
@@ -21,8 +23,8 @@ class DashboardView extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     final Map<_Page, List<Tournament>> _allPages = <_Page, List<Tournament>>{
-      new _Page(label: 'UPCOMING', tabSource: TournamentDetailsActionSource.entered): enteredTournaments.toList(),
-      new _Page(label: 'WATCHED', tabSource: TournamentDetailsActionSource.watched): watchedTournaments.toList()
+      new _Page(label: 'UPCOMING', tabSource: TournamentDetailsActionSource.upcoming, key: TennisAiKeys.upcomingSubTab): enteredTournaments.toList(),
+      new _Page(label: 'WATCHED', tabSource: TournamentDetailsActionSource.watching, key:TennisAiKeys.watchingSubTab): watchedTournaments.toList()
     };
 
     // print('enteredTournaments ${enteredTournaments.length}');
@@ -46,21 +48,23 @@ class DashboardView extends StatelessWidget{
                 forceElevated: innerBoxIsScrolled,
                 bottom: new TabBar(
                   tabs: _allPages.keys
-                      .map((_Page page) => new Tab(text:  page.label))
+                      .map((_Page page) => new Tab(text:  describeEnum(page.tabSource).toUpperCase()))
                       .toList(),
                 ),
               ),
             ];
           },
           body: new TabBarView(
+            key: TennisAiKeys.dashBoardTab,
             children: _allPages.keys.map((_Page page) {
               return new ListView(
+                key: page.key,
                 children: ListTile
                     .divideTiles(
                         color: Theme.of(context).primaryColor,
                         context: context,
                         tiles: _allPages[page].map((Tournament data) {
-                          return new TournamentItem(tournament: data,
+                          return new TournamentItem(tournament: data, source: describeEnum(page.tabSource),
                           onTap: () => _onTap(context, data, page.tabSource)
 
                             // TODO: Add logic to show details page.

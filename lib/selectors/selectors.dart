@@ -9,9 +9,9 @@ List<Tournament> watchedTournamentSelector(AppState state) =>
 // TournamentsSelector returns the combined Watched and entered tournament
 List<Tournament> tournamentsSelector(
     AppState state, TournamentDetailsActionSource source) {
-  if (source == TournamentDetailsActionSource.entered)
+  if (source == TournamentDetailsActionSource.upcoming)
     return state.enteredTournaments;
-  if (source == TournamentDetailsActionSource.watched)
+  if (source == TournamentDetailsActionSource.watching)
     return state.watchedTournaments;
   return [];
 }
