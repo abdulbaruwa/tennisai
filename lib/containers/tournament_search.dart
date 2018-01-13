@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/tournament_search_view.dart';
+import '../tabs/search.dart';
 
 class TournamentSearch extends StatelessWidget {
   TournamentSearch({Key key})
@@ -16,8 +17,9 @@ class TournamentSearch extends StatelessWidget {
         converter: (Store<AppState> store) {
       return new _ViewModel.from(store);
     }, builder: (context, vm) {
-      return new TournamentSearchView(
-          tournaments: vm.tournaments);
+      return new TournamentSearchView();
+      // return new TournamentSearchView(
+      //     tournaments: vm.tournaments);
     });
   }
 }
