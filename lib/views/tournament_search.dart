@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import '../models/tournament.dart';
 import 'package:flutter/rendering.dart';
-import '../models/tournament.dart' as _tournamentModels;
 import '../pages/touranmentDetails.dart';
-import '../services/tournamentServices.dart' as _tournamentServices;
 import "package:intl/intl.dart";
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
   primarySwatch: Colors.indigo,
   accentColor: Colors.redAccent,
-  //  platform: Theme.of(context).platform
 );
 
 class TournamentSearch extends StatefulWidget {
-  const TournamentSearch({Key key}) : super(key: key);
+  final List<Tournament> tournaments;
+  const TournamentSearch({Key key, this.tournaments}) : super(key: key);
   @override
   TournamentSearchState createState() => new TournamentSearchState();
 }
@@ -26,15 +24,6 @@ class TournamentSearchState extends State<TournamentSearch> {
   void initState() {
     super.initState();
 
-    // Fetch tournaments from the Server. 
-    // TODO: Loggin needed in Failure section of Return 'Future'
-    List<Tournament> latestTournaments = [];
-    new _tournamentServices.TennisAiServices()
-        .GetTournaments()
-        .then((value) => handleSuccess(value))
-        .catchError((error) => print('Error occured retrieving Tournaments from server, Error: ${error.toString()}'));
-
-    //print('fetched latest tournaments from server: ${latestTournament.le}')
   }
 
   void handleSuccess(List<Tournament> value)
@@ -47,6 +36,7 @@ class TournamentSearchState extends State<TournamentSearch> {
   Widget build(BuildContext context) {
     //final List<Tournament> tournaments =  tournaments;
     // print('Building Widget with : ${tournaments.length} tournament records');
+    tournaments = widget.tournaments;
 
     Iterable<Widget> listTiles =
         tournaments.map((Tournament item) => new TournamentCard(

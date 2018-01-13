@@ -17,7 +17,7 @@ class TournamentSearch extends StatelessWidget {
         converter: (Store<AppState> store) {
       return new _ViewModel.from(store);
     }, builder: (context, vm) {
-      return new TournamentSearchView();
+      return new TournamentSearchView(tournaments: vm.tournaments);
       // return new TournamentSearchView(
       //     tournaments: vm.tournaments);
     });

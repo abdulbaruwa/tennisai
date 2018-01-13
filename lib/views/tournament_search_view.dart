@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'tournament_search.dart';
 import '../controls/usercontrols.dart';
-
+import '../models/models.dart';
 
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
 
@@ -16,7 +16,8 @@ final ThemeData _kTheme = new ThemeData(
 );
 
 class TournamentSearchView extends StatefulWidget {
-  TournamentSearchView({Key key}) : super(key: key);
+  final List<Tournament> tournaments;
+  TournamentSearchView({Key key, this.tournaments}) : super(key: key);
   @override
   SearchTabState createState() => new SearchTabState();
 }
@@ -53,7 +54,7 @@ class SearchTabState extends State<TournamentSearchView> {
                   Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
             ),
             key: _scaffoldKey,
-            body: new TournamentSearch()));
+            body: new TournamentSearch(tournaments: widget.tournaments)));
   }
 
   void _showConfigurationSheet() {
