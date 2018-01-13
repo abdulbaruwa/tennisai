@@ -85,10 +85,30 @@ class FileStorage {
     return playerProfileEntity;
   }
 
+  Future<List<SearchPreferenceEntity>> loadSearchPreference() async {
+    final file = await _getLocalFile(StoreNames.profile);
+    final string = await file.readAsString();
+    final json = new JsonDecoder().convert(string);
+    final searchPrefEntity =
+        (json['searchPreference'] as List<Map<String, dynamic>>)
+            .map((searchPref) => SearchPreferenceEntity.fromJson(searchPref))
+            .toList();
+
+    return searchPrefEntity;
+  }
+
   Future<File> savePlayerProfile(PlayerEntity player) async {
     final file = await _getLocalFile(StoreNames.profile);
     var playerProfileJson = player.toJson();
     return file.writeAsString(
         new JsonEncoder().convert({'playerProfile': playerProfileJson}));
+  }
+
+  Future<File> saveSearchPreference(
+      SearchPreferenceEntity searchPrefEntity) async {
+    final file = await _getLocalFile(StoreNames.profile);
+    var searchPrefJson = searchPrefEntity.toJson();
+    return file.writeAsString(
+        new JsonEncoder().convert({'playerProfile': searchPrefJson}));
   }
 }

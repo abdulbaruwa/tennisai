@@ -4,7 +4,8 @@ import '../keys/keys.dart';
 
 class ProfileSection extends StatelessWidget {
   final Player player;
-  const ProfileSection({Key key, this.player}) : super(key: key);
+  final SearchPreference searchPreference;
+  const ProfileSection({Key key, this.player, this.searchPreference}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => new Container(
@@ -115,21 +116,22 @@ class _LabelTextRow extends StatelessWidget {
 
 class ProfileView extends StatelessWidget {
   final Player player;
-  const ProfileView({Key key, this.player}) : super(key: key);
+  final SearchPreference searchPreference;
+  const ProfileView({Key key, this.player, this.searchPreference}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return new Container(
         child: new ListView(
       children: <Widget>[
-        new ProfileSection(player: player,),
+        new ProfileSection(player: player, searchPreference: searchPreference,),
         new _LtaInfo(value: 'LTA INFO'),
         new _LabelTextRow(label: 'Lta Number', value: player.ltaNumber.toString(), key: TennisAiKeys.profileLtaNumber,),
         new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),
         new _LabelTextRow(label: 'Gender', value: 'Female'),
-        new _LabelTextRow(label: 'Distance', value: '30 miles'),
-        new _LabelTextRow(label: 'Grade', value: '3'),
-        new _LabelTextRow(label: 'Age Group', value: 'U18'),
+        new _LabelTextRow(label: 'Distance', value:  '${searchPreference.distance} miles'),
+        new _LabelTextRow(label: 'Grade', value: searchPreference.grade.toString()),
+        new _LabelTextRow(label: 'Age Group', value:  searchPreference.ageGroup > 18 ? 'Adult' : 'U${searchPreference.ageGroup}'),
       ],
     ));
   }

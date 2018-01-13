@@ -89,5 +89,30 @@ class DashboardRepository {
       fileStorage.savePlayerProfile(playerEntity),
       webClient.postPlayerProfile(playerEntity),
     ]);
+  }  
+  
+  // Search Preference 
+  /// Loads Search Preference first from File storage. If they don't exist or encounter an
+  /// error, it attempts to load the SearchPrefence from a Web Client
+  Future<List<SearchPreferenceEntity>> loadSearchPreference() async {
+    try {
+      var res = await fileStorage.loadSearchPreference();
+      print('success ${res.length}');
+      return res;
+    } catch (e) {
+      print('Fetcher in error');
+      var result = webClient.fetchSearchPreference();
+      print('Fetched');
+      return result;
+    }
+  }
+
+
+  // Persists SearchPreference to local disk and the web
+  Future saveSearchPreference(SearchPreferenceEntity searchPrefEntity) {
+    return Future.wait([
+      fileStorage.saveSearchPreference(searchPrefEntity),
+      webClient.postSearchPreference(searchPrefEntity),
+    ]);
   }
 }

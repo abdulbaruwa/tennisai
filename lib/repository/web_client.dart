@@ -56,7 +56,26 @@ class WebClient {
       PlayerEntity playerProfile) async {
     return new Future.value(true);
   }
+
+  /// Mock that returns true or false for success or failure. In this case,
+  /// it will "Always Succeed"
+  Future<bool> postSearchPreference(
+      SearchPreferenceEntity searchPref) async {
+    return new Future.value(true);
+  }
+
+  // Search Preference 
+  Future<List<SearchPreferenceEntity>> fetchSearchPreference() async {
+    List<SearchPreferenceEntity> tEntities = [];
+
+    tEntities.add(searchPreference.toEntity());
+    print('before delayed ${tEntities.length}');
+    return new Future.delayed(delay, () => tEntities);
+  }
+
 }
+
+SearchPreference searchPreference = new SearchPreference(ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);
 
 Player player = new Player(
     name: 'Wilson Babolat',

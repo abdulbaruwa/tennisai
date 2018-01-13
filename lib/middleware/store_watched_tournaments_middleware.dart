@@ -20,6 +20,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final loadPlayerProfile = _createLoadPlayerProfile(repository);
   final savePlayerProfile = _createSavePlayerProfile(repository);
 
+  final loadSearchQuery = _createLoadSearchPreference(repository);
+  final saveSearchQuery = _createSaveSearchPreference(repository);
 
   return combineTypedMiddleware([
     new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
@@ -32,6 +34,10 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     // Player Profile
     new MiddlewareBinding<AppState, LoadPlayerAction>(loadPlayerProfile),
     new MiddlewareBinding<AppState, AddPlayerAction>(savePlayerProfile),
+
+    // Search Query preference
+    new MiddlewareBinding<AppState, LoadSearchPreferenceAction>(loadSearchQuery),
+    new MiddlewareBinding<AppState, AddSearchPreferenceAction>(saveSearchQuery),
   ]);
 }
 
@@ -96,7 +102,6 @@ Middleware<AppState> _createLoadEnteredTournaments(
 }
 
 // Player Profile
-
 Middleware<AppState> _createSavePlayerProfile(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
@@ -112,14 +117,42 @@ Middleware<AppState> _createLoadPlayerProfile(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadPlayerProfile().then(
-      (watchedTournaments) {
-        var entities = watchedTournaments.map(Player.fromEntity).toList();
+      (player) {
+        var entities = player.map(Player.fromEntity).toList();
         store.dispatch(
           new PlayerLoadedAction(entities),
         );
       },
     ).catchError(
         (_) => store.dispatch(new PlayerNotLoadedAction()));
+    next(action);
+  };
+}
+
+// Player Profile
+Middleware<AppState> _createSaveSearchPreference(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print('About to save search Query preference');
+    next(action);
+    var toSave = searchPreferenceSelector(store.state).value.toEntity();
+       
+    repository.saveSearchPreference(toSave);
+  };
+}
+
+Middleware<AppState> _createLoadSearchPreference(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    repository.loadSearchPreference().then(
+      (searchPref) {
+        var entities = searchPref.map(SearchPreference.fromEntity).toList();
+        store.dispatch(
+          new SearchPreferenceLoadedAction(entities),
+        );
+      },
+    ).catchError(
+        (_) => store.dispatch(new SearchPreferenceNotLoadedAction()));
     next(action);
   };
 }

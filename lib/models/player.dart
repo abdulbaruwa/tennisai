@@ -1,6 +1,7 @@
 import 'tournament.dart';
 import 'package:meta/meta.dart';
 
+
 @immutable
 class Player {
   final String name;
@@ -113,4 +114,5 @@ class SearchQueryPreference {
   int grade;
   String gender;
   int distance;
+  
 }

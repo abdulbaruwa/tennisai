@@ -1,5 +1,18 @@
 import '../models/models.dart';
 
+class LoadSearchPreferenceAction {}
+class AddSearchPreferenceAction {
+  final SearchPreference searchPreference;
+  AddSearchPreferenceAction(this.searchPreference);
+}
+
+class SearchPreferenceNotLoadedAction {}
+class SearchPreferenceLoadedAction {
+  final List<SearchPreference> searchPreference;
+
+  SearchPreferenceLoadedAction(this.searchPreference);
+}
+
 class LoadPlayerAction {}
 class AddPlayerAction {
   final Player player;

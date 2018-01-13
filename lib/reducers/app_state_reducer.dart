@@ -5,6 +5,7 @@ AppState appReducer(AppState state, action) {
   return new AppState(
       isLoading: loadingReducer(state.isLoading, action),
       player: playerReducer(state.player, action),
+      searchPreference: searchPreferenceReducer(state.searchPreference, action),
       watchedTournaments: dashboardReducer(state.watchedTournaments, action) ,
       enteredTournaments: dashboardReducer(state.enteredTournaments, action) ,
       tournaments: dashboardReducer(state.tournaments, action) ,

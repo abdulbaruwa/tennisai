@@ -15,7 +15,7 @@ class Profile extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(
         converter: _ViewModel.fromStore,
         builder: (context, vm) {
-          return new ProfileView(player: vm.player);
+          return new ProfileView(player: vm.player, searchPreference: vm.searchPreference,);
         });
   }
 }
@@ -23,11 +23,15 @@ class Profile extends StatelessWidget {
 class _ViewModel {
   final bool loading;
   final Player player;
+  final SearchPreference searchPreference;
 
-  _ViewModel({@required this.loading, @required this.player});
+  _ViewModel(
+      {@required this.loading, @required this.player, this.searchPreference});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return new _ViewModel(
-        player: playerSelector(store.state).value, loading: store.state.isLoading);
+        player: playerSelector(store.state).value,
+        loading: store.state.isLoading,
+        searchPreference: searchPreferenceSelector(store.state).value);
   }
 }

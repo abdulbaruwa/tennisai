@@ -38,17 +38,19 @@ class TennisAiApp extends StatelessWidget {
             // Widgets will find and use this value as the `Store`.
             routes: {TennisAiRoutes.about: (context) {}},
             home: new StoreBuilder<AppState>(
-                onInit: (store) =>
-                   _load(store),
+                onInit: (store) => _loadState(store),
                 builder: (context, store) {
                   return new TennisAiHome();
                 })));
   }
 }
 
-_load(Store store){
+_loadState(Store store) {
   store.dispatch(new LoadWatchedTournamentsAction());
-  store.dispatch(new LoadPlayerAction());}
+  store.dispatch(new LoadPlayerAction());
+  store.dispatch(new LoadSearchPreferenceAction());
+}
+
 class TennisAiHome extends StatelessWidget {
   TennisAiHome() : super(key: TennisAiKeys.homeScreen);
 
@@ -96,7 +98,7 @@ Widget _selectActiveTab(BuildContext context, AppTab tab) {
       return new Profile();
       break;
     default:
-    return new Container(child: const Text('Unknown tab'));
+      return new Container(child: const Text('Unknown tab'));
   }
 }
 

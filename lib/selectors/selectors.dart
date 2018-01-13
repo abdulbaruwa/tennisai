@@ -44,6 +44,16 @@ Optional<Player> playerSelector(AppState state) {
   }
 }
 
+// Search Preference
+Optional<SearchPreference> searchPreferenceSelector(AppState state) {
+  try {
+    return new Optional.of(state.searchPreference.first);
+  } catch (e) {
+    return new Optional.absent();
+  }
+}
+
+
 //List<Entrant> _getEntrant
 AppTab activeTabSelector(AppState state) => state.activeTab;
 
