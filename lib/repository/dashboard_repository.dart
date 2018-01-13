@@ -107,7 +107,6 @@ class DashboardRepository {
     }
   }
 
-
   // Persists SearchPreference to local disk and the web
   Future saveSearchPreference(SearchPreferenceEntity searchPrefEntity) {
     return Future.wait([
@@ -115,4 +114,29 @@ class DashboardRepository {
       webClient.postSearchPreference(searchPrefEntity),
     ]);
   }
+  
+  // Persists SearchPreference to local disk and the web
+  Future saveSearchTournaments(List<TournamentEntity> searchTournaments) {
+    return Future.wait([
+      fileStorage.saveSearchTournaments(searchTournaments),
+      webClient.postSearchTournaments(searchTournaments),
+    ]);
+  }
+
+    // Search Preference 
+  /// Loads Search Preference first from File storage. If they don't exist or encounter an
+  /// error, it attempts to load the SearchPrefence from a Web Client
+  Future<List<TournamentEntity>> loadSearchTournaments() async {
+    try {
+      var res = await fileStorage.loadSearchTournaments();
+      print('success ${res.length}');
+      return res;
+    } catch (e) {
+      print('Fetcher in error');
+      var result = webClient.fetchSearchTournaments();
+      print('Fetched');
+      return result;
+    }
+  }
+
 }

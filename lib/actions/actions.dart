@@ -1,5 +1,19 @@
 import '../models/models.dart';
 
+// Search Tournament 
+class LoadSearchTournamentsAction {}
+class AddSearchTournamentsAction {
+  final List<Tournament> searchTournaments;
+  AddSearchTournamentsAction(this.searchTournaments);
+}
+
+class SearchTournamentsNotLoadedAction {}
+class SearchTournamentsLoadedAction {
+  final List<Tournament> searchTournaments;
+
+  SearchTournamentsLoadedAction(this.searchTournaments);
+}
+
 class LoadSearchPreferenceAction {}
 class AddSearchPreferenceAction {
   final SearchPreference searchPreference;

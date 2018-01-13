@@ -23,6 +23,9 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final loadSearchQuery = _createLoadSearchPreference(repository);
   final saveSearchQuery = _createSaveSearchPreference(repository);
 
+  final loadSearchTournaments = _createLoadSearchTournaments(repository);
+  final saveSearchTournaments = _createSaveSearchTournaments(repository);
+
   return combineTypedMiddleware([
     new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
     new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(saveWatchedTournaments),
@@ -38,6 +41,10 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     // Search Query preference
     new MiddlewareBinding<AppState, LoadSearchPreferenceAction>(loadSearchQuery),
     new MiddlewareBinding<AppState, AddSearchPreferenceAction>(saveSearchQuery),
+
+    // Search Tournament 
+    new MiddlewareBinding<AppState, LoadSearchTournamentsAction>(loadSearchTournaments),
+    new MiddlewareBinding<AppState, AddSearchTournamentsAction>(saveSearchTournaments),
   ]);
 }
 
@@ -153,6 +160,35 @@ Middleware<AppState> _createLoadSearchPreference(
       },
     ).catchError(
         (_) => store.dispatch(new SearchPreferenceNotLoadedAction()));
+    next(action);
+  };
+}
+
+// Search for Tournaments 
+Middleware<AppState> _createSaveSearchTournaments(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print('About to save search Query preference');
+    next(action);
+      var toSave = searchTournamentsSelector(store.state)
+        .map((watchedTournament) => watchedTournament.toEntity())
+        .toList();
+    repository.saveSearchTournaments(toSave);
+  };
+}
+
+Middleware<AppState> _createLoadSearchTournaments(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    repository.loadSearchTournaments().then(
+      (searchPref) {
+        var entities = searchPref.map(Tournament.fromEntity).toList();
+        store.dispatch(
+          new SearchTournamentsLoadedAction(entities),
+        );
+      },
+    ).catchError(
+        (_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
     next(action);
   };
 }

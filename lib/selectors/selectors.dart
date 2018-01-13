@@ -53,6 +53,10 @@ Optional<SearchPreference> searchPreferenceSelector(AppState state) {
   }
 }
 
+// Search Result
+List<Tournament> searchTournamentsSelector(AppState state) =>
+    state.searchTournaments;
+
 
 //List<Entrant> _getEntrant
 AppTab activeTabSelector(AppState state) => state.activeTab;

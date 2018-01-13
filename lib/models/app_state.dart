@@ -11,6 +11,7 @@ class AppState {
   final AppTab activeTab;
   final List<Tournament> enteredTournaments;
   final List<Tournament> watchedTournaments;
+  final List<Tournament> searchTournaments;
   final bool activeEntrantsSortOrder;
 
   AppState(
@@ -19,6 +20,7 @@ class AppState {
       this.searchPreference = const [],
       this.enteredTournaments = const [],
       this.watchedTournaments = const [],
+      this.searchTournaments = const [],
       this.tournaments = const [],
       this.activeTab = AppTab.dashboard,
       this.activeEntrantsSortOrder = false});
@@ -32,6 +34,7 @@ class AppState {
       List<Tournament> tournaments,
       List<Tournament> enteredTournaments,
       List<Tournament> watchedTournaments,
+      List<Tournament> searchTournaments,
       AppTab activeTab,
       bool isEntrantsViewItemsReverseSorted,
       bool activeEntrantsSortOrder}) {
@@ -42,6 +45,7 @@ class AppState {
         player: player ?? this.player,
         searchPreference: searchQueryPreference ?? this.searchPreference,
         tournaments: tournaments ?? this.tournaments,
+        searchTournaments: searchTournaments ?? this.searchTournaments,
         watchedTournaments: watchedTournaments ?? this.watchedTournaments,
         enteredTournaments: enteredTournaments ?? this.enteredTournaments,
         activeTab: activeTab ?? this.activeTab);
@@ -54,6 +58,7 @@ class AppState {
       searchPreference.hashCode ^
       activeTab.hashCode ^
       tournaments.hashCode ^
+      searchTournaments.hashCode ^
       enteredTournaments.hashCode ^
       watchedTournaments.hashCode ^
       activeEntrantsSortOrder.hashCode;
@@ -70,12 +75,13 @@ class AppState {
           player == other.player &&
           searchPreference == other.searchPreference &&
           tournaments == other.tournaments &&
+          searchTournaments == other.searchTournaments &&
           watchedTournaments == other.watchedTournaments &&
           enteredTournaments == other.enteredTournaments &&
           activeTab == other.activeTab;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, player: $player, searchQueryPreference: $searchPreference, tournaments: $tournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder}';
+    return 'AppState{isLoading: $isLoading, player: $player, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder}';
   }
 }

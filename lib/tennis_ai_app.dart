@@ -49,6 +49,7 @@ _loadState(Store store) {
   store.dispatch(new LoadWatchedTournamentsAction());
   store.dispatch(new LoadPlayerAction());
   store.dispatch(new LoadSearchPreferenceAction());
+  store.dispatch(new LoadSearchTournamentsAction());
 }
 
 class TennisAiHome extends StatelessWidget {
@@ -90,8 +91,9 @@ Widget _selectActiveTab(BuildContext context, AppTab tab) {
       return new Container(child: new Text('Basket to come'));
       break;
     case AppTab.search:
+      print('About to load Search tab.');
       return new Container(
-        child: new Text('Search to come'),
+        child: new TournamentSearch()
       );
       break;
     case AppTab.profile:

@@ -111,4 +111,25 @@ class FileStorage {
     return file.writeAsString(
         new JsonEncoder().convert({'playerProfile': searchPrefJson}));
   }
+
+    Future<File> saveSearchTournaments(
+      List<TournamentEntity> enteredTournaments) async {
+    final file = await _getLocalFile(StoreNames.enteredTournamens);
+    var searchTournamentJson =
+        enteredTournaments.map((t) => t.toJson()).toList();
+    return file.writeAsString(new JsonEncoder()
+        .convert({'searchTournaments': searchTournamentJson}));
+  }
+
+    Future<List<TournamentEntity>> loadSearchTournaments() async {
+    final file = await _getLocalFile(StoreNames.profile);
+    final string = await file.readAsString();
+    final json = new JsonDecoder().convert(string);
+    final searchTournaments =
+        (json['searchTournaments'] as List<Map<String, dynamic>>)
+            .map((tournament) => TournamentEntity.fromJson(tournament))
+            .toList();
+
+    return searchTournaments;
+  }
 }

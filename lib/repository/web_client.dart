@@ -64,6 +64,20 @@ class WebClient {
     return new Future.value(true);
   }
 
+  /// Mock that returns true or false for success or failure. In this case,
+  /// it will "Always Succeed"
+  Future<bool> postSearchTournaments(
+      List<TournamentEntity> searchTounaments) async {
+    return new Future.value(true);
+  }
+
+   Future<List<TournamentEntity>> fetchSearchTournaments() async {
+    List<TournamentEntity> tEntities = [];
+
+    tournaments.forEach((f) => tEntities.add(f.toEntity()));
+    return new Future.delayed(delay, () => tEntities);
+  }
+
   // Search Preference 
   Future<List<SearchPreferenceEntity>> fetchSearchPreference() async {
     List<SearchPreferenceEntity> tEntities = [];
