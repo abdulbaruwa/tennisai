@@ -26,14 +26,6 @@ class DashboardView extends StatelessWidget{
       new _Page(label: 'UPCOMING', tabSource: TournamentDetailsActionSource.upcoming, key: TennisAiKeys.upcomingSubTab): enteredTournaments.toList(),
       new _Page(label: 'WATCHED', tabSource: TournamentDetailsActionSource.watching, key:TennisAiKeys.watchingSubTab): watchedTournaments.toList()
     };
-
-    // print('enteredTournaments ${enteredTournaments.length}');
-    // print('watchedTournamens ${watchedTournaments.length}');
-
-    // // try talk to the server
-    // var service = new _services.TennisAiServices();
-    // service.GetTournaments();
-
     return new DefaultTabController(
       
       length: _allPages.length,

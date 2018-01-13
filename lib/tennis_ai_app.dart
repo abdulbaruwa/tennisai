@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
@@ -9,7 +10,6 @@ import 'actions/actions.dart';
 import 'routes.dart';
 import 'keys/keys.dart';
 import 'containers/containers.dart';
-import 'localization.dart';
 import './middleware/store_watched_tournaments_middleware.dart';
 
 int counterReducer(int state, action) {
@@ -21,8 +21,9 @@ int counterReducer(int state, action) {
 }
 
 class TennisAiApp extends StatelessWidget {
-  final store =
-      new Store<AppState>(appReducer, initialState: new AppState.loading(), middleware: createStoreWatchedTournamentsMiddleware());
+  final store = new Store<AppState>(appReducer,
+      initialState: new AppState.loading(),
+      middleware: createStoreWatchedTournamentsMiddleware());
   //final store = new Store(counterReducer, initialState: 0);
   TennisAiApp();
 
@@ -35,15 +36,19 @@ class TennisAiApp extends StatelessWidget {
             title: 'Tennis Ai',
             // Pass the store to the StoreProvider. Any ancestor `StoreConnector`
             // Widgets will find and use this value as the `Store`.
-            routes: {TennisAiRoutes.about: (context){}},
+            routes: {TennisAiRoutes.about: (context) {}},
             home: new StoreBuilder<AppState>(
-              onInit: (store) => store.dispatch(new LoadWatchedTournamentsAction()),
-              builder: (context, store) {
-              return new TennisAiHome();
-            })));
+                onInit: (store) =>
+                   _load(store),
+                builder: (context, store) {
+                  return new TennisAiHome();
+                })));
   }
 }
 
+_load(Store store){
+  store.dispatch(new LoadWatchedTournamentsAction());
+  store.dispatch(new LoadPlayerAction());}
 class TennisAiHome extends StatelessWidget {
   TennisAiHome() : super(key: TennisAiKeys.homeScreen);
 
@@ -56,7 +61,7 @@ class TennisAiHome extends StatelessWidget {
           //   //title: new Text(TennisAiLocalizations.of(context).appTitle),
           //   title: new Text('Tennis Ai'),
           // ),
-          body: new Dashboard(),
+          body: _selectActiveTab(context, activeTab),
           floatingActionButton: activeTab == AppTab.profile
               ? new FloatingActionButton(
                   key: TennisAiKeys.editProfile,
@@ -70,6 +75,28 @@ class TennisAiHome extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+Widget _selectActiveTab(BuildContext context, AppTab tab) {
+  print('Selected tab is ${describeEnum(tab)}');
+  switch (tab) {
+    case AppTab.dashboard:
+      return new Dashboard();
+      break;
+    case AppTab.basket:
+      return new Container(child: new Text('Basket to come'));
+      break;
+    case AppTab.search:
+      return new Container(
+        child: new Text('Search to come'),
+      );
+      break;
+    case AppTab.profile:
+      return new Profile();
+      break;
+    default:
+    return new Container(child: const Text('Unknown tab'));
   }
 }
 

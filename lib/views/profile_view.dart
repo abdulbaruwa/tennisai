@@ -122,7 +122,7 @@ class ProfileView extends StatelessWidget {
     return new Container(
         child: new ListView(
       children: <Widget>[
-        new ProfileSection(),
+        new ProfileSection(player: player,),
         new _LtaInfo(value: 'LTA INFO'),
         new _LabelTextRow(label: 'Lta Number', value: player.ltaNumber.toString(), key: TennisAiKeys.profileLtaNumber,),
         new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),

@@ -17,6 +17,10 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final loadEnteredTournaments = _createLoadEnteredTournaments(repository);
   final saveEnterdTournaments = _createSaveEnteredTournaments(repository);
 
+  final loadPlayerProfile = _createLoadPlayerProfile(repository);
+  final savePlayerProfile = _createSavePlayerProfile(repository);
+
+
   return combineTypedMiddleware([
     new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
     new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(saveWatchedTournaments),
@@ -24,6 +28,10 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new MiddlewareBinding<AppState, LoadEnteredTournamentsAction>(loadEnteredTournaments),
     new MiddlewareBinding<AppState, AddEnteredTournamentsAction>(saveEnterdTournaments),
     new MiddlewareBinding<AppState, EnteredTournamentsLoadedAction>(saveEnterdTournaments),
+
+    // Player Profile
+    new MiddlewareBinding<AppState, LoadPlayerAction>(loadPlayerProfile),
+    new MiddlewareBinding<AppState, AddPlayerAction>(savePlayerProfile),
   ]);
 }
 
@@ -83,6 +91,35 @@ Middleware<AppState> _createLoadEnteredTournaments(
       },
     ).catchError(
         (_) => store.dispatch(new EnteredTournamentsNotLoadedAction()));
+    next(action);
+  };
+}
+
+// Player Profile
+
+Middleware<AppState> _createSavePlayerProfile(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print('About to save player profile');
+    next(action);
+    var toSave = playerSelector(store.state).value.toEntity();
+       
+    repository.savePlayerProfile(toSave);
+  };
+}
+
+Middleware<AppState> _createLoadPlayerProfile(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    repository.loadPlayerProfile().then(
+      (watchedTournaments) {
+        var entities = watchedTournaments.map(Player.fromEntity).toList();
+        store.dispatch(
+          new PlayerLoadedAction(entities),
+        );
+      },
+    ).catchError(
+        (_) => store.dispatch(new PlayerNotLoadedAction()));
     next(action);
   };
 }
