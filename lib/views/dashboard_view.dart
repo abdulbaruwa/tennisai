@@ -27,7 +27,6 @@ class DashboardView extends StatelessWidget{
       new _Page(label: 'WATCHED', tabSource: TournamentDetailsActionSource.watching, key:TennisAiKeys.watchingSubTab): watchedTournaments.toList()
     };
     return new DefaultTabController(
-      
       length: _allPages.length,
       child: new Scaffold(
         body: new NestedScrollView(

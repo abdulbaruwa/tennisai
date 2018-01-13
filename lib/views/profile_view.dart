@@ -114,13 +114,7 @@ class _LabelTextRow extends StatelessWidget {
   }
 }
 
-class ProfileView extends StatelessWidget {
-  final Player player;
-  final SearchPreference searchPreference;
-  const ProfileView({Key key, this.player, this.searchPreference}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+ Widget _buildPreference(BuildContext context, Player player, SearchPreference searchPreference) {
     return new Container(
         child: new ListView(
       children: <Widget>[
@@ -134,5 +128,29 @@ class ProfileView extends StatelessWidget {
         new _LabelTextRow(label: 'Age Group', value:  searchPreference.ageGroup > 18 ? 'Adult' : 'U${searchPreference.ageGroup}'),
       ],
     ));
+}
+
+class ProfileView extends StatelessWidget {
+  final Player player;
+  final SearchPreference searchPreference;
+  const ProfileView({Key key, this.player, this.searchPreference}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+
+    return new Theme(
+        data: new ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: Colors.indigo,
+          platform: Theme.of(context).platform,
+        ),
+        child: new Scaffold(
+          appBar: new AppBar(
+            title: new Text('Preference'),
+          ),
+          body: new Scrollbar(
+            child: _buildPreference(context, player, searchPreference),
+           ),
+        ));
   }
 }
