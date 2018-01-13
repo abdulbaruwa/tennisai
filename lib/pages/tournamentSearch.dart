@@ -35,13 +35,14 @@ class TournamentSearchState extends State<TournamentSearch> {
         .catchError((error) => print('Error occured retrieving Tournaments from server, Error: ${error.toString()}'));
 
     //print('fetched latest tournaments from server: ${latestTournament.le}')
-  
   }
+
   void handleSuccess(List<Tournament> value)
   {
     print('Recieved tournamnents ${value.length}');
     setState(() => tournaments = value);
   }
+
   @override
   Widget build(BuildContext context) {
     //final List<Tournament> tournaments =  tournaments;
@@ -53,6 +54,7 @@ class TournamentSearchState extends State<TournamentSearch> {
             onTap: () {
               showTournamentDetailsPage(context, item);
             }));
+            
     listTiles = ListTile.divideTiles(
         context: context,
         tiles: listTiles,

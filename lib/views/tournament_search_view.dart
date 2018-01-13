@@ -34,10 +34,21 @@ class TournamentSearchView extends StatelessWidget{
 
     final ThemeData themedata = Theme.of(context);
 
-    return new Scrollbar(
+     return new Theme(
+        data: new ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: Colors.indigo,
+          platform: Theme.of(context).platform,
+        ),
+        child: new Scaffold(
+          appBar: new AppBar(
+            title: new Text('Search'),
+          ),
+          body: new Scrollbar(
         child: new ListView(
             padding: new EdgeInsets.symmetric(vertical: 4.0),
-            children: listTiles.toList()));
+            children: listTiles.toList())),
+        ));
   }
 }
 
@@ -105,3 +116,4 @@ class _TournamentCard extends StatelessWidget {
     );
   }
 }
+ 
