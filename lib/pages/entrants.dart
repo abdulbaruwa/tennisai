@@ -28,11 +28,11 @@ class EntrantsPageState extends State<EntrantsPage> {
               new CircleAvatar(
                   radius: 16.0,
                   child: new Text(
-                    item.rating,
+                    item.tournamentId,
                     style: Theme.of(context).primaryTextTheme.body1,
                   ))
             ])),
-        title: new Text(item.name),
+        title: new Text(item.tournamentName),
         subtitle: new Text(item.status),
         trailing: new ExcludeSemantics(
             child: new Column(
@@ -40,7 +40,7 @@ class EntrantsPageState extends State<EntrantsPage> {
               new Text('Ranking', style: new TextStyle(fontSize: 10.0)),
               new CircleAvatar(
           radius: 16.0,
-          child: new Text(item.ranking.toString(),
+          child: new Text(item.cost.toString(),
               style: Theme.of(context).primaryTextTheme.body1),
         )])
         ),
@@ -72,8 +72,8 @@ class EntrantsPageState extends State<EntrantsPage> {
                   setState(() {
                     _reverseSort = !_reverseSort;
                     tournamentEntrants.sort((a, b) => _reverseSort
-                        ? b.ranking.compareTo(a.ranking)
-                        : a.ranking.compareTo(b.ranking));
+                        ? b.cost.compareTo(a.cost)
+                        : a.cost.compareTo(b.cost));
                   });
                 },
               ),

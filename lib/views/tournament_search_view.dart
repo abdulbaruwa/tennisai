@@ -43,7 +43,7 @@ class SearchTabState extends State<TournamentSearchView> {
                 ),
               ],
               title: new Text(
-                'Tournament',
+                'Tournaments',
                 style: new TextStyle(
                   fontSize: Theme.of(context).platform == TargetPlatform.iOS
                       ? 17.0

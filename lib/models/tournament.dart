@@ -108,7 +108,7 @@ class TournamentEntity {
     for (int i = 0; i < json.length; i++) {
       var entrantEntity = new EntrantEntity(
           name: json[i]['name'],
-          ranking: json[i]['rankin'],
+          ranking: json[i]['ranking'],
           rating: json[i]['rating'],
           ltaNumber: json[i]['ltaNumber'],
           status: json[i]['status']);

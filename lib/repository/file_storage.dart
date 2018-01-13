@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import '../models/models.dart';
 
-enum StoreNames { enteredTournamens, watchedTournaments, profile }
+enum StoreNames { enteredTournamens, watchedTournaments, profile, basket }
 
 /// Loads and saves a List of Tournament using a text file stored on the device.
 ///
@@ -112,16 +112,16 @@ class FileStorage {
         new JsonEncoder().convert({'playerProfile': searchPrefJson}));
   }
 
-    Future<File> saveSearchTournaments(
+  Future<File> saveSearchTournaments(
       List<TournamentEntity> enteredTournaments) async {
     final file = await _getLocalFile(StoreNames.enteredTournamens);
     var searchTournamentJson =
         enteredTournaments.map((t) => t.toJson()).toList();
-    return file.writeAsString(new JsonEncoder()
-        .convert({'searchTournaments': searchTournamentJson}));
+    return file.writeAsString(
+        new JsonEncoder().convert({'searchTournaments': searchTournamentJson}));
   }
 
-    Future<List<TournamentEntity>> loadSearchTournaments() async {
+  Future<List<TournamentEntity>> loadSearchTournaments() async {
     final file = await _getLocalFile(StoreNames.profile);
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
@@ -131,5 +131,17 @@ class FileStorage {
             .toList();
 
     return searchTournaments;
+  }
+
+  // Basket
+  Future<List<BasketEntity>> loadBasket() async {
+    final file = await _getLocalFile(StoreNames.basket);
+    final string = await file.readAsString();
+    final json = new JsonDecoder().convert(string);
+    final basketEntity = (json['basket'] as List<Map<String, dynamic>>)
+        .map((player) => BasketEntity.fromJson(player))
+        .toList();
+
+    return basketEntity;
   }
 }

@@ -139,4 +139,20 @@ class DashboardRepository {
     }
   }
 
+
+  // Basket
+  /// Loads Player Profile first from File storage. If they don't exist or encounter an
+  /// error, it attempts to load the watchedTournament from a Web Client
+  Future<List<BasketEntity>> loadBasket() async {
+    try {
+      var res = await fileStorage.loadBasket();
+      return res;
+    } catch (e) {
+      print('Fetcher for Basket in error');
+      var result = webClient.fetchBasket();
+      print('Basket Fetched');
+      return result;
+    }
+  }
+
 }

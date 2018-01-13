@@ -1,5 +1,8 @@
 import '../models/models.dart';
 
+// Basket
+class LoadBasketTournamentsAction {}
+
 // Search Tournament 
 class LoadSearchTournamentsAction {}
 class AddSearchTournamentsAction {
