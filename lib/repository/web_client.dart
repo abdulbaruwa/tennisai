@@ -52,15 +52,13 @@ class WebClient {
 
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
-  Future<bool> postPlayerProfile(
-      PlayerEntity playerProfile) async {
+  Future<bool> postPlayerProfile(PlayerEntity playerProfile) async {
     return new Future.value(true);
   }
 
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
-  Future<bool> postSearchPreference(
-      SearchPreferenceEntity searchPref) async {
+  Future<bool> postSearchPreference(SearchPreferenceEntity searchPref) async {
     return new Future.value(true);
   }
 
@@ -71,14 +69,14 @@ class WebClient {
     return new Future.value(true);
   }
 
-   Future<List<TournamentEntity>> fetchSearchTournaments() async {
+  Future<List<TournamentEntity>> fetchSearchTournaments() async {
     List<TournamentEntity> tEntities = [];
 
     tournaments.forEach((f) => tEntities.add(f.toEntity()));
     return new Future.delayed(delay, () => tEntities);
   }
 
-  // Search Preference 
+  // Search Preference
   Future<List<SearchPreferenceEntity>> fetchSearchPreference() async {
     List<SearchPreferenceEntity> tEntities = [];
 
@@ -87,9 +85,36 @@ class WebClient {
     return new Future.delayed(delay, () => tEntities);
   }
 
+// Basket
+  // Search Preference
+  Future<List<BasketEntity>> fetchBasket() async {
+    List<BasketEntity> tEntities = [];
+    tEntities.add(basket);
+    print('before delayed ${tEntities.length}');
+    return new Future.delayed(delay, () => tEntities);
+  }
+
+  /// Mock that returns true or false for success or failure. In this case,
+  /// it will "Always Succeed"
+  Future<bool> postBasket(BasketEntity basketEntity) async {
+    return new Future.value(true);
+  }
 }
 
-SearchPreference searchPreference = new SearchPreference(ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);
+BasketEntity basket = new BasketEntity(
+    ltaNumber: 723492222,
+    totalCost: 45.0,
+    basketItems: <BasketItemEntity>[
+      new BasketItemEntity(
+          cost: 20.0, tournamentId: '1', tournamentName: 'Sutton Grade 4'),
+      new BasketItemEntity(
+          cost: 25.0,
+          tournamentId: '21',
+          tournamentName: 'Wilshire Open Championship')
+    ]);
+
+SearchPreference searchPreference = new SearchPreference(
+    ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);
 
 Player player = new Player(
     name: 'Wilson Babolat',

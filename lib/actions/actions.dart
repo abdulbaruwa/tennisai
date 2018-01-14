@@ -3,14 +3,16 @@ import '../models/models.dart';
 // Basket
 class LoadBasketTournamentsAction {}
 
-// Search Tournament 
+// Search Tournament
 class LoadSearchTournamentsAction {}
+
 class AddSearchTournamentsAction {
   final List<Tournament> searchTournaments;
   AddSearchTournamentsAction(this.searchTournaments);
 }
 
 class SearchTournamentsNotLoadedAction {}
+
 class SearchTournamentsLoadedAction {
   final List<Tournament> searchTournaments;
 
@@ -18,12 +20,14 @@ class SearchTournamentsLoadedAction {
 }
 
 class LoadSearchPreferenceAction {}
+
 class AddSearchPreferenceAction {
   final SearchPreference searchPreference;
   AddSearchPreferenceAction(this.searchPreference);
 }
 
 class SearchPreferenceNotLoadedAction {}
+
 class SearchPreferenceLoadedAction {
   final List<SearchPreference> searchPreference;
 
@@ -31,6 +35,7 @@ class SearchPreferenceLoadedAction {
 }
 
 class LoadPlayerAction {}
+
 class AddPlayerAction {
   final Player player;
   AddPlayerAction(this.player);
@@ -82,12 +87,25 @@ class AddEnteredTournamentsAction {
   AddEnteredTournamentsAction(this.tournament);
 }
 
-class ToggleEntrantsSortAction {
+class ToggleEntrantsSortAction {}
 
-} 
-
-class UpdateEntrantSortOrderAction{
+class UpdateEntrantSortOrderAction {
   final bool order;
   UpdateEntrantSortOrderAction(this.order);
 }
 
+// Basket
+class BasketNotLoadedAction {}
+
+class LoadBasketAction {}
+
+class BasketLoadedAction {
+  final List<Basket> basket;
+
+  BasketLoadedAction(this.basket);
+}
+
+class AddBasketAction {
+  final Basket basket;
+  AddBasketAction(this.basket);
+}

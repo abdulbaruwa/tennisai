@@ -68,7 +68,7 @@ class DashboardRepository {
   }
 
   // Player Profile
-    /// Loads Player Profile first from File storage. If they don't exist or encounter an
+  /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
   Future<List<PlayerEntity>> loadPlayerProfile() async {
     try {
@@ -89,9 +89,9 @@ class DashboardRepository {
       fileStorage.savePlayerProfile(playerEntity),
       webClient.postPlayerProfile(playerEntity),
     ]);
-  }  
-  
-  // Search Preference 
+  }
+
+  // Search Preference
   /// Loads Search Preference first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the SearchPrefence from a Web Client
   Future<List<SearchPreferenceEntity>> loadSearchPreference() async {
@@ -114,7 +114,7 @@ class DashboardRepository {
       webClient.postSearchPreference(searchPrefEntity),
     ]);
   }
-  
+
   // Persists SearchPreference to local disk and the web
   Future saveSearchTournaments(List<TournamentEntity> searchTournaments) {
     return Future.wait([
@@ -123,7 +123,7 @@ class DashboardRepository {
     ]);
   }
 
-    // Search Preference 
+  // Search Preference
   /// Loads Search Preference first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the SearchPrefence from a Web Client
   Future<List<TournamentEntity>> loadSearchTournaments() async {
@@ -138,7 +138,6 @@ class DashboardRepository {
       return result;
     }
   }
-
 
   // Basket
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
@@ -155,4 +154,11 @@ class DashboardRepository {
     }
   }
 
+  // Persists PlayerProfile to local disk and the web
+  Future saveBasket(BasketEntity basketEntity) {
+    return Future.wait([
+      fileStorage.saveBasket(basketEntity),
+      webClient.postBasket(basketEntity),
+    ]);
+  }
 }

@@ -24,7 +24,9 @@ class TennisAiKeys {
   static final todoItemNote = (String id) => new Key('TodoItem__${id}__Note');
 
   // Profile
-  
   static final profileName = const Key('__profileName__');
   static final profileLtaNumber = const Key('__profileLtaNumber__');
+
+
+  static final basket = const Key('__profileName__');
 }

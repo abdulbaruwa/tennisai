@@ -57,6 +57,14 @@ Optional<SearchPreference> searchPreferenceSelector(AppState state) {
 List<Tournament> searchTournamentsSelector(AppState state) =>
     state.searchTournaments;
 
+Optional<Basket> basketSelector(AppState state) {
+  try {
+    return new Optional.of(state.basket.first);
+  } catch (e) {
+    return new Optional.absent();
+  }
+}
+
 
 //List<Entrant> _getEntrant
 AppTab activeTabSelector(AppState state) => state.activeTab;

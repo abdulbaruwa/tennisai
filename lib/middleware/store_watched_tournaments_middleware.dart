@@ -26,25 +26,40 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final loadSearchTournaments = _createLoadSearchTournaments(repository);
   final saveSearchTournaments = _createSaveSearchTournaments(repository);
 
+  final loadBasket = _createLoadBasket(repository);
+  final saveBasket = _createSaveBasket(repository);
+
   return combineTypedMiddleware([
-    new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
-    new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(saveWatchedTournaments),
-    new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(saveWatchedTournaments),
-    new MiddlewareBinding<AppState, LoadEnteredTournamentsAction>(loadEnteredTournaments),
-    new MiddlewareBinding<AppState, AddEnteredTournamentsAction>(saveEnterdTournaments),
-    new MiddlewareBinding<AppState, EnteredTournamentsLoadedAction>(saveEnterdTournaments),
+    new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(
+        loadWatchedTournaments),
+    new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(
+        saveWatchedTournaments),
+    new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(
+        saveWatchedTournaments),
+    new MiddlewareBinding<AppState, LoadEnteredTournamentsAction>(
+        loadEnteredTournaments),
+    new MiddlewareBinding<AppState, AddEnteredTournamentsAction>(
+        saveEnterdTournaments),
+    new MiddlewareBinding<AppState, EnteredTournamentsLoadedAction>(
+        saveEnterdTournaments),
 
     // Player Profile
     new MiddlewareBinding<AppState, LoadPlayerAction>(loadPlayerProfile),
     new MiddlewareBinding<AppState, AddPlayerAction>(savePlayerProfile),
 
     // Search Query preference
-    new MiddlewareBinding<AppState, LoadSearchPreferenceAction>(loadSearchQuery),
+    new MiddlewareBinding<AppState, LoadSearchPreferenceAction>(
+        loadSearchQuery),
     new MiddlewareBinding<AppState, AddSearchPreferenceAction>(saveSearchQuery),
 
-    // Search Tournament 
-    new MiddlewareBinding<AppState, LoadSearchTournamentsAction>(loadSearchTournaments),
-    new MiddlewareBinding<AppState, AddSearchTournamentsAction>(saveSearchTournaments),
+    // Search Tournament
+    new MiddlewareBinding<AppState, LoadSearchTournamentsAction>(
+        loadSearchTournaments),
+    new MiddlewareBinding<AppState, AddSearchTournamentsAction>(
+        saveSearchTournaments),
+    // Basket
+    new MiddlewareBinding<AppState, LoadBasketAction>(loadBasket),
+    new MiddlewareBinding<AppState, AddBasketAction>(saveBasket),
   ]);
 }
 
@@ -109,19 +124,17 @@ Middleware<AppState> _createLoadEnteredTournaments(
 }
 
 // Player Profile
-Middleware<AppState> _createSavePlayerProfile(
-    DashboardRepository repository) {
+Middleware<AppState> _createSavePlayerProfile(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     print('About to save player profile');
     next(action);
     var toSave = playerSelector(store.state).value.toEntity();
-       
+
     repository.savePlayerProfile(toSave);
   };
 }
 
-Middleware<AppState> _createLoadPlayerProfile(
-    DashboardRepository repository) {
+Middleware<AppState> _createLoadPlayerProfile(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadPlayerProfile().then(
       (player) {
@@ -130,8 +143,7 @@ Middleware<AppState> _createLoadPlayerProfile(
           new PlayerLoadedAction(entities),
         );
       },
-    ).catchError(
-        (_) => store.dispatch(new PlayerNotLoadedAction()));
+    ).catchError((_) => store.dispatch(new PlayerNotLoadedAction()));
     next(action);
   };
 }
@@ -143,7 +155,7 @@ Middleware<AppState> _createSaveSearchPreference(
     print('About to save search Query preference');
     next(action);
     var toSave = searchPreferenceSelector(store.state).value.toEntity();
-       
+
     repository.saveSearchPreference(toSave);
   };
 }
@@ -158,19 +170,18 @@ Middleware<AppState> _createLoadSearchPreference(
           new SearchPreferenceLoadedAction(entities),
         );
       },
-    ).catchError(
-        (_) => store.dispatch(new SearchPreferenceNotLoadedAction()));
+    ).catchError((_) => store.dispatch(new SearchPreferenceNotLoadedAction()));
     next(action);
   };
 }
 
-// Search for Tournaments 
+// Search for Tournaments
 Middleware<AppState> _createSaveSearchTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     print('About to save search Query preference');
     next(action);
-      var toSave = searchTournamentsSelector(store.state)
+    var toSave = searchTournamentsSelector(store.state)
         .map((watchedTournament) => watchedTournament.toEntity())
         .toList();
     repository.saveSearchTournaments(toSave);
@@ -187,8 +198,31 @@ Middleware<AppState> _createLoadSearchTournaments(
           new SearchTournamentsLoadedAction(entities),
         );
       },
-    ).catchError(
-        (_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
+    ).catchError((_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
     next(action);
+  };
+}
+
+// Basket
+Middleware<AppState> _createLoadBasket(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    repository.loadBasket().then(
+      (basket) {
+        var entities = basket.map(Basket.fromEntity).toList();
+        store.dispatch(
+          new BasketLoadedAction(entities),
+        );
+      },
+    ).catchError((_) => store.dispatch(new BasketNotLoadedAction()));
+    next(action);
+  };
+}
+
+Middleware<AppState> _createSaveBasket(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print('About to save Basket');
+    next(action);
+    var toSave = basketSelector(store.state).value.toEntity();
+    repository.saveBasket(toSave);
   };
 }

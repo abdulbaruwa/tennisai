@@ -68,4 +68,12 @@ class BasketItem {
         cost: cost,
         tournamentId: tournamentId);
   }
+
+    static List<BasketItem> fromEntitys(List<BasketItemEntity> basketItemEntitys) {
+    List<BasketItem> basketItems = [];
+    if (basketItemEntitys != null) {
+      basketItemEntitys.forEach((f) => basketItems.add(f.fromEntity()));
+    }
+    return basketItems;
+  }
 }

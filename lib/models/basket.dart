@@ -40,15 +40,9 @@ class BasketEntity {
     return x;
   }
 
-  static List<BasketItem> _basketItems(List<BasketItemEntity> entrantEntitys) {
-    List<BasketItem> basketItems = [];
-    if (entrantEntitys != null) {
-      entrantEntitys.forEach((f) => basketItems.add(f.fromEntity()));
-    }
-    return basketItems;
-  }
 
-TODO: Need Unit tests around these
+
+//TODO: Need Unit tests around these
   static BasketEntity fromJson(Map<String, Object> json) {
     return new BasketEntity(
         totalCost: json['totalCost'] as double,
@@ -65,6 +59,7 @@ TODO: Need Unit tests around these
           tournamentName: json[i]['tournamentName']);
       entrants.add(basketItemEntitys);
     }
+    return entrants;
   }
 }
 
@@ -83,9 +78,9 @@ class Basket {
         basketItems: _basketItemEntitys(basketItems));
   }
 
-  Basket fromEntity() {
+  static Basket fromEntity(BasketEntity basketEntity) {
     return new Basket(
-        totalCost: totalCost, basketItems: basketItems, ltaNumber: ltaNumber);
+        totalCost: basketEntity.totalCost, basketItems: BasketItem.fromEntitys(basketEntity.basketItems), ltaNumber: basketEntity.ltaNumber);
   }
 
   static List<BasketItemEntity> _basketItemEntitys(

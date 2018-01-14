@@ -3,7 +3,14 @@ import 'dart:convert';
 import 'dart:io';
 import '../models/models.dart';
 
-enum StoreNames { enteredTournamens, watchedTournaments, profile, basket }
+enum StoreNames {
+  enteredTournamens,
+  watchedTournaments,
+  searchTournaments,
+  profile,
+  preference,
+  basket
+}
 
 /// Loads and saves a List of Tournament using a text file stored on the device.
 ///
@@ -85,8 +92,15 @@ class FileStorage {
     return playerProfileEntity;
   }
 
-  Future<List<SearchPreferenceEntity>> loadSearchPreference() async {
+  Future<File> savePlayerProfile(PlayerEntity player) async {
     final file = await _getLocalFile(StoreNames.profile);
+    var playerProfileJson = player.toJson();
+    return file.writeAsString(
+        new JsonEncoder().convert({'playerProfile': playerProfileJson}));
+  }
+
+  Future<List<SearchPreferenceEntity>> loadSearchPreference() async {
+    final file = await _getLocalFile(StoreNames.preference);
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
     final searchPrefEntity =
@@ -97,16 +111,9 @@ class FileStorage {
     return searchPrefEntity;
   }
 
-  Future<File> savePlayerProfile(PlayerEntity player) async {
-    final file = await _getLocalFile(StoreNames.profile);
-    var playerProfileJson = player.toJson();
-    return file.writeAsString(
-        new JsonEncoder().convert({'playerProfile': playerProfileJson}));
-  }
-
   Future<File> saveSearchPreference(
       SearchPreferenceEntity searchPrefEntity) async {
-    final file = await _getLocalFile(StoreNames.profile);
+    final file = await _getLocalFile(StoreNames.preference);
     var searchPrefJson = searchPrefEntity.toJson();
     return file.writeAsString(
         new JsonEncoder().convert({'playerProfile': searchPrefJson}));
@@ -114,7 +121,7 @@ class FileStorage {
 
   Future<File> saveSearchTournaments(
       List<TournamentEntity> enteredTournaments) async {
-    final file = await _getLocalFile(StoreNames.enteredTournamens);
+    final file = await _getLocalFile(StoreNames.searchTournaments);
     var searchTournamentJson =
         enteredTournaments.map((t) => t.toJson()).toList();
     return file.writeAsString(
@@ -122,7 +129,7 @@ class FileStorage {
   }
 
   Future<List<TournamentEntity>> loadSearchTournaments() async {
-    final file = await _getLocalFile(StoreNames.profile);
+    final file = await _getLocalFile(StoreNames.searchTournaments);
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
     final searchTournaments =
@@ -143,5 +150,12 @@ class FileStorage {
         .toList();
 
     return basketEntity;
+  }
+
+  Future<File> saveBasket(BasketEntity basket) async {
+    final file = await _getLocalFile(StoreNames.basket);
+    var basketJson = basket.toJson();
+    return file
+        .writeAsString(new JsonEncoder().convert({'basket': basketJson}));
   }
 }
