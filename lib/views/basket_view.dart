@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/models.dart';
+import '../views/basket_child_view.dart';
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
@@ -33,6 +34,6 @@ class BasketView extends StatelessWidget {
                   Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
             ),
             key: _scaffoldKey,
-            body: new Container(child: new Text('Basket Place Holder for ${player.name}'))));
+            body: new BasketChildView(basket: basket)));
   }
 }

@@ -3,9 +3,11 @@ import 'package:meta/meta.dart';
 class BasketItemEntity {
   String tournamentName;
   double cost;
+  int grade;
+  String status;
   String tournamentId;
   BasketItemEntity(
-      {this.tournamentName, this.cost, this.tournamentId});
+      {this.tournamentName, this.cost, this.tournamentId, this.grade, this.status});
 
   // EntrantEntity(
   //     this.name, this.ranking, this.rating, this.ltaNumber, this.status);
@@ -19,6 +21,8 @@ class BasketItemEntity {
       other is BasketItemEntity &&
           runtimeType == other.runtimeType &&
           tournamentName == other.tournamentName &&
+          grade == other.grade &&
+          status == other.status &&
           cost == other.cost &&
           tournamentId == other.tournamentId ;
 
@@ -26,6 +30,8 @@ class BasketItemEntity {
     return {
       'tournamentName': tournamentName,
       'cost': cost,
+      'grade': grade,
+      'status': status,
       'tournamentId': tournamentId,
     };
   }
@@ -34,6 +40,8 @@ class BasketItemEntity {
     return new BasketItem(
         tournamentName: tournamentName,
         cost: cost,
+        grade: grade,
+        status: status,
         tournamentId: tournamentId);
   }
 
@@ -41,6 +49,8 @@ class BasketItemEntity {
     return new BasketItemEntity(
       tournamentName: json['name'] as String,
       cost: json['cost'] as double,
+      grade: json['grade'] as int,
+      status: json['status'] as String,
       tournamentId: json['rating'] as String,
     );
   }
@@ -49,9 +59,11 @@ class BasketItemEntity {
 @immutable
 class BasketItem {
   const BasketItem(
-      {this.tournamentName, this.cost, this.tournamentId});
+      {this.tournamentName, this.cost, this.tournamentId, this.grade, this.status});
 
   final String tournamentName;
+  final int grade;
+  final String status;
   final double cost;
   final String tournamentId;
 
@@ -59,6 +71,8 @@ class BasketItem {
     return new BasketItemEntity(
         tournamentName: tournamentName,
         cost: cost,
+        grade: grade,
+        status: status,
         tournamentId: tournamentId);
   }
 
@@ -66,6 +80,8 @@ class BasketItem {
     return new BasketItem(
         tournamentName: tournamentName,
         cost: cost,
+        grade: grade,
+        status: status,
         tournamentId: tournamentId);
   }
 

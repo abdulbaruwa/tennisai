@@ -106,11 +106,11 @@ BasketEntity basket = new BasketEntity(
     totalCost: 45.0,
     basketItems: <BasketItemEntity>[
       new BasketItemEntity(
-          cost: 20.0, tournamentId: '1', tournamentName: 'Sutton Grade 4'),
+          cost: 20.0, tournamentId: '1', tournamentName: 'Sutton Grade 4', grade: 4, status: 'Accepting Entries'),
       new BasketItemEntity(
           cost: 25.0,
           tournamentId: '21',
-          tournamentName: 'Wilshire Open Championship')
+          tournamentName: 'Wilshire Open Championship', grade: 3, status: 'Accepting Entries')
     ]);
 
 SearchPreference searchPreference = new SearchPreference(
