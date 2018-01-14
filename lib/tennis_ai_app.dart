@@ -11,6 +11,7 @@ import 'routes.dart';
 import 'keys/keys.dart';
 import 'containers/containers.dart';
 import './middleware/store_watched_tournaments_middleware.dart';
+import './models/enums.dart' as _enums;
 
 int counterReducer(int state, action) {
   if (action == Actions.Increment) {
@@ -66,15 +67,19 @@ class TennisAiHome extends StatelessWidget {
           //   title: new Text('Tennis Ai'),
           // ),
           body: _selectActiveTab(context, activeTab),
-          floatingActionButton: activeTab == AppTab.profile
-              ? new FloatingActionButton(
-                  key: TennisAiKeys.editProfile,
-                  onPressed: () {
-                    Navigator.pushNamed(context, TennisAiRoutes.editProfile);
-                  },
-                  child: new Icon(Icons.add),
-                  tooltip: 'Edit Profile')
-              : new Container(),
+          // floatingActionButton: activeTab == AppTab.profile
+          //     ? new FloatingActionButton(
+          //         key: TennisAiKeys.editProfile,
+          //         onPressed: () {
+          //           Navigator.push(context, 
+          //                     new MaterialPageRoute<_enums.DismissDialogAction>(
+          //             builder: (BuildContext context) => new ProfileEditContainer(),
+          //             fullscreenDialog: true,
+          //           ));
+          //         },
+          //         child: new Icon(Icons.add),
+          //         tooltip: 'Edit Profile')
+          //     : new Container(),
           bottomNavigationBar: new TabSelector(),
         );
       },

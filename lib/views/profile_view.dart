@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../keys/keys.dart';
+import '../containers/profile_edit_container.dart';
 
 class ProfileSection extends StatelessWidget {
   final Player player;
@@ -137,7 +138,6 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return new Theme(
         data: new ThemeData(
           brightness: Brightness.light,
@@ -145,7 +145,20 @@ class ProfileView extends StatelessWidget {
           platform: Theme.of(context).platform,
         ),
         child: new Scaffold(
+           floatingActionButton: 
+              new FloatingActionButton(
+                  key: TennisAiKeys.editProfile,
+                  onPressed: () {
+                    Navigator.push(context, 
+                              new MaterialPageRoute< DismissDialogAction>(
+                      builder: (BuildContext context) => new ProfileEditContainer(player: player, searchPreference: searchPreference,),
+                      fullscreenDialog: true,
+                    ));
+                  },
+                  child: new Icon(Icons.add),
+                  tooltip: 'Edit Profile'),
           appBar: new AppBar(
+
             title: new Text('Preference'),
           ),
           body: new Scrollbar(

@@ -22,7 +22,7 @@ class ProfileEditContainer extends StatelessWidget {
             player: player, searchPreference: searchPref));
       };
     }, builder: (BuildContext context, OnPlayerProfileSaveCallback onSave) {
-      return new Container();
+      return new ProfileEditView(player: player, searchPreference: searchPreference, onSave: onSave);
     });
   }
 }

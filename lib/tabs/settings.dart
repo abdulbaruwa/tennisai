@@ -52,7 +52,8 @@ class SettingsTabState extends State<SettingsTab> {
                     new MaterialPageRoute<_enums.DismissDialogAction>(
                       builder: (BuildContext context) => new UserProfileEdit(),
                       fullscreenDialog: true,
-                    ));
+                    )
+                    );
               },
             ),
             body: new Profile()));
