@@ -55,6 +55,18 @@ class PlayerLoadedAction {
   PlayerLoadedAction(this.player);
 }
 
+class UpdatePlayerProfileAndSearchPreferenceAction {
+  final Player player;
+  final SearchPreference searchPreference;
+  UpdatePlayerProfileAndSearchPreferenceAction(
+      {this.player, this.searchPreference});
+
+  @override
+  String toString() {
+    return 'UpdatePlayerProfileAndSearchPreferenceAction{player: ${player.toString()}, searchPreference: ${searchPreference.toString()}';
+  }
+}
+
 // Dashboard - Watched Tournaments
 class WatchedTournamentsNotLoadedAction {}
 
