@@ -34,6 +34,12 @@ class ProfileEditView extends StatelessWidget {
   final Player player;
   final SearchPreference searchPreference;
   final Function(Player player, SearchPreference searchPreference) onSave;
+  static final GlobalKey<FormFieldState<String>> _firstNameKey = new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _lastNameKey = new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _addressKey = new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _countryKey  = new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _postCodeKey = new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<int>> _genderKey = new GlobalKey<FormFieldState<int>>();
 
   int quantity = 0;
   int selectedGender = 0;
@@ -60,7 +66,8 @@ class ProfileEditView extends StatelessWidget {
               child: new Text('SAVE',
                   style: theme.textTheme.body1.copyWith(color: Colors.white)),
               onPressed: () {
-                print('poping with context: ${context.widget.key}');
+                print('Selected Gender Value: ${_genderKey.currentState.value}');
+                print('Edited ${_firstNameKey.currentState.value} ${_lastNameKey.currentState.value} address: ${_addressKey.currentState.value}') ;
                 Navigator.pop(context, _enums.DismissDialogAction.save);
               })
         ]),
@@ -88,11 +95,13 @@ class ProfileEditView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 new TextFormField(
+                                  key: _firstNameKey,
                                   decoration: const InputDecoration(
                                       hintText: 'First name *', isDense: true),
                                   keyboardType: TextInputType.text,
                                 ),
                                 new TextFormField(
+                                  key: _lastNameKey,
                                   decoration: const InputDecoration(
                                       hintText: 'Last name *', isDense: true),
                                   keyboardType: TextInputType.text,
@@ -122,9 +131,9 @@ class ProfileEditView extends StatelessWidget {
                   'ADDRESS',
                   style: theme.textTheme.caption,
                 )),
-            new _LabelTextFormEdit(label: 'Street Address'),
-            new _LabelTextFormEdit(label: 'County'),
-            new _LabelTextFormEdit(label: 'Post Code'),
+            new _LabelTextFormEdit(label: 'Street Address', fkey: _addressKey,),
+            new _LabelTextFormEdit(label: 'County', fkey: _countryKey),
+            new _LabelTextFormEdit(label: 'Post Code', fkey: _postCodeKey,),
 
             new Container(
                 color: const Color(0xFFF5F5F5),
@@ -143,6 +152,7 @@ class ProfileEditView extends StatelessWidget {
                         displayIntItems: [0, 1],
                         label: 'Gender',
                         output: selectedGender,
+                        key: _genderKey,
                         displayFunc: (int i) => i == 0 ? 'Female' : 'Male'),
                     // Miles from home
                     new _LabelIntDropDownItem(
@@ -172,21 +182,11 @@ final BoxDecoration _topBottomBoxDecoration = new BoxDecoration(
   ),
 );
 
-class _LabelTextFormEdit extends StatefulWidget {
-  _LabelTextFormEdit({Key key, this.label, this.inputType}) : super(key: key);
-  String label;
-  TextInputType inputType = TextInputType.text;
-
-  @override
-  _LabelTextFormEditState createState() => new _LabelTextFormEditState();
-}
-
-class _LabelTextFormEditState extends State<_LabelTextFormEdit> {
-  @override
-  void initState() {
-    super.initState();
-    //result = widget.output;
-  }
+class _LabelTextFormEdit extends StatelessWidget{
+  final String label;
+  final TextInputType inputType;
+  final GlobalKey<FormFieldState<String>> fkey; 
+  _LabelTextFormEdit({Key key, this.label, this.inputType, this.fkey}) : super(key: key);
 
   Widget build(BuildContext context) {
     return new Container(
@@ -196,12 +196,13 @@ class _LabelTextFormEditState extends State<_LabelTextFormEdit> {
           children: [
             new Row(
               children: <Widget>[
-                new Text(widget.label),
+                new Text(label),
                 new Expanded(
                     child: new Container(
                         padding: const EdgeInsets.only(right: 5.0, left: 10.0),
                         alignment: Alignment.bottomRight,
-                        child: new TextField(
+                        child: new TextFormField(
+                          key: fkey,
                           keyboardType: TextInputType.text,
                           textAlign: TextAlign.end
                         )))
@@ -219,10 +220,12 @@ class _LabelIntDropDownItem extends StatefulWidget {
       this.displayFunc,
       this.displayIntItems,
       this.label,
+      this.gkey,
       this.output})
       : super(key: key);
   var displayFunc;
   final label;
+  final GlobalKey<FormFieldState<int>> gkey;
   List<int> displayIntItems;
   int output;
 
@@ -252,15 +255,20 @@ class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem> {
                       items: widget.displayIntItems.map((int value) {
                         return new DropdownMenuItem<int>(
                           value: value,
+                          //key: widget.gkey,
                           child: new Padding(
                             padding: const EdgeInsets.only(left: 8.0),
-                            child: new Text(widget.displayFunc(value)),
+                            child: new Text(
+                          
+                              widget.displayFunc(value), key: widget.gkey,),
                           ),
                         );
                       }).toList(),
                       value: result,
                       onChanged: (int value) {
                         setState(() {
+          
+                          widget.gkey. currentState.onChanged(value);
                           print(value);
                           result = value;
                           print(widget.output);
