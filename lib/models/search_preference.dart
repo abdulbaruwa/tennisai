@@ -8,16 +8,15 @@ class SearchPreference {
   final int distance;
   final int ageGroup;
 
-  SearchPreference({
-    this.ltaNumber,
-    this.grade,
-    this.gender,
-    this.distance,
-    this.ageGroup
-  });
+  SearchPreference(
+      {this.ltaNumber, this.grade, this.gender, this.distance, this.ageGroup});
   @override
   int get hashCode =>
-      ltaNumber.hashCode ^ grade.hashCode ^ gender.hashCode ^ distance.hashCode ^ ageGroup.hashCode;
+      ltaNumber.hashCode ^
+      grade.hashCode ^
+      gender.hashCode ^
+      distance.hashCode ^
+      ageGroup.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -38,6 +37,11 @@ class SearchPreference {
       ageGroup: playerEntity.ageGroup,
       distance: playerEntity.distance,
     );
+  }
+
+  SearchPreference copyWth(
+      {int ltaNumber, int grade, int distance, int ageGroup, String gender}) {
+    return new SearchPreference(ltaNumber: ltaNumber ?? this.ltaNumber, ageGroup: ageGroup ?? this.ageGroup, distance: distance ?? this.distance, gender: gender ?? this.gender) ;
   }
 
   SearchPreferenceEntity toEntity() {

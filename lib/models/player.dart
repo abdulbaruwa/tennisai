@@ -1,7 +1,6 @@
 import 'tournament.dart';
 import 'package:meta/meta.dart';
 
-
 @immutable
 class Player {
   final String name;
@@ -10,6 +9,8 @@ class Player {
   final String ltaRating;
   final int ltaNumber;
   final String postCode;
+  final String address;
+  
 
   Player(
       {this.name,
@@ -17,14 +18,34 @@ class Player {
       this.ltaNumber,
       this.ltaRanking,
       this.ltaRating,
-      this.postCode});
+      this.postCode,
+      this.address
+      });
   final List<Tournament> watchedTournaments = [];
   final List<Tournament> enteredTournaments = [];
+
+  Player copyWith(
+      {String name,
+      String email,
+      int ltaNumber,
+      int ltaRanking,
+      String ltaRating,
+      String postCode,
+      String address}) {
+    return new Player(
+        name: name ?? this.name,
+        email: email ?? this.email,
+        address: address ?? this.address,
+        ltaNumber: ltaNumber ?? this.ltaNumber,
+        ltaRanking:  ltaRanking ?? this.ltaRanking,
+        ltaRating:  ltaRating ?? this.ltaRating);
+  }
 
   @override
   int get hashCode =>
       name.hashCode ^
       email.hashCode ^
+      address.hashCode ^
       ltaNumber.hashCode ^
       ltaRanking.hashCode ^
       ltaRating.hashCode ^
@@ -37,6 +58,7 @@ class Player {
           runtimeType == other.runtimeType &&
           name == other.name &&
           email == other.email &&
+          address == other.address &&
           ltaRanking == other.ltaRanking &&
           ltaRating == other.ltaRating &&
           ltaNumber == other.ltaNumber &&
@@ -49,6 +71,7 @@ class Player {
       ltaRanking: playerEntity.ltaRanking,
       ltaRating: playerEntity.ltaRating,
       email: playerEntity.email,
+      address: playerEntity.address,
       postCode: playerEntity.postCode,
     );
   }
@@ -57,6 +80,7 @@ class Player {
     return new PlayerEntity(
         name: name,
         email: email,
+        address: address,
         ltaNumber: ltaNumber,
         ltaRanking: ltaRanking,
         postCode: postCode);
@@ -64,7 +88,7 @@ class Player {
 
   @override
   String toString() {
-    return 'Player{name: $name, email: $email, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
+    return 'Player{name: $name, email: $email, address: $address, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
   }
 }
 
@@ -75,6 +99,7 @@ class PlayerEntity {
       this.ltaNumber,
       this.ltaRanking,
       this.ltaRating,
+      this.address,
       this.postCode,
       this.enteredTournaments,
       this.watchedTournaments});
@@ -84,6 +109,7 @@ class PlayerEntity {
   String ltaRating;
   int ltaNumber;
   String postCode;
+  String address;
 
   Map<String, Object> toJson() {
     return {
@@ -93,6 +119,7 @@ class PlayerEntity {
       'ltaRanking': ltaRanking,
       'ltaRating': ltaRating,
       'postCode': postCode,
+      'address': address,
     };
   }
 
@@ -106,6 +133,7 @@ class PlayerEntity {
       ltaRanking: json['ltaRanking'] as int,
       ltaRating: json['ltaRating'] as String,
       postCode: json['postCode'] as String,
+      address: json['address'] as String,
     );
   }
 }
@@ -114,5 +142,4 @@ class SearchQueryPreference {
   int grade;
   String gender;
   int distance;
-  
 }

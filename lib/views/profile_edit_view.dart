@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../keys/keys.dart';
 import '../models/enums.dart' as _enums;
-typedef OnPlayerProfileSaveCallback = Function(Player player, SearchPreference searchPreference );
+
+typedef OnPlayerProfileSaveCallback = Function(
+    Player player, SearchPreference searchPreference);
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
 
 final List<int> _ageGroups = [12, 14, 16, 18, 100];
@@ -22,24 +24,29 @@ final List<int> _grades = [1, 2, 3, 4, 5, 6];
 //   Widget build(BuildContext context){return new Container(child: new Text('Editing profile'));}
 // }
 
-
 // Widget for username editing
 class ProfileEditView extends StatelessWidget {
-   ProfileEditView({Key key, this.onSave, this.isEditing, this.player, this.searchPreference}) : super(key: key ?? TennisAiKeys.editProfile);
-   
-  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  ProfileEditView(
+      {Key key,
+      this.onSave,
+      this.isEditing,
+      this.player,
+      this.searchPreference})
+      : super(key: key ?? TennisAiKeys.editProfile);
 
   final bool isEditing;
   final Player player;
   final SearchPreference searchPreference;
+
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   final Function(Player player, SearchPreference searchPreference) onSave;
   static final GlobalKey<FormFieldState<String>> _firstNameKey = new GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _lastNameKey = new GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _addressKey = new GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _countryKey  = new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _countryKey = new GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _postCodeKey = new GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<int>> _genderKey = new GlobalKey<FormFieldState<int>>();
+  static final GlobalKey _genderKey = new GlobalKey();
 
   int quantity = 0;
   int selectedGender = 0;
@@ -53,6 +60,22 @@ class ProfileEditView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    var genderGroup = new _LabelIntDropDownItem(
+        displayIntItems: [0, 1],
+        label: 'Gender',
+        output: selectedGender,
+        key: _genderKey,
+        displayFunc: (int i) => i == 0 ? 'Female' : 'Male');
+    var distanceGroup = new _LabelIntDropDownItem(
+        displayIntItems: _distancesInMiles,
+        label: 'Distance',
+        output: selectedMiles,
+        displayFunc: (int i) => '$i miles');
+    var gradeGroup = new _LabelIntDropDownItem(
+        displayIntItems: _grades,
+        label: 'Grade',
+        output: selectedGrade,
+        displayFunc: (int i) => 'Grade $i');
     var tournamentGroup = new _LabelIntDropDownItem(
         displayIntItems: _ageGroups,
         label: 'Age Group',
@@ -66,8 +89,12 @@ class ProfileEditView extends StatelessWidget {
               child: new Text('SAVE',
                   style: theme.textTheme.body1.copyWith(color: Colors.white)),
               onPressed: () {
-                print('Selected Gender Value: ${_genderKey.currentState.value}');
-                print('Edited ${_firstNameKey.currentState.value} ${_lastNameKey.currentState.value} address: ${_addressKey.currentState.value}') ;
+                var updatedPlayer = player.copyWith(address: _addressKey.currentState.value, postCode: _postCodeKey.currentState.value);
+                var updateSearchPreference = new SearchPreference(grade: gradeGroup.output, distance: distanceGroup.output, ageGroup: tournamentGroup.output );
+                onSave(updatedPlayer, updateSearchPreference);
+                var tournGroup = tournamentGroup.output;
+                print(
+                    'Edited ${_firstNameKey.currentState.value} ${_lastNameKey.currentState.value} address: ${_addressKey.currentState.value}');
                 Navigator.pop(context, _enums.DismissDialogAction.save);
               })
         ]),
@@ -131,9 +158,15 @@ class ProfileEditView extends StatelessWidget {
                   'ADDRESS',
                   style: theme.textTheme.caption,
                 )),
-            new _LabelTextFormEdit(label: 'Street Address', fkey: _addressKey,),
+            new _LabelTextFormEdit(
+              label: 'Street Address',
+              fkey: _addressKey,
+            ),
             new _LabelTextFormEdit(label: 'County', fkey: _countryKey),
-            new _LabelTextFormEdit(label: 'Post Code', fkey: _postCodeKey,),
+            new _LabelTextFormEdit(
+              label: 'Post Code',
+              fkey: _postCodeKey,
+            ),
 
             new Container(
                 color: const Color(0xFFF5F5F5),
@@ -148,25 +181,11 @@ class ProfileEditView extends StatelessWidget {
                 child: new Column(
                   children: <Widget>[
                     // Gender
-                    new _LabelIntDropDownItem(
-                        displayIntItems: [0, 1],
-                        label: 'Gender',
-                        output: selectedGender,
-                        key: _genderKey,
-                        displayFunc: (int i) => i == 0 ? 'Female' : 'Male'),
-                    // Miles from home
-                    new _LabelIntDropDownItem(
-                        displayIntItems: _distancesInMiles,
-                        label: 'Distance',
-                        output: selectedMiles,
-                        displayFunc: (int i) => '$i miles'),
-                    //  tournament Grade
-                    new _LabelIntDropDownItem(
-                        displayIntItems: _grades,
-                        label: 'Grade',
-                        output: selectedGrade,
-                        displayFunc: (int i) => 'Grade $i'),
-                    //  tournament group
+
+                    //  tournament grou
+                    genderGroup,
+                    distanceGroup,
+                    gradeGroup,
                     tournamentGroup,
                   ],
                 )),
@@ -182,11 +201,12 @@ final BoxDecoration _topBottomBoxDecoration = new BoxDecoration(
   ),
 );
 
-class _LabelTextFormEdit extends StatelessWidget{
+class _LabelTextFormEdit extends StatelessWidget {
   final String label;
   final TextInputType inputType;
-  final GlobalKey<FormFieldState<String>> fkey; 
-  _LabelTextFormEdit({Key key, this.label, this.inputType, this.fkey}) : super(key: key);
+  final GlobalKey<FormFieldState<String>> fkey;
+  _LabelTextFormEdit({Key key, this.label, this.inputType, this.fkey})
+      : super(key: key);
 
   Widget build(BuildContext context) {
     return new Container(
@@ -202,10 +222,9 @@ class _LabelTextFormEdit extends StatelessWidget{
                         padding: const EdgeInsets.only(right: 5.0, left: 10.0),
                         alignment: Alignment.bottomRight,
                         child: new TextFormField(
-                          key: fkey,
-                          keyboardType: TextInputType.text,
-                          textAlign: TextAlign.end
-                        )))
+                            key: fkey,
+                            keyboardType: TextInputType.text,
+                            textAlign: TextAlign.end)))
               ],
             )
           ],
@@ -225,7 +244,8 @@ class _LabelIntDropDownItem extends StatefulWidget {
       : super(key: key);
   var displayFunc;
   final label;
-  final GlobalKey<FormFieldState<int>> gkey;
+
+  final GlobalKey gkey;
   List<int> displayIntItems;
   int output;
 
@@ -255,22 +275,23 @@ class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem> {
                       items: widget.displayIntItems.map((int value) {
                         return new DropdownMenuItem<int>(
                           value: value,
-                          //key: widget.gkey,
+                          key: widget.gkey,
                           child: new Padding(
                             padding: const EdgeInsets.only(left: 8.0),
                             child: new Text(
-                          
-                              widget.displayFunc(value), key: widget.gkey,),
+                              widget.displayFunc(value),
+                              key: widget.gkey,
+                            ),
                           ),
                         );
                       }).toList(),
                       value: result,
                       onChanged: (int value) {
                         setState(() {
-          
-                          widget.gkey. currentState.onChanged(value);
+                          var xx = widget.gkey;
                           print(value);
                           result = value;
+                          widget.output = value;
                           print(widget.output);
                         });
                       },
