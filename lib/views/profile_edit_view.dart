@@ -10,21 +10,7 @@ final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
 final List<int> _ageGroups = [12, 14, 16, 18, 100];
 
 final List<int> _grades = [1, 2, 3, 4, 5, 6];
-// class ProfileEditView extends StatelessWidget{
-//   static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
 
-//   final bool isEditing;
-//   final Player player;
-//   final SearchPreference searchPreference;
-//   final Function(Player player, SearchPreference searchPreference) onSave;
-
-//   ProfileEditView({Key key, this.onSave, this.isEditing, this.player, this.searchPreference}) : super(key: key ?? TennisAiKeys.editProfile);
-
-//   @override
-//   Widget build(BuildContext context){return new Container(child: new Text('Editing profile'));}
-// }
-
-// Widget for username editing
 class ProfileEditView extends StatelessWidget {
   ProfileEditView(
       {Key key,

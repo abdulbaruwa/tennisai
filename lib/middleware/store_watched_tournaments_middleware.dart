@@ -28,6 +28,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
   final loadBasket = _createLoadBasket(repository);
   final saveBasket = _createSaveBasket(repository);
+  final updateProfileAndSearchPref = _updatePlayerAndSearchProfile(repository);
 
   return combineTypedMiddleware([
     new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(
@@ -60,6 +61,10 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     // Basket
     new MiddlewareBinding<AppState, LoadBasketAction>(loadBasket),
     new MiddlewareBinding<AppState, AddBasketAction>(saveBasket),
+
+    // Edit profile
+    new MiddlewareBinding<AppState, UpdatePlayerProfileAndSearchPreferenceAction>(
+        updateProfileAndSearchPref)
   ]);
 }
 
@@ -182,7 +187,7 @@ Middleware<AppState> _createSaveSearchTournaments(
     print('About to save search Query preference');
     next(action);
     var toSave = searchTournamentsSelector(store.state)
-        .map((watchedTournament) => watchedTournament.toEntity())
+        .map((search) => search.toEntity())
         .toList();
     repository.saveSearchTournaments(toSave);
   };
@@ -224,5 +229,19 @@ Middleware<AppState> _createSaveBasket(DashboardRepository repository) {
     next(action);
     var toSave = basketSelector(store.state).value.toEntity();
     repository.saveBasket(toSave);
+  };
+}
+
+Middleware<AppState> _updatePlayerAndSearchProfile(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print('About to save player profile and search pref');
+    next(action);
+    var playerToSave = playerSelector(store.state).value.toEntity();
+    repository.savePlayerProfile(playerToSave);
+
+    var searchPrefToSave =
+        searchPreferenceSelector(store.state).value.toEntity();
+    repository.saveSearchPreference(searchPrefToSave);
   };
 }
