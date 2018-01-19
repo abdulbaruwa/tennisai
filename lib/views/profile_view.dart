@@ -46,7 +46,7 @@ class _UserProfile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    new Text(player.name, key: TennisAiKeys.profileName,),
+                    new Text('${player.firstName} ${player.lastName}', key: TennisAiKeys.profileName,),
                     new Text('99 Ashtead Avenue'),
                     new Text('KT21 2XX, Surrey')
                   ],

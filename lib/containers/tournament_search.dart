@@ -5,7 +5,6 @@ import 'package:redux/redux.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/tournament_search_view.dart';
-import '../tabs/search.dart';
 
 class TournamentSearch extends StatelessWidget {
   TournamentSearch({Key key})
@@ -18,8 +17,6 @@ class TournamentSearch extends StatelessWidget {
       return new _ViewModel.from(store);
     }, builder: (context, vm) {
       return new TournamentSearchView(tournaments: vm.tournaments);
-      // return new TournamentSearchView(
-      //     tournaments: vm.tournaments);
     });
   }
 }
@@ -38,9 +35,6 @@ class _ViewModel {
 
   factory _ViewModel.from(Store<AppState> store) {
     return new _ViewModel(
-        // onSortSelected: () {
-        //   store.dispatch(new UpdateEntrantSortOrderAction(!store.state.activeEntrantsSortOrder));
-        // },
         tournaments: searchTournamentsSelector(
             store.state),
         loading: store.state.isLoading);

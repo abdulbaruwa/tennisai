@@ -3,7 +3,8 @@ import 'package:meta/meta.dart';
 
 @immutable
 class Player {
-  final String name;
+  final String firstName;
+  final String lastName;
   final String email;
   final int ltaRanking;
   final String ltaRating;
@@ -13,7 +14,8 @@ class Player {
   
 
   Player(
-      {this.name,
+      {this.firstName,
+      this.lastName,
       this.email,
       this.ltaNumber,
       this.ltaRanking,
@@ -25,7 +27,8 @@ class Player {
   final List<Tournament> enteredTournaments = [];
 
   Player copyWith(
-      {String name,
+      {String firstName,
+      String lastName,
       String email,
       int ltaNumber,
       int ltaRanking,
@@ -33,7 +36,8 @@ class Player {
       String postCode,
       String address}) {
     return new Player(
-        name: name ?? this.name,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
         email: email ?? this.email,
         address: address ?? this.address,
         ltaNumber: ltaNumber ?? this.ltaNumber,
@@ -43,7 +47,8 @@ class Player {
 
   @override
   int get hashCode =>
-      name.hashCode ^
+      firstName.hashCode ^
+      lastName.hashCode ^
       email.hashCode ^
       address.hashCode ^
       ltaNumber.hashCode ^
@@ -56,7 +61,8 @@ class Player {
       identical(this, other) ||
       other is Player &&
           runtimeType == other.runtimeType &&
-          name == other.name &&
+          firstName == other.firstName &&
+          lastName == other.lastName &&
           email == other.email &&
           address == other.address &&
           ltaRanking == other.ltaRanking &&
@@ -66,7 +72,8 @@ class Player {
 
   static Player fromEntity(PlayerEntity playerEntity) {
     return new Player(
-      name: playerEntity.name,
+      firstName: playerEntity.firstName,
+      lastName: playerEntity.lastName,
       ltaNumber: playerEntity.ltaNumber,
       ltaRanking: playerEntity.ltaRanking,
       ltaRating: playerEntity.ltaRating,
@@ -78,7 +85,8 @@ class Player {
 
   PlayerEntity toEntity() {
     return new PlayerEntity(
-        name: name,
+      firstName: firstName,
+      lastName: lastName,
         email: email,
         address: address,
         ltaNumber: ltaNumber,
@@ -88,13 +96,14 @@ class Player {
 
   @override
   String toString() {
-    return 'Player{name: $name, email: $email, address: $address, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
+    return 'Player{firstName: $firstName, lastName: $lastName, email: $email, address: $address, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
   }
 }
 
 class PlayerEntity {
   PlayerEntity(
-      {this.name,
+      {this.firstName,
+      this.lastName,
       this.email,
       this.ltaNumber,
       this.ltaRanking,
@@ -103,7 +112,8 @@ class PlayerEntity {
       this.postCode,
       this.enteredTournaments,
       this.watchedTournaments});
-  String name;
+  String firstName;
+  String lastName;
   String email;
   int ltaRanking;
   String ltaRating;
@@ -113,7 +123,8 @@ class PlayerEntity {
 
   Map<String, Object> toJson() {
     return {
-      'name': name,
+      'firstName': firstName,
+      'lastName': lastName,
       'email': email,
       'ltaNumber': ltaNumber,
       'ltaRanking': ltaRanking,
@@ -127,7 +138,8 @@ class PlayerEntity {
   List<TournamentEntity> enteredTournaments = [];
   static PlayerEntity fromJson(Map<String, Object> json) {
     return new PlayerEntity(
-      name: json['name'] as String,
+      firstName: json['firstName'] as String,
+      lastName: json['lastName'] as String,
       email: json['email'] as String,
       ltaNumber: json['ltaNumber'] as int,
       ltaRanking: json['ltaRanking'] as int,

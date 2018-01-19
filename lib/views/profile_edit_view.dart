@@ -109,12 +109,14 @@ class ProfileEditView extends StatelessWidget {
                               children: [
                                 new TextFormField(
                                   key: _firstNameKey,
+                                  initialValue: player.firstName,
                                   decoration: const InputDecoration(
                                       hintText: 'First name *', isDense: true),
                                   keyboardType: TextInputType.text,
                                 ),
                                 new TextFormField(
                                   key: _lastNameKey,
+                                  initialValue: player.lastName,
                                   decoration: const InputDecoration(
                                       hintText: 'Last name *', isDense: true),
                                   keyboardType: TextInputType.text,

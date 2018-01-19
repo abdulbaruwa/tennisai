@@ -117,7 +117,8 @@ SearchPreference searchPreference = new SearchPreference(
     ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);
 
 Player player = new Player(
-    name: 'Wilson Babolat',
+    firstName: 'wilson',
+    lastName: 'babolat',
     email: 'Wilson@babalot.com',
     ltaNumber: 723492222,
     ltaRanking: 33,
