@@ -122,6 +122,8 @@ class _LabelTextRow extends StatelessWidget {
         new ProfileSection(player: player, searchPreference: searchPreference,),
         new _LtaInfo(value: 'LTA INFO'),
         new _LabelTextRow(label: 'Lta Number', value: player.ltaNumber.toString(), key: TennisAiKeys.profileLtaNumber,),
+        new _LabelTextRow(label: 'Lta Rating', value: player.ltaRating, key: TennisAiKeys.profileLtaRating,),
+        new _LabelTextRow(label: 'Lta Ranking', value: player.ltaRanking.toString(), key: TennisAiKeys.profileLtaRanking,),
         new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),
         new _LabelTextRow(label: 'Gender', value: searchPreference.gender == 'male' ? 'Male' : 'Female'),
         new _LabelTextRow(label: 'Distance', value:  '${searchPreference.distance} miles'),

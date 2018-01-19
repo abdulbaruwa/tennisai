@@ -124,7 +124,8 @@ Player player = new Player(
     ltaRanking: 33,
     ltaRating: '2.1',
     address: '69 West Field Sheds',
-    postCode: 'KT31 4KU');
+    postCode: 'KT31 4KU',
+    county: 'Surrey');
 
 List<Tournament> tournaments = <Tournament>[
   new Tournament(

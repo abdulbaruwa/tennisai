@@ -26,6 +26,8 @@ class TennisAiKeys {
   // Profile
   static final profileName = const Key('__profileName__');
   static final profileLtaNumber = const Key('__profileLtaNumber__');
+  static final profileLtaRating = const Key('__profileLtaRating__');
+  static final profileLtaRanking = const Key('__profileLtaRanking__');
 
 
   static final basket = const Key('__profileName__');

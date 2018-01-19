@@ -138,7 +138,10 @@ class ProfileEditView extends StatelessWidget {
                 )),
             new _LabelTextFormEdit(
                 label: 'LTA Number', value: player.ltaNumber.toString(), inputType: TextInputType.number),
-
+             new _LabelTextFormEdit(
+                label: 'LTA Rating', value: player.ltaRating, inputType: TextInputType.text),
+                 new _LabelTextFormEdit(
+                label: 'LTA Ranking', value: player.ltaRanking.toString(), inputType: TextInputType.number),
             new Container(
                 color: const Color(0xFFF5F5F5),
                 padding: const EdgeInsets.all(10.0),
@@ -149,11 +152,13 @@ class ProfileEditView extends StatelessWidget {
             new _LabelTextFormEdit(
               label: 'Street Address',
               fkey: _addressKey,
+              value:  player.address,
             ),
-            new _LabelTextFormEdit(label: 'County', fkey: _countryKey),
+            new _LabelTextFormEdit(label: 'County', fkey: _countryKey, value: player.county),
             new _LabelTextFormEdit(
               label: 'Post Code',
               fkey: _postCodeKey,
+              value: player.postCode,
             ),
 
             new Container(

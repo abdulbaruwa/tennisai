@@ -11,7 +11,7 @@ class Player {
   final int ltaNumber;
   final String postCode;
   final String address;
-  
+  final String county;
 
   Player(
       {this.firstName,
@@ -21,8 +21,8 @@ class Player {
       this.ltaRanking,
       this.ltaRating,
       this.postCode,
-      this.address
-      });
+      this.address,
+      this.county});
   final List<Tournament> watchedTournaments = [];
   final List<Tournament> enteredTournaments = [];
 
@@ -34,15 +34,17 @@ class Player {
       int ltaRanking,
       String ltaRating,
       String postCode,
-      String address}) {
+      String address,
+      String county}) {
     return new Player(
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
         email: email ?? this.email,
         address: address ?? this.address,
+        county: county ?? this.county,
         ltaNumber: ltaNumber ?? this.ltaNumber,
-        ltaRanking:  ltaRanking ?? this.ltaRanking,
-        ltaRating:  ltaRating ?? this.ltaRating);
+        ltaRanking: ltaRanking ?? this.ltaRanking,
+        ltaRating: ltaRating ?? this.ltaRating);
   }
 
   @override
@@ -51,6 +53,7 @@ class Player {
       lastName.hashCode ^
       email.hashCode ^
       address.hashCode ^
+      county.hashCode ^
       ltaNumber.hashCode ^
       ltaRanking.hashCode ^
       ltaRating.hashCode ^
@@ -65,6 +68,7 @@ class Player {
           lastName == other.lastName &&
           email == other.email &&
           address == other.address &&
+          county == other.county &&
           ltaRanking == other.ltaRanking &&
           ltaRating == other.ltaRating &&
           ltaNumber == other.ltaNumber &&
@@ -80,23 +84,26 @@ class Player {
       email: playerEntity.email,
       address: playerEntity.address,
       postCode: playerEntity.postCode,
+      county: playerEntity.county,
     );
   }
 
   PlayerEntity toEntity() {
     return new PlayerEntity(
-      firstName: firstName,
-      lastName: lastName,
+        firstName: firstName,
+        lastName: lastName,
         email: email,
         address: address,
         ltaNumber: ltaNumber,
         ltaRanking: ltaRanking,
-        postCode: postCode);
+        ltaRating: ltaRating,
+        postCode: postCode,
+        county: county);
   }
 
   @override
   String toString() {
-    return 'Player{firstName: $firstName, lastName: $lastName, email: $email, address: $address, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
+    return 'Player{firstName: $firstName, lastName: $lastName, email: $email, address: $address, county: $county, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
   }
 }
 
@@ -110,6 +117,7 @@ class PlayerEntity {
       this.ltaRating,
       this.address,
       this.postCode,
+      this.county,
       this.enteredTournaments,
       this.watchedTournaments});
   String firstName;
@@ -120,6 +128,7 @@ class PlayerEntity {
   int ltaNumber;
   String postCode;
   String address;
+  String county;
 
   Map<String, Object> toJson() {
     return {
@@ -131,6 +140,7 @@ class PlayerEntity {
       'ltaRating': ltaRating,
       'postCode': postCode,
       'address': address,
+      'county': county,
     };
   }
 
@@ -146,6 +156,7 @@ class PlayerEntity {
       ltaRating: json['ltaRating'] as String,
       postCode: json['postCode'] as String,
       address: json['address'] as String,
+      county: json['county'] as String,
     );
   }
 }
