@@ -47,8 +47,8 @@ class _UserProfile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     new Text('${player.firstName} ${player.lastName}', key: TennisAiKeys.profileName,),
-                    new Text('99 Ashtead Avenue'),
-                    new Text('KT21 2XX, Surrey')
+                    new Text(player.address),
+                    new Text(player.postCode)
                   ],
                 )),
           ),
@@ -123,7 +123,7 @@ class _LabelTextRow extends StatelessWidget {
         new _LtaInfo(value: 'LTA INFO'),
         new _LabelTextRow(label: 'Lta Number', value: player.ltaNumber.toString(), key: TennisAiKeys.profileLtaNumber,),
         new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),
-        new _LabelTextRow(label: 'Gender', value: 'Female'),
+        new _LabelTextRow(label: 'Gender', value: searchPreference.gender == 'male' ? 'Male' : 'Female'),
         new _LabelTextRow(label: 'Distance', value:  '${searchPreference.distance} miles'),
         new _LabelTextRow(label: 'Grade', value: searchPreference.grade.toString()),
         new _LabelTextRow(label: 'Age Group', value:  searchPreference.ageGroup > 18 ? 'Adult' : 'U${searchPreference.ageGroup}'),

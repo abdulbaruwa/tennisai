@@ -137,7 +137,7 @@ class ProfileEditView extends StatelessWidget {
                   style: theme.textTheme.caption,
                 )),
             new _LabelTextFormEdit(
-                label: 'LTA Number', inputType: TextInputType.number),
+                label: 'LTA Number', value: player.ltaNumber.toString(), inputType: TextInputType.number),
 
             new Container(
                 color: const Color(0xFFF5F5F5),
@@ -193,7 +193,8 @@ class _LabelTextFormEdit extends StatelessWidget {
   final String label;
   final TextInputType inputType;
   final GlobalKey<FormFieldState<String>> fkey;
-  _LabelTextFormEdit({Key key, this.label, this.inputType, this.fkey})
+  final Object value;
+  _LabelTextFormEdit({Key key, this.value, this.label, this.inputType, this.fkey})
       : super(key: key);
 
   Widget build(BuildContext context) {
@@ -210,6 +211,7 @@ class _LabelTextFormEdit extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 5.0, left: 10.0),
                         alignment: Alignment.bottomRight,
                         child: new TextFormField(
+                            initialValue: value != null ? value.toString() : '',
                             key: fkey,
                             keyboardType: TextInputType.text,
                             textAlign: TextAlign.end)))

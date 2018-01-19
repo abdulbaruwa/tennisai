@@ -122,7 +122,9 @@ Player player = new Player(
     email: 'Wilson@babalot.com',
     ltaNumber: 723492222,
     ltaRanking: 33,
-    ltaRating: '2.1');
+    ltaRating: '2.1',
+    address: '69 West Field Sheds',
+    postCode: 'KT31 4KU');
 
 List<Tournament> tournaments = <Tournament>[
   new Tournament(
