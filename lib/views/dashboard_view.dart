@@ -72,15 +72,7 @@ class DashboardView extends StatelessWidget {
                             color: Theme.of(context).primaryColor,
                             context: context,
                             tiles: _allPages[page].map((Tournament data) {
-                              return new TournamentItem(
-                                tournament: data,
-                                source: describeEnum(page.tabSource),
-                                onTap: () =>
-                                        _onTap(context, data, page.tabSource)
-
-                                    // TODO: Add logic to show details page.
-                                    ,
-                              );
+                              return getTabForSource(context, page, data);
                             }).toList())
                         .toList(),
                   );
@@ -89,6 +81,107 @@ class DashboardView extends StatelessWidget {
             ),
           )),
     );
+  }
+
+  Widget getTabForSource(
+      BuildContext context, _Page page, Tournament tournament) {
+    if (page.tabSource == TournamentDetailsActionSource.watching) {
+      return buildDismisableItem(context, tournament, page);
+    }
+
+    return new TournamentItem(
+      tournament: tournament,
+      source: describeEnum(page.tabSource),
+      onTap: () => _onTap(context, tournament, page.tabSource),
+    );
+  }
+
+  Widget buildDismisableItem(
+      BuildContext context, Tournament tournament, _Page page) {
+    final ThemeData theme = Theme.of(context);
+    return new GestureDetector(
+        onTap: () => _onTap(context, tournament, page.tabSource),
+        key: TennisAiKeys.tournamentItem(
+            tournament.code, describeEnum(page.tabSource)),
+        child: new Dismissible(
+          key: new ObjectKey(tournament),
+          direction: DismissDirection.horizontal,
+          // onDismissed: (DismissDirection direction) {
+          //   setState(() {
+          //     leaveBehindItems.remove(item);
+          //   });
+          //   final String action = (direction == DismissDirection.endToStart)
+          //       ? 'archived'
+          //       : 'deleted';
+          //   _scaffoldKey.currentState.showSnackBar(new SnackBar(
+          //       content: new Text('You $action item ${item.name}'),
+          //       action: new SnackBarAction(
+          //           label: 'UNDO',
+          //           onPressed: () {
+          //             handleUndo(item);
+          //           })));
+          // },
+          background: new Container(
+              color: theme.primaryColor,
+              child: const ListTile(
+                  leading: const Icon(Icons.delete,
+                      color: Colors.white, size: 36.0))),
+          secondaryBackground: new Container(
+              color: theme.primaryColor,
+              child: const ListTile(
+                  trailing: const Icon(Icons.archive,
+                      color: Colors.white, size: 36.0))),
+          child: new Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              new Padding(
+                child: new ListTile(
+                  title: new Text(tournament.name,
+                      key: TennisAiKeys.tournamentItemName(
+                        tournament.code,
+                        describeEnum(page.tabSource),
+                      )),
+                  subtitle: new Text(tournament.location),
+                ),
+                padding: const EdgeInsets.only(
+                    left: 1.0, right: 1.0, top: 1.0, bottom: 1.0),
+              ),
+              new Padding(
+                child: new Text(
+                  tournament.startDate.toIso8601String(),
+                  textAlign: TextAlign.left,
+                  //textScaleFactor: 1.0,
+                ),
+                padding: const EdgeInsets.only(left: 20.0),
+              ),
+              new SizedBox(
+                height: 5.0,
+              ),
+              new Row(
+                mainAxisSize: MainAxisSize.max,
+                children: <Widget>[
+                  new Padding(
+                    child: new Text("Grade ${tournament.grade}"),
+                    padding: const EdgeInsets.only(left: 20.0),
+                  ),
+                  new Expanded(
+                      child: new Padding(
+                    child: new Text(
+                      "Entrants ${tournament.numberOfEntrants}",
+                      textAlign: TextAlign.end,
+                    ),
+                    padding: const EdgeInsets.only(right: 10.0),
+                  ))
+                ],
+              ),
+              new SizedBox(
+                height: 15.0,
+              )
+            ],
+          ),
+        ));
   }
 
   void _onTap(BuildContext context, Tournament tournament,
