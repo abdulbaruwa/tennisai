@@ -75,12 +75,12 @@ class ProfileEditView extends StatelessWidget {
               child: new Text('SAVE',
                   style: theme.textTheme.body1.copyWith(color: Colors.white)),
               onPressed: () {
-                var updatedPlayer = player.copyWith(address: _addressKey.currentState.value, postCode: _postCodeKey.currentState.value);
-                var updateSearchPreference = new SearchPreference(grade: gradeGroup.output, distance: distanceGroup.output, ageGroup: tournamentGroup.output );
-                onSave(updatedPlayer, updateSearchPreference);
-                var tournGroup = tournamentGroup.output;
-                print(
-                    'Edited ${_firstNameKey.currentState.value} ${_lastNameKey.currentState.value} address: ${_addressKey.currentState.value}');
+                 var updatedPlayer = player.copyWith(address: _addressKey.currentState.value, postCode: _postCodeKey.currentState.value);
+                 var updateSearchPreference = new SearchPreference(grade: gradeGroup.output, distance: distanceGroup.output, ageGroup: tournamentGroup.output );
+                 onSave(updatedPlayer, updateSearchPreference);
+                // var tournGroup = tournamentGroup.output;
+                // print(
+                //     'Edited ${_firstNameKey.currentState.value} ${_lastNameKey.currentState.value} address: ${_addressKey.currentState.value}');
                 Navigator.pop(context, _enums.DismissDialogAction.save);
               })
         ]),

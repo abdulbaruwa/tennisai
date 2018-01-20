@@ -6,7 +6,8 @@ import '../containers/profile_edit_container.dart';
 class ProfileSection extends StatelessWidget {
   final Player player;
   final SearchPreference searchPreference;
-  const ProfileSection({Key key, this.player, this.searchPreference}) : super(key: key);
+  const ProfileSection({Key key, this.player, this.searchPreference})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => new Container(
@@ -19,7 +20,7 @@ class ProfileSection extends StatelessWidget {
             children: <Widget>[
               new Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
-                  child: new _UserProfile(player:player)),
+                  child: new _UserProfile(player: player)),
             ],
           )));
 }
@@ -46,9 +47,12 @@ class _UserProfile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    new Text('${player.firstName} ${player.lastName}', key: TennisAiKeys.profileName,),
-                    new Text(player.address),
-                    new Text(player.postCode)
+                    new Text(
+                      player != null ? '${player.firstName} ${player.lastName}': '',
+                      key: TennisAiKeys.profileName,
+                    ),
+                    new Text(player != null ? player.address: '?'),
+                    new Text(player.postCode != null ? player.postCode : '?')
                   ],
                 )),
           ),
@@ -90,7 +94,7 @@ class _LabelTextRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-     final ThemeData theme = Theme.of(context);
+    final ThemeData theme = Theme.of(context);
     return new Container(
         color: Colors.white,
         padding: const EdgeInsets.only(top: 0.0, left: 10.0),
@@ -115,28 +119,53 @@ class _LabelTextRow extends StatelessWidget {
   }
 }
 
- Widget _buildPreference(BuildContext context, Player player, SearchPreference searchPreference) {
-    return new Container(
-        child: new ListView(
-      children: <Widget>[
-        new ProfileSection(player: player, searchPreference: searchPreference,),
-        new _LtaInfo(value: 'LTA INFO'),
-        new _LabelTextRow(label: 'Lta Number', value: player.ltaNumber.toString(), key: TennisAiKeys.profileLtaNumber,),
-        new _LabelTextRow(label: 'Lta Rating', value: player.ltaRating, key: TennisAiKeys.profileLtaRating,),
-        new _LabelTextRow(label: 'Lta Ranking', value: player.ltaRanking.toString(), key: TennisAiKeys.profileLtaRanking,),
-        new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),
-        new _LabelTextRow(label: 'Gender', value: searchPreference.gender == 'male' ? 'Male' : 'Female'),
-        new _LabelTextRow(label: 'Distance', value:  '${searchPreference.distance} miles'),
-        new _LabelTextRow(label: 'Grade', value: searchPreference.grade.toString()),
-        new _LabelTextRow(label: 'Age Group', value:  searchPreference.ageGroup > 18 ? 'Adult' : 'U${searchPreference.ageGroup}'),
-      ],
-    ));
+Widget _buildPreference(
+    BuildContext context, Player player, SearchPreference searchPreference) {
+  return new Container(
+      child: new ListView(
+    children: <Widget>[
+      new ProfileSection(
+        player: player,
+        searchPreference: searchPreference,
+      ),
+      new _LtaInfo(value: 'LTA INFO'),
+      new _LabelTextRow(
+        label: 'Lta Number',
+        value: player.ltaNumber.toString(),
+        key: TennisAiKeys.profileLtaNumber,
+      ),
+      new _LabelTextRow(
+        label: 'Lta Rating',
+        value: player.ltaRating,
+        key: TennisAiKeys.profileLtaRating,
+      ),
+      new _LabelTextRow(
+        label: 'Lta Ranking',
+        value: player.ltaRanking.toString(),
+        key: TennisAiKeys.profileLtaRanking,
+      ),
+      new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),
+      new _LabelTextRow(
+          label: 'Gender',
+          value: searchPreference.gender == 'male' ? 'Male' : 'Female'),
+      new _LabelTextRow(
+          label: 'Distance', value: '${searchPreference.distance} miles'),
+      new _LabelTextRow(
+          label: 'Grade', value: searchPreference.grade.toString()),
+      new _LabelTextRow(
+          label: 'Age Group',
+          value: searchPreference.ageGroup > 18
+              ? 'Adult'
+              : 'U${searchPreference.ageGroup}'),
+    ],
+  ));
 }
 
 class ProfileView extends StatelessWidget {
   final Player player;
   final SearchPreference searchPreference;
-  const ProfileView({Key key, this.player, this.searchPreference}) : super(key: key);
+  const ProfileView({Key key, this.player, this.searchPreference})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -147,25 +176,34 @@ class ProfileView extends StatelessWidget {
           platform: Theme.of(context).platform,
         ),
         child: new Scaffold(
-           floatingActionButton: 
-              new FloatingActionButton(
-                  key: TennisAiKeys.editProfile,
-                  onPressed: () {
-                    Navigator.push(context, 
-                              new MaterialPageRoute< DismissDialogAction>(
-                      builder: (BuildContext context) => new ProfileEditContainer(player: player, searchPreference: searchPreference,),
-                      fullscreenDialog: true,
-                    ));
-                  },
-                  child: new Icon(Icons.add),
-                  tooltip: 'Edit Profile'),
           appBar: new AppBar(
-
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text('EDIT',
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .body1
+                        .copyWith(color: Colors.white)),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute<DismissDialogAction>(
+                        builder: (BuildContext context) =>
+                            new ProfileEditContainer(
+                              player: player,
+                              searchPreference: searchPreference,
+                            ),
+                        fullscreenDialog: true,
+                      ));
+                },
+              )
+            ],
             title: new Text('Preference'),
           ),
           body: new Scrollbar(
             child: _buildPreference(context, player, searchPreference),
-           ),
+          ),
         ));
   }
 }
