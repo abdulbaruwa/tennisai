@@ -16,12 +16,6 @@ class BasketChildView extends StatelessWidget{
 
   final List<Tournament> leaveBehindItems;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   leaveBehindItems = widget.tournaments;
-  // }
-
   Widget buildListTile(BuildContext context, Tournament item) {
     Widget secondary;
     print(item.name);
@@ -144,10 +138,10 @@ class BasketChildView extends StatelessWidget{
           padding: const EdgeInsets.all(5.0),
           color: const Color(0xFFFC5CAE9),
           child: new SizedBox(
-            height: 56.0,
+            height: 76.0,
             child: new Row(children: <Widget>[
               new CircleAvatar(
-                radius: 26.0,
+                radius: 36.0,
                 backgroundImage: const AssetImage('images/ademola.jpg'),
               ),
               new Expanded(

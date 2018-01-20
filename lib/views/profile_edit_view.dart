@@ -24,14 +24,20 @@ class ProfileEditView extends StatelessWidget {
   final Player player;
   final SearchPreference searchPreference;
 
-  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      new GlobalKey<ScaffoldState>();
   static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   final Function(Player player, SearchPreference searchPreference) onSave;
-  static final GlobalKey<FormFieldState<String>> _firstNameKey = new GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _lastNameKey = new GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _addressKey = new GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _countryKey = new GlobalKey<FormFieldState<String>>();
-  static final GlobalKey<FormFieldState<String>> _postCodeKey = new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _firstNameKey =
+      new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _lastNameKey =
+      new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _addressKey =
+      new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _countryKey =
+      new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _postCodeKey =
+      new GlobalKey<FormFieldState<String>>();
   static final GlobalKey _genderKey = new GlobalKey();
 
   int quantity = 0;
@@ -68,122 +74,145 @@ class ProfileEditView extends StatelessWidget {
         output: selectedAgeGroup,
         displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
     //selectedAgeGroup = tournamentGroup.output;
-    return new Scaffold(
-        // backgroundColor: Colors.white70,
-        appBar: new AppBar(title: const Text('Edit Profile'), actions: <Widget>[
-          new FlatButton(
-              child: new Text('SAVE',
-                  style: theme.textTheme.body1.copyWith(color: Colors.white)),
-              onPressed: () {
-                 var updatedPlayer = player.copyWith(address: _addressKey.currentState.value, postCode: _postCodeKey.currentState.value);
-                 var updateSearchPreference = new SearchPreference(grade: gradeGroup.output, distance: distanceGroup.output, ageGroup: tournamentGroup.output );
-                 onSave(updatedPlayer, updateSearchPreference);
-                // var tournGroup = tournamentGroup.output;
-                // print(
-                //     'Edited ${_firstNameKey.currentState.value} ${_lastNameKey.currentState.value} address: ${_addressKey.currentState.value}');
-                Navigator.pop(context, _enums.DismissDialogAction.save);
-              })
-        ]),
-        body: new Form(
-            child: new ListView(
-          padding: const EdgeInsets.symmetric(horizontal: 1.0),
-          children: <Widget>[
-            new SizedBox(
-              height: 96.0,
-              child: new Container(
-                  color: Colors.white,
-                  child: new Row(
-                    children: <Widget>[
-                      new CircleAvatar(
-                        radius: 36.0,
-                        backgroundImage: const AssetImage('images/ademola.jpg'),
-                      ),
-                      const SizedBox(width: 8.0),
-                      new Expanded(
-                        child: new Padding(
-                            padding: const EdgeInsets.only(
-                                left: 2.0, top: 10.0, right: 15.0),
-                            child: new Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                new TextFormField(
-                                  key: _firstNameKey,
-                                  initialValue: player.firstName,
-                                  decoration: const InputDecoration(
-                                      hintText: 'First name *', isDense: true),
-                                  keyboardType: TextInputType.text,
-                                ),
-                                new TextFormField(
-                                  key: _lastNameKey,
-                                  initialValue: player.lastName,
-                                  decoration: const InputDecoration(
-                                      hintText: 'Last name *', isDense: true),
-                                  keyboardType: TextInputType.text,
-                                ),
-                              ],
-                            )),
-                      )
-                    ],
-                  )),
-            ),
-            // lta info header
-            // FFAFAFA
-            new Container(
-                color: const Color(0xFFF5F5F5),
-                padding: const EdgeInsets.all(10.0),
-                child: new Text(
-                  'LTA INFO',
-                  style: theme.textTheme.caption,
-                )),
-            new _LabelTextFormEdit(
-                label: 'LTA Number', value: player.ltaNumber.toString(), inputType: TextInputType.number),
-             new _LabelTextFormEdit(
-                label: 'LTA Rating', value: player.ltaRating, inputType: TextInputType.text),
-                 new _LabelTextFormEdit(
-                label: 'LTA Ranking', value: player.ltaRanking.toString(), inputType: TextInputType.number),
-            new Container(
-                color: const Color(0xFFF5F5F5),
-                padding: const EdgeInsets.all(10.0),
-                child: new Text(
-                  'ADDRESS',
-                  style: theme.textTheme.caption,
-                )),
-            new _LabelTextFormEdit(
-              label: 'Street Address',
-              fkey: _addressKey,
-              value:  player.address,
-            ),
-            new _LabelTextFormEdit(label: 'County', fkey: _countryKey, value: player.county),
-            new _LabelTextFormEdit(
-              label: 'Post Code',
-              fkey: _postCodeKey,
-              value: player.postCode,
-            ),
+    return new Theme(
+        data: new ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: Colors.indigo,
+          platform: Theme.of(context).platform,
+        ),
+        child: new Scaffold(
+            // backgroundColor: Colors.white70,
+            appBar:
+                new AppBar(title: const Text('Edit Profile'), actions: <Widget>[
+              new FlatButton(
+                  child: new Text('SAVE',
+                      style:
+                          theme.textTheme.body1.copyWith(color: Colors.white)),
+                  onPressed: () {
+                    var updatedPlayer = player.copyWith(
+                        address: _addressKey.currentState.value,
+                        postCode: _postCodeKey.currentState.value);
+                    var updateSearchPreference = new SearchPreference(
+                        grade: gradeGroup.output,
+                        distance: distanceGroup.output,
+                        ageGroup: tournamentGroup.output);
+                    onSave(updatedPlayer, updateSearchPreference);
+                    // var tournGroup = tournamentGroup.output;
+                    // print(
+                    //     'Edited ${_firstNameKey.currentState.value} ${_lastNameKey.currentState.value} address: ${_addressKey.currentState.value}');
+                    Navigator.pop(context, _enums.DismissDialogAction.save);
+                  })
+            ]),
+            body: new Form(
+                child: new ListView(
+              padding: const EdgeInsets.symmetric(horizontal: 1.0),
+              children: <Widget>[
+                new SizedBox(
+                  height: 96.0,
+                  child: new Container(
+                      color: Colors.white,
+                      child: new Row(
+                        children: <Widget>[
+                          new CircleAvatar(
+                            radius: 36.0,
+                            backgroundImage:
+                                const AssetImage('images/ademola.jpg'),
+                          ),
+                          const SizedBox(width: 8.0),
+                          new Expanded(
+                            child: new Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 2.0, top: 10.0, right: 15.0),
+                                child: new Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    new TextFormField(
+                                      key: _firstNameKey,
+                                      initialValue: player.firstName,
+                                      decoration: const InputDecoration(
+                                          hintText: 'First name *',
+                                          isDense: true),
+                                      keyboardType: TextInputType.text,
+                                    ),
+                                    new TextFormField(
+                                      key: _lastNameKey,
+                                      initialValue: player.lastName,
+                                      decoration: const InputDecoration(
+                                          hintText: 'Last name *',
+                                          isDense: true),
+                                      keyboardType: TextInputType.text,
+                                    ),
+                                  ],
+                                )),
+                          )
+                        ],
+                      )),
+                ),
+                // lta info header
+                // FFAFAFA
+                new Container(
+                    color: const Color(0xFFF5F5F5),
+                    padding: const EdgeInsets.all(10.0),
+                    child: new Text(
+                      'LTA INFO',
+                      style: theme.textTheme.caption,
+                    )),
+                new _LabelTextFormEdit(
+                    label: 'LTA Number',
+                    value: player.ltaNumber.toString(),
+                    inputType: TextInputType.number),
+                new _LabelTextFormEdit(
+                    label: 'LTA Rating',
+                    value: player.ltaRating,
+                    inputType: TextInputType.text),
+                new _LabelTextFormEdit(
+                    label: 'LTA Ranking',
+                    value: player.ltaRanking.toString(),
+                    inputType: TextInputType.number),
+                new Container(
+                    color: const Color(0xFFF5F5F5),
+                    padding: const EdgeInsets.all(10.0),
+                    child: new Text(
+                      'ADDRESS',
+                      style: theme.textTheme.caption,
+                    )),
+                new _LabelTextFormEdit(
+                  label: 'Street Address',
+                  fkey: _addressKey,
+                  value: player.address,
+                ),
+                new _LabelTextFormEdit(
+                    label: 'County', fkey: _countryKey, value: player.county),
+                new _LabelTextFormEdit(
+                  label: 'Post Code',
+                  fkey: _postCodeKey,
+                  value: player.postCode,
+                ),
 
-            new Container(
-                color: const Color(0xFFF5F5F5),
-                padding: const EdgeInsets.all(10.0),
-                child: new Text(
-                  'TOURNAMENT SEARCH PREFERENCES',
-                  style: theme.textTheme.caption,
-                )),
-            new Container(
-                padding: const EdgeInsets.only(top: 5.0, left: 10.0),
-                decoration: _topBottomBoxDecoration,
-                child: new Column(
-                  children: <Widget>[
-                    // Gender
+                new Container(
+                    color: const Color(0xFFF5F5F5),
+                    padding: const EdgeInsets.all(10.0),
+                    child: new Text(
+                      'TOURNAMENT SEARCH PREFERENCES',
+                      style: theme.textTheme.caption,
+                    )),
+                new Container(
+                    padding: const EdgeInsets.only(top: 5.0, left: 10.0),
+                    decoration: _topBottomBoxDecoration,
+                    child: new Column(
+                      children: <Widget>[
+                        // Gender
 
-                    //  tournament grou
-                    genderGroup,
-                    distanceGroup,
-                    gradeGroup,
-                    tournamentGroup,
-                  ],
-                )),
-          ],
-        )));
+                        //  tournament grou
+                        genderGroup,
+                        distanceGroup,
+                        gradeGroup,
+                        tournamentGroup,
+                      ],
+                    )),
+              ],
+            ))));
   }
 }
 
@@ -199,7 +228,8 @@ class _LabelTextFormEdit extends StatelessWidget {
   final TextInputType inputType;
   final GlobalKey<FormFieldState<String>> fkey;
   final Object value;
-  _LabelTextFormEdit({Key key, this.value, this.label, this.inputType, this.fkey})
+  _LabelTextFormEdit(
+      {Key key, this.value, this.label, this.inputType, this.fkey})
       : super(key: key);
 
   Widget build(BuildContext context) {

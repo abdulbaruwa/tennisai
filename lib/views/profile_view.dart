@@ -13,7 +13,7 @@ class ProfileSection extends StatelessWidget {
   Widget build(BuildContext context) => new Container(
       color: const Color(0xFFFAFAFA),
       child: new SizedBox(
-          height: 105.0,
+          height: 85.0,
           child: new Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +33,7 @@ class _UserProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return new SizedBox(
-        height: 96.0,
+        height: 76.0,
         child: new Row(children: <Widget>[
           new CircleAvatar(
             radius: 36.0,
@@ -42,7 +42,7 @@ class _UserProfile extends StatelessWidget {
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(
-                padding: const EdgeInsets.only(left: 2.0, top: 25.0),
+                padding: const EdgeInsets.only(left: 2.0, top: 5.0),
                 child: new Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,8 @@ class _LtaInfo extends StatelessWidget {
           children: <Widget>[
             new Expanded(
                 child: new Container(
-                    color: const Color(0xFFF5F5F5),
+                    color: const Color(0xFFFC5CAE9),
+                    // color: const Color(0xFFF5F5F5),
                     padding: const EdgeInsets.all(10.0),
                     child: new Text(
                       value,
