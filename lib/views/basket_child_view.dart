@@ -12,7 +12,9 @@ class BasketChildView extends StatelessWidget{
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
   final Basket basket;
-    BasketChildView({Key key, this.basket}): super(key: key);
+  final Player player;
+
+    BasketChildView({Key key, this.basket, this.player}): super(key: key);
 
   final List<Tournament> leaveBehindItems;
 
@@ -151,8 +153,8 @@ class BasketChildView extends StatelessWidget{
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        new Text('Ademola Baruwa'),
-                        new Text('LTA Number: 125587'),
+                        new Text('${player.firstName} ${player.lastName}'),
+                        new Text('LTA Number: ${player.ltaNumber}'),
                         // new Text('KT21 2XX, Surrey')
                       ],
                     )),

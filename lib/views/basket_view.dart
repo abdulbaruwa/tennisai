@@ -34,6 +34,6 @@ class BasketView extends StatelessWidget {
                   Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
             ),
             key: _scaffoldKey,
-            body: new BasketChildView(basket: basket)));
+            body: new BasketChildView(basket: basket, player: player)));
   }
 }
