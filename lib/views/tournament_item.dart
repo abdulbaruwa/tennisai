@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../controls/usercontrols.dart';
 import '../models/models.dart';
 import '../keys/keys.dart';
 
@@ -11,7 +12,8 @@ class TournamentItem extends StatelessWidget {
   //     const PestoStyle(fontSize: 24.0, fontWeight: FontWeight.w600);
   // final TextStyle authorStyle =
   //     const PestoStyle(fontWeight: FontWeight.w500, color: Colors.black54);
-  const TournamentItem({@required this.tournament, @required this.source, @required this.onTap});
+  const TournamentItem(
+      {@required this.tournament, @required this.source, @required this.onTap});
 
   final Tournament tournament;
   final VoidCallback onTap;
@@ -24,9 +26,8 @@ class TournamentItem extends StatelessWidget {
 
     return new GestureDetector(
       onTap: onTap,
-      key:TennisAiKeys.tournamentItem(tournament.code, source),
+      key: TennisAiKeys.tournamentItem(tournament.code, source),
       child: new Column(
-        
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +35,10 @@ class TournamentItem extends StatelessWidget {
           new Padding(
             child: new ListTile(
               title: new Text(tournament.name,
-              key: TennisAiKeys.tournamentItemName(tournament.code, source)),
+                  style: new TextStyle(
+                      color: Theme.of(context).primaryColor, fontSize: 18.0),
+                  key:
+                      TennisAiKeys.tournamentItemName(tournament.code, source)),
               subtitle: new Text(tournament.location),
             ),
             padding: const EdgeInsets.only(
@@ -54,17 +58,20 @@ class TournamentItem extends StatelessWidget {
           new Row(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              new Padding(
-                child: new Text("Grade ${tournament.grade}"),
-                padding: const EdgeInsets.only(left: 20.0),
-              ),
               new Expanded(
-                  child: new Padding(
-                child: new Text(
-                  "Entrants ${tournament.numberOfEntrants}",
-                  textAlign: TextAlign.end,
-                ),
-                padding: const EdgeInsets.only(right: 10.0),
+                  child: new TopBottomLabel(
+                value: '${tournament.grade}',
+                label: 'Grade',
+              )),
+              new Expanded(
+                  child: new TopBottomLabel(
+                value: '${tournament.status}',
+                label: 'Status',
+              )),
+              new Expanded(
+                  child: new TopBottomLabel(
+                value: '${tournament.numberOfEntrants}',
+                label: 'Entrants',
               ))
             ],
           ),
@@ -76,4 +83,3 @@ class TournamentItem extends StatelessWidget {
     );
   }
 }
-

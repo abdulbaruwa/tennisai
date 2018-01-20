@@ -60,3 +60,20 @@ class LabelIntDropDownItemState extends State<LabelIntDropDownItem> {
     );
   }
 }
+
+class TopBottomLabel extends StatelessWidget {
+  final String label;
+  final String value;
+  final Key key;
+
+  TopBottomLabel({this.value, this.label, this.key}) : super(key: key);
+  Widget build(BuildContext context) {
+    return new Container(
+        child: new Column(
+      children: <Widget>[
+        new Text(value, style: Theme.of(context).textTheme.body2),
+        new Text(label, style: Theme.of(context).textTheme.caption)
+      ],
+    ));
+  }
+}

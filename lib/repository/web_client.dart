@@ -106,11 +106,11 @@ BasketEntity basket = new BasketEntity(
     totalCost: 45.0,
     basketItems: <BasketItemEntity>[
       new BasketItemEntity(
-          cost: 20.0, tournamentId: '1', tournamentName: 'Sutton Grade 4', grade: 4, status: 'Accepting Entries'),
+          cost: 20.0, tournamentId: '1', tournamentName: 'Sutton Grade 4', grade: 4, status: 'Accepting'),
       new BasketItemEntity(
           cost: 25.0,
           tournamentId: '21',
-          tournamentName: 'Wilshire Open Championship', grade: 3, status: 'Accepting Entries')
+          tournamentName: 'Wilshire Open Championship', grade: 3, status: 'Accepting')
     ]);
 
 SearchPreference searchPreference = new SearchPreference(
@@ -140,7 +140,7 @@ List<Tournament> tournaments = <Tournament>[
       organiserEmail: 'DavidFreeman@Mail.com',
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '9',
       cost: 25.0,
       entrants: <Entrant>[
@@ -181,7 +181,7 @@ List<Tournament> tournaments = <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 23,
       highestPlayerRating: '1.1',
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '2',
       cost: 25.0,
       entrants: <Entrant>[
@@ -222,7 +222,7 @@ List<Tournament> tournaments = <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '3',
       cost: 25.0,
       entrants: const <Entrant>[
@@ -263,7 +263,7 @@ List<Tournament> tournaments = <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 18,
       highestPlayerRating: '1.1',
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '1',
       cost: 25.0),
   new Tournament(
@@ -274,7 +274,7 @@ List<Tournament> tournaments = <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 8,
       highestPlayerRating: '2.1',
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '5',
       cost: 25.0,
       entrants: const <Entrant>[
@@ -315,7 +315,7 @@ List<Tournament> tournaments = <Tournament>[
       startDate: new DateTime(2018, 8, 6),
       numberOfEntrants: 7,
       highestPlayerRating: '3.2',
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '6',
       cost: 25.0,
       entrants: const <Entrant>[
@@ -364,7 +364,7 @@ List<Tournament> tournaments = <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 9,
       highestPlayerRating: '3.1',
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '7',
       cost: 25.0,
       entrants: const <Entrant>[
@@ -413,7 +413,7 @@ List<Tournament> tournaments = <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       highestPlayerRating: '3.1',
       numberOfEntrants: 6,
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '7',
       cost: 25.0,
       entrants: const <Entrant>[
@@ -454,7 +454,7 @@ List<Tournament> tournaments = <Tournament>[
       startDate: new DateTime(2018, 8, 4),
       numberOfEntrants: 33,
       highestPlayerRating: '3.1',
-      status: 'Accepting Entries',
+      status: 'Accepting',
       code: '8',
       cost: 25.0,
       entrants: const <Entrant>[

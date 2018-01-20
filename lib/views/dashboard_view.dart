@@ -1,9 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../models/models.dart';
 import 'tournament_item.dart';
 import '../containers/tournament_details.dart';
 import '../keys/keys.dart';
+import '../controls/usercontrols.dart';
 
 class _Page {
   _Page({this.label, this.tabSource, this.key});
@@ -122,7 +125,8 @@ class DashboardView extends StatelessWidget {
           //           })));
           // },
           background: new Container(
-              color: theme.primaryColor,
+              // color: theme.primaryColor,
+              color: Colors.amber,
               child: const ListTile(
                   leading: const Icon(Icons.delete,
                       color: Colors.white, size: 36.0))),
@@ -138,7 +142,10 @@ class DashboardView extends StatelessWidget {
             children: <Widget>[
               new Padding(
                 child: new ListTile(
+                  dense: true,
                   title: new Text(tournament.name,
+                      style: new TextStyle(
+                          color: theme.primaryColor, fontSize: 18.0),
                       key: TennisAiKeys.tournamentItemName(
                         tournament.code,
                         describeEnum(page.tabSource),
@@ -150,34 +157,52 @@ class DashboardView extends StatelessWidget {
               ),
               new Padding(
                 child: new Text(
-                  tournament.startDate.toIso8601String(),
+                  "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}",
+
                   textAlign: TextAlign.left,
                   //textScaleFactor: 1.0,
                 ),
                 padding: const EdgeInsets.only(left: 20.0),
               ),
               new SizedBox(
-                height: 5.0,
+                height: 10.0,
               ),
               new Row(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  new Padding(
-                    child: new Text("Grade ${tournament.grade}"),
-                    padding: const EdgeInsets.only(left: 20.0),
-                  ),
                   new Expanded(
-                      child: new Padding(
-                    child: new Text(
-                      "Entrants ${tournament.numberOfEntrants}",
-                      textAlign: TextAlign.end,
-                    ),
-                    padding: const EdgeInsets.only(right: 10.0),
+                      child: new TopBottomLabel(
+                    value: '${tournament.grade}',
+                    label: 'Grade',
+                  )),
+                  new Expanded(
+                      child: new TopBottomLabel(
+                    value: '${tournament.status}',
+                    label: 'Status',
+                  )),
+                  new Expanded(
+                      child: new TopBottomLabel(
+                    value: '${tournament.numberOfEntrants}',
+                    label: 'Entrants',
                   ))
                 ],
+                // children: <Widget>[
+                //   new Padding(
+                //     child: new Text("Grade ${tournament.grade}"),
+                //     padding: const EdgeInsets.only(left: 20.0),
+                //   ),
+                //   new Expanded(
+                //       child: new Padding(
+                //     child: new Text(
+                //       "Entrants ${tournament.numberOfEntrants}",
+                //       textAlign: TextAlign.end,
+                //     ),
+                //     padding: const EdgeInsets.only(right: 10.0),
+                //   ))
+                // ],
               ),
               new SizedBox(
-                height: 15.0,
+                height: 5.0,
               )
             ],
           ),
