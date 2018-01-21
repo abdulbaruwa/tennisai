@@ -43,6 +43,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
         saveEnterdTournaments),
     new MiddlewareBinding<AppState, EnteredTournamentsLoadedAction>(
         saveEnterdTournaments),
+    new MiddlewareBinding<AppState, RemoveFromWatchedTournamentsAction>(
+      saveWatchedTournaments),
 
     // Player Profile
     new MiddlewareBinding<AppState, LoadPlayerAction>(loadPlayerProfile),

@@ -166,7 +166,9 @@ class TournamentDetailsView extends StatelessWidget
                   index], // Specify herotag - to its icon name: Do this to avoid FloatingActionButton throwing 'Multiple heroes share the same tag exception'
               mini: true,
               child: new Icon(icons[index], color: foregroundColor),
-              onPressed: () {},
+              onPressed: () {
+                print(index == 0 ?'Adding to tournament with id ${tournament.code} basket' : 'Watching');
+              },
             ),
           ),
         );

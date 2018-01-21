@@ -67,6 +67,16 @@ class UpdatePlayerProfileAndSearchPreferenceAction {
   }
 }
 
+class RemoveFromWatchedTournamentsAction {
+  final String tournamentCode;
+  RemoveFromWatchedTournamentsAction(this.tournamentCode);
+
+  @override
+  String toString() {
+    return 'RemoveFromWatchedTournamentsAction{tournamentCode: $tournamentCode}';
+  }
+}
+
 // Dashboard - Watched Tournaments
 class WatchedTournamentsNotLoadedAction {}
 
