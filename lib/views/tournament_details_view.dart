@@ -219,7 +219,7 @@ class TournamentDetailsView extends StatelessWidget
               pinned: true,
               floating: true,
               flexibleSpace: new FlexibleSpaceBar(
-                title: const Text('Sutton'),
+                title: new Text('${tournament.name}'),
                 background: new Stack(
                   fit: StackFit.expand,
                   children: <Widget>[

@@ -219,7 +219,7 @@ class TournamentDetailsPageState extends State<TournamentDetailsPage>
               pinned: true,
               floating: true,
               flexibleSpace: new FlexibleSpaceBar(
-                title: const Text('Sutton'),
+                title: new Text('${widget.tournament.name}'),
                 background: new Stack(
                   fit: StackFit.expand,
                   children: <Widget>[

@@ -1,3 +1,4 @@
+import 'package:uuid/uuid.dart';
 import 'models.dart';
 
 class TournamentEntity {
@@ -270,7 +271,6 @@ class Tournament {
       code: entity.code,
       status: entity.status,
       site: entity.site,
-      cost: entity.cost,
       highestPlayerRating: entity.highestPlayerRating,
       entrants: _entrants(entity.entrants)
     );
@@ -295,7 +295,6 @@ class Tournament {
         code: code,
         status: status,
         site: site,
-        cost: cost,
         highestPlayerRating: highestPlayerRating,
         entrants: _entrantEntitys(entrants));
   }
@@ -317,7 +316,9 @@ class Tournament {
   }
 }
 
+String getRandomString = new Uuid().v4().toString().substring(0,8);
 List<Tournament> tournaments = <Tournament>[
+    
   new Tournament(
       name: 'Sutton Super Series 1',
       location: 'Sutton Tennis Academy',
@@ -335,7 +336,7 @@ List<Tournament> tournaments = <Tournament>[
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
       status: 'Accepting Entries',
-      cost: 25.0,
+      code: new Uuid().v4().toString().substring(0,8), cost:  25.0,
       entrants: <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -379,7 +380,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 23,
       highestPlayerRating: '1.1',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
       entrants: <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -423,7 +424,7 @@ List<Tournament> tournaments = <Tournament>[
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
       status: 'Accepting Entries',
-      cost: 25.0,
+      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -467,7 +468,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 18,
       highestPlayerRating: '1.1',
       status: 'Accepting Entries',
-      cost: 25.0),
+      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0),
   new Tournament(
       name: 'Valencia Junior cup',
       location: '3',
@@ -481,7 +482,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 8,
       highestPlayerRating: '2.1',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -525,7 +526,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 7,
       highestPlayerRating: '3.2',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -581,7 +582,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 9,
       highestPlayerRating: '3.1',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -637,7 +638,7 @@ List<Tournament> tournaments = <Tournament>[
       highestPlayerRating: '3.1',
       numberOfEntrants: 6,
       status: 'Accepting Entries',
-      cost: 25.0,
+      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
@@ -681,7 +682,7 @@ List<Tournament> tournaments = <Tournament>[
       numberOfEntrants: 33,
       highestPlayerRating: '3.1',
       status: 'Accepting Entries',
-      cost: 25.0,
+      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
