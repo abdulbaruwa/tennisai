@@ -358,7 +358,7 @@ class TournamentDetailsView extends StatelessWidget
                                   new TextSpan(
                                     style: new TextStyle(fontWeight: FontWeight.bold),
                                     text:
-                                        '${new DateFormat("yMMMEd").format(tournament.startDate)}',
+                                        tournament.entryCloseDate != null ? '${new DateFormat("yMMMEd").format(tournament.entryCloseDate)}' : '',
                                   ),
                                 ]),
                           )),
