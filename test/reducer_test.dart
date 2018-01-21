@@ -37,5 +37,34 @@ main() {
       var answer = 42;
       expect(answer, 42);
     });
+
+    test('should add tournament to watched list in response to a AddToWatchListAction',(){
+      final tournament = new Tournament(code: '101', name: 'Test Tournament');
+      final store = new Store<AppState>(appReducer,initialState: new AppState(watchedTournaments: [tournament]));
+
+      expect(watchedTournamentSelector(store.state), [tournament]);
+      final newTournament = new Tournament(code: '10204', name: 'Second Test Tournament');
+
+      store.dispatch(new AddWatchedTournamentsAction(newTournament));
+
+      expect(watchedTournamentSelector(store.state), [tournament, newTournament]);
+    });
+
+
+    test('should not add tournament to watched list if AddToWatchListAction is called for existing Wathched tournament',(){
+      final tournament = new Tournament(code: '101', name: 'Test Tournament');
+      final store = new Store<AppState>(appReducer,initialState: new AppState(watchedTournaments: [tournament]));
+
+      store.dispatch(new AddWatchedTournamentsAction(tournament));
+
+      expect(watchedTournamentSelector(store.state), [tournament]);
+    });
+            
+    test('place holder test in', () {
+      var answer = 42;
+      expect(answer, 42);
+    });
+
+
   });
 }

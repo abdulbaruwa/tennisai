@@ -91,6 +91,11 @@ class LoadWatchedTournamentsAction {}
 class AddWatchedTournamentsAction {
   final Tournament tournament;
   AddWatchedTournamentsAction(this.tournament);
+
+   @override
+  String toString() {
+    return 'AddWatchedTournamentsAction{tournament: ${tournament.toString()}';
+  }
 }
 
 // Dashboard - Entered Tournament

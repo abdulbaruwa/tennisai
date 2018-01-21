@@ -15,7 +15,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final saveWatchedTournaments = _createSaveWatchedTournaments(repository);
 
   final loadEnteredTournaments = _createLoadEnteredTournaments(repository);
-  final saveEnterdTournaments = _createSaveEnteredTournaments(repository);
+  final saveEnteredTournaments = _createSaveEnteredTournaments(repository);
 
   final loadPlayerProfile = _createLoadPlayerProfile(repository);
   final savePlayerProfile = _createSavePlayerProfile(repository);
@@ -35,14 +35,14 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
         loadWatchedTournaments),
     new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(
         saveWatchedTournaments),
-    new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(
+    new MiddlewareBinding<AppState, WatchedTournamentsLoadedAction>(
         saveWatchedTournaments),
     new MiddlewareBinding<AppState, LoadEnteredTournamentsAction>(
         loadEnteredTournaments),
     new MiddlewareBinding<AppState, AddEnteredTournamentsAction>(
-        saveEnterdTournaments),
+        saveEnteredTournaments),
     new MiddlewareBinding<AppState, EnteredTournamentsLoadedAction>(
-        saveEnterdTournaments),
+        saveEnteredTournaments),
     new MiddlewareBinding<AppState, RemoveFromWatchedTournamentsAction>(
       saveWatchedTournaments),
 
