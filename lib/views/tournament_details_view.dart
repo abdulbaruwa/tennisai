@@ -1,5 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../models/models.dart';
 import '../containers/tournament_entrants.dart';
 
@@ -131,7 +133,8 @@ class TournamentDetailsView extends StatelessWidget
 {
   final Tournament tournament;
   final TournamentDetailsActionSource source;
-  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      new GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
   final AnimationController controller; // =  new AnimationController(
 
@@ -140,7 +143,8 @@ class TournamentDetailsView extends StatelessWidget
     Icons.flag
   ];
 
-  TournamentDetailsView({Key key, this.tournament, this.controller, this.source})
+  TournamentDetailsView(
+      {Key key, this.tournament, this.controller, this.source})
       : super(key: key);
   @override
   @override
@@ -167,7 +171,9 @@ class TournamentDetailsView extends StatelessWidget
               mini: true,
               child: new Icon(icons[index], color: foregroundColor),
               onPressed: () {
-                print(index == 0 ?'Adding to tournament with id ${tournament.code} basket' : 'Watching');
+                print(index == 0
+                    ? 'Adding to tournament with id ${tournament.code} basket'
+                    : 'Watching');
               },
             ),
           ),
@@ -253,7 +259,7 @@ class TournamentDetailsView extends StatelessWidget
                                 const EdgeInsets.only(left: 30.0, top: 5.0),
                             child: new CircleAvatar(
                                 radius: 12.0,
-                                child: new Text("2",
+                                child: new Text('${tournament.grade}',
                                     style: Theme
                                         .of(context)
                                         .primaryTextTheme
@@ -269,7 +275,8 @@ class TournamentDetailsView extends StatelessWidget
                                 const EdgeInsets.only(left: 16.0, top: 5.0),
                             child: new CircleAvatar(
                                 radius: 12.0,
-                                child: new Text("18",
+                                child: new Text(
+                                    '${tournament.numberOfEntrants}',
                                     style: Theme
                                         .of(context)
                                         .primaryTextTheme
@@ -295,11 +302,11 @@ class TournamentDetailsView extends StatelessWidget
                   children: <Widget>[
                     new _IconTextItem(
                       icon: Icons.email,
-                      line: "Davids.F@mail.com",
+                      line: '${tournament.organiserEmail}',
                     ),
                     new _IconTextItem(
                       icon: Icons.phone,
-                      line: "077558585555",
+                      line: '${tournament.organiserPhone}',
                     ),
                   ],
                 ),
@@ -317,9 +324,46 @@ class TournamentDetailsView extends StatelessWidget
                 new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new _TextItem(
-                          text: 'Sat, 21-Mar-2018 - Sun, 22-Mar-2018'),
-                      new _TextItem(text: 'Entry closes on Mon, 14-Mar-2018'),
+                      //new _TextItem(text: 'Sat, 21-Mar-2018 - Sun, 22-Mar-2018'),
+
+                      new Container(
+                          padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+                          child: new RichText(
+                            text: new TextSpan(
+                                text: '',
+                                style: new TextStyle(color: Colors.black) ,
+                                children: <TextSpan>[
+                                  new TextSpan(
+                                      text: 'Start: ',
+                                      style: new TextStyle(
+                                          fontSize: 14.0)),
+                                  new TextSpan(
+                                    style: new TextStyle(fontWeight: FontWeight.bold),
+                                    text:
+                                        '${new DateFormat("yMMMEd").format(tournament.startDate)} - ${ new DateFormat("yMMMEd").format(tournament.endDate)}',
+                                  ),
+                                ]),
+                          )),
+                            new Container(
+                          padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+                          child: new RichText(
+                            text: new TextSpan(
+                                text: '',
+                                style: new TextStyle(color: Colors.black) ,
+                                children: <TextSpan>[
+                                  new TextSpan(
+                                      text: 'Enter by: ',
+                                      style: new TextStyle(
+                                          fontSize: 14.0)),
+                                  new TextSpan(
+                                    style: new TextStyle(fontWeight: FontWeight.bold),
+                                    text:
+                                        '${new DateFormat("yMMMEd").format(tournament.startDate)}',
+                                  ),
+                                ]),
+                          )),
+                          
+                      //new _TextItem(text: 'Entry closes on Mon, 14-Mar-2018'),
                     ]),
                 new SizedBox(
                   height: 50.0,
@@ -333,11 +377,11 @@ class TournamentDetailsView extends StatelessWidget
     );
   }
 
-  void showTournamentEntrantsPage(BuildContext context, Tournament tournament, TournamentDetailsActionSource source) {
-      Navigator
-        .of(context)
-        .push(new MaterialPageRoute(
-          builder: (_) => new TournamentEntrants(id: tournament.code, source: source),
+  void showTournamentEntrantsPage(BuildContext context, Tournament tournament,
+      TournamentDetailsActionSource source) {
+    Navigator.of(context).push(new MaterialPageRoute(
+          builder: (_) =>
+              new TournamentEntrants(id: tournament.code, source: source),
         ));
     // Navigator.push(
     //     context,
