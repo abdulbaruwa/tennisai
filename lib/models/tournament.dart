@@ -7,6 +7,10 @@ class TournamentEntity {
       this.startDate,
       this.endDate,
       this.location,
+      this.address,
+      this.town,
+      this.county,
+      this.postCode,
       this.numberOfEntrants,
       this.organiserName,
       this.organiserEmail,
@@ -23,6 +27,10 @@ class TournamentEntity {
   DateTime startDate;
   DateTime endDate;
   String location;
+  String address;
+  String town;
+  String county;
+  String postCode;
   int numberOfEntrants;
   String organiserName;
   String organiserPhone;
@@ -43,6 +51,10 @@ class TournamentEntity {
       startDate.hashCode ^
       endDate.hashCode ^
       location.hashCode ^
+      address.hashCode ^
+      town.hashCode ^
+      county.hashCode ^
+      postCode.hashCode ^
       numberOfEntrants.hashCode ^
       organiserName.hashCode ^
       organiserEmail.hashCode ^
@@ -63,6 +75,10 @@ class TournamentEntity {
           grade == other.grade &&
           startDate == other.startDate &&
           location == other.location &&
+          address == other.address &&
+          town == other.town &&
+          county == other.county &&
+          postCode == other.postCode &&
           numberOfEntrants == other.numberOfEntrants &&
           organiserName == other.organiserName &&
           organiserEmail == other.organiserEmail &&
@@ -85,6 +101,10 @@ class TournamentEntity {
       'startDate': startDate.toIso8601String(),
       'endDate': endDate.toIso8601String(),
       'location': location,
+      'address': address,
+      'town': town,
+      'county': county,
+      'postCode': postCode,
       'numberOfEntrants': location,
       'organiserName': organiserName,
       'organiserEmail': organiserEmail,
@@ -123,6 +143,10 @@ class TournamentEntity {
         startDate: json['startDate'] as DateTime,
         endDate: json['endDate'] as DateTime,
         location: json['location'] as String,
+        address : json['address'] as String,
+        town: json['town'] as String,
+        county : json['county'] as String,
+        postCode: json['postCode'] as String,
         numberOfEntrants: json['numberOfEntrants'] as int,
         organiserName: json['organiserName'] as String,
         organiserEmail: json['organiserEmail'] as String,
@@ -142,6 +166,10 @@ class Tournament {
       this.startDate,
       this.endDate,
       this.location,
+      this.address,
+      this.town,
+      this.county,
+      this.postCode,
       this.numberOfEntrants,
       this.organiserName,
       this.organiserEmail,
@@ -158,6 +186,10 @@ class Tournament {
   final DateTime startDate;
   final DateTime endDate;
   final String location;
+  final String address;
+  final String county;
+  final String town;
+  final String postCode;
   final int numberOfEntrants;
   final String organiserName;
   final String organiserPhone;
@@ -177,6 +209,10 @@ class Tournament {
       startDate.hashCode ^
       endDate.hashCode ^
       location.hashCode ^
+      address.hashCode ^
+      town.hashCode ^
+      county.hashCode ^
+      postCode.hashCode ^
       numberOfEntrants.hashCode ^
       organiserName.hashCode ^
       organiserPhone.hashCode ^
@@ -199,6 +235,10 @@ class Tournament {
           startDate == other.startDate &&
           endDate == other.endDate &&
           location == other.location &&
+          address == other.address &&
+          town == other.town &&
+          county == other.county &&
+          postCode == other.postCode &&
           numberOfEntrants == other.numberOfEntrants &&
           organiserName == other.organiserName &&
           organiserPhone == other.organiserPhone &&
@@ -218,6 +258,10 @@ class Tournament {
       startDate: entity.startDate,
       endDate: entity.endDate,
       location: entity.location,
+      address: entity.address,
+      town: entity.town,
+      county: entity.county,
+      postCode: entity.postCode,
       numberOfEntrants: entity.numberOfEntrants,
       organiserName: entity.organiserName,
       organiserPhone: entity.organiserPhone,
@@ -239,6 +283,10 @@ class Tournament {
         startDate: startDate,
         endDate: endDate,
         location: location,
+        address: address,
+        town: town,
+        county: county,
+        postCode: postCode,
         numberOfEntrants: numberOfEntrants,
         organiserName: organiserName,
         organiserPhone: organiserPhone,
@@ -273,6 +321,10 @@ List<Tournament> tournaments = <Tournament>[
   new Tournament(
       name: 'Sutton Super Series 1',
       location: 'Sutton Tennis Academy',
+      address: 'Redham Street',
+      town: 'Sutton',
+      county: 'Surrey',
+      postCode: 'KT17 9EL',
       grade: '2',
       endDate: new DateTime(2018, 7, 6),
       startDate: new DateTime(2018, 7, 9),
@@ -316,7 +368,11 @@ List<Tournament> tournaments = <Tournament>[
       ]),
   new Tournament(
       name: 'Horsham Open',
-      location: '',
+      location: 'Horsham Tennis Center',
+      address: '25 Kettring Road',
+      town: 'Horsham',
+      county: 'Hampshire',
+      postCode: 'GU17 8Rs',
       grade: '1',
       endDate: new DateTime(2018, 8, 6),
       startDate: new DateTime(2018, 8, 4),
@@ -356,7 +412,11 @@ List<Tournament> tournaments = <Tournament>[
       ]),
   new Tournament(
       name: 'Salem Cup ',
-      location: '',
+      location: 'Salem',
+      address: '9 Winston Street',
+      town: 'Wilsdean Green',
+      county: 'London',
+      postCode: 'N17 7UE',
       grade: '1',
       endDate: new DateTime(2018, 8, 6),
       startDate: new DateTime(2018, 8, 4),
@@ -397,6 +457,10 @@ List<Tournament> tournaments = <Tournament>[
   new Tournament(
       name: 'Surrey Open Champion Ships',
       location: '2',
+      address: '2 Cheam Street',
+      town: 'Cheam',
+      county: 'Surrey',
+      postCode: 'KT8 9LU',
       grade: '1',
       endDate: new DateTime(2018, 8, 6),
       startDate: new DateTime(2018, 8, 4),
@@ -407,6 +471,10 @@ List<Tournament> tournaments = <Tournament>[
   new Tournament(
       name: 'Valencia Junior cup',
       location: '3',
+      address: '2 Petxina',
+      town: 'Valencia',
+      county: 'Sila',
+      postCode: '83833',
       grade: '3',
       endDate: new DateTime(2018, 8, 6),
       startDate: new DateTime(2018, 8, 4),
@@ -446,7 +514,11 @@ List<Tournament> tournaments = <Tournament>[
       ]),
   new Tournament(
       name: 'Surrey Open',
-      location: '',
+      location: 'National Tennis Center',
+      address: '2 Nates Park Road',
+      town: 'Roehampton',
+      county: 'Kingston',
+      postCode: 'LH8 9DE',
       grade: '4',
       endDate: new DateTime(2018, 8, 1),
       startDate: new DateTime(2018, 8, 6),
@@ -487,6 +559,10 @@ List<Tournament> tournaments = <Tournament>[
   new Tournament(
       name: 'Nike Boys U16',
       location: 'Liverpool Indoor Arena',
+      address: 'Bales Avenue',
+      town: 'Liverpool',
+      county: 'Mersey Side',
+      postCode: 'LV98 1LD',
       grade: '2',
       endDate: new DateTime(2018, 8, 2),
       startDate: new DateTime(2018, 8, 6),
@@ -495,6 +571,10 @@ List<Tournament> tournaments = <Tournament>[
   new Tournament(
       name: 'David Lloyds U18',
       location: 'Raynes Park London',
+      address: '3 Lloyds Road',
+      town: 'Raynes Park',
+      county: 'Surrey',
+      postCode: 'KT15 8DD',
       grade: '3',
       endDate: new DateTime(2018, 8, 6),
       startDate: new DateTime(2018, 8, 4),
@@ -535,6 +615,10 @@ List<Tournament> tournaments = <Tournament>[
   new Tournament(
       name: 'Fast Four Super Series',
       location: 'Sutton Tennis Academy',
+      address: '7 Will Smit Street',
+      town: 'Sutton',
+      county: 'Surrey',
+      postCode: 'KT38 3DM',
       grade: '3',
       endDate: new DateTime(2018, 8, 6),
       startDate: new DateTime(2018, 8, 4),
@@ -543,6 +627,10 @@ List<Tournament> tournaments = <Tournament>[
   new Tournament(
       name: 'Kalkuta Open',
       location: 'Kalkuta India ',
+      address: '3 Chuhala Road',
+      town: 'Chenai',
+      county: 'Chenai Main',
+      postCode: 'ZZ303',
       grade: '3',
       endDate: new DateTime(2018, 8, 6),
       startDate: new DateTime(2018, 8, 4),
@@ -583,6 +671,10 @@ List<Tournament> tournaments = <Tournament>[
   new Tournament(
       name: 'Compete Mens Open',
       location: 'University Of Bath',
+      address: '3 Bath Road',
+      town: 'Bath',
+      county: 'Bath',
+      postCode: 'BU99 3PA',
       grade: '3',
       endDate: new DateTime(2018, 8, 4),
       startDate: new DateTime(2018, 8, 4),

@@ -308,9 +308,9 @@ class TournamentDetailsView extends StatelessWidget
                 new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      new _TextItem(text: '22 Winston Harvey street'),
-                      new _TextItem(text: 'London'),
-                      new _TextItem(text: 'London')
+                      new _TextItem(text: '${tournament.address}'),
+                      new _TextItem(text: '${tournament.town}'),
+                      new _TextItem(text: '${tournament.postCode}')
                     ]),
                 new _Header(
                     icon: Icons.calendar_view_day, text: 'Dates and Times'),
