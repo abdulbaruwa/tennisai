@@ -19,11 +19,12 @@ class _Page {
 class DashboardView extends StatelessWidget {
   final List<Tournament> watchedTournaments;
   final List<Tournament> enteredTournaments;
-
+  final Function(Tournament) onRemoveFromWatchList; 
   DashboardView(
       {Key key,
       @required this.watchedTournaments,
-      @required this.enteredTournaments})
+      @required this.enteredTournaments,
+      this.onRemoveFromWatchList})
       : super(key: key);
 
   @override
@@ -113,22 +114,25 @@ class DashboardView extends StatelessWidget {
             tournament.code, describeEnum(page.tabSource)),
         child: new Dismissible(
           key: new ObjectKey(tournament),
-          direction: DismissDirection.horizontal,
-          // onDismissed: (DismissDirection direction) {
-          //   setState(() {
-          //     leaveBehindItems.remove(item);
-          //   });
-          //   final String action = (direction == DismissDirection.endToStart)
-          //       ? 'archived'
-          //       : 'deleted';
-          //   _scaffoldKey.currentState.showSnackBar(new SnackBar(
-          //       content: new Text('You $action item ${item.name}'),
-          //       action: new SnackBarAction(
-          //           label: 'UNDO',
-          //           onPressed: () {
-          //             handleUndo(item);
-          //           })));
-          // },
+          direction: DismissDirection.startToEnd,
+          onDismissed: (DismissDirection direction) {
+            onRemoveFromWatchList(tournament);
+            // setState(() {
+            //   leaveBehindItems.remove(item);
+            // });
+            final String action = (direction == DismissDirection.endToStart)
+                ? 'archived'
+                : 'deleted';
+            Scaffold.of(context).showSnackBar(new SnackBar(
+                content: new Text('You $action item ${tournament.name}'),
+                // action: new SnackBarAction(
+                //     label: 'UNDO',
+                //     onPressed: () {
+                //       //handleUndo(item);
+                //     }
+                //     )
+                    ));
+          },
           background: new Container(
               // color: theme.primaryColor,
               color: Colors.amber,
