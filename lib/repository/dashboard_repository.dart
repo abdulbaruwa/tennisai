@@ -22,16 +22,17 @@ class DashboardRepository {
   });
   Future<List<TournamentEntity>> loadUpcomingTournaments() async {
     try {
-      var result = webClient.fetchEnteredTournaments();
+      var result = await fileStorage.loadEnteredTournaments();
       print('dashboard_repository.loadUpcomingTournaments: Returned Futures');
       return result;
     } catch (e) {
-      print('LoadWatchedTournaments Fetcher in error');
-      var result = webClient.fetchWatchedTournaments();
+      print('LoadUpcomingTournaments Fetcher in error');
+      var result = webClient.fetchEnteredTournaments();
       print('LoadWatchedTournaments Fetched');
       return result;
     }
   }
+
   /// Loads watched Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
   Future<List<TournamentEntity>> loadWatchedTournaments() async {
@@ -78,12 +79,13 @@ class DashboardRepository {
       webClient.postEnteredTournaments(tournamentEntitys),
     ]);
   }
-    Future saveUpcomingTournaments(List<TournamentEntity> tournamentEntitys) {
+
+  Future saveUpcomingTournaments(List<TournamentEntity> tournamentEntitys) {
     return Future.wait([
-      
       webClient.postEnteredTournaments(tournamentEntitys),
     ]);
   }
+
   // Player Profile
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client

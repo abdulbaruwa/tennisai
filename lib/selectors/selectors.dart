@@ -11,7 +11,7 @@ List<Tournament> upcomingTournamentSelector(AppState state) => state.upcomingTou
 List<Tournament> tournamentsSelector(
     AppState state, TournamentDetailsActionSource source) {
   if (source == TournamentDetailsActionSource.upcoming) {
-    return state.enteredTournaments;
+    return state.upcomingTournaments;
   }
   if (source == TournamentDetailsActionSource.watching) {
     return state.watchedTournaments;

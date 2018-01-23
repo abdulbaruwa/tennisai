@@ -25,6 +25,7 @@ class FileStorage {
     this.tag,
     this.getDirectory,
   );
+  
   Future<List<TournamentEntity>> loadWatchedTournaments() async {
     final file = await _getLocalFile(StoreNames.watchedTournaments);
     final string = await file.readAsString();
