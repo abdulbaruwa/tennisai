@@ -15,9 +15,9 @@ class WebClient {
   /// Mock that "fetches" some watchedTournament from a "web service" after a short delay
   Future<List<TournamentEntity>> fetchWatchedTournaments() async {
     List<TournamentEntity> tEntities = [];
-    tournaments.forEach((f) => tEntities.add(f.toEntity()));
+    watchedTournaments.forEach((f) => tEntities.add(f.toEntity()));
     print('before delayed ${tEntities.length}');
-    return new Future.delayed(delay, () => tEntities);
+     return new Future.delayed(delay, () => tEntities);
   }
 
   /// Mock that returns true or false for success or failure. In this case,

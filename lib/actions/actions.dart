@@ -107,7 +107,14 @@ class EnteredTournamentsLoadedAction {
   EnteredTournamentsLoadedAction(this.enteredTournaments);
 }
 
+class UpcomingTournamentsLoadedAction {
+  final List<Tournament> upcomingTournaments;
+
+  UpcomingTournamentsLoadedAction(this.upcomingTournaments);
+}
+
 class LoadEnteredTournamentsAction {}
+class LoadUpcomingTournamentsAction {}
 
 class AddEnteredTournamentsAction {
   final Tournament tournament;

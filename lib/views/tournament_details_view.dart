@@ -5,138 +5,14 @@ import 'package:intl/intl.dart';
 import '../models/models.dart';
 import '../containers/tournament_entrants.dart';
 
-class _Header extends StatelessWidget {
-  const _Header({Key key, this.icon, this.text}) : super(key: key);
-  final IconData icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themedata = Theme.of(context);
-    final Row textRow = new Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        new Container(
-            padding: const EdgeInsets.only(top: 30.0, right: 0.0),
-            width: 31.0,
-            child: new Icon(icon, color: themedata.primaryColor)),
-        new Container(
-            padding: const EdgeInsets.only(top: 30.0),
-            child: new Text(
-              text,
-              style: themedata.textTheme.title,
-            ))
-      ],
-    );
-
-    final BoxDecoration underlineDecoration = new BoxDecoration(
-        border:
-            new Border(bottom: new BorderSide(color: themedata.accentColor)));
-    return new Container(
-        padding: const EdgeInsets.symmetric(vertical: 6.0),
-        decoration: underlineDecoration,
-        child: new DefaultTextStyle(
-            style: themedata.textTheme.subhead, child: textRow));
-  }
-}
-
-class _IconTextItem extends StatelessWidget {
-  _IconTextItem({Key key, this.icon, this.line}) : super(key: key);
-  final IconData icon;
-  final String line;
-  Widget build(BuildContext context) {
-    return new Container(
-        child: new DefaultTextStyle(
-      style: Theme.of(context).textTheme.subhead,
-      child: new Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          new Container(
-            padding: const EdgeInsets.only(left: 29.0, top: 5.0),
-            width: 30.0,
-            child: new Icon(
-              icon,
-              size: 14.0,
-              color: Theme.of(context).primaryColor,
-            ),
-          ),
-          new Container(
-              padding: const EdgeInsets.only(top: 3.0, left: 25.0),
-              child: new Text(line)),
-        ],
-      ),
-    ));
-  }
-}
-
-class _HeaderItem extends StatelessWidget {
-  _HeaderItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})
-      : assert(lines.length > 0),
-        super(key: key);
-
-  final IconData icon;
-  final List<String> lines;
-  final String tooltip;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final List<Widget> columnChildren = new List<Widget>();
-    columnChildren.add(new Text(lines.first, style: themeData.textTheme.title));
-    columnChildren.addAll(lines
-        .sublist(1, lines.length)
-        .map((String line) => new Text(
-              line,
-              style: themeData.textTheme.subhead,
-            ))
-        .toList());
-    //columnChildren.add(new Text(lines.last, style: themeData.textTheme.subhead));
-
-    final List<Widget> rowChildren = <Widget>[
-      new Expanded(
-          child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: columnChildren))
-    ];
-    if (icon != null) {
-      rowChildren.add(new SizedBox(
-          width: 72.0,
-          child: new IconButton(
-              icon: new Icon(icon),
-              color: themeData.primaryColor,
-              onPressed: onPressed)));
-    }
-    return new MergeSemantics(
-      child: new Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: rowChildren)),
-    );
-  }
-}
-
-class _TextItem extends StatelessWidget {
-  const _TextItem({Key key, this.text}) : super(key: key);
-  final String text;
-  @override
-  Widget build(BuildContext context) {
-    return new Container(
-        padding: const EdgeInsets.only(top: 3.0, left: 25.0),
-        child: new Text(text));
-  }
-}
-
-class TournamentDetailsView extends StatelessWidget
-//with TickerProviderStateMixin
-{
+class TournamentDetailsView extends StatelessWidget {
   final Tournament tournament;
   final TournamentDetailsActionSource source;
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
   final double _appBarHeight = 256.0;
   final AnimationController controller; // =  new AnimationController(
+  final Function onAddToWatch;
 
   static final List<IconData> icons = const [
     Icons.add_shopping_cart,
@@ -144,9 +20,13 @@ class TournamentDetailsView extends StatelessWidget
   ];
 
   TournamentDetailsView(
-      {Key key, this.tournament, this.controller, this.source})
+      {Key key,
+      this.tournament,
+      this.onAddToWatch,
+      this.controller,
+      this.source})
       : super(key: key);
-  @override
+
   @override
   Widget build(BuildContext context) {
     final Color backgroundColor = Theme.of(context).cardColor;
@@ -170,11 +50,8 @@ class TournamentDetailsView extends StatelessWidget
                   index], // Specify herotag - to its icon name: Do this to avoid FloatingActionButton throwing 'Multiple heroes share the same tag exception'
               mini: true,
               child: new Icon(icons[index], color: foregroundColor),
-              onPressed: () {
-                print(index == 0
-                    ? 'Adding to tournament with id ${tournament.code} basket'
-                    : 'Watching');
-              },
+              onPressed: onAddToWatch,
+              
             ),
           ),
         );
@@ -331,38 +208,39 @@ class TournamentDetailsView extends StatelessWidget
                           child: new RichText(
                             text: new TextSpan(
                                 text: '',
-                                style: new TextStyle(color: Colors.black) ,
+                                style: new TextStyle(color: Colors.black),
                                 children: <TextSpan>[
                                   new TextSpan(
                                       text: 'Start: ',
-                                      style: new TextStyle(
-                                          fontSize: 14.0)),
+                                      style: new TextStyle(fontSize: 14.0)),
                                   new TextSpan(
-                                    style: new TextStyle(fontWeight: FontWeight.bold),
+                                    style: new TextStyle(
+                                        fontWeight: FontWeight.bold),
                                     text:
                                         '${new DateFormat("yMMMEd").format(tournament.startDate)} - ${ new DateFormat("yMMMEd").format(tournament.endDate)}',
                                   ),
                                 ]),
                           )),
-                            new Container(
+                      new Container(
                           padding: const EdgeInsets.only(top: 3.0, left: 25.0),
                           child: new RichText(
                             text: new TextSpan(
                                 text: '',
-                                style: new TextStyle(color: Colors.black) ,
+                                style: new TextStyle(color: Colors.black),
                                 children: <TextSpan>[
                                   new TextSpan(
                                       text: 'Enter by: ',
-                                      style: new TextStyle(
-                                          fontSize: 14.0)),
+                                      style: new TextStyle(fontSize: 14.0)),
                                   new TextSpan(
-                                    style: new TextStyle(fontWeight: FontWeight.bold),
-                                    text:
-                                        tournament.entryCloseDate != null ? '${new DateFormat("yMMMEd").format(tournament.entryCloseDate)}' : '',
+                                    style: new TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                    text: tournament.entryCloseDate != null
+                                        ? '${new DateFormat("yMMMEd").format(tournament.entryCloseDate)}'
+                                        : '',
                                   ),
                                 ]),
                           )),
-                          
+
                       //new _TextItem(text: 'Entry closes on Mon, 14-Mar-2018'),
                     ]),
                 new SizedBox(
@@ -394,5 +272,128 @@ class TournamentDetailsView extends StatelessWidget
     //         );
     //       },
     //     ));
+  }
+}
+
+class _Header extends StatelessWidget {
+  const _Header({Key key, this.icon, this.text}) : super(key: key);
+  final IconData icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData themedata = Theme.of(context);
+    final Row textRow = new Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        new Container(
+            padding: const EdgeInsets.only(top: 30.0, right: 0.0),
+            width: 31.0,
+            child: new Icon(icon, color: themedata.primaryColor)),
+        new Container(
+            padding: const EdgeInsets.only(top: 30.0),
+            child: new Text(
+              text,
+              style: themedata.textTheme.title,
+            ))
+      ],
+    );
+
+    final BoxDecoration underlineDecoration = new BoxDecoration(
+        border:
+            new Border(bottom: new BorderSide(color: themedata.accentColor)));
+    return new Container(
+        padding: const EdgeInsets.symmetric(vertical: 6.0),
+        decoration: underlineDecoration,
+        child: new DefaultTextStyle(
+            style: themedata.textTheme.subhead, child: textRow));
+  }
+}
+
+class _IconTextItem extends StatelessWidget {
+  _IconTextItem({Key key, this.icon, this.line}) : super(key: key);
+  final IconData icon;
+  final String line;
+  Widget build(BuildContext context) {
+    return new Container(
+        child: new DefaultTextStyle(
+      style: Theme.of(context).textTheme.subhead,
+      child: new Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          new Container(
+            padding: const EdgeInsets.only(left: 29.0, top: 5.0),
+            width: 30.0,
+            child: new Icon(
+              icon,
+              size: 14.0,
+              color: Theme.of(context).primaryColor,
+            ),
+          ),
+          new Container(
+              padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+              child: new Text(line)),
+        ],
+      ),
+    ));
+  }
+}
+
+class _HeaderItem extends StatelessWidget {
+  _HeaderItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})
+      : assert(lines.length > 0),
+        super(key: key);
+
+  final IconData icon;
+  final List<String> lines;
+  final String tooltip;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final ThemeData themeData = Theme.of(context);
+    final List<Widget> columnChildren = new List<Widget>();
+    columnChildren.add(new Text(lines.first, style: themeData.textTheme.title));
+    columnChildren.addAll(lines
+        .sublist(1, lines.length)
+        .map((String line) => new Text(
+              line,
+              style: themeData.textTheme.subhead,
+            ))
+        .toList());
+    //columnChildren.add(new Text(lines.last, style: themeData.textTheme.subhead));
+
+    final List<Widget> rowChildren = <Widget>[
+      new Expanded(
+          child: new Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: columnChildren))
+    ];
+    if (icon != null) {
+      rowChildren.add(new SizedBox(
+          width: 72.0,
+          child: new IconButton(
+              icon: new Icon(icon),
+              color: themeData.primaryColor,
+              onPressed: onPressed)));
+    }
+    return new MergeSemantics(
+      child: new Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: new Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: rowChildren)),
+    );
+  }
+}
+
+class _TextItem extends StatelessWidget {
+  const _TextItem({Key key, this.text}) : super(key: key);
+  final String text;
+  @override
+  Widget build(BuildContext context) {
+    return new Container(
+        padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+        child: new Text(text));
   }
 }

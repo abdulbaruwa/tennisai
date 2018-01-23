@@ -1,7 +1,6 @@
 import 'package:redux/redux.dart';
 import '../actions/actions.dart';
 import '../models/models.dart';
-import '../selectors/selectors.dart';
 
 final dashboardReducer = combineTypedReducers<List<Tournament>>([
   new ReducerBinding<List<Tournament>, WatchedTournamentsLoadedAction>(
@@ -12,16 +11,13 @@ final dashboardReducer = combineTypedReducers<List<Tournament>>([
       _addWatchedTournament),
   new ReducerBinding<List<Tournament>, RemoveFromWatchedTournamentsAction>(
       _removeFromWatchedTournaments),
-  new ReducerBinding<List<Tournament>, EnteredTournamentsLoadedAction>(
-      _setLoadedEnteredTournaments),
-  new ReducerBinding<List<Tournament>, EnteredTournamentsNotLoadedAction>(
-      _setNoEnteredTournaments),
 ]);
 
 List<Tournament> _setLoadedWatchedTournaments(
     List<Tournament> watchedTournaments,
     WatchedTournamentsLoadedAction action) {
-  return action.watchedTournaments;
+    return action.watchedTournaments;
+  //return [];
 }
 
 List<Tournament> _setNoWatchedTournaments(List<Tournament> watchedTournaments,
@@ -45,15 +41,4 @@ List<Tournament> _removeFromWatchedTournaments(
       .where((watchedTournament) =>
           watchedTournament.code != action.tournamentCode)
       .toList();
-}
-
-List<Tournament> _setLoadedEnteredTournaments(
-    List<Tournament> enteredTournaments,
-    EnteredTournamentsLoadedAction action) {
-  return action.enteredTournaments;
-}
-
-List<Tournament> _setNoEnteredTournaments(List<Tournament> enteredTournaments,
-    EnteredTournamentsNotLoadedAction action) {
-  return [];
 }

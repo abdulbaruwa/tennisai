@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import '../models/models.dart';
+import '../models/tournament.dart' as _tournament;
 import '../selectors/selectors.dart';
 import '../views/dashboard_view.dart';
 
@@ -28,8 +29,15 @@ class _ViewModel {
       {@required this.loading, @required this.enteredTournaments, @required this.watchedTournaments});
 
   static _ViewModel fromStore(Store<AppState> store) {
+    var entered = enteredTournamentSelector(store.state);
+    var watching = watchedTournamentSelector(store.state);
+    var watched = _tournament.watchedTournaments.toList();
+    print('DashboardContainer: entered items ${entered.length}');
+    print('DashboardContainer: watched items ${watched.length}');
+    print('DashboardContainer: watching items ${watching.length}');
+    
     return new _ViewModel(
-        enteredTournaments: enteredTournamentSelector(store.state),
+        enteredTournaments: upcomingTournamentSelector(store.state),
         watchedTournaments: watchedTournamentSelector(store.state),
         loading: store.state.isLoading);
   }

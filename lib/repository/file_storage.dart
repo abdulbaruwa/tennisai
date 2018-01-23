@@ -4,7 +4,7 @@ import 'dart:io';
 import '../models/models.dart';
 
 enum StoreNames {
-  enteredTournamens,
+  enteredTournaments,
   watchedTournaments,
   searchTournaments,
   profile,
@@ -34,37 +34,42 @@ class FileStorage {
             .map((tournament) => TournamentEntity.fromJson(tournament))
             .toList();
 
+    print('file_storage.LoadEnteredTournaments returned ${watchedTournaments.length}');
     return watchedTournaments;
   }
 
   Future<File> saveWatchedTournaments(
       List<TournamentEntity> watchedTournaments) async {
+    print('file_storage.saveWatchedTournaments: passed ${watchedTournaments.length} entries');
     final file = await _getLocalFile(StoreNames.watchedTournaments);
     var watchedTournamentsJson =
         watchedTournaments.map((t) => t.toJson()).toList();
+    print('file_storage.saveWatchedTournaments: json to save $watchedTournamentsJson');
     return file.writeAsString(new JsonEncoder()
         .convert({'watchedTournaments': watchedTournamentsJson}));
   }
 
   Future<List<TournamentEntity>> loadEnteredTournaments() async {
-    final file = await _getLocalFile(StoreNames.enteredTournamens);
+    final file = await _getLocalFile(StoreNames.enteredTournaments);
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
     final enteredTournaments =
-        (json['watchedTournaments'] as List<Map<String, dynamic>>)
+        (json['enteredTournaments'] as List<Map<String, dynamic>>)
             .map((tournament) => TournamentEntity.fromJson(tournament))
             .toList();
-
+    print('file_storage.LoadEnteredTournaments: returned ${enteredTournaments.length} entries');
     return enteredTournaments;
   }
 
   Future<File> saveEnteredTournaments(
       List<TournamentEntity> enteredTournaments) async {
-    final file = await _getLocalFile(StoreNames.enteredTournamens);
+    print('file_storage.saveEnteredTournaments: passed ${enteredTournaments.length} entries');
+    final file = await _getLocalFile(StoreNames.enteredTournaments);
     var enteredTournamentsJson =
         enteredTournaments.map((t) => t.toJson()).toList();
+    print('file_storage.saveEnteredTournaments: json to save ${enteredTournamentsJson}');
     return file.writeAsString(new JsonEncoder()
-        .convert({'watchedTournaments': enteredTournamentsJson}));
+        .convert({'enteredTournaments': enteredTournamentsJson}));
   }
 
   Future<File> _getLocalFile(StoreNames name) async {
@@ -116,7 +121,7 @@ class FileStorage {
     final file = await _getLocalFile(StoreNames.preference);
     var searchPrefJson = searchPrefEntity.toJson();
     return file.writeAsString(
-        new JsonEncoder().convert({'playerProfile': searchPrefJson}));
+        new JsonEncoder().convert({'searchPreference': searchPrefJson}));
   }
 
   Future<File> saveSearchTournaments(

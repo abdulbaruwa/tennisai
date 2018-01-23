@@ -12,6 +12,7 @@ class AppState {
   final List<Tournament> enteredTournaments;
   final List<Tournament> watchedTournaments;
   final List<Tournament> searchTournaments;
+  final List<Tournament> upcomingTournaments;
   final List<Basket> basket;
   final bool activeEntrantsSortOrder;
 
@@ -22,6 +23,7 @@ class AppState {
       this.enteredTournaments = const [],
       this.watchedTournaments = const [],
       this.searchTournaments = const [],
+      this.upcomingTournaments = const [],
       this.tournaments = const [],
       this.basket = const [],
       this.activeTab = AppTab.dashboard,

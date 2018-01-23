@@ -317,6 +317,56 @@ class Tournament {
 }
 
 String getRandomString = new Uuid().v4().toString().substring(0,8);
+List<Tournament> watchedTournaments = <Tournament>[
+    
+  new Tournament(
+      name: 'Sutton Super Series 1',
+      location: 'Sutton Tennis Academy',
+      address: 'Redham Street',
+      town: 'Sutton',
+      county: 'Surrey',
+      postCode: 'KT17 9EL',
+      grade: '2',
+      endDate: new DateTime(2018, 7, 6),
+      startDate: new DateTime(2018, 7, 9),
+      site: 'www.sherbornetennis.com',
+      organiserName: 'David Freeman',
+      organiserPhone: '44776639393',
+      organiserEmail: 'DavidFreeman@Mail.com',
+      highestPlayerRating: '2.1',
+      numberOfEntrants: 12,
+      status: 'Accepting Entries',
+      code: new Uuid().v4().toString().substring(0,8), cost:  25.0,
+      entrants: <Entrant>[
+        const Entrant(
+            name: 'Archie Duncan',
+            status: 'pending',
+            rating: '7.2',
+            ranking: 124),
+        const Entrant(
+            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+        const Entrant(
+            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+        const Entrant(
+            name: 'Willie Nelsom',
+            status: 'pending',
+            rating: '1.2',
+            ranking: 16),
+        const Entrant(
+            name: 'Marvin Ashana',
+            status: 'pending',
+            rating: '2.2',
+            ranking: 84),
+        const Entrant(
+            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+        const Entrant(
+            name: 'Navas Jesus',
+            status: 'pending',
+            rating: '8.2',
+            ranking: 1233),
+        const Entrant(
+            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+      ])];
 List<Tournament> tournaments = <Tournament>[
     
   new Tournament(

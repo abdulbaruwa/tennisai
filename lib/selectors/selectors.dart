@@ -5,14 +5,18 @@ List<Tournament> enteredTournamentSelector(AppState state) =>
     state.enteredTournaments;
 List<Tournament> watchedTournamentSelector(AppState state) =>
     state.watchedTournaments;
+List<Tournament> upcomingTournamentSelector(AppState state) => state.upcomingTournaments;
 
 // TournamentsSelector returns the combined Watched and entered tournament
 List<Tournament> tournamentsSelector(
     AppState state, TournamentDetailsActionSource source) {
-  if (source == TournamentDetailsActionSource.upcoming)
+  if (source == TournamentDetailsActionSource.upcoming) {
     return state.enteredTournaments;
-  if (source == TournamentDetailsActionSource.watching)
+  }
+  if (source == TournamentDetailsActionSource.watching) {
     return state.watchedTournaments;
+  }
+
   return [];
 }
 
@@ -64,7 +68,6 @@ Optional<Basket> basketSelector(AppState state) {
     return new Optional.absent();
   }
 }
-
 
 //List<Entrant> _getEntrant
 AppTab activeTabSelector(AppState state) => state.activeTab;

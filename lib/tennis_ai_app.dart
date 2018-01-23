@@ -11,7 +11,6 @@ import 'routes.dart';
 import 'keys/keys.dart';
 import 'containers/containers.dart';
 import './middleware/store_watched_tournaments_middleware.dart';
-import './models/enums.dart' as _enums;
 
 int counterReducer(int state, action) {
   if (action == Actions.Increment) {
@@ -48,6 +47,7 @@ class TennisAiApp extends StatelessWidget {
 
 _loadState(Store store) {
   store.dispatch(new LoadWatchedTournamentsAction());
+  store.dispatch(new LoadUpcomingTournamentsAction());
   store.dispatch(new LoadPlayerAction());
   store.dispatch(new LoadBasketAction());
   store.dispatch(new LoadSearchPreferenceAction());

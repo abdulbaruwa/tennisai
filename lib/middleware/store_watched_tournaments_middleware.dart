@@ -11,11 +11,13 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
         const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),
   ),
 ]) {
+  final loadUpcomingTournaments = _createLoadUpcomingTournaments(repository);
   final loadWatchedTournaments = _createLoadWatchedTournaments(repository);
   final saveWatchedTournaments = _createSaveWatchedTournaments(repository);
 
   final loadEnteredTournaments = _createLoadEnteredTournaments(repository);
   final saveEnteredTournaments = _createSaveEnteredTournaments(repository);
+  final saveUpcomingTournaments = _createSaveUpcomingTournaments(repository);
 
   final loadPlayerProfile = _createLoadPlayerProfile(repository);
   final savePlayerProfile = _createSavePlayerProfile(repository);
@@ -33,6 +35,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   return combineTypedMiddleware([
     new MiddlewareBinding<AppState, LoadWatchedTournamentsAction>(
         loadWatchedTournaments),
+    new MiddlewareBinding<AppState, LoadUpcomingTournamentsAction>(
+        loadUpcomingTournaments),
     new MiddlewareBinding<AppState, AddWatchedTournamentsAction>(
         saveWatchedTournaments),
     new MiddlewareBinding<AppState, WatchedTournamentsLoadedAction>(
@@ -43,8 +47,12 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
         saveEnteredTournaments),
     new MiddlewareBinding<AppState, EnteredTournamentsLoadedAction>(
         saveEnteredTournaments),
+    new MiddlewareBinding<AppState, UpcomingTournamentsLoadedAction>(
+        saveUpcomingTournaments),
+    // new MiddlewareBinding<AppSate, UpcomingTournamentsLoadedAction>(
+    //   saveUpcomingTournaments),
     new MiddlewareBinding<AppState, RemoveFromWatchedTournamentsAction>(
-      saveWatchedTournaments),
+        saveWatchedTournaments),
 
     // Player Profile
     new MiddlewareBinding<AppState, LoadPlayerAction>(loadPlayerProfile),
@@ -65,7 +73,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new MiddlewareBinding<AppState, AddBasketAction>(saveBasket),
 
     // Edit profile
-    new MiddlewareBinding<AppState, UpdatePlayerProfileAndSearchPreferenceAction>(
+    new MiddlewareBinding<AppState,
+            UpdatePlayerProfileAndSearchPreferenceAction>(
         updateProfileAndSearchPref)
   ]);
 }
@@ -73,15 +82,47 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 Middleware<AppState> _createSaveWatchedTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print('About to save');
+    print(
+        'Middleware._createSaveWatchedTournaments: About to save watched Tournaments');
     next(action);
     var toSave = watchedTournamentSelector(store.state)
         .map((watchedTournament) => watchedTournament.toEntity())
         .toList();
-    print('To Save ${toSave.length}');
+    print(
+        'Middleware._createSaveWatchedTournaments: Saved ${toSave.length} Watched tournament');
     repository.saveWatchedTournaments(toSave);
   };
 }
+
+Middleware<AppState> _createLoadUpcomingTournaments(DashboardRepository repo) {
+  var stateResult = (Store<AppState> store, action, NextDispatcher next) {
+    repo.loadUpcomingTournaments().then((t) {
+      var upComingTourn = t.map(Tournament.fromEntity).toList();
+      print(
+          'Middleware ._createLoadWatchedTournaments: Loading ${upComingTourn.length} Watched tournament');
+      store.dispatch(
+        new UpcomingTournamentsLoadedAction(upComingTourn),
+      );
+    });
+  };
+  return stateResult;
+}
+
+Middleware<AppState> _createSaveUpcomingTournaments(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print(
+        'Middleware._createSaveUpcomingTournaments: About to save entered tournament');
+    next(action);
+    var toSave = upcomingTournamentSelector(store.state)
+        .map((upcomingTournament) => upcomingTournament.toEntity())
+        .toList();
+    print(
+        'Middleware._createSaveUpcomingTournaments: Saved ${toSave.length} Entered tournament');
+    repository.saveEnteredTournaments(toSave);
+  };
+}
+
 
 Middleware<AppState> _createLoadWatchedTournaments(
     DashboardRepository repository) {
@@ -89,7 +130,8 @@ Middleware<AppState> _createLoadWatchedTournaments(
     repository.loadWatchedTournaments().then(
       (watchedTournaments) {
         var entities = watchedTournaments.map(Tournament.fromEntity).toList();
-        print('there ${watchedTournaments.length}');
+        print(
+            'Middleware ._createLoadWatchedTournaments: Loading ${entities.length} Watched tournament');
         store.dispatch(
           new WatchedTournamentsLoadedAction(entities),
         );
@@ -103,13 +145,15 @@ Middleware<AppState> _createLoadWatchedTournaments(
 Middleware<AppState> _createSaveEnteredTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print('About to save entered tournament');
+    print(
+        'Middleware._createSaveEnteredTournaments: About to save entered tournament');
     next(action);
     var toSave = enteredTournamentSelector(store.state)
         .map((enteredTournament) => enteredTournament.toEntity())
         .toList();
-    print('To Save ${toSave.length}');
-    repository.saveWatchedTournaments(toSave);
+    print(
+        'Middleware._createSaveEnteredTournaments: Saved ${toSave.length} Entered tournament');
+    repository.saveEnteredTournaments(toSave);
   };
 }
 
@@ -119,7 +163,8 @@ Middleware<AppState> _createLoadEnteredTournaments(
     repository.loadEnteredTournaments().then(
       (enteredTournaments) {
         var entities = enteredTournaments.map(Tournament.fromEntity).toList();
-        print('there ${enteredTournaments.length}');
+        print(
+            'Middleware._createLoadEnteredTournaments: returned ${enteredTournaments.length}');
         store.dispatch(
           new EnteredTournamentsLoadedAction(entities),
         );

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import '../actions/actions.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/tournament_details_view.dart';
@@ -25,7 +26,7 @@ class TournamentDetailsWithTickerState extends State<TournamentDetails> with Tic
       },
       builder: (context, vm) {
         return new TournamentDetailsView(
-          tournament: vm.tournament, source: vm.source, controller:_controller,
+          tournament: vm.tournament, source: vm.source, onAddToWatch: vm.onAddToWatch, controller:_controller,
         );
       },
     );
@@ -47,9 +48,10 @@ class _ViewModel {
   final TournamentDetailsActionSource source;
   final Function onDelete;
   final Function(bool) toggleCompleted;
-
+  final Function onAddToWatch;
   _ViewModel({
     @required this.tournament,
+    @required this.onAddToWatch,
     this.source
     // @required this.onDelete,
     // @required this.toggleCompleted,
@@ -57,10 +59,13 @@ class _ViewModel {
 
   factory _ViewModel.from(Store<AppState> store, String id, TournamentDetailsActionSource source) {
     final tournament = tournamentSelector(tournamentsSelector(store.state, source), id).value;
-
     return new _ViewModel(
       tournament: tournament,
-      source: source
+      source: source,
+      onAddToWatch: () { 
+            print('Adding tournament with code: ${tournament.code} to watchlist');
+            store.dispatch(new AddWatchedTournamentsAction(tournament));
+      } 
       //onWatchUnWatch: () => store.dispatch(new DeleteTodoAction(todo.id)),
       // toggleCompleted: (isComplete) {
       //   store.dispatch(new UpdateTodoAction(

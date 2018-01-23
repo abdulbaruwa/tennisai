@@ -20,18 +20,29 @@ class DashboardRepository {
     @required this.fileStorage,
     this.webClient = const WebClient(),
   });
-
+  Future<List<TournamentEntity>> loadUpcomingTournaments() async {
+    try {
+      var result = webClient.fetchEnteredTournaments();
+      print('dashboard_repository.loadUpcomingTournaments: Returned Futures');
+      return result;
+    } catch (e) {
+      print('LoadWatchedTournaments Fetcher in error');
+      var result = webClient.fetchWatchedTournaments();
+      print('LoadWatchedTournaments Fetched');
+      return result;
+    }
+  }
   /// Loads watched Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
   Future<List<TournamentEntity>> loadWatchedTournaments() async {
     try {
       var res = await fileStorage.loadWatchedTournaments();
-      print('success ${res.length}');
+      print('Returned ${res.length} entries for loadWatchedTournaments');
       return res;
     } catch (e) {
-      print('Fetcher in error');
+      print('LoadWatchedTournaments Fetcher in error');
       var result = webClient.fetchWatchedTournaments();
-      print('Fetched');
+      print('LoadWatchedTournaments Fetched');
       return result;
     }
   }
@@ -49,12 +60,13 @@ class DashboardRepository {
   Future<List<TournamentEntity>> loadEnteredTournaments() async {
     try {
       var res = await fileStorage.loadEnteredTournaments();
-      print('success ${res.length}');
+      print('Returne ${res.length} entries for  loadEnteredTournaments ');
+
       return res;
     } catch (e) {
-      print('Fetcher in error');
+      print('LoadEnteredTournaments Fetcher in error');
       var result = webClient.fetchEnteredTournaments();
-      print('Fetched');
+      print('LoadEnteredTournaments Fetched');
       return result;
     }
   }
@@ -66,7 +78,12 @@ class DashboardRepository {
       webClient.postEnteredTournaments(tournamentEntitys),
     ]);
   }
-
+    Future saveUpcomingTournaments(List<TournamentEntity> tournamentEntitys) {
+    return Future.wait([
+      
+      webClient.postEnteredTournaments(tournamentEntitys),
+    ]);
+  }
   // Player Profile
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client

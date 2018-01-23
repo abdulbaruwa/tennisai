@@ -8,9 +8,9 @@ AppState appReducer(AppState state, action) {
       basket: basketReducer(state.basket, action),
       searchPreference: searchPreferenceReducer(state.searchPreference, action),
       watchedTournaments: dashboardReducer(state.watchedTournaments, action) ,
-      searchTournaments: tournamentSearchReducer(state.watchedTournaments, action) ,
-      enteredTournaments: dashboardReducer(state.enteredTournaments, action) ,
-      tournaments: dashboardReducer(state.tournaments, action) ,
+      upcomingTournaments: dashboardUpcomingReducer(state.upcomingTournaments, action),
+      searchTournaments: tournamentSearchReducer(state.searchTournaments, action) ,
+      //tournaments: dashboardReducer(state.tournaments, action) ,
       activeTab: tabsReducer(state.activeTab, action),
       activeEntrantsSortOrder: entrantsSortReducer(state.activeEntrantsSortOrder, action));
 }
