@@ -13,22 +13,32 @@ class TournamentDetailsView extends StatelessWidget {
   final double _appBarHeight = 256.0;
   final AnimationController controller; // =  new AnimationController(
   final Function onAddToWatch;
+  final Function onAddToBasket;
 
   static final List<IconData> icons = const [
     Icons.add_shopping_cart,
     Icons.flag
   ];
+  
 
+  // static List<Function> floatActions = new List()..add(onAddToBasket);
+  //   onAddToBasket,
+  //   onAddToWatch
+  // ];
   TournamentDetailsView(
       {Key key,
       this.tournament,
       this.onAddToWatch,
+      this.onAddToBasket,
       this.controller,
       this.source})
       : super(key: key);
 
+  
   @override
   Widget build(BuildContext context) {
+    final List<Function> floatActions = [this.onAddToBasket, this.onAddToWatch];
+
     final Color backgroundColor = Theme.of(context).cardColor;
     final Color foregroundColor = Theme.of(context).accentColor;
     Widget floater = new Column(
@@ -46,12 +56,10 @@ class TournamentDetailsView extends StatelessWidget {
             ),
             child: new FloatingActionButton(
               backgroundColor: backgroundColor,
-              heroTag: icons[
-                  index], // Specify herotag - to its icon name: Do this to avoid FloatingActionButton throwing 'Multiple heroes share the same tag exception'
+              heroTag: icons[index], // Specify herotag - to its icon name: Do this to avoid FloatingActionButton throwing 'Multiple heroes share the same tag exception'
               mini: true,
               child: new Icon(icons[index], color: foregroundColor),
-              onPressed: onAddToWatch,
-              
+              onPressed: floatActions[index],
             ),
           ),
         );

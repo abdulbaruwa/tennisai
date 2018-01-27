@@ -26,7 +26,7 @@ class TournamentDetailsWithTickerState extends State<TournamentDetails> with Tic
       },
       builder: (context, vm) {
         return new TournamentDetailsView(
-          tournament: vm.tournament, source: vm.source, onAddToWatch: vm.onAddToWatch, controller:_controller,
+          tournament: vm.tournament, source: vm.source, onAddToWatch: vm.onAddToWatch, onAddToBasket: vm.onAddToBasket, controller:_controller,
         );
       },
     );
@@ -49,9 +49,11 @@ class _ViewModel {
   final Function onDelete;
   final Function(bool) toggleCompleted;
   final Function onAddToWatch;
+  final Function onAddToBasket;
   _ViewModel({
     @required this.tournament,
     @required this.onAddToWatch,
+    @required this.onAddToBasket,
     this.source
     // @required this.onDelete,
     // @required this.toggleCompleted,
@@ -65,6 +67,10 @@ class _ViewModel {
       onAddToWatch: () { 
             print('Adding tournament with code: ${tournament.code} to watchlist');
             store.dispatch(new AddWatchedTournamentsAction(tournament));
+      },
+      onAddToBasket: () { 
+            print('Adding tournament with code: ${tournament.code} to basket');
+            store.dispatch(new AddTournamentToBasketAction(tournament));
       } 
       //onWatchUnWatch: () => store.dispatch(new DeleteTodoAction(todo.id)),
       // toggleCompleted: (isComplete) {
