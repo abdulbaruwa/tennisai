@@ -34,15 +34,19 @@ class BasketEntity {
         basketItems: _basketItems(basketItems));
   }
 
-  dynamic _jsonFromBasketItem(List<BasketItemEntity> entrants) {
+  List<BasketItem> _basketItems(List<BasketItemEntity> items){ 
     var x = [];
-    entrants.forEach((f) => x.add(f.toJson()));
+    items.forEach((f) => x.add(f.fromEntity()));
     return x;
   }
 
+  dynamic _jsonFromBasketItem(List<BasketItemEntity> basketItems) {
+    var x = [];
+    basketItems.forEach((f) => x.add(f.toJson()));
+    return x;
+  }
 
-
-//TODO: Need Unit tests around these
+  //TODO: Need Unit tests around these
   static BasketEntity fromJson(Map<String, Object> json) {
     return new BasketEntity(
         totalCost: json['totalCost'] as double,
@@ -55,7 +59,7 @@ class BasketEntity {
     for (int i = 0; i < json.length; i++) {
       var basketItemEntitys = new BasketItemEntity(
           cost: json[i]['cost'] as double,
-          tournamentId: json[i]['tournamentId'],
+          code: json[i]['code'],
           tournamentName: json[i]['tournamentName']);
       entrants.add(basketItemEntitys);
     }
@@ -76,6 +80,16 @@ class Basket {
         totalCost: totalCost,
         ltaNumber: ltaNumber,
         basketItems: _basketItemEntitys(basketItems));
+  }
+
+ Basket copyWith(
+      {int ltaNumber,
+      double totalCost,
+      List<BasketItem> basketItems}) {
+    return new Basket(
+        ltaNumber: ltaNumber ?? this.ltaNumber,
+        totalCost: totalCost ?? this.totalCost,
+        basketItems: basketItems ?? this.basketItems);
   }
 
   static Basket fromEntity(BasketEntity basketEntity) {

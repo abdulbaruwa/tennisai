@@ -143,3 +143,8 @@ class AddBasketAction {
   final Basket basket;
   AddBasketAction(this.basket);
 }
+
+class AddTournamentToBasketAction{
+  final Tournament tournament;
+  AddTournamentToBasketAction(this.tournament);
+}

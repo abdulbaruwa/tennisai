@@ -71,6 +71,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     // Basket
     new MiddlewareBinding<AppState, LoadBasketAction>(loadBasket),
     new MiddlewareBinding<AppState, AddBasketAction>(saveBasket),
+    new MiddlewareBinding<AppState, AddTournamentToBasketAction>(saveBasket),
 
     // Edit profile
     new MiddlewareBinding<AppState,

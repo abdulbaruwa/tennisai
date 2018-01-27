@@ -28,7 +28,7 @@ class EntrantsPageState extends State<EntrantsPage> {
               new CircleAvatar(
                   radius: 16.0,
                   child: new Text(
-                    item.tournamentId,
+                    item.code,
                     style: Theme.of(context).primaryTextTheme.body1,
                   ))
             ])),

@@ -1,20 +1,21 @@
 import 'package:meta/meta.dart';
+import '../models/tournament.dart';
 
 class BasketItemEntity {
   String tournamentName;
   double cost;
-  int grade;
+  String grade;
   String status;
-  String tournamentId;
+  String code;
   BasketItemEntity(
-      {this.tournamentName, this.cost, this.tournamentId, this.grade, this.status});
+      {this.tournamentName, this.cost, this.code, this.grade, this.status});
 
   // EntrantEntity(
   //     this.name, this.ranking, this.rating, this.ltaNumber, this.status);
 
   @override
   int get hashCode =>
-      tournamentName.hashCode ^ tournamentId.hashCode;
+      tournamentName.hashCode ^ code.hashCode ^ grade.hashCode ^ status.hashCode;
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -24,7 +25,7 @@ class BasketItemEntity {
           grade == other.grade &&
           status == other.status &&
           cost == other.cost &&
-          tournamentId == other.tournamentId ;
+          code == other.code ;
 
   Map<String, Object> toJson() {
     return {
@@ -32,7 +33,7 @@ class BasketItemEntity {
       'cost': cost,
       'grade': grade,
       'status': status,
-      'tournamentId': tournamentId,
+      'code': code,
     };
   }
 
@@ -42,30 +43,29 @@ class BasketItemEntity {
         cost: cost,
         grade: grade,
         status: status,
-        tournamentId: tournamentId);
+        code: code);
   }
 
   static BasketItemEntity fromJson(Map<String, Object> json) {
     return new BasketItemEntity(
-      tournamentName: json['name'] as String,
+      tournamentName: json['tournamentName'] as String,
       cost: json['cost'] as double,
-      grade: json['grade'] as int,
+      grade: json['grade'] as String,
       status: json['status'] as String,
-      tournamentId: json['rating'] as String,
+      code: json['code'] as String,
     );
   }
 }
 
 @immutable
 class BasketItem {
-  const BasketItem(
-      {this.tournamentName, this.cost, this.tournamentId, this.grade, this.status});
+   BasketItem({this.tournamentName, this.cost, this.code, this.grade, this.status});
 
   final String tournamentName;
-  final int grade;
+  final String grade;
   final String status;
   final double cost;
-  final String tournamentId;
+  final String code;
 
   BasketItemEntity toEntity() {
     return new BasketItemEntity(
@@ -73,7 +73,7 @@ class BasketItem {
         cost: cost,
         grade: grade,
         status: status,
-        tournamentId: tournamentId);
+        code: code);
   }
 
   BasketItem fromEntity() {
@@ -82,7 +82,16 @@ class BasketItem {
         cost: cost,
         grade: grade,
         status: status,
-        tournamentId: tournamentId);
+        code: code);
+  }
+
+  static BasketItem fromTournament(Tournament tournament){
+     return new BasketItem(
+        tournamentName: tournament.name,
+        cost: tournament.cost,
+        grade: tournament.grade,
+        status: tournament.status,
+        code: tournament.code);
   }
 
     static List<BasketItem> fromEntitys(List<BasketItemEntity> basketItemEntitys) {
