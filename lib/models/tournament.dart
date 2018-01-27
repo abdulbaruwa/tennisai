@@ -25,8 +25,8 @@ class TournamentEntity {
       this.cost});
   String name;
   String grade;
-  DateTime startDate;
-  DateTime endDate;
+  int startDate;
+  int endDate;
   String location;
   String address;
   String town;
@@ -99,14 +99,14 @@ class TournamentEntity {
     return {
       'name': name,
       'grade': grade,
-      'startDate': startDate.toIso8601String(),
-      'endDate': endDate.toIso8601String(),
+      'startDate': startDate,
+      'endDate': endDate,
       'location': location,
       'address': address,
       'town': town,
       'county': county,
       'postCode': postCode,
-      'numberOfEntrants': location,
+      'numberOfEntrants': numberOfEntrants,
       'organiserName': organiserName,
       'organiserEmail': organiserEmail,
       'organiserPhone': organiserPhone,
@@ -141,8 +141,8 @@ class TournamentEntity {
     return new TournamentEntity(
         name: json['name'] as String,
         grade: json['grade'] as String,
-        startDate: json['startDate'] as DateTime,
-        endDate: json['endDate'] as DateTime,
+        startDate: json['startDate'] as int,
+        endDate: json['endDate'] as int,
         location: json['location'] as String,
         address : json['address'] as String,
         town: json['town'] as String,
@@ -256,8 +256,8 @@ class Tournament {
     return new Tournament(
       name: entity.name,
       grade: entity.grade,
-      startDate: entity.startDate,
-      endDate: entity.endDate,
+      startDate: new DateTime.fromMillisecondsSinceEpoch(entity.startDate),
+      endDate: new DateTime.fromMillisecondsSinceEpoch(entity.endDate),
       location: entity.location,
       address: entity.address,
       town: entity.town,
@@ -280,8 +280,8 @@ class Tournament {
     return new TournamentEntity(
         name: name,
         grade: grade,
-        startDate: startDate,
-        endDate: endDate,
+        startDate: startDate.millisecondsSinceEpoch,
+        endDate: endDate.millisecondsSinceEpoch,
         location: location,
         address: address,
         town: town,
