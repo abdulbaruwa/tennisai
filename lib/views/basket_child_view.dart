@@ -8,13 +8,14 @@ final ThemeData _kTheme = new ThemeData(
   accentColor: Colors.redAccent,
 );
 
-class BasketChildView extends StatelessWidget{
+class BasketChildView extends StatelessWidget {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
   final Basket basket;
   final Player player;
   final Function(String) onRemoveFromBasket;
-    BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket }): super(key: key);
+  BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket})
+      : super(key: key);
 
   final List<Tournament> leaveBehindItems;
 
@@ -23,7 +24,6 @@ class BasketChildView extends StatelessWidget{
     print(item.name);
     print(item.grade);
     print(item.status);
-
     return new MergeSemantics(
       child: new ListTile(
         dense: true,
@@ -58,9 +58,9 @@ class BasketChildView extends StatelessWidget{
     return new Dismissible(
         key: new ObjectKey(item),
         direction: DismissDirection.horizontal,
-         onDismissed: (DismissDirection direction) {
-            onRemoveFromBasket(item.code);
-         },
+        onDismissed: (DismissDirection direction) {
+          onRemoveFromBasket(item.code);
+        },
         //   setState(() {
         //     leaveBehindItems.remove(item);
         //   });
@@ -134,8 +134,8 @@ class BasketChildView extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    Iterable<Widget> listTiles =
-        basket.basketItems.map((BasketItem item) => buildDismisableItem(context, item));
+    Iterable<Widget> listTiles = basket.basketItems
+        .map((BasketItem item) => buildDismisableItem(context, item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
     return new Column(children: <Widget>[
       new Container(

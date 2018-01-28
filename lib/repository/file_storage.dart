@@ -151,11 +151,8 @@ class FileStorage {
     final file = await _getLocalFile(StoreNames.basket);
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
-    final basketEntity = (json['basket'] as List<Map<String, dynamic>>)
-        .map((player) => BasketEntity.fromJson(player))
-        .toList();
-
-    return basketEntity;
+    final basketEntity = (json['basket'] as Map<String, dynamic>);
+    return new List<BasketEntity>()..add(BasketEntity.fromJson(basketEntity));
   }
 
   Future<File> saveBasket(BasketEntity basket) async {

@@ -10,6 +10,7 @@ class BasketEntity {
   @override
   int get hashCode =>
       totalCost.hashCode ^ basketItems.hashCode ^ ltaNumber.hashCode;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -60,6 +61,8 @@ class BasketEntity {
       var basketItemEntitys = new BasketItemEntity(
           cost: json[i]['cost'] as double,
           code: json[i]['code'],
+          grade: json[i]['grade'],
+          status: json[i]['status'],
           tournamentName: json[i]['tournamentName']);
       entrants.add(basketItemEntitys);
     }
@@ -80,6 +83,26 @@ class Basket {
         totalCost: totalCost,
         ltaNumber: ltaNumber,
         basketItems: _basketItemEntitys(basketItems));
+  }
+
+  @override
+  int get hashCode =>
+      totalCost.hashCode ^
+      ltaNumber.hashCode ^
+      basketItems.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Basket &&
+          runtimeType == other.runtimeType &&
+          totalCost == other.totalCost &&
+          ltaNumber == other.ltaNumber &&
+          basketItems == other.basketItems;
+
+  @override
+  String toString() {
+    return 'Basket{totalCost: $totalCost, ltaNumber: $ltaNumber, basketItems: $basketItems}';
   }
 
  Basket copyWith(

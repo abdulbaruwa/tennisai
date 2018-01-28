@@ -67,6 +67,32 @@ class BasketItem {
   final double cost;
   final String code;
 
+
+ @override
+  int get hashCode =>
+      tournamentName.hashCode ^
+      grade.hashCode ^
+      status.hashCode ^
+      cost.hashCode ^
+      code.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is BasketItem &&
+          runtimeType == other.runtimeType &&
+          tournamentName == other.tournamentName &&
+          grade == other.grade &&
+          cost == other.cost &&
+          code == other.code &&
+          status == other.status;
+
+  @override
+  String toString() {
+    return 'BasketItem{tournamentName: $tournamentName, grade: $grade, cost: $cost, code: $code, status: $status}';
+  }
+  
+
   BasketItemEntity toEntity() {
     return new BasketItemEntity(
         tournamentName: tournamentName,
