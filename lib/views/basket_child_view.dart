@@ -13,8 +13,8 @@ class BasketChildView extends StatelessWidget{
       new GlobalKey<ScaffoldState>();
   final Basket basket;
   final Player player;
-
-    BasketChildView({Key key, this.basket, this.player}): super(key: key);
+  final Function(String) onRemoveFromBasket;
+    BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket }): super(key: key);
 
   final List<Tournament> leaveBehindItems;
 
@@ -58,7 +58,9 @@ class BasketChildView extends StatelessWidget{
     return new Dismissible(
         key: new ObjectKey(item),
         direction: DismissDirection.horizontal,
-        // onDismissed: (DismissDirection direction) {
+         onDismissed: (DismissDirection direction) {
+            onRemoveFromBasket(item.code);
+         },
         //   setState(() {
         //     leaveBehindItems.remove(item);
         //   });
