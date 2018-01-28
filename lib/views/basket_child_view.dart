@@ -174,7 +174,7 @@ class BasketChildView extends StatelessWidget{
           child: new Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                buildTotalRow(context, 95.0),
+                buildTotalRow(context, basket.totalCost),
                 new Expanded(
                     child: new FlatButton(
                         onPressed: () {
