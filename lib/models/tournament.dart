@@ -62,6 +62,7 @@ class TournamentEntity {
       organiserPhone.hashCode ^
       entryCloseDate.hashCode ^
       code.hashCode ^
+      cost.hashCode ^
       status.hashCode ^
       site.hashCode ^
       highestPlayerRating.hashCode ^
@@ -86,6 +87,7 @@ class TournamentEntity {
           organiserPhone == other.organiserPhone &&
           entryCloseDate == other.entryCloseDate &&
           code == other.code &&
+          cost == other.cost &&
           status == other.status &&
           highestPlayerRating == other.highestPlayerRating &&
           entrantsAreEqual(entrants, other.entrants);
@@ -112,6 +114,7 @@ class TournamentEntity {
       'organiserPhone': organiserPhone,
       'entryCloseDate': entryCloseDate,
       'code': code,
+      'cost': cost,
       'status': status,
       'highestPlayerRating': highestPlayerRating,
       'entrants': _jsonFromEntrant(entrants)
@@ -135,6 +138,7 @@ class TournamentEntity {
           status: json[i]['status']);
       entrants.add(entrantEntity);
     }
+    return entrants;
   }
 
   static TournamentEntity fromJson(Map<String, Object> json) {
@@ -154,6 +158,7 @@ class TournamentEntity {
         organiserPhone: json['organiserPhone'] as String,
         entryCloseDate: json['entryCloseDate'] as DateTime,
         code: json['code'] as String,
+        cost: json['cost'] as double,
         status: json['status'] as String,
         highestPlayerRating: json['highestPlayerRating'] as String,
         entrants: _entrantsFromJson(json['entrants']));
@@ -269,6 +274,7 @@ class Tournament {
       organiserEmail: entity.organiserEmail,
       entryCloseDate: entity.entryCloseDate,
       code: entity.code,
+      cost: entity.cost,
       status: entity.status,
       site: entity.site,
       highestPlayerRating: entity.highestPlayerRating,
@@ -293,6 +299,7 @@ class Tournament {
         organiserEmail: organiserEmail,
         entryCloseDate: entryCloseDate,
         code: code,
+        cost: cost,
         status: status,
         site: site,
         highestPlayerRating: highestPlayerRating,
@@ -474,7 +481,7 @@ List<Tournament> tournaments = <Tournament>[
       highestPlayerRating: '2.1',
       numberOfEntrants: 12,
       status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
+      code: new Uuid().v4().toString().substring(0,8),  cost:25.0,
       entrants: const <Entrant>[
         const Entrant(
             name: 'Archie Duncan',
