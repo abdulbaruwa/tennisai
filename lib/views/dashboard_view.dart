@@ -29,10 +29,9 @@ class DashboardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('Total items watched ${watchedTournaments.length}');
-    print('Total items entered ${enteredTournaments.length}');
+    print('dashboard_view: Total items watched ${watchedTournaments.length}');
+    print('dashboard_view: Total items entered ${enteredTournaments.length}');
     final Map<_Page, List<Tournament>> _allPages = <_Page, List<Tournament>>{
-      
       new _Page(
           label: 'UPCOMING',
           tabSource: TournamentDetailsActionSource.upcoming,

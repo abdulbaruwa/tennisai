@@ -148,3 +148,8 @@ class AddTournamentToBasketAction{
   final Tournament tournament;
   AddTournamentToBasketAction(this.tournament);
 }
+
+class RemoveTournamentFromBasketAction{
+  final String code;
+  RemoveTournamentFromBasketAction(this.code);
+}
