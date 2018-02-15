@@ -13,4 +13,4 @@ Longterm
 * Include mined data for International Tennis Europe and Junior ATP tournament.
 
 ## Tech
-The project was initially to be based on Xamarin's cross platform development framework, which I have now canned in favour of Google's Dart-based [flutter](http://flutter.io/) platform. Though in Alfa, flutter's development experience to be a whole load better than Xamarin's. [Hot reloading](https://flutter.io/hot-reload/#using-hot-reload) is just freaking awesome.
+The project was initially to be based on Xamarin's cross platform development framework, which I have now canned in favour of Google's Dart-based [flutter](http://flutter.io/) platform. Though in Alfa, flutter's development experience is yet a whole loads better than Xamarin's. [Hot reloading](https://flutter.io/hot-reload/#using-hot-reload) is just freaking awesome.
