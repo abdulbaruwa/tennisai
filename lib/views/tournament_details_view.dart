@@ -38,7 +38,6 @@ class TournamentDetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Function> floatActions = [this.onAddToBasket, this.onAddToWatch];
-
     final Color backgroundColor = Theme.of(context).cardColor;
     final Color foregroundColor = Theme.of(context).accentColor;
     Widget floater = new Column(
@@ -100,21 +99,13 @@ class TournamentDetailsView extends StatelessWidget {
         body: new CustomScrollView(
           slivers: <Widget>[
             new SliverAppBar(
-              expandedHeight: _appBarHeight,
               pinned: true,
-              floating: true,
+              floating: false,
               flexibleSpace: new FlexibleSpaceBar(
                 title: new Text('${tournament.name}'),
                 background: new Stack(
                   fit: StackFit.expand,
                   children: <Widget>[
-                    new Image.asset(
-                      'images/tennisacademy.jpg',
-                      fit: BoxFit.cover,
-                      height: _appBarHeight,
-                    ),
-
-                    // Add this gradient helps make the toolbar icons if any against background image.
                     const DecoratedBox(
                       decoration: const BoxDecoration(
                           gradient: const LinearGradient(
