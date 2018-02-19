@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/tournament.dart';
 import 'package:flutter/rendering.dart';
-import '../pages/touranmentDetails.dart';
 import "package:intl/intl.dart";
 
 final ThemeData _kTheme = new ThemeData(
@@ -42,7 +41,7 @@ class TournamentSearchState extends State<TournamentSearch> {
         tournaments.map((Tournament item) => new TournamentCard(
             tournament: item,
             onTap: () {
-              showTournamentDetailsPage(context, item);
+             // showTournamentDetailsPage(context, item);
             }));
             
     listTiles = ListTile.divideTiles(
@@ -124,17 +123,17 @@ class TournamentCard extends StatelessWidget {
   }
 }
 
-void showTournamentDetailsPage(BuildContext context, Tournament tournament) {
-  print('Showing tourmanet detail with ${tournament.entrants.length} entrants');
-  Navigator.push(
-      context,
-      new MaterialPageRoute<Null>(
-        settings: const RouteSettings(name: '/tournament/details'),
-        builder: (BuildContext context) {
-          return new Theme(
-            data: _kTheme.copyWith(platform: Theme.of(context).platform),
-            child: new TournamentDetailsPage(tournament: tournament),
-          );
-        },
-      ));
-}
+// void showTournamentDetailsPage(BuildContext context, Tournament tournament) {
+//   print('Showing tourmanet detail with ${tournament.entrants.length} entrants');
+//   Navigator.push(
+//       context,
+//       new MaterialPageRoute<Null>(
+//         settings: const RouteSettings(name: '/tournament/details'),
+//         builder: (BuildContext context) {
+//           return new Theme(
+//             data: _kTheme.copyWith(platform: Theme.of(context).platform),
+//             child: new TournamentDetailsPage(tournament: tournament),
+//           );
+//         },
+//       ));
+// }

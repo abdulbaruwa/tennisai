@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import '../models/tournament.dart';
 import '../models/tournament.dart' as _tournamentModels;
-import '../pages/touranmentDetails.dart';
 import '../services/tournamentServices.dart' as _services;
 import 'package:intl/intl.dart';
 import 'dart:math' as math;

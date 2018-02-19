@@ -78,9 +78,7 @@ class TennisAiServices {
     print(jsonData[0]['name']);
 
     for (int i = 0; i < jsonData.length; i++) {
-      var player = new Player();
-      player.email = jsonData[i]['email'];
-      player.name = jsonData[i]['name'];
+      var player = new Player(email:   jsonData[i]['email'], firstName:  jsonData[i]['name']);
     }
   }
 }
