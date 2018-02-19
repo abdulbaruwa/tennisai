@@ -8,9 +8,7 @@ import '../containers/tournament_entrants.dart';
 class TournamentDetailsView extends StatelessWidget {
   final Tournament tournament;
   final TournamentDetailsActionSource source;
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
-  final double _appBarHeight = 256.0;
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final AnimationController controller; // =  new AnimationController(
   final Function onAddToWatch;
   final Function onAddToBasket;
@@ -19,7 +17,6 @@ class TournamentDetailsView extends StatelessWidget {
     Icons.add_shopping_cart,
     Icons.flag
   ];
-  
 
   // static List<Function> floatActions = new List()..add(onAddToBasket);
   //   onAddToBasket,
@@ -335,54 +332,6 @@ class _IconTextItem extends StatelessWidget {
         ],
       ),
     ));
-  }
-}
-
-class _HeaderItem extends StatelessWidget {
-  _HeaderItem({Key key, this.icon, this.lines, this.tooltip, this.onPressed})
-      : assert(lines.length > 0),
-        super(key: key);
-
-  final IconData icon;
-  final List<String> lines;
-  final String tooltip;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    final ThemeData themeData = Theme.of(context);
-    final List<Widget> columnChildren = new List<Widget>();
-    columnChildren.add(new Text(lines.first, style: themeData.textTheme.title));
-    columnChildren.addAll(lines
-        .sublist(1, lines.length)
-        .map((String line) => new Text(
-              line,
-              style: themeData.textTheme.subhead,
-            ))
-        .toList());
-    //columnChildren.add(new Text(lines.last, style: themeData.textTheme.subhead));
-
-    final List<Widget> rowChildren = <Widget>[
-      new Expanded(
-          child: new Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: columnChildren))
-    ];
-    if (icon != null) {
-      rowChildren.add(new SizedBox(
-          width: 72.0,
-          child: new IconButton(
-              icon: new Icon(icon),
-              color: themeData.primaryColor,
-              onPressed: onPressed)));
-    }
-    return new MergeSemantics(
-      child: new Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: rowChildren)),
-    );
   }
 }
 
