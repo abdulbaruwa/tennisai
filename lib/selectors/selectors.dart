@@ -16,7 +16,9 @@ List<Tournament> tournamentsSelector(
   if (source == TournamentDetailsActionSource.watching) {
     return state.watchedTournaments;
   }
-
+  if (source == TournamentDetailsActionSource.search) {
+    return state.searchTournaments;
+  }
   return [];
 }
 

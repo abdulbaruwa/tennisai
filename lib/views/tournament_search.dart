@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/tournament.dart';
 import 'package:flutter/rendering.dart';
 import "package:intl/intl.dart";
+
+import '../containers/tournament_details.dart';
+import '../models/models.dart';
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
@@ -42,14 +44,13 @@ class TournamentSearchState extends State<TournamentSearch> {
             tournament: item,
             onTap: () {
              // showTournamentDetailsPage(context, item);
+             _onTap(context, item);
             }));
             
     listTiles = ListTile.divideTiles(
         context: context,
         tiles: listTiles,
         color: Theme.of(context).primaryColor);
-
-    final ThemeData themedata = Theme.of(context);
 
     return new Scrollbar(
         child: new ListView(
@@ -123,17 +124,11 @@ class TournamentCard extends StatelessWidget {
   }
 }
 
-// void showTournamentDetailsPage(BuildContext context, Tournament tournament) {
-//   print('Showing tourmanet detail with ${tournament.entrants.length} entrants');
-//   Navigator.push(
-//       context,
-//       new MaterialPageRoute<Null>(
-//         settings: const RouteSettings(name: '/tournament/details'),
-//         builder: (BuildContext context) {
-//           return new Theme(
-//             data: _kTheme.copyWith(platform: Theme.of(context).platform),
-//             child: new TournamentDetailsPage(tournament: tournament),
-//           );
-//         },
-//       ));
-// }
+ void _onTap(BuildContext context, Tournament tournament) {
+    print('tournament_search:_onTap: ${tournament.code}');
+    Navigator.of(context).push(new MaterialPageRoute(
+          builder: (_) =>
+              new TournamentDetails(id: tournament.code, source: TournamentDetailsActionSource.search)
+          
+        ));
+  }

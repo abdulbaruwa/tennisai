@@ -45,7 +45,6 @@ class TournamentEntrantsView extends StatelessWidget {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
     bool _reverseSort = false;

@@ -22,6 +22,7 @@ class TournamentDetailsWithTickerState extends State<TournamentDetails> with Tic
     return new StoreConnector<AppState, _ViewModel>(
       //ignoreChange: (state) => tournamentSelector(state.tournaments, id, source).isNotPresent,
       converter: (Store<AppState> store) {
+
         return new _ViewModel.from(store, widget.id, widget.source);
       },
       builder: (context, vm) {
@@ -60,7 +61,9 @@ class _ViewModel {
   });
 
   factory _ViewModel.from(Store<AppState> store, String id, TournamentDetailsActionSource source) {
+    print('tournament_details: _ViewModel factory $source tournamentId: $id' );
     final tournament = tournamentSelector(tournamentsSelector(store.state, source), id).value;
+    
     return new _ViewModel(
       tournament: tournament,
       source: source,
