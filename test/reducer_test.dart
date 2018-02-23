@@ -16,7 +16,7 @@ main() {
     test('should update the AppTab', () {
       final store = new Store<AppState>(
         appReducer,
-        initialState: new AppState(activeTab: AppTab.dashboard),
+        initialState: new AppState(activeTab: AppTab.upcoming),
       );
 
       store.dispatch(new UpdateTabAction(AppTab.search));

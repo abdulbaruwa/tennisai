@@ -91,7 +91,7 @@ Widget _selectActiveTab(BuildContext context, AppTab tab) {
   print('Selected tab is ${describeEnum(tab)}');
   switch (tab) {
     case AppTab.home:
-      return new Dashboard();
+      return new MainTab();
       break;
     case AppTab.upcoming:
       return new Dashboard();
