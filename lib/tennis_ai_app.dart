@@ -90,7 +90,10 @@ class TennisAiHome extends StatelessWidget {
 Widget _selectActiveTab(BuildContext context, AppTab tab) {
   print('Selected tab is ${describeEnum(tab)}');
   switch (tab) {
-    case AppTab.dashboard:
+    case AppTab.home:
+      return new Dashboard();
+      break;
+    case AppTab.upcoming:
       return new Dashboard();
       break;
     case AppTab.basket:
@@ -120,7 +123,8 @@ class TabItem {
 
 const List<TabItem> TabItems = const <TabItem>[
   const TabItem(title: 'Home', icon: Icons.home),
-  const TabItem(title: 'Tournaments', icon: Icons.search),
+  const TabItem(title: 'Upcoming', icon: Icons.watch_later),
+  const TabItem(title: 'Search', icon: Icons.search),
   const TabItem(title: 'Basket', icon: Icons.shopping_basket),
   const TabItem(title: 'Settings', icon: Icons.settings),
 ];

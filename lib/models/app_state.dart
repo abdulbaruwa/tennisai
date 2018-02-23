@@ -26,7 +26,7 @@ class AppState {
       this.upcomingTournaments = const [],
       this.tournaments = const [],
       this.basket = const [],
-      this.activeTab = AppTab.dashboard,
+      this.activeTab = AppTab.home,
       this.activeEntrantsSortOrder = false});
 
   factory AppState.loading() => new AppState(isLoading: true);
