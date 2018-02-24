@@ -14,8 +14,7 @@ class BasketView extends StatelessWidget {
   final Function(String) onRemoveFromBasket;
 
   BasketView({Key key, this.player, this.basket, this.onRemoveFromBasket}) : super(key: key);
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {

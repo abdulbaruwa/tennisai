@@ -18,19 +18,19 @@ class MainTab extends StatelessWidget {
     return new StoreConnector<AppState, _ViewModel>(
         converter: _ViewModel.fromStore,
         builder: (context, vm) {
-          return new MainView(
+          return new MainView(player: vm.player
           );
         });
   }
 }
 
 class _ViewModel {
-  _ViewModel();
-
+  final Player player;
+  _ViewModel({@required this.player});
   static _ViewModel fromStore(Store<AppState> store) {
-
-    return new _ViewModel();
-        
+    return new _ViewModel(
+        player: playerSelector(store.state).value,
+    );
   }
 }
 

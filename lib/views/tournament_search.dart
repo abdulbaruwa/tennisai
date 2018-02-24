@@ -24,7 +24,6 @@ class TournamentSearchState extends State<TournamentSearch> {
   @override
   void initState() {
     super.initState();
-
   }
 
   void handleSuccess(List<Tournament> value)
