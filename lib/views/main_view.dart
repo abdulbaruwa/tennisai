@@ -22,8 +22,8 @@ class MainView extends StatelessWidget {
       new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    Iterable<Widget> listTiles = rankingInfos
-        .map((RankingInfo item) => buildRankingInfoItem(context, item));
+    Iterable<Widget> listTiles = rankingInfos.map((RankingInfo item) => buildRankingInfoItem(context, item));
+    Iterable<Widget> matcheResultsTiles = matchResultInfos.map((MatchResultInfo item) => buildEventItem(context, item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
     return new Theme(
         data: kTheme.copyWith(platform: Theme.of(context).platform),
@@ -55,6 +55,9 @@ class MainView extends StatelessWidget {
                     new Column(children: listTiles.toList()),
                     new SizedBox(height: 20.0),
                     new Text('Results', style: Theme.of(context).textTheme.title,),
+                    new SizedBox(height: 5.0),
+                    buildEventsHeader(context),
+                    new Column(children: matcheResultsTiles.toList())
                   ]),
             ))
         // new Column(
@@ -108,7 +111,42 @@ class MainView extends StatelessWidget {
                       style: Theme.of(context).textTheme.body2)))),
     ]));
   }
-
+ Widget buildEventsHeader(BuildContext context) {
+    return new Container(
+        color: const Color(0xFFFC5CAE9),
+        child: new Row(children: <Widget>[
+          new Container(
+              alignment: Alignment.topCenter,
+              width: 70.0,
+              child: new Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: new Text('DATE',
+                      style: Theme.of(context).textTheme.body2))),
+              new Container(
+                  width: 120.0,
+                  alignment: Alignment.topCenter,
+                  child: new Padding(
+                      padding: const EdgeInsets.only(right: 1.0),
+                      child: new Text('TOURNAMENT',
+                          style: Theme.of(context).textTheme.body2))),
+          new Expanded(
+              child: new Container(
+                  width: 70.0,
+                  alignment: Alignment.topCenter,
+                  child: new Padding(
+                      padding: const EdgeInsets.only(right: 1.0),
+                      child: new Text('',
+                          style: Theme.of(context).textTheme.body2)))),
+          new Expanded(
+              child: new Container(
+                  width: 70.0,
+                  alignment: Alignment.topCenter,
+                  child: new Padding(
+                      padding: const EdgeInsets.only(right: 1.0),
+                      child: new Text('',
+                          style: Theme.of(context).textTheme.body2)))),
+        ]));
+  } 
   Widget buildRankingInfoHeader(BuildContext context) {
     return new Container(
         color: const Color(0xFFFC5CAE9),
@@ -145,7 +183,46 @@ class MainView extends StatelessWidget {
                       child: new Text('POINTS',
                           style: Theme.of(context).textTheme.body2)))),
         ]));
+  }  
+  
+  Widget buildEventItem(BuildContext context, MatchResultInfo matchResultInfo) {
+    return new Container(
+      height: 50.0,
+      alignment: Alignment.center,
+       // color: const Color(0xFFFC5CAE9),
+        child: new Row(children: <Widget>[
+          new Container(
+              alignment: Alignment.centerLeft,
+              child: new Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: new Text(new DateFormat("dd-MMM-yy").format(matchResultInfo.tournamentDate),
+                      style: Theme.of(context).textTheme.body2))),
+          new Expanded(
+              child: new Container(
+                  alignment: Alignment.centerLeft,
+                  child: new Padding(
+                      padding: const EdgeInsets.only(right: 1.0),
+                      child: new Text(matchResultInfo.tournamentName,
+                          style: Theme.of(context).textTheme.body2)))),
+           new Container(
+                 width: 40.0,
+                  alignment: Alignment.center,
+                  child: new Padding(
+                      padding: const EdgeInsets.only(right: 1.0),
+                      child: new Text(matchResultInfo.points.toString(),
+                          style: Theme.of(context).textTheme.body2))),
+          new Container(
+              child: new Container(
+                color: Colors.yellow,
+                width: 30.0,
+                  child: new Padding(
+                      padding: const EdgeInsets.only(right: 1.0),
+                      child: new Text('tick',
+                          style: Theme.of(context).textTheme.body2)))),
+        ]));
   }
+
+
 
   Widget buildListTileHeader(BuildContext context) {
     return new MergeSemantics(
