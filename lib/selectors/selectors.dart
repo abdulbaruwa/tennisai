@@ -1,6 +1,9 @@
 import '../utils/optional.dart';
 import '../models/models.dart';
 
+List<RankingInfo> rankingInfosSelector(AppState state) => state.rankingInfos;
+List<MatchResultInfo> matchResultInfosSelector(AppState state) => state.matchResultInfos;
+
 List<Tournament> enteredTournamentSelector(AppState state) =>
     state.enteredTournaments;
 List<Tournament> watchedTournamentSelector(AppState state) =>

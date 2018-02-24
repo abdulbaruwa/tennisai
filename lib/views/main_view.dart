@@ -13,7 +13,10 @@ import '../theme/ktheme.dart';
 
 class MainView extends StatelessWidget {
   final Player player;
-  MainView({Key key, this.player}) : super(key: key);
+  final List<RankingInfo> rankingInfos;
+  final List<MatchResultInfo> matchResultInfos;
+
+  MainView({Key key, this.player, this.rankingInfos, this.matchResultInfos}) : super(key: key);
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
   @override
