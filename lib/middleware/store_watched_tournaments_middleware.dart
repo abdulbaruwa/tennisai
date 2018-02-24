@@ -15,6 +15,9 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final loadWatchedTournaments = _createLoadWatchedTournaments(repository);
   final saveWatchedTournaments = _createSaveWatchedTournaments(repository);
 
+  final loadRankingInfos = _createLoadRankingInfos(repository);
+  final loadMatchResultInfos = _createLoadMatchResultInfos(repository);
+
   final loadEnteredTournaments = _createLoadEnteredTournaments(repository);
   final saveEnteredTournaments = _createSaveEnteredTournaments(repository);
   final saveUpcomingTournaments = _createSaveUpcomingTournaments(repository);
@@ -49,6 +52,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
         saveEnteredTournaments),
     new MiddlewareBinding<AppState, UpcomingTournamentsLoadedAction>(
         saveUpcomingTournaments),
+    new MiddlewareBinding<AppState, LoadRankingInfosAction>(loadRankingInfos),
+    new MiddlewareBinding<AppState, LoadMatchResultInfosAction>(loadMatchResultInfos),
     // new MiddlewareBinding<AppSate, UpcomingTournamentsLoadedAction>(
     //   saveUpcomingTournaments),
     new MiddlewareBinding<AppState, RemoveFromWatchedTournamentsAction>(
@@ -293,4 +298,32 @@ Middleware<AppState> _updatePlayerAndSearchProfile(
         searchPreferenceSelector(store.state).value.toEntity();
     repository.saveSearchPreference(searchPrefToSave);
   };
+}
+
+Middleware<AppState> _createLoadRankingInfos(DashboardRepository repo) {
+  var stateResult = (Store<AppState> store, action, NextDispatcher next) {
+    repo.loadRankingInfos().then((t) {
+      var rankingInfo = t.map(RankingInfo.fromEntity).toList();
+      print(
+          'Middleware ._createLoadRankingInfos: Loading ${rankingInfo.length} Ranking Info');
+      store.dispatch(
+        new RankingInfoLoadedAction(rankingInfo),
+      );
+    });
+  };
+  return stateResult;
+}
+
+Middleware<AppState> _createLoadMatchResultInfos(DashboardRepository repo) {
+  var stateResult = (Store<AppState> store, action, NextDispatcher next) {
+    repo.loadRankingInfos().then((t) {
+      var rankingInfo = t.map(RankingInfo.fromEntity).toList();
+      print(
+          'Middleware ._createLoadRankingInfos: Loading ${rankingInfo.length} Ranking Info');
+      store.dispatch(
+        new RankingInfoLoadedAction(rankingInfo),
+      );
+    });
+  };
+  return stateResult;
 }

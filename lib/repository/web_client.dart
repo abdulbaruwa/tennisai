@@ -85,12 +85,25 @@ class WebClient {
     return new Future.delayed(delay, () => tEntities);
   }
 
-// Basket
-  // Search Preference
+  // Basket
   Future<List<BasketEntity>> fetchBasket() async {
     List<BasketEntity> tEntities = [];
     tEntities.add(basket);
     print('before delayed ${tEntities.length}');
+    return new Future.delayed(delay, () => tEntities);
+  }
+
+  // RankingInfos
+  Future<List<RankingInfoEntity>> fetchRankingInfos() async {
+    List<RankingInfoEntity> tEntities = [];
+    rankingInfos.forEach((f) => tEntities.add(f.toEntity()));
+    return new Future.delayed(delay, () => tEntities);
+  }
+
+  // MatchResulInfos
+  Future<List<MatchResultInfoEntity>> fetchMatchResultInfos() async {
+    List<MatchResultInfoEntity> tEntities = [];
+    matchResultInfos.forEach((f) => tEntities.add(f.toEntity()));
     return new Future.delayed(delay, () => tEntities);
   }
 

@@ -7,3 +7,5 @@ export 'search_preference_reducer.dart';
 export 'tournament_search_reducer.dart';
 export 'basket_reducer.dart';
 export 'dashboard_upcoming_reducer.dart';
+export 'match_result_info_reducer.dart';
+export 'ranking_info_reducer.dart';

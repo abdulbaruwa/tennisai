@@ -14,6 +14,8 @@ class AppState {
   final List<Tournament> searchTournaments;
   final List<Tournament> upcomingTournaments;
   final List<Basket> basket;
+  final List<RankingInfo> rankingInfos;
+  final List<MatchResultInfo> matchResultInfos;
   final bool activeEntrantsSortOrder;
 
   AppState(
@@ -27,7 +29,10 @@ class AppState {
       this.tournaments = const [],
       this.basket = const [],
       this.activeTab = AppTab.home,
-      this.activeEntrantsSortOrder = false});
+      this.matchResultInfos = const [],
+      this.rankingInfos = const [],
+      this.activeEntrantsSortOrder = false,
+      this.isEntrantsViewItemsReverseSorted = false});
 
   factory AppState.loading() => new AppState(isLoading: true);
 
@@ -68,7 +73,10 @@ class AppState {
       searchTournaments.hashCode ^
       enteredTournaments.hashCode ^
       watchedTournaments.hashCode ^
-      activeEntrantsSortOrder.hashCode;
+      activeEntrantsSortOrder.hashCode ^
+      rankingInfos.hashCode ^
+      matchResultInfos.hashCode ^
+      isEntrantsViewItemsReverseSorted.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -86,10 +94,12 @@ class AppState {
           searchTournaments == other.searchTournaments &&
           watchedTournaments == other.watchedTournaments &&
           enteredTournaments == other.enteredTournaments &&
+          matchResultInfos == other.matchResultInfos &&
+          rankingInfos == other.rankingInfos &&
           activeTab == other.activeTab;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, player: $player, basket: $basket, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder}';
+    return 'AppState{isLoading: $isLoading, player: $player, basket: $basket, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted}';
   }
 }

@@ -1,4 +1,22 @@
 import '../models/models.dart';
+// Main
+class LoadRankingInfosAction{}
+
+class LoadMatchResultInfosAction{}
+
+class MatchResultInfoNotLoadedAction{}
+
+class MatchResultInfoLoadedAction {
+  final List<MatchResultInfo> matchResultInfos;
+
+  MatchResultInfoLoadedAction(this.matchResultInfos);
+}
+class RankingInfoNotLoadedAction{}
+class RankingInfoLoadedAction {
+  final List<RankingInfo> rankingInfos;
+
+  RankingInfoLoadedAction(this.rankingInfos);
+}
 
 // Basket
 class LoadBasketTournamentsAction {}

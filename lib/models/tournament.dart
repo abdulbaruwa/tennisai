@@ -325,7 +325,6 @@ class Tournament {
 
 String getRandomString = new Uuid().v4().toString().substring(0,8);
 List<Tournament> watchedTournaments = <Tournament>[
-    
   new Tournament(
       name: 'Sutton Super Series 1',
       location: 'Sutton Tennis Academy',

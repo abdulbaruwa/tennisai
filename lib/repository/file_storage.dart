@@ -9,7 +9,9 @@ enum StoreNames {
   searchTournaments,
   profile,
   preference,
-  basket
+  basket,
+  rankingInfos,
+  matchResultInfos
 }
 
 /// Loads and saves a List of Tournament using a text file stored on the device.
@@ -160,5 +162,23 @@ class FileStorage {
     var basketJson = basket.toJson();
     return file
         .writeAsString(new JsonEncoder().convert({'basket': basketJson}));
+  }
+
+  // RankingInfo
+  Future<List<RankingInfoEntity>> loadRankingInfos() async {
+    final file = await _getLocalFile(StoreNames.rankingInfos);
+    final string = await file.readAsString();
+    final json = new JsonDecoder().convert(string);
+    final rankingInfoEntity = (json['rankingInfos'] as Map<String, dynamic>);
+    return new List<RankingInfoEntity>()..add(RankingInfoEntity.fromJson(rankingInfoEntity));
+  }
+
+  // MatchResultInfo
+  Future<List<MatchResultInfoEntity>> loadMatchResultInfos() async {
+    final file = await _getLocalFile(StoreNames.matchResultInfos);
+    final string = await file.readAsString();
+    final json = new JsonDecoder().convert(string);
+    final matchResultInfoEntity = (json['matchResultInfos'] as Map<String, dynamic>);
+    return new List<MatchResultInfoEntity>()..add(MatchResultInfoEntity.fromJson(matchResultInfoEntity));
   }
 }

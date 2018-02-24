@@ -180,4 +180,33 @@ class DashboardRepository {
       webClient.postBasket(basketEntity),
     ]);
   }
+
+  // Main
+  /// Loads Ranking Info from File storage. If they don't exist or encounter an
+  /// error, it attempts to load the rankingInfo from a Web Client
+  Future<List<RankingInfoEntity>> loadRankingInfos() async {
+    try {
+      var res = await fileStorage.loadRankingInfos();
+      return res;
+    } catch (e) {
+      print('Fetcher for Basket in error');
+      var result = webClient.fetchRankingInfos();
+      print('dashboard_repository.loadRankingInfo()..RankingInfos Fetched');
+      return result;
+    }
+  }
+
+  /// Loads MatchResultInfo from File storage. If they don't exist or encounter an
+  /// error, it attempts to load the matchResultInfo from a Web Client
+  Future<List<MatchResultInfoEntity>> loadMatchResultInfos() async {
+    try {
+      var res = await fileStorage.loadMatchResultInfos();
+      return res;
+    } catch (e) {
+      print('Fetcher for Basket in error');
+      var result = webClient.fetchMatchResultInfos();
+      print('dashboard_repository.loadRankingInfo()..RankingInfos Fetched');
+      return result;
+    }
+  }
 }

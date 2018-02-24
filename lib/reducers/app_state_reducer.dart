@@ -12,5 +12,8 @@ AppState appReducer(AppState state, action) {
       searchTournaments: tournamentSearchReducer(state.searchTournaments, action) ,
       //tournaments: dashboardReducer(state.tournaments, action) ,
       activeTab: tabsReducer(state.activeTab, action),
+      matchResultInfos: matchResultInfoReducer(state.matchResultInfos, action),
+      rankingInfos: rankingInfoReducer(state.rankingInfos, action),
       activeEntrantsSortOrder: entrantsSortReducer(state.activeEntrantsSortOrder, action));
+
 }

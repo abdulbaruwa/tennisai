@@ -52,6 +52,8 @@ _loadState(Store store) {
   store.dispatch(new LoadBasketAction());
   store.dispatch(new LoadSearchPreferenceAction());
   store.dispatch(new LoadSearchTournamentsAction());
+  store.dispatch(new LoadRankingInfosAction());
+  store.dispatch(new LoadMatchResultInfosAction());
 }
 
 class TennisAiHome extends StatelessWidget {
