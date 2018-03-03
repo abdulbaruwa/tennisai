@@ -117,7 +117,7 @@ class MatchResultInfoEntity{
 }
 
 List<MatchResultInfo> matchResultInfos = <MatchResultInfo>[
-new MatchResultInfo(tournamentDate: new DateTime(2018, 2, 17), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 3, playerId: 1,result: 'MD 58POCF W', points: 320),
+new MatchResultInfo(tournamentDate: new DateTime(2018, 2, 17), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 3, playerId: 1,result: 'MD 58POCF W', points: 1320),
 new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 28), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 4, playerId: 1,result: 'MD 58POCF W', points: 320),
 new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 21), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 4, playerId: 1,result: 'MD F W', points: 500),
 new MatchResultInfo(tournamentDate: new DateTime(2018, 12, 18), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: false, grade: 3, playerId: 1,result: 'MD Q', points: 1),
