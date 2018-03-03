@@ -8,6 +8,7 @@ class TennisAiKeys {
   // Tabs
   static final tabs = const Key('__tabs__');
   static const homeTab = const Key('__homeTab__');
+  static const homeTabLoading = const Key('__homeTabLoading__');
   static const dashBoardTab = const Key('__dashboardTab__');
   static const searchTab = const Key('__searchTab__');
   static const basketTab = const Key('__basketTab__');

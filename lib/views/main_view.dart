@@ -4,6 +4,9 @@ import 'package:intl/intl.dart';
 import '../models/models.dart';
 import 'photo_profile_view.dart';
 import '../theme/ktheme.dart';
+import '../containers/app_loading.dart';
+import '../views/loading_indicator.dart';
+import '../keys/keys.dart';
 
 class MainView extends StatelessWidget {
   final Player player;
@@ -12,15 +15,13 @@ class MainView extends StatelessWidget {
 
   MainView({Key key, this.player, this.rankingInfos, this.matchResultInfos})
       : super(key: key);
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
-  @override
-  Widget build(BuildContext context) {
-    Iterable<Widget> listTiles = rankingInfos
-        .map((RankingInfo item) => buildRankingInfoItem(context, item));
-    Iterable<Widget> matcheResultsTiles = matchResultInfos
-        .map((MatchResultInfo item) => buildEventItem(context, item));
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
+  Widget _buildView(BuildContext context) {
+    Iterable<Widget> listTiles = rankingInfos.map((RankingInfo item) => buildRankingInfoItem(context, item));
+    Iterable<Widget> matcheResultsTiles = matchResultInfos.map((MatchResultInfo item) => buildEventItem(context, item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
+
     return new Theme(
         data: kTheme.copyWith(platform: Theme.of(context).platform),
         child: new Scaffold(
@@ -75,6 +76,17 @@ class MainView extends StatelessWidget {
 
         );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return new AppLoading(builder: (context, loading) {
+        print('LOADING !!!');
+      return loading
+          ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)
+          : _buildView(context);
+    });
+  }
+
 
   Widget buildRankingInfoItem(BuildContext context, RankingInfo rankingInfo) {
     return new Container(

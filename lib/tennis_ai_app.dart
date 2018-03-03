@@ -12,6 +12,11 @@ import 'keys/keys.dart';
 import 'containers/containers.dart';
 import './middleware/store_watched_tournaments_middleware.dart';
 
+import 'containers/app_loading.dart';
+import 'views/loading_indicator.dart';
+import 'keys/keys.dart';
+
+
 int counterReducer(int state, action) {
   if (action == Actions.Increment) {
     return state + 1;
@@ -59,29 +64,21 @@ _loadState(Store store) {
 class TennisAiHome extends StatelessWidget {
   TennisAiHome() : super(key: TennisAiKeys.homeScreen);
 
-  @override
+    @override
   Widget build(BuildContext context) {
+    return new AppLoading(builder: (context, loading) {
+        print('LOADING APP!!!');
+      return loading
+          ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)
+          : _buildView(context);
+    });
+  }
+
+  Widget _buildView(BuildContext context) {
     return new ActiveTab(
       builder: (BuildContext context, AppTab activeTab) {
         return new Scaffold(
-          // appBar: new AppBar(
-          //   //title: new Text(TennisAiLocalizations.of(context).appTitle),
-          //   title: new Text('Tennis Ai'),
-          // ),
           body: _selectActiveTab(context, activeTab),
-          // floatingActionButton: activeTab == AppTab.profile
-          //     ? new FloatingActionButton(
-          //         key: TennisAiKeys.editProfile,
-          //         onPressed: () {
-          //           Navigator.push(context, 
-          //                     new MaterialPageRoute<_enums.DismissDialogAction>(
-          //             builder: (BuildContext context) => new ProfileEditContainer(),
-          //             fullscreenDialog: true,
-          //           ));
-          //         },
-          //         child: new Icon(Icons.add),
-          //         tooltip: 'Edit Profile')
-          //     : new Container(),
           bottomNavigationBar: new TabSelector(),
         );
       },
