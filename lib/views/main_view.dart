@@ -80,7 +80,6 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new AppLoading(builder: (context, loading) {
-        print('LOADING !!!');
       return loading
           ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)
           : _buildView(context);

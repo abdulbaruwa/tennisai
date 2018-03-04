@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'dart:async';
+import 'dart:convert';
 import '../models/models.dart';
 
 /// A class that is meant to represent a Client that would be used to call a Web
@@ -16,9 +18,39 @@ class WebClient {
   Future<List<TournamentEntity>> fetchWatchedTournaments() async {
     List<TournamentEntity> tEntities = [];
     watchedTournaments.forEach((f) => tEntities.add(f.toEntity()));
+    print('web_client.fetchWatchedTournaments(): About to make service call');
+    getTournaments().then((values) {
+      print('web_client.fetchWatchedTournaments(): Call to service for tournaments returned ${values.length}');
+    });
+
     print('before delayed ${tEntities.length}');
     return new Future.delayed(delay, () => tEntities);
   }
+
+  Future<List<TournamentEntity>> getTournaments() async {
+    var httpClient = new HttpClient();
+    List<TournamentEntity> tournaments = [];
+    print('GetTournaments called');
+    var uri = new Uri.http('192.168.1.156:45455', '/TennisAiServiceService/api/tournaments');
+    var request = await httpClient.getUrl(uri);
+    request.headers.add('zumo-api-version', '2.0.0');
+    print('Header set');
+
+    var response = await request.close();
+    print('request closed');
+
+    var responseBody = await response.transform(UTF8.decoder).join();
+    print('response body transformed');
+    var jsonData = JSON.decode(responseBody);
+  
+    for (int i = 0; i < jsonData.length; i++){
+        tournaments.add(TournamentEntity.fromJson(jsonData[i]));
+    }
+
+    print('done');
+    return tournaments;
+  }
+
 
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
