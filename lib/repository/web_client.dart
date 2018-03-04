@@ -51,7 +51,6 @@ class WebClient {
     return tournaments;
   }
 
-
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postWatchedTournaments(

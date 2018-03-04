@@ -36,7 +36,7 @@ class TournamentEntity {
   String organiserName;
   String organiserPhone;
   String organiserEmail;
-  DateTime entryCloseDate;
+  int entryCloseDate;
   String code;
   String status;
   String site;
@@ -129,6 +129,7 @@ class TournamentEntity {
 
   static List<EntrantEntity> _entrantsFromJson(dynamic json) {
     List<EntrantEntity> entrants = [];
+    if(json == null)return entrants;
     for (int i = 0; i < json.length; i++) {
       var entrantEntity = new EntrantEntity(
           name: json[i]['name'],
@@ -156,7 +157,7 @@ class TournamentEntity {
         organiserName: json['organiserName'] as String,
         organiserEmail: json['organiserEmail'] as String,
         organiserPhone: json['organiserPhone'] as String,
-        entryCloseDate: json['entryCloseDate'] as DateTime,
+        entryCloseDate: json['entryCloseDate'] as int,
         code: json['code'] as String,
         cost: json['cost'] as double,
         status: json['status'] as String,
@@ -261,8 +262,8 @@ class Tournament {
     return new Tournament(
       name: entity.name,
       grade: entity.grade,
-      startDate: new DateTime.fromMillisecondsSinceEpoch(entity.startDate.toInt()),
-      endDate: new DateTime.fromMillisecondsSinceEpoch(entity.endDate.toInt()),
+      startDate: new DateTime.fromMillisecondsSinceEpoch(entity.startDate),
+      endDate: new DateTime.fromMillisecondsSinceEpoch(entity.endDate),
       location: entity.location,
       address: entity.address,
       town: entity.town,
@@ -272,7 +273,7 @@ class Tournament {
       organiserName: entity.organiserName,
       organiserPhone: entity.organiserPhone,
       organiserEmail: entity.organiserEmail,
-      entryCloseDate: entity.entryCloseDate,
+      entryCloseDate:  entity.entryCloseDate == null ? null : new DateTime.fromMillisecondsSinceEpoch(entity.entryCloseDate),
       code: entity.code,
       cost: entity.cost,
       status: entity.status,
@@ -286,8 +287,8 @@ class Tournament {
     return new TournamentEntity(
         name: name,
         grade: grade,
-        startDate: startDate.millisecondsSinceEpoch.toInt(),
-        endDate: endDate.millisecondsSinceEpoch.toInt(),
+        startDate: startDate.millisecondsSinceEpoch,
+        endDate: endDate.millisecondsSinceEpoch,
         location: location,
         address: address,
         town: town,
@@ -297,7 +298,7 @@ class Tournament {
         organiserName: organiserName,
         organiserPhone: organiserPhone,
         organiserEmail: organiserEmail,
-        entryCloseDate: entryCloseDate,
+        entryCloseDate: entryCloseDate?.millisecondsSinceEpoch,
         code: code,
         cost: cost,
         status: status,
