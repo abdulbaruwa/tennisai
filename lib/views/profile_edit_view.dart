@@ -24,8 +24,6 @@ class ProfileEditView extends StatelessWidget {
   final Player player;
   final SearchPreference searchPreference;
 
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
   static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   final Function(Player player, SearchPreference searchPreference) onSave;
   static final GlobalKey<FormFieldState<String>> _firstNameKey =

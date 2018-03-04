@@ -5,16 +5,12 @@ import '../models/models.dart';
 class TournamentEntrantsView extends StatelessWidget {
   final Tournament tournament;
   final List<Entrant> entrants;
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final bool activeEntrantSortOrder;
   final Function() onSortSelected;
 
   TournamentEntrantsView({this.tournament, this.entrants, this.onSortSelected, this.activeEntrantSortOrder});
 
-  //bool _reverseSort = false;
   Widget buildListTile(BuildContext context, Entrant item) {
-    Widget secondary;
-
     return new MergeSemantics(
       child: new ListTile(
         dense: true,
@@ -47,7 +43,6 @@ class TournamentEntrantsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _reverseSort = false;
     List<Entrant> tournamentEntrants = entrants;
     Iterable<Widget> listTiles =
         tournamentEntrants.map((Entrant item) => buildListTile(context, item));

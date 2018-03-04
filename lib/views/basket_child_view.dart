@@ -14,13 +14,13 @@ class BasketChildView extends StatelessWidget {
   final Basket basket;
   final Player player;
   final Function(String) onRemoveFromBasket;
+  final List<Tournament> leaveBehindItems;
+
   BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket})
       : super(key: key);
 
-  final List<Tournament> leaveBehindItems;
 
   Widget buildListTile(BuildContext context, Tournament item) {
-    Widget secondary;
     print(item.name);
     print(item.grade);
     print(item.status);
