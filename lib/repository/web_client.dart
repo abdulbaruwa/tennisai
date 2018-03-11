@@ -16,22 +16,15 @@ class WebClient {
 
   /// Mock that "fetches" some watchedTournament from a "web service" after a short delay
   Future<List<TournamentEntity>> fetchWatchedTournaments() async {
-    List<TournamentEntity> tEntities = [];
-    watchedTournaments.forEach((f) => tEntities.add(f.toEntity()));
     print('web_client.fetchWatchedTournaments(): About to make service call');
-    getTournaments().then((values) {
-      print('web_client.fetchWatchedTournaments(): Call to service for tournaments returned ${values.length}');
-    });
-
-    print('before delayed ${tEntities.length}');
-    return new Future.delayed(delay, () => tEntities);
+    return getWatchedTournaments("12");
   }
 
   Future<List<TournamentEntity>> getTournaments() async {
     var httpClient = new HttpClient();
     List<TournamentEntity> tournaments = [];
     print('GetTournaments called');
-    var uri = new Uri.http('192.168.1.156:45455', '/TennisAiServiceService/api/tournaments');
+    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/tournaments');
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
     print('Header set');
@@ -50,6 +43,27 @@ class WebClient {
     print('done');
     return tournaments;
   }
+  
+  Future<List<TournamentEntity>> getWatchedTournaments(String userId) async {
+    var httpClient = new HttpClient();
+    List<TournamentEntity> tournaments = [];
+    print('GetTournaments called');
+    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/watched',{'id': userId,});
+    var request = await httpClient.getUrl(uri);
+    request.headers.add('zumo-api-version', '2.0.0');
+    var response = await request.close();
+    var responseBody = await response.transform(UTF8.decoder).join();
+    print('response body transformed');
+    var jsonData = JSON.decode(responseBody);
+  
+    for (int i = 0; i < jsonData.length; i++){
+        tournaments.add(TournamentEntity.fromJson(jsonData[i]));
+    }
+
+    print('done');
+    return tournaments;
+  }
+
 
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"

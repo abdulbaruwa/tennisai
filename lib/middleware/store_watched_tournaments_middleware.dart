@@ -130,15 +130,13 @@ Middleware<AppState> _createSaveUpcomingTournaments(
   };
 }
 
-
 Middleware<AppState> _createLoadWatchedTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadWatchedTournaments().then(
       (watchedTournaments) {
         var entities = watchedTournaments.map(Tournament.fromEntity).toList();
-        print(
-            'Middleware ._createLoadWatchedTournaments: Loading ${entities.length} Watched tournament');
+        print('Middleware ._createLoadWatchedTournaments: Loading ${entities.length} Watched tournament');
         store.dispatch(
           new WatchedTournamentsLoadedAction(entities),
         );

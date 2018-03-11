@@ -28,7 +28,6 @@ class DashboardRepository {
     } catch (e) {
       print('LoadUpcomingTournaments Fetcher in error');
       var result = webClient.fetchEnteredTournaments();
-      print('LoadWatchedTournaments Fetched');
       return result;
     }
   }
@@ -42,7 +41,7 @@ class DashboardRepository {
       return res;
     } catch (e) {
       print('LoadWatchedTournaments Fetcher in error');
-      var result = webClient.fetchWatchedTournaments();
+      var result = await webClient.fetchWatchedTournaments();
       print('LoadWatchedTournaments Fetched');
       return result;
     }
