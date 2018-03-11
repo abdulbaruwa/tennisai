@@ -130,8 +130,7 @@ Middleware<AppState> _createSaveUpcomingTournaments(
   };
 }
 
-Middleware<AppState> _createLoadWatchedTournaments(
-    DashboardRepository repository) {
+Middleware<AppState> _createLoadWatchedTournaments(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadWatchedTournaments().then(
       (watchedTournaments) {

@@ -27,7 +27,7 @@ class TournamentEntrantsView extends StatelessWidget {
                   ))
             ])),
         title: new Text(item.name),
-        subtitle: new Text(item.status),
+        subtitle: new Text(item.status ?? ''),
         trailing: new ExcludeSemantics(
             child: new Column(children: [
           new Text('Ranking', style: new TextStyle(fontSize: 10.0)),
