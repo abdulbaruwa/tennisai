@@ -14,56 +14,30 @@ class WebClient {
 
   const WebClient([this.delay = const Duration(milliseconds: 3000)]);
 
-  /// Mock that "fetches" some watchedTournament from a "web service" after a short delay
   Future<List<TournamentEntity>> fetchWatchedTournaments() async {
     print('web_client.fetchWatchedTournaments(): About to make service call');
-    return getWatchedTournaments("12");
+    return getTournamentsFromControllerWithUserId("watched", "12");
   }
 
-  Future<List<TournamentEntity>> getTournaments() async {
+  Future<List<TournamentEntity>> getTournamentsFromControllerWithUserId(String controller, String userId) async {
     var httpClient = new HttpClient();
     List<TournamentEntity> tournaments = [];
     print('GetTournaments called');
-    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/tournaments');
-    var request = await httpClient.getUrl(uri);
-    request.headers.add('zumo-api-version', '2.0.0');
-    print('Header set');
-
-    var response = await request.close();
-    print('request closed');
-
-    var responseBody = await response.transform(UTF8.decoder).join();
-    print('response body transformed');
-    var jsonData = JSON.decode(responseBody);
-  
-    for (int i = 0; i < jsonData.length; i++){
-        tournaments.add(TournamentEntity.fromJson(jsonData[i]));
-    }
-
-    print('done');
-    return tournaments;
-  }
-  
-  Future<List<TournamentEntity>> getWatchedTournaments(String userId) async {
-    var httpClient = new HttpClient();
-    List<TournamentEntity> tournaments = [];
-    print('GetTournaments called');
-    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/watched',{'id': userId,});
+    var uri = new Uri.http(
+        '192.168.1.156:55511', '/TennisAiServiceService/api/$controller', {
+        'id': userId,
+    });
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
     var responseBody = await response.transform(UTF8.decoder).join();
-    print('response body transformed');
     var jsonData = JSON.decode(responseBody);
-  
-    for (int i = 0; i < jsonData.length; i++){
-        tournaments.add(TournamentEntity.fromJson(jsonData[i]));
-    }
 
-    print('done');
+    for (int i = 0; i < jsonData.length; i++) {
+      tournaments.add(TournamentEntity.fromJson(jsonData[i]));
+    }
     return tournaments;
   }
-
 
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
@@ -73,10 +47,8 @@ class WebClient {
   }
 
   Future<List<TournamentEntity>> fetchEnteredTournaments() async {
-    List<TournamentEntity> tEntities = [];
-    tournaments.forEach((f) => tEntities.add(f.toEntity()));
-    print('before delayed ${tEntities.length}');
-    return new Future.delayed(delay, () => tEntities);
+    print('web_client.fetchEnteredTournaments(): About to make service call');
+    return getTournamentsFromControllerWithUserId("entered", "12");
   }
 
   /// Mock that returns true or false for success or failure. In this case,
