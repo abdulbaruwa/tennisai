@@ -27,17 +27,17 @@ class MatchResultInfo{
         playerId: playerId);
   }
 
-  MatchResultInfo fromEntity() {
+  static MatchResultInfo fromEntity(MatchResultInfoEntity entity) {
     return new MatchResultInfo(
-        ageGroup: ageGroup,
-        tournamentDate: tournamentDate,
-        grade: grade,
-        tournamentName: tournamentName,
-        tournamentEvent: tournamentEvent,
-        result: result,
-        points: points,
-        appliedToRanking: appliedToRanking,
-        playerId: playerId);
+        ageGroup: entity.ageGroup,
+        tournamentDate: new DateTime.fromMicrosecondsSinceEpoch(entity.tournamentDate),
+        grade: entity.grade,
+        tournamentName: entity.tournamentName,
+        tournamentEvent: entity.tournamentEvent,
+        result: entity.result,
+        points: entity.points,
+        appliedToRanking: entity.appliedToRanking,
+        playerId: entity.playerId);
   }
 }
 
@@ -116,11 +116,11 @@ class MatchResultInfoEntity{
   }
 }
 
-List<MatchResultInfo> matchResultInfos = <MatchResultInfo>[
-new MatchResultInfo(tournamentDate: new DateTime(2018, 2, 17), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 3, playerId: 1,result: 'MD 58POCF W', points: 1320),
-new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 28), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 4, playerId: 1,result: 'MD 58POCF W', points: 320),
-new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 21), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 4, playerId: 1,result: 'MD F W', points: 500),
-new MatchResultInfo(tournamentDate: new DateTime(2018, 12, 18), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: false, grade: 3, playerId: 1,result: 'MD Q', points: 1),
-new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 6), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: false, grade: 3, playerId: 1,result: 'PQ QF', points: 1),
-new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 20), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 3, playerId: 1,result: 'MD 58POCF W', points: 132),
-];
+// List<MatchResultInfo> matchResultInfos = <MatchResultInfo>[
+// new MatchResultInfo(tournamentDate: new DateTime(2018, 2, 17), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 3, playerId: 1,result: 'MD 58POCF W', points: 1320),
+// new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 28), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 4, playerId: 1,result: 'MD 58POCF W', points: 320),
+// new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 21), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 4, playerId: 1,result: 'MD F W', points: 500),
+// new MatchResultInfo(tournamentDate: new DateTime(2018, 12, 18), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: false, grade: 3, playerId: 1,result: 'MD Q', points: 1),
+// new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 6), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: false, grade: 3, playerId: 1,result: 'PQ QF', points: 1),
+// new MatchResultInfo(tournamentDate: new DateTime(2018, 1, 20), tournamentName: 'Sutton Tennis Academy Men\'s INDOOR FAST4 Event', tournamentEvent: 'Open Mens Singles', ageGroup: '', appliedToRanking: true, grade: 3, playerId: 1,result: 'MD 58POCF W', points: 132),
+// ];

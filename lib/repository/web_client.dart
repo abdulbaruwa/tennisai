@@ -39,6 +39,44 @@ class WebClient {
     return tournaments;
   }
 
+ Future<List<MatchResultInfoEntity>> getMatchResult(String userId) async {
+    var httpClient = new HttpClient();
+    List<MatchResultInfoEntity> matchResults = [];
+    var uri = new Uri.http(
+        '192.168.1.156:55511', '/TennisAiServiceService/api/tournamentresult', {
+        'id': userId,
+    });
+    var request = await httpClient.getUrl(uri);
+    request.headers.add('zumo-api-version', '2.0.0');
+    var response = await request.close();
+    var responseBody = await response.transform(UTF8.decoder).join();
+    var jsonData = JSON.decode(responseBody);
+
+    for (int i = 0; i < jsonData.length; i++) {
+      matchResults.add(MatchResultInfoEntity.fromJson(jsonData[i]));
+    }
+    return matchResults;
+  }
+
+ Future<List<RankingInfoEntity>> getRankings(String userId) async {
+    var httpClient = new HttpClient();
+    List<RankingInfoEntity> matchResults = [];
+    var uri = new Uri.http(
+        '192.168.1.156:55511', '/TennisAiServiceService/api/rankinginfo', {
+        'id': userId,
+    });
+    var request = await httpClient.getUrl(uri);
+    request.headers.add('zumo-api-version', '2.0.0');
+    var response = await request.close();
+    var responseBody = await response.transform(UTF8.decoder).join();
+    var jsonData = JSON.decode(responseBody);
+
+    for (int i = 0; i < jsonData.length; i++) {
+      matchResults.add(RankingInfoEntity.fromJson(jsonData[i]));
+    }
+    return matchResults;
+  }
+  
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postWatchedTournaments(
@@ -112,16 +150,12 @@ class WebClient {
 
   // RankingInfos
   Future<List<RankingInfoEntity>> fetchRankingInfos() async {
-    List<RankingInfoEntity> tEntities = [];
-    rankingInfos.forEach((f) => tEntities.add(f.toEntity()));
-    return new Future.delayed(delay, () => tEntities);
+    return getRankings("12");
   }
 
   // MatchResulInfos
   Future<List<MatchResultInfoEntity>> fetchMatchResultInfos() async {
-    List<MatchResultInfoEntity> tEntities = [];
-    matchResultInfos.forEach((f) => tEntities.add(f.toEntity()));
-    return new Future.delayed(delay, () => tEntities);
+    return getMatchResult("12");
   }
 
   /// Mock that returns true or false for success or failure. In this case,

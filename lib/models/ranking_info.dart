@@ -89,8 +89,8 @@ class RankingInfoEntity{
   }
 }
 
-List<RankingInfo> rankingInfos = <RankingInfo>[
-  new RankingInfo(playerId: 1, ageGroup: '16', national: 256, regional: 54, county: 17, totalPoints: 2221),
-  new RankingInfo(playerId: 1, ageGroup: '18', national: 426, regional: 104, county: 35, totalPoints: 2221),
-  new RankingInfo(playerId: 1, ageGroup: 'Open', national: 805, regional: 197, county: 68,  totalPoints: 2221),
-];
+// List<RankingInfo> rankingInfos = <RankingInfo>[
+//   new RankingInfo(playerId: 1, ageGroup: '16', national: 256, regional: 54, county: 17, totalPoints: 2221),
+//   new RankingInfo(playerId: 1, ageGroup: '18', national: 426, regional: 104, county: 35, totalPoints: 2221),
+//   new RankingInfo(playerId: 1, ageGroup: 'Open', national: 805, regional: 197, county: 68,  totalPoints: 2221),
+// ];

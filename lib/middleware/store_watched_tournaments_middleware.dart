@@ -313,12 +313,11 @@ Middleware<AppState> _createLoadRankingInfos(DashboardRepository repo) {
 
 Middleware<AppState> _createLoadMatchResultInfos(DashboardRepository repo) {
   var stateResult = (Store<AppState> store, action, NextDispatcher next) {
-    repo.loadRankingInfos().then((t) {
-      var rankingInfo = t.map(RankingInfo.fromEntity).toList();
+    repo.loadMatchResultInfos().then((t) {
+      var rankingInfo = t.map(MatchResultInfo.fromEntity).toList();
       print(
           'Middleware ._createLoadRankingInfos: Loading ${rankingInfo.length} Ranking Info');
-      store.dispatch(
-        new RankingInfoLoadedAction(rankingInfo),
+      store.dispatch(new MatchResultInfoLoadedAction(rankingInfo),
       );
     });
   };
