@@ -149,8 +149,7 @@ Middleware<AppState> _createLoadWatchedTournaments(DashboardRepository repositor
 Middleware<AppState> _createSaveEnteredTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print(
-        'Middleware._createSaveEnteredTournaments: About to save entered tournament');
+    print('Middleware._createSaveEnteredTournaments: About to save entered tournament');
     next(action);
     var toSave = enteredTournamentSelector(store.state)
         .map((enteredTournament) => enteredTournament.toEntity())

@@ -14,7 +14,6 @@ import './middleware/store_watched_tournaments_middleware.dart';
 
 import 'containers/app_loading.dart';
 import 'views/loading_indicator.dart';
-import 'keys/keys.dart';
 
 
 int counterReducer(int state, action) {
@@ -29,7 +28,6 @@ class TennisAiApp extends StatelessWidget {
   final store = new Store<AppState>(appReducer,
       initialState: new AppState.loading(),
       middleware: createStoreWatchedTournamentsMiddleware());
-  //final store = new Store(counterReducer, initialState: 0);
   TennisAiApp();
 
   @override

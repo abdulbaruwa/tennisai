@@ -26,6 +26,7 @@ class FileStorage {
   const FileStorage(
     this.tag,
     this.getDirectory,
+    
   );
   
   Future<List<TournamentEntity>> loadWatchedTournaments() async {
@@ -85,6 +86,12 @@ class FileStorage {
     final file = await _getLocalFile(name);
 
     return file.delete();
+  }
+
+  Future cleanFiles() async{
+    for (var file in StoreNames.values ){
+      await clean(file);
+    }
   }
 
   // Player Profile

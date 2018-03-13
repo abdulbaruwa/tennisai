@@ -61,7 +61,6 @@ class DashboardRepository {
     try {
       var res = await fileStorage.loadEnteredTournaments();
       print('Returne ${res.length} entries for  loadEnteredTournaments ');
-
       return res;
     } catch (e) {
       print('LoadEnteredTournaments Fetcher in error');

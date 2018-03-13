@@ -10,7 +10,7 @@ class MatchResultInfo{
   final String result;
   final int points;
   final bool appliedToRanking;
-  final int playerId;
+  final String playerId;
 
 
   const MatchResultInfo({this.tournamentDate, this.ageGroup, this.grade, this.tournamentEvent, this.tournamentName, this.result, this.points, this.appliedToRanking, this.playerId});
@@ -51,7 +51,7 @@ class MatchResultInfoEntity{
   final String result;
   final int points;
   final bool appliedToRanking;
-  final int playerId;
+  final String playerId;
 
   MatchResultInfoEntity({this.tournamentDate, this.ageGroup, this.grade, this.tournamentEvent, this.tournamentName, this.result, this.points, this.appliedToRanking, this.playerId});
 
@@ -111,7 +111,7 @@ class MatchResultInfoEntity{
       result: json['result'] as String,
       points: json['points'] as int,
       appliedToRanking: json['appliedToRanking'] as bool,
-      playerId: json['playerId'] as int,
+      playerId: json['playerId'] as String,
     );
   }
 }
