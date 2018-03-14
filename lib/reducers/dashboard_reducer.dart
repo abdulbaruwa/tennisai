@@ -17,7 +17,6 @@ List<Tournament> _setLoadedWatchedTournaments(
     List<Tournament> watchedTournaments,
     WatchedTournamentsLoadedAction action) {
     return action.watchedTournaments;
-  //return [];
 }
 
 List<Tournament> _setNoWatchedTournaments(List<Tournament> watchedTournaments,

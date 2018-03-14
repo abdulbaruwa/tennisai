@@ -207,4 +207,12 @@ class DashboardRepository {
       return result;
     }
   }
+
+  Future saveRankingInfos(List<RankingInfoEntity> rankingInfoEntitys) {
+    return fileStorage.saveRankingInfos(rankingInfoEntitys);
+  }
+
+  Future saveMatchResultInfos(List<MatchResultInfoEntity> matchResultInfoEntitys) {
+    return fileStorage.saveMatchResultInfos(matchResultInfoEntitys);
+  }
 }

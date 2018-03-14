@@ -188,4 +188,27 @@ class FileStorage {
     final matchResultInfoEntity = (json['matchResultInfos'] as Map<String, dynamic>);
     return new List<MatchResultInfoEntity>()..add(MatchResultInfoEntity.fromJson(matchResultInfoEntity));
   }
+
+  Future<File> saveRankingInfos(
+      List<RankingInfoEntity> rankingInfos) async {
+    print('file_storage.saveRankingInfos: passed ${rankingInfos.length} entries');
+    final file = await _getLocalFile(StoreNames.rankingInfos);
+    var rankingInfosJson =
+        rankingInfos.map((t) => t.toJson()).toList();
+    print('file_storage.saveRankingInfos: json to save $rankingInfosJson');
+    return file.writeAsString(new JsonEncoder()
+        .convert({'rankingInfos': rankingInfosJson}));
+  }
+
+  Future<File> saveMatchResultInfos(
+      List<MatchResultInfoEntity> matchResultInfos) async {
+    print('file_storage.saveMatchResults: passed ${matchResultInfos.length} entries');
+    final file = await _getLocalFile(StoreNames.matchResultInfos);
+    var matchResultInfoJson =
+        matchResultInfos.map((t) => t.toJson()).toList();
+    print('file_storage.saveMatchResultInfo: json to save $matchResultInfoJson');
+    return file.writeAsString(new JsonEncoder()
+        .convert({'matchResultInfos': matchResultInfoJson}));
+  }
+
 }
