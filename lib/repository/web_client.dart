@@ -76,6 +76,32 @@ class WebClient {
     }
     return matchResults;
   }
+
+  Future<List<SearchPreferenceEntity>> getSearchPreference(String userId) async {
+    List<SearchPreferenceEntity> matchResults = [];
+    var uri = new Uri.http(
+        '192.168.1.156:55511', '/TennisAiServiceService/api/searchpreference', {
+        'id': userId,
+    });
+  
+    var jsonData = await makeHttpCall(uri);
+    
+    for (int i = 0; i < jsonData.length; i++) {
+      matchResults.add(SearchPreferenceEntity.fromJson(jsonData[i]));
+    }
+    return matchResults;
+  }
+
+
+  Future<dynamic> makeHttpCall(Uri uri) async{
+    var httpClient = new HttpClient();
+    var request = await httpClient.getUrl(uri);
+    request.headers.add('zumo-api-version', '2.0.0');
+    var response = await request.close();
+    var responseBody = await response.transform(UTF8.decoder).join();
+    var jsonData = JSON.decode(responseBody);
+    return jsonData;
+  }
   
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
@@ -133,11 +159,7 @@ class WebClient {
 
   // Search Preference
   Future<List<SearchPreferenceEntity>> fetchSearchPreference() async {
-    List<SearchPreferenceEntity> tEntities = [];
-
-    tEntities.add(searchPreference.toEntity());
-    print('before delayed ${tEntities.length}');
-    return new Future.delayed(delay, () => tEntities);
+    return getSearchPreference("12");
   }
 
   // Basket
