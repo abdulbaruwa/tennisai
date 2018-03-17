@@ -6,9 +6,13 @@ final searchPreferenceReducer = combineTypedReducers<List<SearchPreference>>([
   new ReducerBinding<List<SearchPreference>, SearchPreferenceLoadedAction>(_setLoadedSearchPreference),
   new ReducerBinding<List<SearchPreference>, SearchPreferenceNotLoadedAction>(_setNoSearchPreference),
   new ReducerBinding<List<SearchPreference>, UpdatePlayerProfileAndSearchPreferenceAction>(_updateSearchPreference),
+  new ReducerBinding<List<SearchPreference>, SearchTournamentWithPreferenceAction>(_setActiveSearchPreference),
 ]);
 
 List<SearchPreference> _setLoadedSearchPreference(List<SearchPreference> searchPref, SearchPreferenceLoadedAction action) {
+  return action.searchPreference;
+}
+List<SearchPreference> _setActiveSearchPreference(List<SearchPreference> searchPref, SearchTournamentWithPreferenceAction action) {
   return action.searchPreference;
 }
 

@@ -7,6 +7,7 @@ class AppState {
   final bool isEntrantsViewItemsReverseSorted;
   final List<Player> player;
   final List<SearchPreference> searchPreference;
+  final List<SearchPreference> activeSearchPreference;
   final List<Tournament> tournaments;
   final AppTab activeTab;
   final List<Tournament> enteredTournaments;
@@ -22,6 +23,7 @@ class AppState {
       {this.isLoading = false,
       this.player = const [],
       this.searchPreference = const [],
+      this.activeSearchPreference = const [],
       this.enteredTournaments = const [],
       this.watchedTournaments = const [],
       this.searchTournaments = const [],
@@ -39,7 +41,8 @@ class AppState {
   AppState copyWith(
       {bool isLoading,
       List<Player> player,
-      List<SearchQueryPreference> searchQueryPreference,
+      List<SearchPreference> searchPreference,
+      List<SearchPreference> activeSearchPreference,
       List<Tournament> tournaments,
       List<Tournament> enteredTournaments,
       List<Tournament> watchedTournaments,
@@ -54,7 +57,8 @@ class AppState {
             activeEntrantsSortOrder ?? activeEntrantsSortOrder,
         player: player ?? this.player,
         basket: basket ?? this.basket,
-        searchPreference: searchQueryPreference ?? this.searchPreference,
+        searchPreference: searchPreference ?? this.searchPreference,
+        activeSearchPreference: activeSearchPreference ?? this.activeSearchPreference,
         tournaments: tournaments ?? this.tournaments,
         searchTournaments: searchTournaments ?? this.searchTournaments,
         watchedTournaments: watchedTournaments ?? this.watchedTournaments,
@@ -68,6 +72,7 @@ class AppState {
       player.hashCode ^
       basket.hashCode ^
       searchPreference.hashCode ^
+      activeSearchPreference.hashCode ^
       activeTab.hashCode ^
       tournaments.hashCode ^
       searchTournaments.hashCode ^
@@ -90,6 +95,7 @@ class AppState {
           player == other.player &&
           basket == other.basket &&
           searchPreference == other.searchPreference &&
+          activeSearchPreference == other.activeSearchPreference &&
           tournaments == other.tournaments &&
           searchTournaments == other.searchTournaments &&
           watchedTournaments == other.watchedTournaments &&

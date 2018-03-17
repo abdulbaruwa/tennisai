@@ -7,6 +7,7 @@ AppState appReducer(AppState state, action) {
       player: playerReducer(state.player, action),
       basket: basketReducer(state.basket, action),
       searchPreference: searchPreferenceReducer(state.searchPreference, action),
+      activeSearchPreference: searchPreferenceReducer(state.activeSearchPreference, action),
       watchedTournaments: dashboardReducer(state.watchedTournaments, action) ,
       upcomingTournaments: dashboardUpcomingReducer(state.upcomingTournaments, action),
       searchTournaments: tournamentSearchReducer(state.searchTournaments, action) ,

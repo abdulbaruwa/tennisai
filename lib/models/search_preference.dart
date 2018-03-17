@@ -56,7 +56,7 @@ class SearchPreference {
 
   @override
   String toString() {
-    return 'Player{grade: $grade, gender: $gender, distance: $distance, ltaNumber: $ltaNumber, ageGroup: $ageGroup}';
+    return 'SearchPreference{grade: $grade, gender: $gender, distance: $distance, ltaNumber: $ltaNumber, ageGroup: $ageGroup}';
   }
 }
 

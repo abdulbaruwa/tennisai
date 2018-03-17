@@ -4,15 +4,18 @@ class LabelIntDropDownItem extends StatefulWidget {
   LabelIntDropDownItem(
       {Key key,
       this.displayFunc,
+      this.onChangedFunc,
       this.displayIntItems,
       this.label,
-      this.output})
+      this.inputValue,
+      this.outputValue})
       : super(key: key);
   var displayFunc;
+  Function(int) onChangedFunc;
   final label;
   List<int> displayIntItems;
-  int output;
-
+  int inputValue;
+  int outputValue;
   @override
   LabelIntDropDownItemState createState() => new LabelIntDropDownItemState();
 }
@@ -23,7 +26,7 @@ class LabelIntDropDownItemState extends State<LabelIntDropDownItem> {
   @override
   void initState() {
     super.initState();
-    result = widget.output;
+    result = widget.inputValue;
   }
 
   Widget build(BuildContext context) {
@@ -48,9 +51,10 @@ class LabelIntDropDownItemState extends State<LabelIntDropDownItem> {
                       value: result,
                       onChanged: (int value) {
                         setState(() {
-                          print(value);
                           result = value;
-                          print(widget.output);
+                          print(result);
+                          widget.outputValue = value;
+                          widget.onChangedFunc(result);
                         });
                       },
                     ),

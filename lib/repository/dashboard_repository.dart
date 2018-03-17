@@ -156,6 +156,9 @@ class DashboardRepository {
     }
   }
 
+  Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(SearchPreference searchPreference){
+    return webClient.loadTournamentsWithSearchPreference(searchPreference);
+  }
   // Basket
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client

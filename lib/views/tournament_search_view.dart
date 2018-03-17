@@ -17,7 +17,10 @@ final ThemeData _kTheme = new ThemeData(
 
 class TournamentSearchView extends StatefulWidget {
   final List<Tournament> tournaments;
-  TournamentSearchView({Key key, this.tournaments}) : super(key: key);
+  final Function(SearchPreference) onSearchPreferenceChanged;
+  TournamentSearchView(
+      {Key key, this.tournaments, this.onSearchPreferenceChanged})
+      : super(key: key);
   @override
   SearchTabState createState() => new SearchTabState();
 }
@@ -27,6 +30,27 @@ class SearchTabState extends State<TournamentSearchView> {
       new GlobalKey<ScaffoldState>();
 
   PersistentBottomSheetController<Null> _bottomSheet;
+  int _selectedAgeGroup = 18;
+
+  LabelIntDropDownItem _distanceInMilesDropDown = new LabelIntDropDownItem(
+      onChangedFunc: (int i) => print('Distance from home changed to $i miles'),
+      displayIntItems: _distancesInMiles,
+      label: 'Distance',
+      inputValue: 30,
+      displayFunc: (int i) => '$i miles');
+
+  LabelIntDropDownItem _ageGroupDropDown = new LabelIntDropDownItem(
+      onChangedFunc: (int i) => print('Value Changed to $i'),
+      displayIntItems: _ageGroups,
+      label: 'Age Group',
+      inputValue: 16,
+      displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
+  LabelIntDropDownItem _gradeDropDown = new LabelIntDropDownItem(
+      onChangedFunc: (int i) => print('Grade changed to Grade $i'),
+      displayIntItems: _grades,
+      label: 'Grade',
+      inputValue: 3,
+      displayFunc: (int i) => 'Grade $i');
 
   @override
   Widget build(BuildContext context) {
@@ -77,39 +101,19 @@ class SearchTabState extends State<TournamentSearchView> {
           primary: false,
           children: <Widget>[
             new Container(
-              padding: const EdgeInsets.only(left: 10.0, top: 10.0),
-              child: new Text('Filter options', style: Theme.of(context).textTheme.subhead)
-              ),
+                padding: const EdgeInsets.only(left: 10.0, top: 10.0),
+                child: new Text('Filter options',
+                    style: Theme.of(context).textTheme.subhead)),
             new Container(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: new LabelIntDropDownItem(
-                  displayIntItems: _ageGroups,
-                  label: 'Age Group',
-                  output: selectedAgeGroup,
-                  displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult'),
+              child: _ageGroupDropDown,
             ),
-            // new Container(
-            //   padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            //   child: new LabelIntDropDownItem(
-            //       displayIntItems: [0, 1],
-            //       label: 'Gender',
-            //       output: selectedGender,
-            //       displayFunc: (int i) => i == 0 ? 'Female' : 'Male'),
-            // ),
             new Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: new LabelIntDropDownItem(
-                    displayIntItems: _distancesInMiles,
-                    label: 'Distance',
-                    output: selectedMiles,
-                    displayFunc: (int i) => '$i miles')),
+                child: _distanceInMilesDropDown),
             new Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: new LabelIntDropDownItem(
-                    displayIntItems: _grades,
-                    label: 'Grade',
-                    output: selectedGrade,
-                    displayFunc: (int i) => 'Grade $i'))
+                child: _gradeDropDown),
           ],
         ),
       );
@@ -122,6 +126,14 @@ class SearchTabState extends State<TournamentSearchView> {
     _bottomSheet.closed.whenComplete(() {
       if (mounted) {
         setState(() {
+          print('Selected Age Group is ${_ageGroupDropDown.outputValue}');
+          print('Selected Distance is ${_distanceInMilesDropDown.outputValue}');
+          print('Selected Grade is ${_gradeDropDown.outputValue}');
+          var searchPref = new SearchPreference(
+              ageGroup: _ageGroupDropDown.outputValue,
+              grade: _gradeDropDown.outputValue,
+              distance: _distanceInMilesDropDown.outputValue);
+          widget.onSearchPreferenceChanged(searchPref);
           _bottomSheet = null;
         });
       }

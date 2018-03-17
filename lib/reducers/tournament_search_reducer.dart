@@ -9,3 +9,6 @@ final tournamentSearchReducer = combineTypedReducers<List<Tournament>>([
 
 List<Tournament> _setLoadedSearchTournaments(List<Tournament> watchedTournaments, SearchTournamentsLoadedAction action ){return action.searchTournaments;}
 List<Tournament> _setNoSearchTournaments(List<Tournament> watchedTournaments, SearchTournamentsNotLoadedAction action){return [];}
+
+
+// List<Tournament> _searchTournamentsWithPreference(List<Tournament> tournaments, SearchTournamentWithPreferenceAction action){return action.searchPreference;}

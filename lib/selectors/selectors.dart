@@ -1,6 +1,15 @@
 import '../utils/optional.dart';
 import '../models/models.dart';
 
+Optional<SearchPreference> activeSearchPreferenceSelector(AppState state) {
+  try {
+    return new Optional.of(state.searchPreference.first);
+  } catch (e) {
+    return new Optional.absent();
+  }
+}
+
+
 List<RankingInfo> rankingInfosSelector(AppState state) => state.rankingInfos;
 List<MatchResultInfo> matchResultInfosSelector(AppState state) => state.matchResultInfos;
 

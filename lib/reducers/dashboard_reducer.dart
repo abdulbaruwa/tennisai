@@ -33,9 +33,7 @@ List<Tournament> _addWatchedTournament(
   return watchedTournaments;
 }
 
-List<Tournament> _removeFromWatchedTournaments(
-    List<Tournament> watchedTournaments,
-    RemoveFromWatchedTournamentsAction action) {
+List<Tournament> _removeFromWatchedTournaments(List<Tournament> watchedTournaments, RemoveFromWatchedTournamentsAction action) {
   return watchedTournaments
       .where((watchedTournament) =>
           watchedTournament.code != action.tournamentCode)

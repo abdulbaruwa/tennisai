@@ -24,6 +24,11 @@ class LoadBasketTournamentsAction {}
 // Search Tournament
 class LoadSearchTournamentsAction {}
 
+class SearchTournamentWithPreferenceAction{
+  final List<SearchPreference> searchPreference;
+  SearchTournamentWithPreferenceAction(this.searchPreference);
+}
+
 class AddSearchTournamentsAction {
   final List<Tournament> searchTournaments;
   AddSearchTournamentsAction(this.searchTournaments);

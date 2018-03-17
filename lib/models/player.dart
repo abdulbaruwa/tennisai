@@ -161,8 +161,8 @@ class PlayerEntity {
   }
 }
 
-class SearchQueryPreference {
-  int grade;
-  String gender;
-  int distance;
-}
+// class SearchQueryPreference {
+//   int grade;
+//   String gender;
+//   int distance;
+// }

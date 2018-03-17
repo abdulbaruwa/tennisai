@@ -30,6 +30,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
   final loadSearchTournaments = _createLoadSearchTournaments(repository);
   final saveSearchTournaments = _createSaveSearchTournaments(repository);
+  final loadSearchTournamentsWithPreference =
+      _createLoadSearchTournamentsWithPreference(repository);
 
   final loadBasket = _createLoadBasket(repository);
   final saveBasket = _createSaveBasket(repository);
@@ -75,16 +77,20 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     // Search Tournament
     new MiddlewareBinding<AppState, LoadSearchTournamentsAction>(
         loadSearchTournaments),
+    new MiddlewareBinding<AppState, SearchTournamentWithPreferenceAction>(loadSearchTournamentsWithPreference),
     new MiddlewareBinding<AppState, AddSearchTournamentsAction>(
         saveSearchTournaments),
     // Basket
     new MiddlewareBinding<AppState, LoadBasketAction>(loadBasket),
     new MiddlewareBinding<AppState, AddBasketAction>(saveBasket),
     new MiddlewareBinding<AppState, AddTournamentToBasketAction>(saveBasket),
-    new MiddlewareBinding<AppState, RemoveTournamentFromBasketAction>(saveBasket),
+    new MiddlewareBinding<AppState, RemoveTournamentFromBasketAction>(
+        saveBasket),
 
     // Edit profile
-    new MiddlewareBinding<AppState, UpdatePlayerProfileAndSearchPreferenceAction>(updateProfileAndSearchPref),
+    new MiddlewareBinding<AppState,
+            UpdatePlayerProfileAndSearchPreferenceAction>(
+        updateProfileAndSearchPref),
 
     // Main View, Match result and Ranking Info.
     new MiddlewareBinding<AppState, RankingInfoLoadedAction>(saveRankingInfos),
@@ -224,17 +230,37 @@ Middleware<AppState> _createSaveSearchPreference(
   };
 }
 
-Middleware<AppState> _createLoadSearchPreference(
-    DashboardRepository repository) {
+Middleware<AppState> _createLoadSearchPreference(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadSearchPreference().then(
       (searchPref) {
         var entities = searchPref.map(SearchPreference.fromEntity).toList();
-        store.dispatch(
-          new SearchPreferenceLoadedAction(entities),
+        store.dispatch(new SearchPreferenceLoadedAction(entities),
         );
       },
     ).catchError((_) => store.dispatch(new SearchPreferenceNotLoadedAction()));
+    next(action);
+  };
+}
+
+// Middleware<AppState> _createLoadSearchTournamentsWithPreference (DashboardRepository repository){
+//   return (Store<AppState> store, action, NextDispatcher next){
+//     repository.loadTournamentsWithSearchPreference(action).then((tournaments){}).
+//   };
+// }
+
+Middleware<AppState> _createLoadSearchTournamentsWithPreference(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    var searchPreference = activeSearchPreferenceSelector(store.state);
+    repository.loadTournamentsWithSearchPreference(searchPreference.first).then(
+      (searchPref) {
+        var entities = searchPref.map(Tournament.fromEntity).toList();
+        store.dispatch(
+          new SearchTournamentsLoadedAction(entities),
+        );
+      },
+    ).catchError((_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
     next(action);
   };
 }

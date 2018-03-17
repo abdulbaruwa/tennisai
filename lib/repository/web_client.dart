@@ -169,6 +169,20 @@ class WebClient {
     return getTournamentsByDefaultSearchPreferences("12");
   }
 
+  Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(
+      SearchPreference searchPreference) async {
+    List<TournamentEntity> tournaments = [];
+    var uri = new Uri.http('192.168.1.156:55511',
+        '/TennisAiServiceService/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/searchall');
+
+    var jsonData = await makeHttpCall(uri);
+
+    for (var json in jsonData) {
+      tournaments.add(TournamentEntity.fromJson(json));
+    }
+    return tournaments;
+  }
+
   // Search Preference
   Future<List<SearchPreferenceEntity>> fetchSearchPreference() async {
     return getSearchPreference("12");
