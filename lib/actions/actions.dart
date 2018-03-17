@@ -11,6 +11,7 @@ class MatchResultInfoLoadedAction {
 
   MatchResultInfoLoadedAction(this.matchResultInfos);
 }
+
 class RankingInfoNotLoadedAction{}
 class RankingInfoLoadedAction {
   final List<RankingInfo> rankingInfos;
@@ -25,7 +26,7 @@ class LoadBasketTournamentsAction {}
 class LoadSearchTournamentsAction {}
 
 class SearchTournamentWithPreferenceAction{
-  final List<SearchPreference> searchPreference;
+  final SearchPreference searchPreference;
   SearchTournamentWithPreferenceAction(this.searchPreference);
 }
 

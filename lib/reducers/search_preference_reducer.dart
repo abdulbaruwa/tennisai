@@ -12,8 +12,9 @@ final searchPreferenceReducer = combineTypedReducers<List<SearchPreference>>([
 List<SearchPreference> _setLoadedSearchPreference(List<SearchPreference> searchPref, SearchPreferenceLoadedAction action) {
   return action.searchPreference;
 }
+
 List<SearchPreference> _setActiveSearchPreference(List<SearchPreference> searchPref, SearchTournamentWithPreferenceAction action) {
-  return action.searchPreference;
+  return new List<SearchPreference>()..add(action.searchPreference);
 }
 
 List<SearchPreference> _setNoSearchPreference(List<SearchPreference> searchPref, SearchPreferenceNotLoadedAction action) {

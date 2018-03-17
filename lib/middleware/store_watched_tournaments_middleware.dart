@@ -253,7 +253,7 @@ Middleware<AppState> _createLoadSearchTournamentsWithPreference(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var searchPreference = activeSearchPreferenceSelector(store.state);
-    repository.loadTournamentsWithSearchPreference(searchPreference.first).then(
+    repository.loadTournamentsWithSearchPreference(action.searchPreference.first).then(
       (searchPref) {
         var entities = searchPref.map(Tournament.fromEntity).toList();
         store.dispatch(

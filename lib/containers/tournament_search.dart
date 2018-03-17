@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/tournament_search_view.dart';
+import '../actions/actions.dart';
 
 class TournamentSearch extends StatelessWidget {
   TournamentSearch({Key key})
@@ -39,6 +40,7 @@ class _ViewModel {
         loading: store.state.isLoading,
         onSearchPreferenceChanged: (searchPreference){
           print(searchPreference.toString());
+          store.dispatch(new SearchTournamentWithPreferenceAction(searchPreference));
         });
   }
 }

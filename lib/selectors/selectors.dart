@@ -3,7 +3,7 @@ import '../models/models.dart';
 
 Optional<SearchPreference> activeSearchPreferenceSelector(AppState state) {
   try {
-    return new Optional.of(state.searchPreference.first);
+    return new Optional.of(state.activeSearchPreference.first);
   } catch (e) {
     return new Optional.absent();
   }
