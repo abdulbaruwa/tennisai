@@ -24,7 +24,7 @@ class TournamentEntity {
       this.entrants,
       this.cost});
   String name;
-  String grade;
+  int grade;
   int startDate;
   int endDate;
   String location;
@@ -145,7 +145,7 @@ class TournamentEntity {
   static TournamentEntity fromJson(Map<String, Object> json) {
     return new TournamentEntity(
         name: json['name'] as String,
-        grade: json['grade'] as String,
+        grade: json['grade'] as int,
         startDate: json['startDate'] as int,
         endDate:   json['endDate']   as int,
         location: json['location'] as String,
@@ -189,7 +189,7 @@ class Tournament {
       this.entrants,
       this.cost});
   final String name;
-  final String grade;
+  final int grade;
   final DateTime startDate;
   final DateTime endDate;
   final String location;
@@ -325,449 +325,449 @@ class Tournament {
 }
 
 String getRandomString = new Uuid().v4().toString().substring(0,8);
-List<Tournament> watchedTournaments = <Tournament>[
-  new Tournament(
-      name: 'Sutton Super Series 1',
-      location: 'Sutton Tennis Academy',
-      address: 'Redham Street',
-      town: 'Sutton',
-      county: 'Surrey',
-      postCode: 'KT17 9EL',
-      grade: '2',
-      endDate: new DateTime(2018, 7, 6),
-      startDate: new DateTime(2018, 7, 9),
-      site: 'www.sherbornetennis.com',
-      organiserName: 'David Freeman',
-      organiserPhone: '44776639393',
-      organiserEmail: 'DavidFreeman@Mail.com',
-      highestPlayerRating: '2.1',
-      numberOfEntrants: 12,
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8), cost:  25.0,
-      entrants: <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ])];
-List<Tournament> tournaments = <Tournament>[
+// List<Tournament> watchedTournaments = <Tournament>[
+//   new Tournament(
+//       name: 'Sutton Super Series 1',
+//       location: 'Sutton Tennis Academy',
+//       address: 'Redham Street',
+//       town: 'Sutton',
+//       county: 'Surrey',
+//       postCode: 'KT17 9EL',
+//       grade: '2',
+//       endDate: new DateTime(2018, 7, 6),
+//       startDate: new DateTime(2018, 7, 9),
+//       site: 'www.sherbornetennis.com',
+//       organiserName: 'David Freeman',
+//       organiserPhone: '44776639393',
+//       organiserEmail: 'DavidFreeman@Mail.com',
+//       highestPlayerRating: '2.1',
+//       numberOfEntrants: 12,
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8), cost:  25.0,
+//       entrants: <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ])];
+// List<Tournament> tournaments = <Tournament>[
     
-  new Tournament(
-      name: 'Sutton Super Series 1',
-      location: 'Sutton Tennis Academy',
-      address: 'Redham Street',
-      town: 'Sutton',
-      county: 'Surrey',
-      postCode: 'KT17 9EL',
-      grade: '2',
-      endDate: new DateTime(2018, 7, 6),
-      startDate: new DateTime(2018, 7, 9),
-      site: 'www.sherbornetennis.com',
-      organiserName: 'David Freeman',
-      organiserPhone: '44776639393',
-      organiserEmail: 'DavidFreeman@Mail.com',
-      highestPlayerRating: '2.1',
-      numberOfEntrants: 12,
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8), cost:  25.0,
-      entrants: <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ]),
-  new Tournament(
-      name: 'Horsham Open',
-      location: 'Horsham Tennis Center',
-      address: '25 Kettring Road',
-      town: 'Horsham',
-      county: 'Hampshire',
-      postCode: 'GU17 8Rs',
-      grade: '1',
-      endDate: new DateTime(2018, 8, 6),
-      startDate: new DateTime(2018, 8, 4),
-      numberOfEntrants: 23,
-      highestPlayerRating: '1.1',
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
-      entrants: <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ]),
-  new Tournament(
-      name: 'Salem Cup ',
-      location: 'Salem',
-      address: '9 Winston Street',
-      town: 'Wilsdean Green',
-      county: 'London',
-      postCode: 'N17 7UE',
-      grade: '1',
-      endDate: new DateTime(2018, 8, 6),
-      startDate: new DateTime(2018, 8, 4),
-      highestPlayerRating: '2.1',
-      numberOfEntrants: 12,
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:25.0,
-      entrants: const <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ]),
-  new Tournament(
-      name: 'Surrey Open Champion Ships',
-      location: '2',
-      address: '2 Cheam Street',
-      town: 'Cheam',
-      county: 'Surrey',
-      postCode: 'KT8 9LU',
-      grade: '1',
-      endDate: new DateTime(2018, 8, 6),
-      startDate: new DateTime(2018, 8, 4),
-      numberOfEntrants: 18,
-      highestPlayerRating: '1.1',
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0),
-  new Tournament(
-      name: 'Valencia Junior cup',
-      location: '3',
-      address: '2 Petxina',
-      town: 'Valencia',
-      county: 'Sila',
-      postCode: '83833',
-      grade: '3',
-      endDate: new DateTime(2018, 8, 6),
-      startDate: new DateTime(2018, 8, 4),
-      numberOfEntrants: 8,
-      highestPlayerRating: '2.1',
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
-      entrants: const <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ]),
-  new Tournament(
-      name: 'Surrey Open',
-      location: 'National Tennis Center',
-      address: '2 Nates Park Road',
-      town: 'Roehampton',
-      county: 'Kingston',
-      postCode: 'LH8 9DE',
-      grade: '4',
-      endDate: new DateTime(2018, 8, 1),
-      startDate: new DateTime(2018, 8, 6),
-      numberOfEntrants: 7,
-      highestPlayerRating: '3.2',
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
-      entrants: const <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ]),
-  new Tournament(
-      name: 'Nike Boys U16',
-      location: 'Liverpool Indoor Arena',
-      address: 'Bales Avenue',
-      town: 'Liverpool',
-      county: 'Mersey Side',
-      postCode: 'LV98 1LD',
-      grade: '2',
-      endDate: new DateTime(2018, 8, 2),
-      startDate: new DateTime(2018, 8, 6),
-      numberOfEntrants: 44,
-      highestPlayerRating: '2.2'),
-  new Tournament(
-      name: 'David Lloyds U18',
-      location: 'Raynes Park London',
-      address: '3 Lloyds Road',
-      town: 'Raynes Park',
-      county: 'Surrey',
-      postCode: 'KT15 8DD',
-      grade: '3',
-      endDate: new DateTime(2018, 8, 6),
-      startDate: new DateTime(2018, 8, 4),
-      numberOfEntrants: 9,
-      highestPlayerRating: '3.1',
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
-      entrants: const <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ]),
-  new Tournament(
-      name: 'Fast Four Super Series',
-      location: 'Sutton Tennis Academy',
-      address: '7 Will Smit Street',
-      town: 'Sutton',
-      county: 'Surrey',
-      postCode: 'KT38 3DM',
-      grade: '3',
-      endDate: new DateTime(2018, 8, 6),
-      startDate: new DateTime(2018, 8, 4),
-      numberOfEntrants: 91,
-      highestPlayerRating: '4.1'),
-  new Tournament(
-      name: 'Kalkuta Open',
-      location: 'Kalkuta India ',
-      address: '3 Chuhala Road',
-      town: 'Chenai',
-      county: 'Chenai Main',
-      postCode: 'ZZ303',
-      grade: '3',
-      endDate: new DateTime(2018, 8, 6),
-      startDate: new DateTime(2018, 8, 4),
-      highestPlayerRating: '3.1',
-      numberOfEntrants: 6,
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
-      entrants: const <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ]),
-  new Tournament(
-      name: 'Compete Mens Open',
-      location: 'University Of Bath',
-      address: '3 Bath Road',
-      town: 'Bath',
-      county: 'Bath',
-      postCode: 'BU99 3PA',
-      grade: '3',
-      endDate: new DateTime(2018, 8, 4),
-      startDate: new DateTime(2018, 8, 4),
-      numberOfEntrants: 33,
-      highestPlayerRating: '3.1',
-      status: 'Accepting Entries',
-      code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
-      entrants: const <Entrant>[
-        const Entrant(
-            name: 'Archie Duncan',
-            status: 'pending',
-            rating: '7.2',
-            ranking: 124),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
-        const Entrant(
-            name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
-        const Entrant(
-            name: 'Willie Nelsom',
-            status: 'pending',
-            rating: '1.2',
-            ranking: 16),
-        const Entrant(
-            name: 'Marvin Ashana',
-            status: 'pending',
-            rating: '2.2',
-            ranking: 84),
-        const Entrant(
-            name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
-        const Entrant(
-            name: 'Navas Jesus',
-            status: 'pending',
-            rating: '8.2',
-            ranking: 1233),
-        const Entrant(
-            name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
-      ])
-];
+//   new Tournament(
+//       name: 'Sutton Super Series 1',
+//       location: 'Sutton Tennis Academy',
+//       address: 'Redham Street',
+//       town: 'Sutton',
+//       county: 'Surrey',
+//       postCode: 'KT17 9EL',
+//       grade: '2',
+//       endDate: new DateTime(2018, 7, 6),
+//       startDate: new DateTime(2018, 7, 9),
+//       site: 'www.sherbornetennis.com',
+//       organiserName: 'David Freeman',
+//       organiserPhone: '44776639393',
+//       organiserEmail: 'DavidFreeman@Mail.com',
+//       highestPlayerRating: '2.1',
+//       numberOfEntrants: 12,
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8), cost:  25.0,
+//       entrants: <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ]),
+//   new Tournament(
+//       name: 'Horsham Open',
+//       location: 'Horsham Tennis Center',
+//       address: '25 Kettring Road',
+//       town: 'Horsham',
+//       county: 'Hampshire',
+//       postCode: 'GU17 8Rs',
+//       grade: '1',
+//       endDate: new DateTime(2018, 8, 6),
+//       startDate: new DateTime(2018, 8, 4),
+//       numberOfEntrants: 23,
+//       highestPlayerRating: '1.1',
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
+//       entrants: <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ]),
+//   new Tournament(
+//       name: 'Salem Cup ',
+//       location: 'Salem',
+//       address: '9 Winston Street',
+//       town: 'Wilsdean Green',
+//       county: 'London',
+//       postCode: 'N17 7UE',
+//       grade: '1',
+//       endDate: new DateTime(2018, 8, 6),
+//       startDate: new DateTime(2018, 8, 4),
+//       highestPlayerRating: '2.1',
+//       numberOfEntrants: 12,
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8),  cost:25.0,
+//       entrants: const <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ]),
+//   new Tournament(
+//       name: 'Surrey Open Champion Ships',
+//       location: '2',
+//       address: '2 Cheam Street',
+//       town: 'Cheam',
+//       county: 'Surrey',
+//       postCode: 'KT8 9LU',
+//       grade: '1',
+//       endDate: new DateTime(2018, 8, 6),
+//       startDate: new DateTime(2018, 8, 4),
+//       numberOfEntrants: 18,
+//       highestPlayerRating: '1.1',
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8),  cost:  25.0),
+//   new Tournament(
+//       name: 'Valencia Junior cup',
+//       location: '3',
+//       address: '2 Petxina',
+//       town: 'Valencia',
+//       county: 'Sila',
+//       postCode: '83833',
+//       grade: '3',
+//       endDate: new DateTime(2018, 8, 6),
+//       startDate: new DateTime(2018, 8, 4),
+//       numberOfEntrants: 8,
+//       highestPlayerRating: '2.1',
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
+//       entrants: const <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ]),
+//   new Tournament(
+//       name: 'Surrey Open',
+//       location: 'National Tennis Center',
+//       address: '2 Nates Park Road',
+//       town: 'Roehampton',
+//       county: 'Kingston',
+//       postCode: 'LH8 9DE',
+//       grade: '4',
+//       endDate: new DateTime(2018, 8, 1),
+//       startDate: new DateTime(2018, 8, 6),
+//       numberOfEntrants: 7,
+//       highestPlayerRating: '3.2',
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
+//       entrants: const <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ]),
+//   new Tournament(
+//       name: 'Nike Boys U16',
+//       location: 'Liverpool Indoor Arena',
+//       address: 'Bales Avenue',
+//       town: 'Liverpool',
+//       county: 'Mersey Side',
+//       postCode: 'LV98 1LD',
+//       grade: '2',
+//       endDate: new DateTime(2018, 8, 2),
+//       startDate: new DateTime(2018, 8, 6),
+//       numberOfEntrants: 44,
+//       highestPlayerRating: '2.2'),
+//   new Tournament(
+//       name: 'David Lloyds U18',
+//       location: 'Raynes Park London',
+//       address: '3 Lloyds Road',
+//       town: 'Raynes Park',
+//       county: 'Surrey',
+//       postCode: 'KT15 8DD',
+//       grade: '3',
+//       endDate: new DateTime(2018, 8, 6),
+//       startDate: new DateTime(2018, 8, 4),
+//       numberOfEntrants: 9,
+//       highestPlayerRating: '3.1',
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
+//       entrants: const <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ]),
+//   new Tournament(
+//       name: 'Fast Four Super Series',
+//       location: 'Sutton Tennis Academy',
+//       address: '7 Will Smit Street',
+//       town: 'Sutton',
+//       county: 'Surrey',
+//       postCode: 'KT38 3DM',
+//       grade: '3',
+//       endDate: new DateTime(2018, 8, 6),
+//       startDate: new DateTime(2018, 8, 4),
+//       numberOfEntrants: 91,
+//       highestPlayerRating: '4.1'),
+//   new Tournament(
+//       name: 'Kalkuta Open',
+//       location: 'Kalkuta India ',
+//       address: '3 Chuhala Road',
+//       town: 'Chenai',
+//       county: 'Chenai Main',
+//       postCode: 'ZZ303',
+//       grade: '3',
+//       endDate: new DateTime(2018, 8, 6),
+//       startDate: new DateTime(2018, 8, 4),
+//       highestPlayerRating: '3.1',
+//       numberOfEntrants: 6,
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
+//       entrants: const <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ]),
+//   new Tournament(
+//       name: 'Compete Mens Open',
+//       location: 'University Of Bath',
+//       address: '3 Bath Road',
+//       town: 'Bath',
+//       county: 'Bath',
+//       postCode: 'BU99 3PA',
+//       grade: '3',
+//       endDate: new DateTime(2018, 8, 4),
+//       startDate: new DateTime(2018, 8, 4),
+//       numberOfEntrants: 33,
+//       highestPlayerRating: '3.1',
+//       status: 'Accepting Entries',
+//       code: new Uuid().v4().toString().substring(0,8),  cost:  25.0,
+//       entrants: const <Entrant>[
+//         const Entrant(
+//             name: 'Archie Duncan',
+//             status: 'pending',
+//             rating: '7.2',
+//             ranking: 124),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '5.2', ranking: 104),
+//         const Entrant(
+//             name: 'Ben Dean', status: 'pending', rating: '3.2', ranking: 12),
+//         const Entrant(
+//             name: 'Willie Nelsom',
+//             status: 'pending',
+//             rating: '1.2',
+//             ranking: 16),
+//         const Entrant(
+//             name: 'Marvin Ashana',
+//             status: 'pending',
+//             rating: '2.2',
+//             ranking: 84),
+//         const Entrant(
+//             name: 'Giva Lukman', status: 'pending', rating: '2.1', ranking: 2),
+//         const Entrant(
+//             name: 'Navas Jesus',
+//             status: 'pending',
+//             rating: '8.2',
+//             ranking: 1233),
+//         const Entrant(
+//             name: 'Obi Mikaiel', status: 'pending', rating: '1.2', ranking: 2),
+//       ])
+// ];

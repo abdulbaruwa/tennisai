@@ -19,13 +19,14 @@ class WebClient {
     return getTournamentsFromControllerWithUserId("watched", "12");
   }
 
-  Future<List<TournamentEntity>> getTournamentsFromControllerWithUserId(String controller, String userId) async {
+  Future<List<TournamentEntity>> getTournamentsFromControllerWithUserId(
+      String controller, String userId) async {
     var httpClient = new HttpClient();
     List<TournamentEntity> tournaments = [];
     print('GetTournaments called');
     var uri = new Uri.http(
         '192.168.1.156:55511', '/TennisAiServiceService/api/$controller', {
-        'id': userId,
+      'id': userId,
     });
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
@@ -39,12 +40,12 @@ class WebClient {
     return tournaments;
   }
 
- Future<List<MatchResultInfoEntity>> getMatchResult(String userId) async {
+  Future<List<MatchResultInfoEntity>> getMatchResult(String userId) async {
     var httpClient = new HttpClient();
     List<MatchResultInfoEntity> matchResults = [];
     var uri = new Uri.http(
         '192.168.1.156:55511', '/TennisAiServiceService/api/tournamentresult', {
-        'id': userId,
+      'id': userId,
     });
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
@@ -58,12 +59,12 @@ class WebClient {
     return matchResults;
   }
 
- Future<List<RankingInfoEntity>> getRankings(String userId) async {
+  Future<List<RankingInfoEntity>> getRankings(String userId) async {
     var httpClient = new HttpClient();
     List<RankingInfoEntity> matchResults = [];
     var uri = new Uri.http(
         '192.168.1.156:55511', '/TennisAiServiceService/api/rankinginfo', {
-        'id': userId,
+      'id': userId,
     });
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
@@ -77,23 +78,37 @@ class WebClient {
     return matchResults;
   }
 
-  Future<List<SearchPreferenceEntity>> getSearchPreference(String userId) async {
-    List<SearchPreferenceEntity> matchResults = [];
+  Future<List<SearchPreferenceEntity>> getSearchPreference(
+      String userId) async {
+    List<SearchPreferenceEntity> searchPreferences = [];
     var uri = new Uri.http(
         '192.168.1.156:55511', '/TennisAiServiceService/api/searchpreference', {
-        'id': userId,
+      'id': userId,
     });
-  
+
     var jsonData = await makeHttpCall(uri);
-    
+
     for (int i = 0; i < jsonData.length; i++) {
-      matchResults.add(SearchPreferenceEntity.fromJson(jsonData[i]));
+      searchPreferences.add(SearchPreferenceEntity.fromJson(jsonData[i]));
     }
-    return matchResults;
+    return searchPreferences;
   }
 
+  Future<List<TournamentEntity>> getTournamentsByDefaultSearchPreferences(
+      String playerId) async {
+    List<TournamentEntity> tournaments = [];
+    var uri = new Uri.http('192.168.1.156:55511',
+        '/TennisAiServiceService/api/tournaments/$playerId/searchpreference');
 
-  Future<dynamic> makeHttpCall(Uri uri) async{
+    var jsonData = await makeHttpCall(uri);
+
+    for (var json in jsonData) {
+      tournaments.add(TournamentEntity.fromJson(json));
+    }
+    return tournaments;
+  }
+
+  Future<dynamic> makeHttpCall(Uri uri) async {
     var httpClient = new HttpClient();
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
@@ -102,7 +117,7 @@ class WebClient {
     var jsonData = JSON.decode(responseBody);
     return jsonData;
   }
-  
+
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postWatchedTournaments(
@@ -151,10 +166,7 @@ class WebClient {
   }
 
   Future<List<TournamentEntity>> fetchSearchTournaments() async {
-    List<TournamentEntity> tEntities = [];
-
-    tournaments.forEach((f) => tEntities.add(f.toEntity()));
-    return new Future.delayed(delay, () => tEntities);
+    return getTournamentsByDefaultSearchPreferences("12");
   }
 
   // Search Preference
@@ -195,13 +207,13 @@ BasketEntity basket = new BasketEntity(
           cost: 20.0,
           code: '1',
           tournamentName: 'Sutton Grade 4',
-          grade: '4',
+          grade: 4,
           status: 'Accepting'),
       new BasketItemEntity(
           cost: 25.0,
           code: '21',
           tournamentName: 'Wilshire Open Championship',
-          grade: '3',
+          grade: 3,
           status: 'Accepting')
     ]);
 

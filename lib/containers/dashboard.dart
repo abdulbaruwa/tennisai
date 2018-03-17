@@ -40,9 +40,7 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     var entered = enteredTournamentSelector(store.state);
     var watching = watchedTournamentSelector(store.state);
-    var watched = _tournament.watchedTournaments.toList();
     print('DashboardContainer: entered items ${entered.length}');
-    print('DashboardContainer: watched items ${watched.length}');
     print('DashboardContainer: watching items ${watching.length}');
 
     return new _ViewModel(

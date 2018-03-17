@@ -4,7 +4,7 @@ import '../models/tournament.dart';
 class BasketItemEntity {
   String tournamentName;
   double cost;
-  String grade;
+  int grade;
   String status;
   String code;
   BasketItemEntity(
@@ -50,7 +50,7 @@ class BasketItemEntity {
     return new BasketItemEntity(
       tournamentName: json['tournamentName'] as String,
       cost: json['cost'] as double,
-      grade: json['grade'] as String,
+      grade: json['grade'] as int,
       status: json['status'] as String,
       code: json['code'] as String,
     );
@@ -62,7 +62,7 @@ class BasketItem {
    BasketItem({this.tournamentName, this.cost, this.code, this.grade, this.status});
 
   final String tournamentName;
-  final String grade;
+  final int grade;
   final String status;
   final double cost;
   final String code;

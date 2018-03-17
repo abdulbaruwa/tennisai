@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 @immutable
 class MatchResultInfo{
   final DateTime tournamentDate;
-  final String ageGroup;
+  final int ageGroup;
   final int grade;
   final String tournamentName;
   final String tournamentEvent;
@@ -44,7 +44,7 @@ class MatchResultInfo{
 
 class MatchResultInfoEntity{
   final int tournamentDate;
-  final String ageGroup;
+  final int ageGroup;
   final int grade;
   final String tournamentName;
   final String tournamentEvent;
@@ -103,7 +103,7 @@ class MatchResultInfoEntity{
 
   static MatchResultInfoEntity fromJson(Map<String, Object> json) {
     return new MatchResultInfoEntity(
-      ageGroup: json['ageGroup'] as String,
+      ageGroup: json['ageGroup'] as int,
       tournamentDate: json['tournamentDate'] as int,
       grade: json['grade'] as int,
       tournamentEvent: json['tournamentEvent'] as String,

@@ -35,7 +35,7 @@ class BasketChildView extends StatelessWidget {
               new CircleAvatar(
                   radius: 16.0,
                   child: new Text(
-                    item.grade,
+                    item.grade.toString(),
                     style: Theme.of(context).primaryTextTheme.body1,
                   ))
             ])),
