@@ -173,7 +173,7 @@ class WebClient {
       SearchPreference searchPreference) async {
     List<TournamentEntity> tournaments = [];
     var uri = new Uri.http('192.168.1.156:55511',
-        '/TennisAiServiceService/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/searchall');
+        '/TennisAiServiceService/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/${searchPreference.gender}/${searchPreference.distance}/searchall');
 
     var jsonData = await makeHttpCall(uri);
 

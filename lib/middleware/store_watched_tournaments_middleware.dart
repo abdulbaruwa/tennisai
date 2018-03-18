@@ -77,7 +77,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     // Search Tournament
     new MiddlewareBinding<AppState, LoadSearchTournamentsAction>(
         loadSearchTournaments),
-    new MiddlewareBinding<AppState, SearchTournamentWithPreferenceAction>(loadSearchTournamentsWithPreference),
+    new MiddlewareBinding<AppState, SearchTournamentWithPreferenceAction>(
+        loadSearchTournamentsWithPreference),
     new MiddlewareBinding<AppState, AddSearchTournamentsAction>(
         saveSearchTournaments),
     // Basket
@@ -230,12 +231,14 @@ Middleware<AppState> _createSaveSearchPreference(
   };
 }
 
-Middleware<AppState> _createLoadSearchPreference(DashboardRepository repository) {
+Middleware<AppState> _createLoadSearchPreference(
+    DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadSearchPreference().then(
       (searchPref) {
         var entities = searchPref.map(SearchPreference.fromEntity).toList();
-        store.dispatch(new SearchPreferenceLoadedAction(entities),
+        store.dispatch(
+          new SearchPreferenceLoadedAction(entities),
         );
       },
     ).catchError((_) => store.dispatch(new SearchPreferenceNotLoadedAction()));
@@ -243,17 +246,22 @@ Middleware<AppState> _createLoadSearchPreference(DashboardRepository repository)
   };
 }
 
-// Middleware<AppState> _createLoadSearchTournamentsWithPreference (DashboardRepository repository){
-//   return (Store<AppState> store, action, NextDispatcher next){
-//     repository.loadTournamentsWithSearchPreference(action).then((tournaments){}).
-//   };
-// }
-
 Middleware<AppState> _createLoadSearchTournamentsWithPreference(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var searchPreference = activeSearchPreferenceSelector(store.state);
-    repository.loadTournamentsWithSearchPreference(action.searchPreference.first).then(
+    
+    var defaultGenderSetting = activeSearchPreferenceSelector(store.state).first?.gender;
+    // Use the default Gender settings
+    SearchPreference activeSearch = action.searchPreference;
+    var searchPreference = new SearchPreference(
+        gender: defaultGenderSetting, 
+        ageGroup: activeSearch.ageGroup,
+        grade: activeSearch.grade,
+        distance: activeSearch.distance);
+
+    repository
+        .loadTournamentsWithSearchPreference(searchPreference)
+        .then(
       (searchPref) {
         var entities = searchPref.map(Tournament.fromEntity).toList();
         store.dispatch(
