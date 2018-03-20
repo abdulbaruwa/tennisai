@@ -264,8 +264,8 @@ Middleware<AppState> _createLoadSearchTournamentsWithPreference(
         .then(
       (searchPref) {
         var entities = searchPref.map(Tournament.fromEntity).toList();
-        store.dispatch(
-          new SearchTournamentsLoadedAction(entities),
+        store.dispatch(new SearchTournamentsLoadedAction(entities),
+        
         );
       },
     ).catchError((_) => store.dispatch(new SearchTournamentsNotLoadedAction()));

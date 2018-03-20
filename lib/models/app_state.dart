@@ -53,8 +53,7 @@ class AppState {
       bool activeEntrantsSortOrder}) {
     return new AppState(
         isLoading: isLoading ?? this.isLoading,
-        activeEntrantsSortOrder:
-            activeEntrantsSortOrder ?? activeEntrantsSortOrder,
+        activeEntrantsSortOrder: activeEntrantsSortOrder ?? activeEntrantsSortOrder,
         player: player ?? this.player,
         basket: basket ?? this.basket,
         searchPreference: searchPreference ?? this.searchPreference,

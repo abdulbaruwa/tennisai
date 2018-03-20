@@ -18,42 +18,22 @@ final ThemeData _kTheme = new ThemeData(
 class TournamentSearchView extends StatefulWidget {
   final List<Tournament> tournaments;
   final Function(SearchPreference) onSearchPreferenceChanged;
+  final SearchPreference searchPreference;
   TournamentSearchView(
-      {Key key, this.tournaments, this.onSearchPreferenceChanged})
+      {Key key, this.tournaments, this.searchPreference, this.onSearchPreferenceChanged})
       : super(key: key);
   @override
   SearchTabState createState() => new SearchTabState();
 }
 
 class SearchTabState extends State<TournamentSearchView> {
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
-
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   PersistentBottomSheetController<Null> _bottomSheet;
-  int _selectedAgeGroup = 18;
 
-  LabelIntDropDownItem _distanceInMilesDropDown = new LabelIntDropDownItem(
-      onChangedFunc: (int i) => print('Distance from home changed to $i miles'),
-      displayIntItems: _distancesInMiles,
-      label: 'Distance',
-      inputValue: 30,
-      displayFunc: (int i) => '$i miles');
-
-  LabelIntDropDownItem _ageGroupDropDown = new LabelIntDropDownItem(
-      onChangedFunc: (int i) => print('Value Changed to $i'),
-      displayIntItems: _ageGroups,
-      label: 'Age Group',
-      inputValue: 16,
-      displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
-  LabelIntDropDownItem _gradeDropDown = new LabelIntDropDownItem(
-      onChangedFunc: (int i) => print('Grade changed to Grade $i'),
-      displayIntItems: _grades,
-      label: 'Grade',
-      inputValue: 3,
-      displayFunc: (int i) => 'Grade $i');
 
   @override
   Widget build(BuildContext context) {
+    
     return new Theme(
         data: _kTheme.copyWith(platform: Theme.of(context).platform),
         child: new Scaffold(
@@ -82,6 +62,28 @@ class SearchTabState extends State<TournamentSearchView> {
   }
 
   void _showConfigurationSheet() {
+      LabelIntDropDownItem _distanceInMilesDropDown = new LabelIntDropDownItem(
+      onChangedFunc: (int i) => print('Distance from home changed to $i miles'),
+      displayIntItems: _distancesInMiles,
+      label: 'Distance',
+      inputValue: widget.searchPreference.distance,
+      displayFunc: (int i) => '$i miles');
+
+  LabelIntDropDownItem _ageGroupDropDown = new LabelIntDropDownItem(
+      onChangedFunc: (int i) => print('Value Changed to $i'),
+      displayIntItems: _ageGroups,
+      label: 'Age Group',
+      inputValue: widget.searchPreference.ageGroup,
+      displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
+
+  LabelIntDropDownItem _gradeDropDown = new LabelIntDropDownItem(
+      onChangedFunc: (int i) => print('Grade changed to Grade $i'),
+      displayIntItems: _grades,
+      label: 'Grade',
+      inputValue: widget.searchPreference.grade,
+      displayFunc: (int i) => 'Grade $i');
+
+
     final PersistentBottomSheetController<Null> bottomSheet = _scaffoldKey
         .currentState.showBottomSheet((BuildContext bottomSheetContext) {
       int selectedGender = 0;
@@ -132,7 +134,8 @@ class SearchTabState extends State<TournamentSearchView> {
           var searchPref = new SearchPreference(
               ageGroup: _ageGroupDropDown.outputValue,
               grade: _gradeDropDown.outputValue,
-              distance: _distanceInMilesDropDown.outputValue);
+              distance: _distanceInMilesDropDown.outputValue,
+              gender: widget.searchPreference.gender);
           widget.onSearchPreferenceChanged(searchPref);
           _bottomSheet = null;
         });

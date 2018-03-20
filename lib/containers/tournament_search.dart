@@ -17,7 +17,7 @@ class TournamentSearch extends StatelessWidget {
         converter: (Store<AppState> store) {
       return new _ViewModel.from(store);
     }, builder: (context, vm) {
-      return new TournamentSearchView(tournaments: vm.tournaments, onSearchPreferenceChanged: vm.onSearchPreferenceChanged);
+      return new TournamentSearchView(tournaments: vm.tournaments, onSearchPreferenceChanged: vm.onSearchPreferenceChanged, searchPreference: vm.searchPreference);
     });
   }
 }
@@ -26,11 +26,13 @@ class _ViewModel {
   final bool loading;
   final List<Tournament> tournaments;
   final Function(SearchPreference) onSearchPreferenceChanged;
+  final SearchPreference searchPreference;
   final bool activeSortOrder;
   _ViewModel(
       {@required this.loading,
       @required this.tournaments,
       @required this.onSearchPreferenceChanged,
+      @required this.searchPreference,
       this.activeSortOrder
       });
 
@@ -38,6 +40,7 @@ class _ViewModel {
     return new _ViewModel(
         tournaments: searchTournamentsSelector(store.state),
         loading: store.state.isLoading,
+        searchPreference: activeSearchPreferenceSelector(store.state).first,
         onSearchPreferenceChanged: (searchPreference){
           print(searchPreference.toString());
           store.dispatch(new SearchTournamentWithPreferenceAction(searchPreference));
