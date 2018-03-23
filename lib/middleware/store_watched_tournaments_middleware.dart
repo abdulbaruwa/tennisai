@@ -30,8 +30,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
   final loadSearchTournaments = _createLoadSearchTournaments(repository);
   final saveSearchTournaments = _createSaveSearchTournaments(repository);
-  final loadSearchTournamentsWithPreference =
-      _createLoadSearchTournamentsWithPreference(repository);
+  final loadSearchTournamentsWithPreference = _createLoadSearchTournamentsWithPreference(repository);
 
   final loadBasket = _createLoadBasket(repository);
   final saveBasket = _createSaveBasket(repository);
@@ -75,12 +74,9 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new MiddlewareBinding<AppState, AddSearchPreferenceAction>(saveSearchQuery),
 
     // Search Tournament
-    new MiddlewareBinding<AppState, LoadSearchTournamentsAction>(
-        loadSearchTournaments),
-    new MiddlewareBinding<AppState, SearchTournamentWithPreferenceAction>(
-        loadSearchTournamentsWithPreference),
-    new MiddlewareBinding<AppState, AddSearchTournamentsAction>(
-        saveSearchTournaments),
+    new MiddlewareBinding<AppState, LoadSearchTournamentsAction>(loadSearchTournaments),
+    new MiddlewareBinding<AppState, SearchTournamentWithPreferenceAction>(loadSearchTournamentsWithPreference),
+    new MiddlewareBinding<AppState, AddSearchTournamentsAction>(saveSearchTournaments),
     // Basket
     new MiddlewareBinding<AppState, LoadBasketAction>(loadBasket),
     new MiddlewareBinding<AppState, AddBasketAction>(saveBasket),
@@ -246,8 +242,7 @@ Middleware<AppState> _createLoadSearchPreference(
   };
 }
 
-Middleware<AppState> _createLoadSearchTournamentsWithPreference(
-    DashboardRepository repository) {
+Middleware<AppState> _createLoadSearchTournamentsWithPreference(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     
     var defaultGenderSetting = activeSearchPreferenceSelector(store.state).first?.gender;
