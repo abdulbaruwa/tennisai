@@ -37,42 +37,29 @@ class TournamentDetailsView extends StatelessWidget {
     final List<Function> floatActions = [this.onAddToBasket, this.onAddToWatch];
     final Color backgroundColor = Theme.of(context).cardColor;
     final Color foregroundColor = Theme.of(context).accentColor;
-    Widget floater = new Column(
-      mainAxisSize: MainAxisSize.min,
-      children: new List.generate(icons.length, (int index) {
-        Widget child = new Container(
-          height: 60.0,
-          width: 56.0,
-          alignment: FractionalOffset.topCenter,
-          child: new ScaleTransition(
-            scale: new CurvedAnimation(
-              parent: controller,
-              curve: new Interval(0.0, 1.0 - index / icons.length / 2.0,
-                  curve: Curves.easeOut),
-            ),
-            child: new FloatingActionButton(
-              backgroundColor: backgroundColor,
-              heroTag: icons[index], // Specify herotag - to its icon name: Do this to avoid FloatingActionButton throwing 'Multiple heroes share the same tag exception'
-              mini: true,
-              child: new Icon(icons[index], color: foregroundColor),
-              onPressed: floatActions[index],
-            ),
-          ),
-        );
-        return child;
-      }).toList()
-        ..add(
+    List<Widget> floaters = new List<Widget>();
+    var totalButtons = 0;
+    if(tournament.statusIndex == 1) {
+      totalButtons = 2;
+      floaters.add(createfloatButtoner(context, Icons.flag, 0, totalButtons, this.onAddToWatch));
+      floaters.add(createfloatButtoner(context, Icons.add_shopping_cart, 1, totalButtons, this.onAddToBasket));
+    }
+    else if(tournament.statusIndex <= 2){
+      totalButtons = 1;
+      floaters.add(createfloatButtoner(context, Icons.flag, 0, totalButtons, this.onAddToWatch));
+    }
+
+   // if(totalButtons > 0){
+    floaters..add(
           new FloatingActionButton(
             heroTag: 'rootFloater',
             child: new AnimatedBuilder(
               animation: controller,
               builder: (BuildContext context, Widget child) {
                 return new Transform(
-                  transform:
-                      new Matrix4.rotationZ(controller.value * 0.5 * math.PI),
+                  transform: new Matrix4.rotationZ(controller.value * 0.5 * math.PI),
                   alignment: FractionalOffset.center,
-                  child: new Icon(
-                      controller.isDismissed ? Icons.share : Icons.close),
+                  child: new Icon(controller.isDismissed ? Icons.share : Icons.close),
                 );
               },
             ),
@@ -84,7 +71,10 @@ class TournamentDetailsView extends StatelessWidget {
               }
             },
           ),
-        ),
+        );
+    Widget floater = new Column(
+      mainAxisSize: MainAxisSize.min,
+      children: floaters
     );
     return new Theme(
       data: new ThemeData(
@@ -246,13 +236,38 @@ class TournamentDetailsView extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: floater,
+        floatingActionButton: totalButtons > 0 ? floater : null,
       ),
     );
   }
 
-  void showTournamentEntrantsPage(BuildContext context, Tournament tournament,
-      TournamentDetailsActionSource source) {
+  
+  Widget createfloatButtoner(BuildContext context, IconData icon, int index, int totalButtons, Function onPressed)
+  {
+    final Color backgroundColor = Theme.of(context).cardColor;
+    final Color foregroundColor = Theme.of(context).accentColor;
+    return new Container(
+          height: 60.0,
+          width: 56.0,
+          alignment: FractionalOffset.topCenter,
+          child: new ScaleTransition(
+            scale: new CurvedAnimation(
+              parent: controller,
+              curve: new Interval(0.0, 1.0 - index / totalButtons / 2.0,
+                  curve: Curves.easeOut),
+            ),
+            child: new FloatingActionButton(
+              backgroundColor: backgroundColor,
+              heroTag: icon,
+              mini: true,
+              child: new Icon(icon, color: foregroundColor),
+              onPressed: onPressed,
+            ),
+          ),
+        );
+  }
+
+  void showTournamentEntrantsPage(BuildContext context, Tournament tournament,TournamentDetailsActionSource source) {
     Navigator.of(context).push(new MaterialPageRoute(
           builder: (_) =>
               new TournamentEntrants(id: tournament.code, source: source),
