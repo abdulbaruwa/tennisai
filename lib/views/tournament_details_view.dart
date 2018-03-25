@@ -15,13 +15,9 @@ class TournamentDetailsView extends StatelessWidget {
 
   static final List<IconData> icons = const [
     Icons.add_shopping_cart,
-    Icons.flag
+    Icons.flag,
   ];
 
-  // static List<Function> floatActions = new List()..add(onAddToBasket);
-  //   onAddToBasket,
-  //   onAddToWatch
-  // ];
   TournamentDetailsView(
       {Key key,
       this.tournament,
@@ -30,13 +26,9 @@ class TournamentDetailsView extends StatelessWidget {
       this.controller,
       this.source})
       : super(key: key);
-
   
   @override
   Widget build(BuildContext context) {
-    final List<Function> floatActions = [this.onAddToBasket, this.onAddToWatch];
-    final Color backgroundColor = Theme.of(context).cardColor;
-    final Color foregroundColor = Theme.of(context).accentColor;
     List<Widget> floaters = new List<Widget>();
     var totalButtons = 0;
     if(tournament.statusIndex == 1) {
@@ -49,7 +41,6 @@ class TournamentDetailsView extends StatelessWidget {
       floaters.add(createfloatButtoner(context, Icons.flag, 0, totalButtons, this.onAddToWatch));
     }
 
-   // if(totalButtons > 0){
     floaters..add(
           new FloatingActionButton(
             heroTag: 'rootFloater',
@@ -159,6 +150,19 @@ class TournamentDetailsView extends StatelessWidget {
                                       }))),
                         ],
                       ),
+                      new Row(
+                        children: <Widget>[
+                          new _TextItem(text: 'Status'),
+                          new Container(
+                            padding: const EdgeInsets.only(left: 30.0, top: 5.0),
+                            child:  new Text('${tournament.status}',
+                                    style: Theme
+                                        .of(context)
+                                        .textTheme
+                                        .body2),
+                          )
+                        ],
+                      ),
                     ]),
                 new _Header(icon: Icons.account_balance, text: 'Organiser'),
                 new Column(
@@ -187,8 +191,6 @@ class TournamentDetailsView extends StatelessWidget {
                 new Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      //new _TextItem(text: 'Sat, 21-Mar-2018 - Sun, 22-Mar-2018'),
-
                       new Container(
                           padding: const EdgeInsets.only(top: 3.0, left: 25.0),
                           child: new RichText(
@@ -203,7 +205,25 @@ class TournamentDetailsView extends StatelessWidget {
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold),
                                     text:
-                                        '${new DateFormat("yMMMEd").format(tournament.startDate)} - ${ new DateFormat("yMMMEd").format(tournament.endDate)}',
+                                        '${new DateFormat("yMMMEd").format(tournament.startDate)}',
+                                  ),
+                                ]),
+                          )),
+                      new Container(
+                          padding: const EdgeInsets.only(top: 3.0, left: 25.0),
+                          child: new RichText(
+                            text: new TextSpan(
+                                text: '',
+                                style: new TextStyle(color: Colors.black),
+                                children: <TextSpan>[
+                                  new TextSpan(
+                                      text: 'End:   ',
+                                      style: new TextStyle(fontSize: 14.0)),
+                                  new TextSpan(
+                                    style: new TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                    text:
+                                        '${  new DateFormat("yMMMEd").format(tournament.endDate)}',
                                   ),
                                 ]),
                           )),
@@ -226,8 +246,6 @@ class TournamentDetailsView extends StatelessWidget {
                                   ),
                                 ]),
                           )),
-
-                      //new _TextItem(text: 'Entry closes on Mon, 14-Mar-2018'),
                     ]),
                 new SizedBox(
                   height: 50.0,
