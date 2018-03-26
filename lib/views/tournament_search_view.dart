@@ -62,36 +62,39 @@ class SearchTabState extends State<TournamentSearchView> {
   }
 
   void _showConfigurationSheet() {
-      LabelIntDropDownItem _distanceInMilesDropDown = new LabelIntDropDownItem(
+    LabelIntDropDownItem _distanceInMilesDropDown = new LabelIntDropDownItem(
       onChangedFunc: (int i) => print('Distance from home changed to $i miles'),
       displayIntItems: _distancesInMiles,
       label: 'Distance',
       inputValue: widget.searchPreference.distance,
       displayFunc: (int i) => '$i miles');
 
-  LabelIntDropDownItem _ageGroupDropDown = new LabelIntDropDownItem(
+    LabelIntDropDownItem _ageGroupDropDown = new LabelIntDropDownItem(
       onChangedFunc: (int i) => print('Value Changed to $i'),
       displayIntItems: _ageGroups,
       label: 'Age Group',
       inputValue: widget.searchPreference.ageGroup,
       displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
 
-  LabelIntDropDownItem _gradeDropDown = new LabelIntDropDownItem(
+    LabelIntDropDownItem _gradeDropDown = new LabelIntDropDownItem(
       onChangedFunc: (int i) => print('Grade changed to Grade $i'),
       displayIntItems: _grades,
       label: 'Grade',
       inputValue: widget.searchPreference.grade,
       displayFunc: (int i) => 'Grade $i');
 
+    LabelIntDropDownItem _statusDropDown = new LabelIntDropDownItem(
+      onChangedFunc: (int i) => print('Status changed to Grade $i'),
+      displayIntItems: tournamentStatusIndexs,
+      label: 'Status',
+      inputValue: widget.searchPreference.statusIndex ?? 1,
+      displayFunc: (int i)
+      {
+        return tournamentStatus[i].toString();
+      });
 
     final PersistentBottomSheetController<Null> bottomSheet = _scaffoldKey
         .currentState.showBottomSheet((BuildContext bottomSheetContext) {
-      int selectedGender = 0;
-      int miles = 30;
-      int selectedMiles = 30;
-      int selectedGrade = 3;
-      int selectedAgeGroup = 18;
-
       return new Container(
         decoration: const BoxDecoration(
           color: const Color(0xFFE8EAF6),
@@ -116,6 +119,9 @@ class SearchTabState extends State<TournamentSearchView> {
             new Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: _gradeDropDown),
+            new Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: _statusDropDown),
           ],
         ),
       );

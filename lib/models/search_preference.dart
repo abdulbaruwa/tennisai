@@ -1,5 +1,8 @@
 import 'package:meta/meta.dart';
 
+final tournamentStatus = {0: 'Upcoming', 1: 'Accepting Entries', 2: 'Closed for Entries', 3: 'Withdrawal Passed', 4: 'Pending Result', 5: 'Results Ready'};
+final tournamentStatusIndexs = [0, 1, 2, 3, 4, 5, 6];
+
 @immutable
 class SearchPreference {
   final int ltaNumber;
@@ -7,15 +10,17 @@ class SearchPreference {
   final String gender;
   final int distance;
   final int ageGroup;
+  final int statusIndex;
 
   SearchPreference(
-      {this.ltaNumber, this.grade, this.gender, this.distance, this.ageGroup});
+      {this.ltaNumber, this.grade, this.gender, this.distance, this.ageGroup, this.statusIndex});
   @override
   int get hashCode =>
       ltaNumber.hashCode ^
       grade.hashCode ^
       gender.hashCode ^
       distance.hashCode ^
+      statusIndex.hashCode ^
       ageGroup.hashCode;
 
   @override
@@ -27,21 +32,23 @@ class SearchPreference {
           grade == other.grade &&
           gender == other.gender &&
           ageGroup == other.ageGroup &&
+          statusIndex == other.statusIndex &&
           distance == other.distance;
 
-  static SearchPreference fromEntity(SearchPreferenceEntity playerEntity) {
+  static SearchPreference fromEntity(SearchPreferenceEntity searchPrefEntity) {
     return new SearchPreference(
-      ltaNumber: playerEntity.ltaNumber,
-      grade: playerEntity.grade,
-      gender: playerEntity.gender,
-      ageGroup: playerEntity.ageGroup,
-      distance: playerEntity.distance,
+      ltaNumber: searchPrefEntity.ltaNumber,
+      grade: searchPrefEntity.grade,
+      gender: searchPrefEntity.gender,
+      ageGroup: searchPrefEntity.ageGroup,
+      statusIndex: searchPrefEntity.statusIndex,
+      distance: searchPrefEntity.distance,
     );
   }
 
   SearchPreference copyWth(
       {int ltaNumber, int grade, int distance, int ageGroup, String gender}) {
-    return new SearchPreference(ltaNumber: ltaNumber ?? this.ltaNumber, ageGroup: ageGroup ?? this.ageGroup, distance: distance ?? this.distance, gender: gender ?? this.gender) ;
+    return new SearchPreference(ltaNumber: ltaNumber ?? this.ltaNumber, statusIndex: this.statusIndex, ageGroup: ageGroup ?? this.ageGroup, distance: distance ?? this.distance, gender: gender ?? this.gender) ;
   }
 
   SearchPreferenceEntity toEntity() {
@@ -50,25 +57,27 @@ class SearchPreference {
       grade: grade,
       gender: gender,
       ageGroup: ageGroup,
+      statusIndex: statusIndex,
       distance: distance,
     );
   }
 
   @override
   String toString() {
-    return 'SearchPreference{grade: $grade, gender: $gender, distance: $distance, ltaNumber: $ltaNumber, ageGroup: $ageGroup}';
+    return 'SearchPreference{grade: $grade, gender: $gender, distance: $distance, statusIndex: $statusIndex, ltaNumber: $ltaNumber, ageGroup: $ageGroup}';
   }
 }
 
 class SearchPreferenceEntity {
   SearchPreferenceEntity(
-      {this.ltaNumber, this.grade, this.gender, this.distance, this.ageGroup});
+      {this.ltaNumber, this.grade, this.gender, this.distance, this.statusIndex, this.ageGroup});
   int grade;
   String gender;
   String ltaRating;
   int ltaNumber;
   int distance;
   int ageGroup;
+  int statusIndex;
 
   Map<String, Object> toJson() {
     return {
@@ -76,6 +85,7 @@ class SearchPreferenceEntity {
       'gender': gender,
       'ltaNumber': ltaNumber,
       'distance': distance,
+      'statusIndex': statusIndex,
       'ageGroup': ageGroup,
     };
   }
@@ -87,6 +97,7 @@ class SearchPreferenceEntity {
       ltaNumber: json['ltaNumber'] as int,
       distance: json['distance'] as int,
       ageGroup: json['ageGroup'] as int,
+      statusIndex: json['statusIndex'] as int,
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../keys/keys.dart';
 import '../models/enums.dart' as _enums;
+import '../controls/usercontrols.dart';
 
 typedef OnPlayerProfileSaveCallback = Function(
     Player player, SearchPreference searchPreference);
@@ -71,6 +72,17 @@ class ProfileEditView extends StatelessWidget {
         label: 'Age Group',
         output: selectedAgeGroup,
         displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
+    var _statusDropDown = new LabelIntDropDownItem(
+        onChangedFunc: (int i) => print('Status changed to Grade $i'),
+        displayIntItems: tournamentStatusIndexs,
+        label: 'Status',
+        inputValue: 2,
+        displayFunc: (int i)
+        {
+          var statuses = {0: 'Upcoming', 1: 'Accepting Entries', 2: 'Closed for Entries', 3: 'Withdrawal Passed', 4: 'Pending Result', 5: 'Results Ready'};
+          return tournamentStatus[i].toString();
+        });
+
     //selectedAgeGroup = tournamentGroup.output;
     return new Theme(
         data: new ThemeData(
@@ -93,11 +105,9 @@ class ProfileEditView extends StatelessWidget {
                     var updateSearchPreference = new SearchPreference(
                         grade: gradeGroup.output,
                         distance: distanceGroup.output,
-                        ageGroup: tournamentGroup.output);
+                        ageGroup: tournamentGroup.output,
+                        statusIndex: _statusDropDown.outputValue);
                     onSave(updatedPlayer, updateSearchPreference);
-                    // var tournGroup = tournamentGroup.output;
-                    // print(
-                    //     'Edited ${_firstNameKey.currentState.value} ${_lastNameKey.currentState.value} address: ${_addressKey.currentState.value}');
                     Navigator.pop(context, _enums.DismissDialogAction.save);
                   })
             ]),
@@ -200,13 +210,11 @@ class ProfileEditView extends StatelessWidget {
                     decoration: _topBottomBoxDecoration,
                     child: new Column(
                       children: <Widget>[
-                        // Gender
-
-                        //  tournament grou
                         genderGroup,
                         distanceGroup,
                         gradeGroup,
                         tournamentGroup,
+                        _statusDropDown
                       ],
                     )),
               ],
