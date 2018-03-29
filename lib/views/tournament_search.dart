@@ -80,7 +80,7 @@ class TournamentCard extends StatelessWidget {
         children: <Widget>[
           new Padding(
             child: new ListTile(
-              title: new Text(tournament.name),
+              title: new Text(tournament.name, style: new TextStyle(color: Theme.of(context).primaryColor, fontSize: 18.0)),
               subtitle: new Text(tournament.location),
             ),
             padding: const EdgeInsets.only(

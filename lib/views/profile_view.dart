@@ -159,7 +159,7 @@ Widget _buildPreference(
               ? 'Adult'
               : 'U${searchPreference.ageGroup}'),
       new _LabelTextRow(
-          label: 'Status', value: tournamentStatus[searchPreference.statusIndex]),
+          label: 'Status', value: tournamentStatus[searchPreference == null ? 0 : searchPreference.statusIndex]),
     ],
   ));
 }

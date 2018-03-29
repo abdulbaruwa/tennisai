@@ -42,8 +42,7 @@ class LabelIntDropDownItemState extends State<LabelIntDropDownItem> {
                       items: widget.displayIntItems.map((int value) {
                         return new DropdownMenuItem<int>(
                           value: value,
-                          child: new Padding(
-                            padding: const EdgeInsets.only(left: 8.0),
+                          child: new Align(alignment: Alignment.centerRight,
                             child: new Text(widget.displayFunc(value)),
                           ),
                         );

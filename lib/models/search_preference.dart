@@ -1,6 +1,13 @@
 import 'package:meta/meta.dart';
 
-final tournamentStatus = {0: 'Upcoming', 1: 'Accepting Entries', 2: 'Closed for Entries', 3: 'Withdrawal Passed', 4: 'Pending Result', 5: 'Results Ready'};
+final tournamentStatus = {0: 'Upcoming       ', 
+                          1: 'Accepting Entry', 
+                          2: 'Entry Closed', 
+                          3: 'Past Withdrawal', 
+                          4: 'In Progress',
+                          5: 'Pending Result', 
+                          6: 'Results Ready'};
+                          
 final tournamentStatusIndexs = [0, 1, 2, 3, 4, 5, 6];
 
 @immutable

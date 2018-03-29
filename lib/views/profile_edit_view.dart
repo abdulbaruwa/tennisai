@@ -79,7 +79,6 @@ class ProfileEditView extends StatelessWidget {
         inputValue: 2,
         displayFunc: (int i)
         {
-          var statuses = {0: 'Upcoming', 1: 'Accepting Entries', 2: 'Closed for Entries', 3: 'Withdrawal Passed', 4: 'Pending Result', 5: 'Results Ready'};
           return tournamentStatus[i].toString();
         });
 
