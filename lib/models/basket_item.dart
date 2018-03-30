@@ -7,15 +7,12 @@ class BasketItemEntity {
   int grade;
   String status;
   String code;
+  String basketStatus;
   BasketItemEntity(
-      {this.tournamentName, this.cost, this.code, this.grade, this.status});
-
-  // EntrantEntity(
-  //     this.name, this.ranking, this.rating, this.ltaNumber, this.status);
-
+      {this.tournamentName, this.cost, this.code, this.grade, this.status, this.basketStatus});
   @override
   int get hashCode =>
-      tournamentName.hashCode ^ code.hashCode ^ grade.hashCode ^ status.hashCode;
+      tournamentName.hashCode ^ code.hashCode ^ grade.hashCode ^ status.hashCode ^ basketStatus.hashCode;
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -25,6 +22,7 @@ class BasketItemEntity {
           grade == other.grade &&
           status == other.status &&
           cost == other.cost &&
+          basketStatus == other.basketStatus && 
           code == other.code ;
 
   Map<String, Object> toJson() {
@@ -34,6 +32,7 @@ class BasketItemEntity {
       'grade': grade,
       'status': status,
       'code': code,
+      'basketStatus' : basketStatus,
     };
   }
 
@@ -43,6 +42,7 @@ class BasketItemEntity {
         cost: cost,
         grade: grade,
         status: status,
+        basketStatus: basketStatus,
         code: code);
   }
 
@@ -53,19 +53,21 @@ class BasketItemEntity {
       grade: json['grade'] as int,
       status: json['status'] as String,
       code: json['code'] as String,
+      basketStatus: json['basketStatus'] as String,
     );
   }
 }
 
 @immutable
 class BasketItem {
-   BasketItem({this.tournamentName, this.cost, this.code, this.grade, this.status});
+   BasketItem({this.tournamentName, this.cost, this.code, this.grade, this.status, this.basketStatus});
 
   final String tournamentName;
   final int grade;
   final String status;
   final double cost;
   final String code;
+  final String basketStatus;
 
 
  @override
@@ -74,6 +76,7 @@ class BasketItem {
       grade.hashCode ^
       status.hashCode ^
       cost.hashCode ^
+      basketStatus.hashCode ^
       code.hashCode;
 
   @override
@@ -85,11 +88,12 @@ class BasketItem {
           grade == other.grade &&
           cost == other.cost &&
           code == other.code &&
+          basketStatus == other.basketStatus &&
           status == other.status;
 
   @override
   String toString() {
-    return 'BasketItem{tournamentName: $tournamentName, grade: $grade, cost: $cost, code: $code, status: $status}';
+    return 'BasketItem{tournamentName: $tournamentName, grade: $grade, cost: $cost, code: $code, status: $status, basketStatus: $basketStatus}';
   }
   
 
@@ -99,6 +103,7 @@ class BasketItem {
         cost: cost,
         grade: grade,
         status: status,
+        basketStatus: basketStatus,
         code: code);
   }
 
@@ -108,6 +113,7 @@ class BasketItem {
         cost: cost,
         grade: grade,
         status: status,
+        basketStatus: basketStatus,
         code: code);
   }
 

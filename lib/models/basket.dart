@@ -47,7 +47,6 @@ class BasketEntity {
     return x;
   }
 
-  //TODO: Need Unit tests around these
   static BasketEntity fromJson(Map<String, Object> json) {
     return new BasketEntity(
         totalCost: json['totalCost'] as double,
@@ -63,6 +62,7 @@ class BasketEntity {
           code: json[i]['code'],
           grade: json[i]['grade'],
           status: json[i]['status'],
+          basketStatus: json[i]['basketStatus'],
           tournamentName: json[i]['tournamentName']);
       entrants.add(basketItemEntitys);
     }

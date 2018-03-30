@@ -106,7 +106,7 @@ class BasketChildView extends StatelessWidget {
                           ))
                     ])),
                 title: new Text(item.tournamentName),
-                subtitle: new Text(item.status),
+                subtitle: new Text(item.basketStatus ?? 'Unknown Status'),
                 trailing: new Text('£${item.cost.toString()}'),
               ),
             )));

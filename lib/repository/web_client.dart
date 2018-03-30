@@ -108,6 +108,15 @@ class WebClient {
     return tournaments;
   }
 
+  Future<BasketEntity> getBasket(String playerId) async {
+    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/basket/$playerId/getplayerbasket');
+
+    var jsonData = await makeHttpCall(uri);
+
+    var basket  = BasketEntity.fromJson(jsonData);
+    return basket;
+  }
+
   Future<dynamic> makeHttpCall(Uri uri) async {
     var httpClient = new HttpClient();
     var request = await httpClient.getUrl(uri);
@@ -190,8 +199,9 @@ class WebClient {
 
   // Basket
   Future<List<BasketEntity>> fetchBasket() async {
+    var playerId = '12';
     List<BasketEntity> tEntities = [];
-    tEntities.add(basket);
+    tEntities.add(await getBasket(playerId));
     print('before delayed ${tEntities.length}');
     return new Future.delayed(delay, () => tEntities);
   }
@@ -213,23 +223,23 @@ class WebClient {
   }
 }
 
-BasketEntity basket = new BasketEntity(
-    ltaNumber: 723492222,
-    totalCost: 45.0,
-    basketItems: <BasketItemEntity>[
-      new BasketItemEntity(
-          cost: 20.0,
-          code: '1',
-          tournamentName: 'Sutton Grade 4',
-          grade: 4,
-          status: 'Accepting'),
-      new BasketItemEntity(
-          cost: 25.0,
-          code: '21',
-          tournamentName: 'Wilshire Open Championship',
-          grade: 3,
-          status: 'Accepting')
-    ]);
+// BasketEntity basket = new BasketEntity(
+//     ltaNumber: 723492222,
+//     totalCost: 45.0,
+//     basketItems: <BasketItemEntity>[
+//       new BasketItemEntity(
+//           cost: 20.0,
+//           code: '1',
+//           tournamentName: 'Sutton Grade 4',
+//           grade: 4,
+//           status: 'Accepting'),
+//       new BasketItemEntity(
+//           cost: 25.0,
+//           code: '21',
+//           tournamentName: 'Wilshire Open Championship',
+//           grade: 3,
+//           status: 'Accepting')
+//     ]);
 
 SearchPreference searchPreference = new SearchPreference(
     ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);
