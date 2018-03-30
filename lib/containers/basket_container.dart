@@ -15,7 +15,7 @@ class BasketContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(converter: _ViewModel.fromStore, builder: (context, vm){
 
-      return new BasketView(basket: vm.basket, player: vm.player, onRemoveFromBasket: vm.onRemoveFromBasket);
+      return new BasketView(basket: vm.basket, player: vm.player, onRemoveFromBasket: vm.onRemoveFromBasket, onSendToLta: vm.onSendToLta,);
     });
   }
 }
@@ -25,18 +25,22 @@ class _ViewModel {
   final Basket basket;
   final Player player;
   final Function(String) onRemoveFromBasket;
+  final Function(Basket) onSendToLta;
 
   _ViewModel(
-      {@required this.loading, @required this.basket, @required this.player, this.onRemoveFromBasket});
+      {@required this.loading, @required this.basket, @required this.player, this.onRemoveFromBasket, this.onSendToLta});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return new _ViewModel(
         basket: basketSelector(store.state).value,
         player: playerSelector(store.state).value,
         loading: store.state.isLoading,
+        onSendToLta: (basket){
+          print('basket_container.viewModel: Sending basket content to lta basket');
+          store.dispatch(new SendBasketToLtaBasketAction(basket));
+        },
         onRemoveFromBasket: (code) {
-          print(
-              'basket_container.viewModel: Removing tournament with code $code from basket ');
+          print('basket_container.viewModel: Removing tournament with code $code from basket ');
                store.dispatch(new RemoveTournamentFromBasketAction(code));
         });
   }

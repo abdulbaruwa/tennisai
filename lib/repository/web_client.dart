@@ -127,6 +127,18 @@ class WebClient {
     return jsonData;
   }
 
+  Future<dynamic> makeHttpPostCall(Uri uri, String jsonRequestBody) async {
+    var httpClient = new HttpClient();
+    var request = await httpClient.postUrl(uri);
+    request.headers.contentType = new ContentType("application", "json", charset: "utf-8");
+    request.headers.add('zumo-api-version', '2.0.0');
+    request.write(jsonRequestBody);
+    var response = await request.close();
+    var responseBody = await response.transform(UTF8.decoder).join();
+    var jsonData = JSON.decode(responseBody);
+    return jsonData;
+  }
+
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postWatchedTournaments(
@@ -221,25 +233,15 @@ class WebClient {
   Future<bool> postBasket(BasketEntity basketEntity) async {
     return new Future.value(true);
   }
+
+  Future<bool> postToLtaBasket(BasketEntity basketEntity) async {
+    var jsonRequest =  JSON.encode(basketEntity.toJson());
+    var uri = new Uri.http('192.168.1.156:55511','/TennisAiServiceService/api/basket');
+    var response = await makeHttpPostCall(uri, jsonRequest);
+    return true;
+  }
 }
 
-// BasketEntity basket = new BasketEntity(
-//     ltaNumber: 723492222,
-//     totalCost: 45.0,
-//     basketItems: <BasketItemEntity>[
-//       new BasketItemEntity(
-//           cost: 20.0,
-//           code: '1',
-//           tournamentName: 'Sutton Grade 4',
-//           grade: 4,
-//           status: 'Accepting'),
-//       new BasketItemEntity(
-//           cost: 25.0,
-//           code: '21',
-//           tournamentName: 'Wilshire Open Championship',
-//           grade: 3,
-//           status: 'Accepting')
-//     ]);
 
 SearchPreference searchPreference = new SearchPreference(
     ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);

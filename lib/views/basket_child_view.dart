@@ -9,21 +9,16 @@ final ThemeData _kTheme = new ThemeData(
 );
 
 class BasketChildView extends StatelessWidget {
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
   final Basket basket;
   final Player player;
   final Function(String) onRemoveFromBasket;
   final List<Tournament> leaveBehindItems;
+  final Function(Basket) onSendToLta;
 
-  BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket})
-      : super(key: key);
+  BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket, this.onSendToLta}) : super(key: key);
 
 
   Widget buildListTile(BuildContext context, Tournament item) {
-    print(item.name);
-    print(item.grade);
-    print(item.status);
     return new MergeSemantics(
       child: new ListTile(
         dense: true,
@@ -181,6 +176,7 @@ class BasketChildView extends StatelessWidget {
                     child: new FlatButton(
                         onPressed: () {
                           print('Send to LTA button clicked');
+                          onSendToLta(basket);
                         },
                         child: new Text('SEND TO LTA BASKET')))
               ])),

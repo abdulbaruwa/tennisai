@@ -178,4 +178,11 @@ class RemoveTournamentFromBasketAction{
   RemoveTournamentFromBasketAction(this.code);
 }
 
+class SendBasketToLtaBasketAction{
+  final Basket basket;
+  SendBasketToLtaBasketAction(this.basket);
+}
+
+class BasketSentToLtaAction{}
+
 // class ResetCacheAction{}

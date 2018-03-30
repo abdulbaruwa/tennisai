@@ -34,6 +34,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
   final loadBasket = _createLoadBasket(repository);
   final saveBasket = _createSaveBasket(repository);
+  final sendToLtaBasket = _createSendBasketToLta(repository);
 
   final saveRankingInfos = _createSaveRankingInfos(repository);
   final saveMatchResultInfos = _createSaveMatchResultInfos(repository);
@@ -81,13 +82,11 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new MiddlewareBinding<AppState, LoadBasketAction>(loadBasket),
     new MiddlewareBinding<AppState, AddBasketAction>(saveBasket),
     new MiddlewareBinding<AppState, AddTournamentToBasketAction>(saveBasket),
-    new MiddlewareBinding<AppState, RemoveTournamentFromBasketAction>(
-        saveBasket),
+    new MiddlewareBinding<AppState, RemoveTournamentFromBasketAction>(saveBasket),
+    new MiddlewareBinding<AppState, SendBasketToLtaBasketAction>(sendToLtaBasket),
 
     // Edit profile
-    new MiddlewareBinding<AppState,
-            UpdatePlayerProfileAndSearchPreferenceAction>(
-        updateProfileAndSearchPref),
+    new MiddlewareBinding<AppState, UpdatePlayerProfileAndSearchPreferenceAction>(updateProfileAndSearchPref),
 
     // Main View, Match result and Ranking Info.
     new MiddlewareBinding<AppState, RankingInfoLoadedAction>(saveRankingInfos),
@@ -317,6 +316,16 @@ Middleware<AppState> _createSaveBasket(DashboardRepository repository) {
     next(action);
     var toSave = basketSelector(store.state).value.toEntity();
     repository.saveBasket(toSave);
+  };
+}
+
+Middleware<AppState> _createSendBasketToLta(DashboardRepository repository){
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    print('About to send Basket to lta');
+    next(action);
+    var toSave = basketSelector(store.state).value.toEntity();
+    await repository.saveToLtaBasket(toSave);
+    store.dispatch(new BasketSentToLtaAction());
   };
 }
 

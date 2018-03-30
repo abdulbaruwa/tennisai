@@ -5,10 +5,10 @@ import '../actions/actions.dart';
 final basketReducer = combineTypedReducers<List<Basket>>([
   new ReducerBinding<List<Basket>, BasketLoadedAction>(_setLoadedBasket),
   new ReducerBinding<List<Basket>, BasketNotLoadedAction>(_setNoBasket),
-  new ReducerBinding<List<Basket>, AddTournamentToBasketAction>(
-      _addTournamentToBasket),
-  new ReducerBinding<List<Basket>, RemoveTournamentFromBasketAction>(
-      _removeTournamentFromBasket),
+  new ReducerBinding<List<Basket>, AddTournamentToBasketAction>(_addTournamentToBasket),
+  new ReducerBinding<List<Basket>, RemoveTournamentFromBasketAction>(_removeTournamentFromBasket),
+  new ReducerBinding<List<Basket>, BasketSentToLtaAction>(_clearBasket),
+
 ]);
 
 List<Basket> _setLoadedBasket(List<Basket> player, BasketLoadedAction action) {
@@ -36,6 +36,12 @@ List<Basket> _addTournamentToBasket(
   print(
       'basket_reducer._addTournamentToBasket: Basket contains basketItem - ${basketItem.toString()}. Request ignored. ');
   return baskets;
+}
+
+List<Basket> _clearBasket(
+    List<Basket> basket, BasketSentToLtaAction action) {
+  var newBasket = new Basket();
+  return new List<Basket>.from([])..add(newBasket);
 }
 
 List<Basket> _removeTournamentFromBasket(

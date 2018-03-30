@@ -182,6 +182,11 @@ class DashboardRepository {
     ]);
   }
 
+  Future saveToLtaBasket(BasketEntity basketEntity) {
+    return Future.wait([
+      webClient.postToLtaBasket(basketEntity),
+    ]);
+  }
   // Main
   /// Loads Ranking Info from File storage. If they don't exist or encounter an
   /// error, it attempts to load the rankingInfo from a Web Client
