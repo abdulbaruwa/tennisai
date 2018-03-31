@@ -134,9 +134,12 @@ class WebClient {
     request.headers.add('zumo-api-version', '2.0.0');
     request.write(jsonRequestBody);
     var response = await request.close();
-    var responseBody = await response.transform(UTF8.decoder).join();
-    var jsonData = JSON.decode(responseBody);
-    return jsonData;
+    if(response.statusCode == 200)
+    {
+      return true;
+    }
+
+    return false;
   }
 
   /// Mock that returns true or false for success or failure. In this case,
@@ -231,14 +234,15 @@ class WebClient {
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postBasket(BasketEntity basketEntity) async {
+    // Todo add and update basket.
     return new Future.value(true);
   }
 
   Future<bool> postToLtaBasket(BasketEntity basketEntity) async {
     var jsonRequest =  JSON.encode(basketEntity.toJson());
-    var uri = new Uri.http('192.168.1.156:55511','/TennisAiServiceService/api/basket');
+    var uri = new Uri.http('192.168.1.156:55511','/TennisAiServiceService/api/baskettolta');
     var response = await makeHttpPostCall(uri, jsonRequest);
-    return true;
+    return response;
   }
 }
 

@@ -35,6 +35,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final loadBasket = _createLoadBasket(repository);
   final saveBasket = _createSaveBasket(repository);
   final sendToLtaBasket = _createSendBasketToLta(repository);
+  final clearBasket = _createClearBasketAfterSendToLta(repository);
 
   final saveRankingInfos = _createSaveRankingInfos(repository);
   final saveMatchResultInfos = _createSaveMatchResultInfos(repository);
@@ -84,6 +85,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new MiddlewareBinding<AppState, AddTournamentToBasketAction>(saveBasket),
     new MiddlewareBinding<AppState, RemoveTournamentFromBasketAction>(saveBasket),
     new MiddlewareBinding<AppState, SendBasketToLtaBasketAction>(sendToLtaBasket),
+    new MiddlewareBinding<AppState, BasketSentToLtaAction>(clearBasket),
 
     // Edit profile
     new MiddlewareBinding<AppState, UpdatePlayerProfileAndSearchPreferenceAction>(updateProfileAndSearchPref),
@@ -94,8 +96,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   ]);
 }
 
-Middleware<AppState> _createSaveWatchedTournaments(
-    DashboardRepository repository) {
+Middleware<AppState> _createSaveWatchedTournaments(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     print(
         'Middleware._createSaveWatchedTournaments: About to save watched Tournaments');
@@ -106,6 +107,18 @@ Middleware<AppState> _createSaveWatchedTournaments(
     print(
         'Middleware._createSaveWatchedTournaments: Saved ${toSave.length} Watched tournament');
     repository.saveWatchedTournaments(toSave);
+  };
+}
+
+Middleware<AppState> _createClearBasketAfterSendToLta(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print(
+        'Middleware._createClearBasketAfterSendToLta: About to clear basket repository');
+    next(action);
+    var toSave = basketSelector(store.state)
+        .map((basket) => basket.toEntity())
+        .toList();
+    repository.saveBasket(toSave.first);
   };
 }
 
@@ -122,6 +135,7 @@ Middleware<AppState> _createLoadUpcomingTournaments(DashboardRepository repo) {
   };
   return stateResult;
 }
+
 
 Middleware<AppState> _createSaveUpcomingTournaments(
     DashboardRepository repository) {

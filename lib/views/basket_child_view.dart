@@ -129,8 +129,7 @@ class BasketChildView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Iterable<Widget> listTiles = basket.basketItems
-        .map((BasketItem item) => buildDismisableItem(context, item));
+    Iterable<Widget> listTiles = basket.basketItems == null ? [] : basket.basketItems.map((BasketItem item) => buildDismisableItem(context, item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
     return new Column(children: <Widget>[
       new Container(
