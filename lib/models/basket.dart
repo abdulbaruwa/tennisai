@@ -62,6 +62,7 @@ class BasketEntity {
           code: json[i]['code'],
           grade: json[i]['grade'],
           status: json[i]['status'],
+          playerId: json[i]['playerId'],
           basketStatus: json[i]['basketStatus'],
           tournamentName: json[i]['tournamentName']);
       entrants.add(basketItemEntitys);

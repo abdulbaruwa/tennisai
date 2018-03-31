@@ -170,7 +170,8 @@ class AddBasketAction {
 
 class AddTournamentToBasketAction{
   final Tournament tournament;
-  AddTournamentToBasketAction(this.tournament);
+  final String playerId;
+  AddTournamentToBasketAction(this.tournament, this.playerId);
 }
 
 class RemoveTournamentFromBasketAction{

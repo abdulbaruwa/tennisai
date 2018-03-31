@@ -8,7 +8,6 @@ final basketReducer = combineTypedReducers<List<Basket>>([
   new ReducerBinding<List<Basket>, AddTournamentToBasketAction>(_addTournamentToBasket),
   new ReducerBinding<List<Basket>, RemoveTournamentFromBasketAction>(_removeTournamentFromBasket),
   new ReducerBinding<List<Basket>, BasketSentToLtaAction>(_clearBasket),
-
 ]);
 
 List<Basket> _setLoadedBasket(List<Basket> player, BasketLoadedAction action) {
@@ -21,7 +20,7 @@ List<Basket> _setNoBasket(List<Basket> player, BasketNotLoadedAction action) {
 
 List<Basket> _addTournamentToBasket(
     List<Basket> baskets, AddTournamentToBasketAction action) {
-  var basketItem = BasketItem.fromTournament(action.tournament);
+  var basketItem = BasketItem.fromTournament(action.tournament, action.playerId);
   var basket = baskets.first;
   if (basket.basketItems.contains(basketItem) == false) {
     var newBasketItems = new List<BasketItem>.from(basket.basketItems)
