@@ -37,14 +37,12 @@ List<Basket> _addTournamentToBasket(
   return baskets;
 }
 
-List<Basket> _clearBasket(
-    List<Basket> basket, BasketSentToLtaAction action) {
-  var newBasket = new Basket();
+List<Basket> _clearBasket(List<Basket> basket, BasketSentToLtaAction action) {
+  var newBasket = basket.first.copyWith(totalCost: 0.0, basketItems: []);
   return new List<Basket>.from([])..add(newBasket);
 }
 
-List<Basket> _removeTournamentFromBasket(
-    List<Basket> basket, RemoveTournamentFromBasketAction action) {
+List<Basket> _removeTournamentFromBasket(List<Basket> basket, RemoveTournamentFromBasketAction action) {
   var items = basket.first.basketItems
       .where((basketItem) => basketItem.code != action.code)
       .toList();

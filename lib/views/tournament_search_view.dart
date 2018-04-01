@@ -134,14 +134,12 @@ class SearchTabState extends State<TournamentSearchView> {
     _bottomSheet.closed.whenComplete(() {
       if (mounted) {
         setState(() {
-          print('Selected Age Group is ${_ageGroupDropDown.outputValue}');
-          print('Selected Distance is ${_distanceInMilesDropDown.outputValue}');
-          print('Selected Grade is ${_gradeDropDown.outputValue}');
           var searchPref = new SearchPreference(
               ageGroup: _ageGroupDropDown.outputValue ?? widget.searchPreference?.ageGroup,
               grade: _gradeDropDown.outputValue ?? widget.searchPreference?.grade,
               distance: _distanceInMilesDropDown.outputValue ?? widget.searchPreference?.distance,
-              gender: widget.searchPreference.gender);
+              gender: widget.searchPreference.gender,
+              statusIndex: _statusDropDown.outputValue ?? widget.searchPreference?.statusIndex);
           widget.onSearchPreferenceChanged(searchPref);
           _bottomSheet = null;
         });

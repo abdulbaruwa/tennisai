@@ -55,7 +55,12 @@ class SearchPreference {
 
   SearchPreference copyWth(
       {int ltaNumber, int grade, int distance, int ageGroup, String gender}) {
-    return new SearchPreference(ltaNumber: ltaNumber ?? this.ltaNumber, statusIndex: this.statusIndex, ageGroup: ageGroup ?? this.ageGroup, distance: distance ?? this.distance, gender: gender ?? this.gender) ;
+    return new SearchPreference(ltaNumber: ltaNumber ?? this.ltaNumber, 
+    statusIndex: this.statusIndex, 
+    ageGroup: ageGroup ?? this.ageGroup, 
+    distance: distance ?? this.distance, 
+    grade: distance ?? this.grade, 
+    gender: gender ?? this.gender) ;
   }
 
   SearchPreferenceEntity toEntity() {

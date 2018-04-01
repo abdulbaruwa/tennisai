@@ -261,11 +261,7 @@ Middleware<AppState> _createLoadSearchTournamentsWithPreference(DashboardReposit
     var defaultGenderSetting = activeSearchPreferenceSelector(store.state).first?.gender;
     // Use the default Gender settings
     SearchPreference activeSearch = action.searchPreference;
-    var searchPreference = new SearchPreference(
-        gender: defaultGenderSetting, 
-        ageGroup: activeSearch.ageGroup,
-        grade: activeSearch.grade,
-        distance: activeSearch.distance);
+    var searchPreference = activeSearch.copyWth(gender: defaultGenderSetting);
 
     repository
         .loadTournamentsWithSearchPreference(searchPreference)

@@ -166,7 +166,6 @@ class WebClient {
     List<PlayerEntity> tEntities = [];
 
     tEntities.add(player.toEntity());
-    print('before delayed ${tEntities.length}');
     return new Future.delayed(delay, () => tEntities);
   }
 
@@ -193,12 +192,9 @@ class WebClient {
     return getTournamentsByDefaultSearchPreferences("12");
   }
 
-  Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(
-      SearchPreference searchPreference) async {
+  Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(SearchPreference searchPreference) async {
     List<TournamentEntity> tournaments = [];
-    var uri = new Uri.http('192.168.1.156:55511',
-        '/TennisAiServiceService/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/${searchPreference.gender}/${searchPreference.distance}/searchall');
-
+    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/${searchPreference.gender}/${searchPreference.distance}/${searchPreference.statusIndex}/searchall');
     var jsonData = await makeHttpCall(uri);
 
     for (var json in jsonData) {
@@ -231,11 +227,11 @@ class WebClient {
     return getMatchResult("12");
   }
 
-  /// Mock that returns true or false for success or failure. In this case,
-  /// it will "Always Succeed"
   Future<bool> postBasket(BasketEntity basketEntity) async {
-    // Todo add and update basket.
-    return new Future.value(true);
+    var jsonRequest =  JSON.encode(basketEntity.toJson());
+    var uri = new Uri.http('192.168.1.156:55511','/TennisAiServiceService/api/basket');
+    var response = await makeHttpPostCall(uri, jsonRequest);
+    return response;
   }
 
   Future<bool> postToLtaBasket(BasketEntity basketEntity) async {
