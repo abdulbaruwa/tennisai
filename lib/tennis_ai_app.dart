@@ -51,7 +51,8 @@ class TennisAiApp extends StatelessWidget {
 _loadState(Store store) {
   store.dispatch(new LoadWatchedTournamentsAction());
   store.dispatch(new LoadUpcomingTournamentsAction());
-  store.dispatch(new LoadPlayerAction());
+  // TODO playerId will need to be passed in via Auth and cache.
+  store.dispatch(new LoadPlayerAction("12"));
   store.dispatch(new LoadBasketAction());
   store.dispatch(new LoadSearchPreferenceAction());
   store.dispatch(new LoadSearchTournamentsAction());

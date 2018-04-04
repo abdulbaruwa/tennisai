@@ -216,7 +216,7 @@ Middleware<AppState> _createSavePlayerProfile(DashboardRepository repository) {
 
 Middleware<AppState> _createLoadPlayerProfile(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.loadPlayerProfile().then(
+    repository.loadPlayerProfile(action.playerId).then(
       (player) {
         var entities = player.map(Player.fromEntity).toList();
         store.dispatch(

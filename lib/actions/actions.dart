@@ -58,7 +58,10 @@ class SearchPreferenceLoadedAction {
   SearchPreferenceLoadedAction(this.searchPreference);
 }
 
-class LoadPlayerAction {}
+class LoadPlayerAction {
+  final String playerId;
+  LoadPlayerAction(this.playerId);
+}
 
 class AddPlayerAction {
   final Player player;

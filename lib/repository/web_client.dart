@@ -117,6 +117,18 @@ class WebClient {
     return basket;
   }
 
+  Future<List<PlayerEntity>> getPlayers(String playerId) async {
+    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/players/$playerId/getplayerprofile');
+    List<PlayerEntity> players = [];
+    var jsonData = await makeHttpCall(uri);
+
+    for (var json in jsonData) {
+      players.add(PlayerEntity.fromJson(json));
+    }
+    return players;
+
+  }
+
   Future<dynamic> makeHttpCall(Uri uri) async {
     var httpClient = new HttpClient();
     var request = await httpClient.getUrl(uri);
@@ -162,11 +174,11 @@ class WebClient {
   }
 
   // Player Profile
-  Future<List<PlayerEntity>> fetchPlayerProfile() async {
+  Future<List<PlayerEntity>> fetchPlayerProfile(String playerId) async {
     List<PlayerEntity> tEntities = [];
+    tEntities.addAll(await getPlayers(playerId));
 
-    tEntities.add(player.toEntity());
-    return new Future.delayed(delay, () => tEntities);
+    return tEntities;
   }
 
   /// Mock that returns true or false for success or failure. In this case,
@@ -208,15 +220,6 @@ class WebClient {
     return getSearchPreference("12");
   }
 
-  // Basket
-  Future<List<BasketEntity>> fetchBasket() async {
-    var playerId = '12';
-    List<BasketEntity> tEntities = [];
-    tEntities.add(await getBasket(playerId));
-    print('before delayed ${tEntities.length}');
-    return new Future.delayed(delay, () => tEntities);
-  }
-
   // RankingInfos
   Future<List<RankingInfoEntity>> fetchRankingInfos() async {
     return getRankings("12");
@@ -225,6 +228,15 @@ class WebClient {
   // MatchResulInfos
   Future<List<MatchResultInfoEntity>> fetchMatchResultInfos() async {
     return getMatchResult("12");
+  }
+
+  // Basket
+  Future<List<BasketEntity>> fetchBasket() async {
+    var playerId = '12';
+    List<BasketEntity> tEntities = [];
+    tEntities.add(await getBasket(playerId));
+    print('before delayed ${tEntities.length}');
+    return new Future.delayed(delay, () => tEntities);
   }
 
   Future<bool> postBasket(BasketEntity basketEntity) async {
@@ -246,13 +258,13 @@ class WebClient {
 SearchPreference searchPreference = new SearchPreference(
     ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);
 
-Player player = new Player(
-    firstName: 'wilson',
-    lastName: 'babolat',
-    email: 'Wilson@babalot.com',
-    ltaNumber: 723492222,
-    ltaRanking: 33,
-    ltaRating: '2.1',
-    address: '69 West Field Sheds',
-    postCode: 'KT31 4KU',
-    county: 'Surrey');
+// Player player = new Player(
+//     firstName: 'wilson',
+//     lastName: 'babolat',
+//     email: 'Wilson@babalot.com',
+//     ltaNumber: 723492222,
+//     ltaRanking: 33,
+//     ltaRating: '2.1',
+//     address: '69 West Field Sheds',
+//     postCode: 'KT31 4KU',
+//     county: 'Surrey');

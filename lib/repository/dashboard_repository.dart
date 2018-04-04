@@ -87,14 +87,14 @@ class DashboardRepository {
   // Player Profile
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
-  Future<List<PlayerEntity>> loadPlayerProfile() async {
+  Future<List<PlayerEntity>> loadPlayerProfile(String playerId) async {
     try {
       var res = await fileStorage.loadPlayerProfile();
       print('success ${res.length}');
       return res;
     } catch (e) {
       print('Fetcher in error');
-      var result = webClient.fetchPlayerProfile();
+      var result = webClient.fetchPlayerProfile(playerId);
       print('Fetched');
       return result;
     }

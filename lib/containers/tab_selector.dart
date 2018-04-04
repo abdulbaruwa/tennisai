@@ -8,7 +8,6 @@ import '../actions/actions.dart';
 
 class TabSelector extends StatelessWidget {
   TabSelector({Key key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
@@ -20,10 +19,10 @@ class TabSelector extends StatelessWidget {
           ? new CupertinoTabBar(
               activeColor: Colors.blueGrey,
               onTap: vm.onTabSelected,
-              items: TabItems.map((TabItem) {
+              items: TabItems.map((tabItem) {
                 return new BottomNavigationBarItem(
-                  title: new Text(TabItem.title),
-                  icon: new Icon(TabItem.icon),
+                  title: new Text(tabItem.title),
+                  icon: new Icon(tabItem.icon),
                 );
               }).toList(),
             )
@@ -31,10 +30,10 @@ class TabSelector extends StatelessWidget {
               currentIndex: AppTab.values.indexOf(vm.activeTab),
               onTap: vm.onTabSelected,
               type: BottomNavigationBarType.shifting,
-              items: TabItems.map((TabItem) {
+              items: TabItems.map((tabItem) {
                 return new BottomNavigationBarItem(
-                    title: new Text(TabItem.title, style: new TextStyle(color: Colors.black),),
-                    icon: new Icon(TabItem.icon, color: Colors.black, key: TabItem.key,));
+                    title: new Text(tabItem.title, style: new TextStyle(color: Colors.black),),
+                    icon: new Icon(tabItem.icon, color: Colors.black, key: tabItem.key,));
               }).toList(),
             ); 
       },
