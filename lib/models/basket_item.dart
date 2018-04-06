@@ -133,6 +133,7 @@ class BasketItem {
         grade: tournament.grade,
         status: tournament.status,
         playerId: playerId,
+        basketStatus: 'Pending',
         code: tournament.code);
   }
 
