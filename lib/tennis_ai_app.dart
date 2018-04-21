@@ -6,7 +6,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'models/models.dart';
 import 'reducers/app_state_reducer.dart';
-import 'actions/actions.dart';
 import 'routes.dart';
 import 'keys/keys.dart';
 import 'containers/containers.dart';
@@ -14,6 +13,7 @@ import './middleware/store_watched_tournaments_middleware.dart';
 
 import 'containers/app_loading.dart';
 import 'views/loading_indicator.dart';
+import 'actions/actions.dart';
 
 
 int counterReducer(int state, action) {
@@ -28,7 +28,6 @@ class TennisAiApp extends StatelessWidget {
   final store = new Store<AppState>(appReducer,
       initialState: new AppState.loading(),
       middleware: createStoreWatchedTournamentsMiddleware());
-  TennisAiApp();
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +51,7 @@ _loadState(Store store) {
   store.dispatch(new LoadWatchedTournamentsAction());
   store.dispatch(new LoadUpcomingTournamentsAction());
   // TODO playerId will need to be passed in via Auth and cache.
-  store.dispatch(new LoadPlayerAction("12"));
+   store.dispatch(new LoadPlayerAction("12"));
   store.dispatch(new LoadBasketAction());
   store.dispatch(new LoadSearchPreferenceAction());
   store.dispatch(new LoadSearchTournamentsAction());

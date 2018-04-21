@@ -79,7 +79,7 @@ main() {
       final store = new Store<AppState>(appReducer,
           initialState: new AppState(basket: [basket]));
 
-      store.dispatch(new AddTournamentToBasketAction(tournament));
+      store.dispatch(new AddTournamentToBasketAction(tournament,"12"));
       var storeBasket = basketSelector(store.state).value;
 
       expect(storeBasket.basketItems.length, 1);
@@ -97,7 +97,7 @@ main() {
       // Create initial basket state with empty items
       final store = new Store<AppState>(appReducer,
           initialState: new AppState(basket: [basket]));
-      store.dispatch(new AddTournamentToBasketAction(tournament));
+      store.dispatch(new AddTournamentToBasketAction(tournament,"12"));
 
       expect(basketSelector(store.state).value.totalCost, 22.9);
 
