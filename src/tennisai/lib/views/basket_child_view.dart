@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart' show lowerBound;
 import '../models/models.dart';
+import '../controls/usercontrols.dart';
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
@@ -16,7 +17,6 @@ class BasketChildView extends StatelessWidget {
   final Function(Basket) onSendToLta;
 
   BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket, this.onSendToLta}) : super(key: key);
-
 
   Widget buildListTile(BuildContext context, Tournament item) {
     return new MergeSemantics(
@@ -138,10 +138,7 @@ class BasketChildView extends StatelessWidget {
           child: new SizedBox(
             height: 76.0,
             child: new Row(children: <Widget>[
-              new CircleAvatar(
-                radius: 36.0,
-                backgroundImage: const AssetImage('images/ademola.jpg'),
-              ),
+              new ProfileAvatar(playerId: player.playerId),
               new Expanded(
                 child: new Padding(
                     padding: const EdgeInsets.only(left: 5.0, top: 5.0),

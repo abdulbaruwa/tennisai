@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../paths/paths.dart';
 
 class LabelIntDropDownItem extends StatefulWidget {
   LabelIntDropDownItem(
@@ -78,5 +79,18 @@ class TopBottomLabel extends StatelessWidget {
         new Text(label, style: Theme.of(context).textTheme.caption)
       ],
     ));
+  }
+}
+
+class ProfileAvatar extends StatelessWidget{
+  final String playerId;
+
+  ProfileAvatar({this.playerId});
+  Widget build(BuildContext context){
+      var networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId), headers: TennisAiPaths.zumoHeader);
+      return new CircleAvatar(
+            radius: 36.0,
+            backgroundImage: networkImage)
+          ;
   }
 }

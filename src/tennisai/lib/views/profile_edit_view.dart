@@ -120,11 +120,7 @@ class ProfileEditView extends StatelessWidget {
                       color: Colors.white,
                       child: new Row(
                         children: <Widget>[
-                          new CircleAvatar(
-                            radius: 36.0,
-                            backgroundImage:
-                                const AssetImage('images/ademola.jpg'),
-                          ),
+                          new ProfileAvatar(playerId: player.playerId),
                           const SizedBox(width: 8.0),
                           new Expanded(
                             child: new Padding(

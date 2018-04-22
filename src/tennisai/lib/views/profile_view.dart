@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../keys/keys.dart';
 import '../containers/profile_edit_container.dart';
+import '../controls/usercontrols.dart';
 
 class ProfileSection extends StatelessWidget {
   final Player player;
@@ -31,14 +32,12 @@ class _UserProfile extends StatelessWidget {
   const _UserProfile({Key key, this.player}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final Map<String, String> headers = {'zumo-api-version': '2.0.0'};
     final ThemeData theme = Theme.of(context);
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new CircleAvatar(
-            radius: 36.0,
-            backgroundImage: const AssetImage('images/ademola.jpg'),
-          ),
+          new ProfileAvatar(playerId: player.playerId.toString()),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(

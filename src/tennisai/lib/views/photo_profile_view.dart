@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../keys/keys.dart';
 import '../models/models.dart';
+import '../controls/usercontrols.dart';
 
 class PhotoProfileView extends StatelessWidget {
   final Player player;
@@ -10,10 +11,7 @@ class PhotoProfileView extends StatelessWidget {
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new CircleAvatar(
-            radius: 36.0,
-            backgroundImage: const AssetImage('images/ademola.jpg'),
-          ),
+          new ProfileAvatar(playerId: player.playerId),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(
