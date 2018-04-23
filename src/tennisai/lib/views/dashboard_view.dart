@@ -109,8 +109,7 @@ class DashboardView extends StatelessWidget {
     final ThemeData theme = Theme.of(context);
     return new GestureDetector(
         onTap: () => _onTap(context, tournament, page.tabSource),
-        key: TennisAiKeys.tournamentItem(
-            tournament.code, describeEnum(page.tabSource)),
+        key: TennisAiKeys.tournamentItem(tournament.code, describeEnum(page.tabSource)),
         child: new Dismissible(
           key: new ObjectKey(tournament),
           direction: DismissDirection.startToEnd,

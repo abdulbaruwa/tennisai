@@ -44,6 +44,11 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<key>NSCameraUsageDescription</key>
+	<string>Used to capture image for profile</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Used select image to use for profile image</string>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
 </plist>

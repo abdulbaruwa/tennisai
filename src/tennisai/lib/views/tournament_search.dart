@@ -65,10 +65,8 @@ class TournamentCard extends StatelessWidget {
 
   final Tournament tournament;
   final VoidCallback onTap;
-//  String tournamentDate;
   @override
   Widget build(BuildContext context) {
-    //return new GestureDetector(
     var tournamentDate =
         "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
     return new GestureDetector(

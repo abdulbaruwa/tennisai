@@ -7,7 +7,7 @@ dependencies:
   flutter_redux: ^0.5.0
   flutter:
     sdk: flutter
-   
+  image_picker: 0.4.1
   intl: ^0.15.2
   path_provider: ">=0.2.1+1 <0.3.0"
   uuid: 'any'

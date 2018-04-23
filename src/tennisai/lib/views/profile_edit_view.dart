@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 import '../models/models.dart';
 import '../keys/keys.dart';
 import '../models/enums.dart' as _enums;
 import '../controls/usercontrols.dart';
+import 'dart:io';
+import 'dart:async';
 
 typedef OnPlayerProfileSaveCallback = Function(
     Player player, SearchPreference searchPreference);
@@ -20,6 +24,11 @@ class ProfileEditView extends StatelessWidget {
       this.player,
       this.searchPreference})
       : super(key: key ?? TennisAiKeys.editProfile);
+
+  Future getImage() async {
+    print('Getting image from device');
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  }
 
   final bool isEditing;
   final Player player;
@@ -47,6 +56,19 @@ class ProfileEditView extends StatelessWidget {
   int selectedAgeGroup = 18;
 
   final ValueChanged<int> onChanged;
+
+  void showDemoDialog<T>({BuildContext context, Widget child}) {
+    showDialog<T>(
+      context: context,
+      builder: (BuildContext context) => child,
+    ).then<void>((T value) {
+      if (value != null) {
+        // _scaffoldKey.currentState.showSnackBar(new SnackBar(
+        //   content: new Text('You selected: $value')
+        // ));
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,12 +99,10 @@ class ProfileEditView extends StatelessWidget {
         displayIntItems: tournamentStatusIndexs,
         label: 'Status',
         inputValue: 2,
-        displayFunc: (int i)
-        {
+        displayFunc: (int i) {
           return tournamentStatus[i].toString();
         });
 
-    //selectedAgeGroup = tournamentGroup.output;
     return new Theme(
         data: new ThemeData(
           brightness: Brightness.light,
@@ -120,7 +140,33 @@ class ProfileEditView extends StatelessWidget {
                       color: Colors.white,
                       child: new Row(
                         children: <Widget>[
-                          new ProfileAvatar(playerId: player.playerId),
+                          new EditableProfileAvatar(
+                            playerId: player.playerId,
+                            source: 'userProfile',
+                            onTap: () {
+                              showDemoDialog<String>(
+                                  context: context,
+                                  child: new SimpleDialog(
+                                      title:
+                                          const Text('Select Profile Picture'),
+                                      children: <Widget>[
+                                        new SimpleDialogOption(
+                                          onPressed: () {
+                                            Navigator.pop(
+                                                context, 'Not implemented');
+                                          },
+                                          child: const Text('Take a picture'),
+                                        ),
+                                        new SimpleDialogOption(
+                                          onPressed: () {
+                                            getImage();
+                                          },
+                                          child:
+                                              const Text('Select from Gallery'),
+                                        )
+                                      ]));
+                            },
+                          ),
                           const SizedBox(width: 8.0),
                           new Expanded(
                             child: new Padding(
