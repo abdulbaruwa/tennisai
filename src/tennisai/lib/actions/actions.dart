@@ -1,3 +1,4 @@
+import 'dart:io';
 import '../models/models.dart';
 // Main
 class LoadRankingInfosAction{}
@@ -66,6 +67,11 @@ class LoadPlayerAction {
 class AddPlayerAction {
   final Player player;
   AddPlayerAction(this.player);
+}
+
+class ChangedAvatarAction{
+  final File avatar;
+  ChangedAvatarAction(this.avatar);
 }
 
 class UpdateTabAction {

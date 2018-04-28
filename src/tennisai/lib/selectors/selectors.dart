@@ -1,3 +1,4 @@
+import 'dart:io';
 import '../utils/optional.dart';
 import '../models/models.dart';
 
@@ -8,7 +9,6 @@ Optional<SearchPreference> activeSearchPreferenceSelector(AppState state) {
     return new Optional.absent();
   }
 }
-
 
 List<RankingInfo> rankingInfosSelector(AppState state) => state.rankingInfos;
 List<MatchResultInfo> matchResultInfosSelector(AppState state) => state.matchResultInfos;
@@ -54,9 +54,18 @@ List<Entrant> tournamentEntrantsSelector(
   return entrants;
 }
 
+
 Optional<Player> playerSelector(AppState state) {
   try {
     return new Optional.of(state.player.first);
+  } catch (e) {
+    return new Optional.absent();
+  }
+}
+
+Optional<File> avatarSelector(AppState state) {
+  try {
+    return new Optional.of(state.avatar.first);
   } catch (e) {
     return new Optional.absent();
   }

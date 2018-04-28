@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../paths/paths.dart';
 import '../keys/keys.dart';
+import 'dart:io';
 
 class LabelIntDropDownItem extends StatefulWidget {
   LabelIntDropDownItem(
@@ -100,17 +101,18 @@ class EditableProfileAvatar extends StatelessWidget{
   final String playerId;
   final String source;
   final VoidCallback onTap;
-
-  EditableProfileAvatar({this.playerId, this.source, this.onTap});
+  final File defaultImage;
+  EditableProfileAvatar({this.playerId, this.source, this.onTap, this.defaultImage});
   Widget build(BuildContext context){
       var networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId), headers: TennisAiPaths.zumoHeader);
+      var defaultAvatar = defaultImage == null ? null :  new FileImage(defaultImage);
       return GestureDetector
       (
         onTap: onTap,
         key: TennisAiKeys.profileAvatar(source),
         child:new CircleAvatar(
             radius: 36.0,
-            backgroundImage: networkImage)
+            backgroundImage: defaultAvatar ?? networkImage)
       );
   }
 }

@@ -40,6 +40,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final saveRankingInfos = _createSaveRankingInfos(repository);
   final saveMatchResultInfos = _createSaveMatchResultInfos(repository);
   final updateProfileAndSearchPref = _updatePlayerAndSearchProfile(repository);
+  final changedAvatar = _changedAvatar(repository);
 
   return [
     new TypedMiddleware<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
@@ -83,8 +84,17 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
     // Main View, Match result and Ranking Info.
     new TypedMiddleware<AppState, RankingInfoLoadedAction>(saveRankingInfos),
-    new TypedMiddleware<AppState, MatchResultInfo>(saveMatchResultInfos)
+    new TypedMiddleware<AppState, MatchResultInfo>(saveMatchResultInfos),
+    new TypedMiddleware<AppState, ChangedAvatarAction>(changedAvatar)
   ];
+}
+Middleware<AppState> _changedAvatar(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    print(
+        'Middleware._changedAvatar: About to temporary store avatar image');
+    next(action);
+    
+  };
 }
 
 Middleware<AppState> _createSaveWatchedTournaments(DashboardRepository repository) {

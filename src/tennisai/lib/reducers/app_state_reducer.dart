@@ -5,6 +5,7 @@ AppState appReducer(AppState state, action) {
   return new AppState(
       isLoading: loadingReducer(state.isLoading, action),
       player: playerReducer(state.player, action),
+      avatar: avatarUpdateReducer(state.avatar, action),
       basket: basketReducer(state.basket, action),
       searchPreference: searchPreferenceReducer(state.searchPreference, action),
       activeSearchPreference: searchPreferenceReducer(state.activeSearchPreference, action),
@@ -16,5 +17,4 @@ AppState appReducer(AppState state, action) {
       matchResultInfos: matchResultInfoReducer(state.matchResultInfos, action),
       rankingInfos: rankingInfoReducer(state.rankingInfos, action),
       activeEntrantsSortOrder: entrantsSortReducer(state.activeEntrantsSortOrder, action));
-
 }

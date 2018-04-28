@@ -5,7 +5,8 @@ import '../actions/actions.dart';
 final playerReducer = combineReducers<List<Player>>([
   new TypedReducer<List<Player>, PlayerLoadedAction>(_setLoadedPlayer),
   new TypedReducer<List<Player>, PlayerNotLoadedAction>(_setNoPlayer),
-  new TypedReducer<List<Player>,  UpdatePlayerProfileAndSearchPreferenceAction>(_updatePlayer)
+  new TypedReducer<List<Player>, UpdatePlayerProfileAndSearchPreferenceAction>(_updatePlayer),
+
 ]);
 
 List<Player> _setLoadedPlayer(List<Player> player, PlayerLoadedAction action) {

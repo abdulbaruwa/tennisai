@@ -8,8 +8,9 @@ import '../controls/usercontrols.dart';
 import 'dart:io';
 import 'dart:async';
 
-typedef OnPlayerProfileSaveCallback = Function(
-    Player player, SearchPreference searchPreference);
+typedef OnPlayerProfileSaveCallback = Function(Player player, SearchPreference searchPreference);
+typedef OnLocalAvatarImageChangedCallback = Function(File newImage);
+
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
 
 final List<int> _ageGroups = [12, 14, 16, 18, 100];
@@ -22,20 +23,24 @@ class ProfileEditView extends StatelessWidget {
       this.onSave,
       this.isEditing,
       this.player,
-      this.searchPreference})
+      this.searchPreference,
+      this.onChangeImage,
+      this.changedAvatar})
       : super(key: key ?? TennisAiKeys.editProfile);
 
   Future getImage() async {
     print('Getting image from device');
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    onChangeImage(image);
   }
-
+  final File changedAvatar;
   final bool isEditing;
   final Player player;
   final SearchPreference searchPreference;
 
   static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   final Function(Player player, SearchPreference searchPreference) onSave;
+  final Function(File newImage) onChangeImage;
   static final GlobalKey<FormFieldState<String>> _firstNameKey =
       new GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _lastNameKey =
@@ -143,6 +148,7 @@ class ProfileEditView extends StatelessWidget {
                           new EditableProfileAvatar(
                             playerId: player.playerId,
                             source: 'userProfile',
+                            defaultImage: changedAvatar,
                             onTap: () {
                               showDemoDialog<String>(
                                   context: context,

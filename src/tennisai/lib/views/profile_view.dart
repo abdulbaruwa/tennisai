@@ -192,10 +192,7 @@ class ProfileView extends StatelessWidget {
                       context,
                       new MaterialPageRoute<DismissDialogAction>(
                         builder: (BuildContext context) =>
-                            new ProfileEditContainer(
-                              player: player,
-                              searchPreference: searchPreference,
-                            ),
+                            new ProfileEditContainer(),
                         fullscreenDialog: true,
                       ));
                 },

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:meta/meta.dart';
 import 'models.dart';
 
@@ -6,6 +7,7 @@ class AppState {
   final bool isLoading;
   final bool isEntrantsViewItemsReverseSorted;
   final List<Player> player;
+  final List<File> avatar;
   final List<SearchPreference> searchPreference;
   final List<SearchPreference> activeSearchPreference;
   final List<Tournament> tournaments;
@@ -22,6 +24,7 @@ class AppState {
   AppState(
       {this.isLoading = false,
       this.player = const [],
+      this.avatar = const[],
       this.searchPreference = const [],
       this.activeSearchPreference = const [],
       this.enteredTournaments = const [],
@@ -41,6 +44,7 @@ class AppState {
   AppState copyWith(
       {bool isLoading,
       List<Player> player,
+      List<File> avatar,
       List<SearchPreference> searchPreference,
       List<SearchPreference> activeSearchPreference,
       List<Tournament> tournaments,
@@ -54,6 +58,7 @@ class AppState {
     return new AppState(
         isLoading: isLoading ?? this.isLoading,
         activeEntrantsSortOrder: activeEntrantsSortOrder ?? activeEntrantsSortOrder,
+        avatar: avatar ?? this.avatar,
         player: player ?? this.player,
         basket: basket ?? this.basket,
         searchPreference: searchPreference ?? this.searchPreference,
@@ -69,6 +74,7 @@ class AppState {
   int get hashCode =>
       isLoading.hashCode ^
       player.hashCode ^
+      avatar.hashCode ^
       basket.hashCode ^
       searchPreference.hashCode ^
       activeSearchPreference.hashCode ^
@@ -88,10 +94,10 @@ class AppState {
       other is AppState &&
           runtimeType == other.runtimeType &&
           isLoading == other.isLoading &&
-          isEntrantsViewItemsReverseSorted ==
-              other.isEntrantsViewItemsReverseSorted &&
+          isEntrantsViewItemsReverseSorted == other.isEntrantsViewItemsReverseSorted &&
           activeEntrantsSortOrder == other.activeEntrantsSortOrder &&
           player == other.player &&
+          avatar == other.avatar &&
           basket == other.basket &&
           searchPreference == other.searchPreference &&
           activeSearchPreference == other.activeSearchPreference &&
@@ -105,6 +111,6 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, player: $player, basket: $basket, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted}';
+    return 'AppState{isLoading: $isLoading, player: $player, avatar: $avatar, basket: $basket, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted}';
   }
 }
