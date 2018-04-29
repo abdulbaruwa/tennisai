@@ -1,7 +1,11 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'package:path/path.dart';
+import 'package:http/http.dart' as httpdart;
+import 'package:http_parser/http_parser.dart';
 import '../models/models.dart';
+import '../paths/paths.dart';
 
 /// A class that is meant to represent a Client that would be used to call a Web
 /// Service. It is responsible for fetching and persisting WatchedTournaments to and from the
@@ -153,7 +157,7 @@ class WebClient {
 
     return false;
   }
-
+  
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postWatchedTournaments(
@@ -200,9 +204,22 @@ class WebClient {
     return new Future.value(true);
   }
 
-  Future<bool> postAvatarImage(String playerId, File avatar)
+  Future<bool> postAvatarImage(String playerId, File avatar) async
   {
     // TODO: 
+    var uri = new Uri.http(TennisAiPaths.server, TennisAiPaths.imageUploadPath(playerId));
+    var request  = httpdart.MultipartRequest('POST', uri);
+    var fileBytes = avatar.readAsBytesSync();
+    var multipartFile = new httpdart.MultipartFile.fromBytes('file', fileBytes, filename:  basename(avatar.path));
+    request.files.add(multipartFile);
+  
+    request.headers.putIfAbsent('zumo-api-version', () => '2.0.0');
+    
+    var response = await request.send();
+    if(response.statusCode == 200)
+    {
+      return true;
+    }
      return new Future.value(true);
   }
 
@@ -260,17 +277,5 @@ class WebClient {
   }
 }
 
-
 SearchPreference searchPreference = new SearchPreference(
     ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);
-
-// Player player = new Player(
-//     firstName: 'wilson',
-//     lastName: 'babolat',
-//     email: 'Wilson@babalot.com',
-//     ltaNumber: 723492222,
-//     ltaRanking: 33,
-//     ltaRating: '2.1',
-//     address: '69 West Field Sheds',
-//     postCode: 'KT31 4KU',
-//     county: 'Surrey');

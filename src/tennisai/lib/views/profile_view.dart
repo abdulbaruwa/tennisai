@@ -1,3 +1,4 @@
+import 'dart:io'; 
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../keys/keys.dart';
@@ -6,8 +7,9 @@ import '../controls/usercontrols.dart';
 
 class ProfileSection extends StatelessWidget {
   final Player player;
+  final File changedAvatar;
   final SearchPreference searchPreference;
-  const ProfileSection({Key key, this.player, this.searchPreference})
+  const ProfileSection({Key key, this.player, this.searchPreference, this.changedAvatar})
       : super(key: key);
 
   @override
@@ -21,7 +23,7 @@ class ProfileSection extends StatelessWidget {
             children: <Widget>[
               new Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
-                  child: new _UserProfile(player: player)),
+                  child: new _UserProfile(player: player, changedAvatar: changedAvatar)),
             ],
           )));
 }
@@ -29,7 +31,8 @@ class ProfileSection extends StatelessWidget {
 // Displays the Vendor's name and avatar.
 class _UserProfile extends StatelessWidget {
   final Player player;
-  const _UserProfile({Key key, this.player}) : super(key: key);
+  final File changedAvatar;
+  const _UserProfile({Key key, this.player, this.changedAvatar}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final Map<String, String> headers = {'zumo-api-version': '2.0.0'};
@@ -37,7 +40,7 @@ class _UserProfile extends StatelessWidget {
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new ProfileAvatar(playerId: player.playerId.toString()),
+          new ProfileAvatar(playerId: player.playerId.toString(), latestImage: changedAvatar),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(
@@ -119,13 +122,14 @@ class _LabelTextRow extends StatelessWidget {
 }
 
 Widget _buildPreference(
-    BuildContext context, Player player, SearchPreference searchPreference) {
+    BuildContext context, Player player, SearchPreference searchPreference, File changedAvatar) {
   return new Container(
       child: new ListView(
     children: <Widget>[
       new ProfileSection(
         player: player,
         searchPreference: searchPreference,
+        changedAvatar: changedAvatar,
       ),
       new _LtaInfo(value: 'LTA INFO'),
       new _LabelTextRow(
@@ -165,7 +169,8 @@ Widget _buildPreference(
 class ProfileView extends StatelessWidget {
   final Player player;
   final SearchPreference searchPreference;
-  const ProfileView({Key key, this.player, this.searchPreference})
+  final File changedAvatar;
+  const ProfileView({Key key, this.player, this.searchPreference, this.changedAvatar})
       : super(key: key);
 
   @override
@@ -200,7 +205,7 @@ class ProfileView extends StatelessWidget {
             title: new Text('Preference'),
           ),
           body: new Scrollbar(
-            child: _buildPreference(context, player, searchPreference),
+            child: _buildPreference(context, player, searchPreference, changedAvatar),
           ),
         ));
   }

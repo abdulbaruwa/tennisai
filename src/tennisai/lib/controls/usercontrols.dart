@@ -86,13 +86,15 @@ class TopBottomLabel extends StatelessWidget {
 
 class ProfileAvatar extends StatelessWidget{
   final String playerId;
+  final File latestImage;
 
-  ProfileAvatar({this.playerId});
+  ProfileAvatar({this.playerId, this.latestImage});
   Widget build(BuildContext context){
       var networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId), headers: TennisAiPaths.zumoHeader);
+      var latestAvatar = latestImage == null ? null :  new FileImage(latestImage);
       return new CircleAvatar(
             radius: 36.0,
-            backgroundImage: networkImage)
+            backgroundImage: latestAvatar ?? networkImage)
           ;
   }
 }
