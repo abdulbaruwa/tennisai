@@ -10,8 +10,7 @@ import '../actions/actions.dart';
 import '../selectors/selectors.dart';
 
 class ProfileEditContainer extends StatelessWidget {
-  ProfileEditContainer({Key key})
-      : super(key: key);
+  ProfileEditContainer({Key key}) : super(key: key);
 
   // @override
   // Widget build(BuildContext context) {
@@ -25,12 +24,18 @@ class ProfileEditContainer extends StatelessWidget {
   //   });
   // }
 
-    @override
+  @override
   Widget build(BuildContext context) {
-    return new StoreConnector<AppState, _ViewModel>(converter: _ViewModel.fromStore, builder: (context, vm){
-
-      return new ProfileEditView(player: vm.player, searchPreference: vm.searchPreference, onChangeImage: vm.onImageChanged, changedAvatar: vm.changedAvatar);
-    });
+    return new StoreConnector<AppState, _ViewModel>(
+        converter: _ViewModel.fromStore,
+        builder: (context, vm) {
+          return new ProfileEditView(
+              player: vm.player,
+              searchPreference: vm.searchPreference,
+              onChangeImage: vm.onImageChanged,
+              changedAvatar: vm.changedAvatar,
+              onSave: vm.onSave);
+        });
   }
 }
 
@@ -40,10 +45,15 @@ class _ViewModel {
   final Player player;
   final File changedAvatar;
   final Function(File) onImageChanged;
-  final Function(Basket) onSendToLta;
+  final Function(Player player, SearchPreference searchPreference, File avatar) onSave;
 
   _ViewModel(
-      {@required this.loading, @required this.searchPreference, @required this.player, this.changedAvatar, this.onImageChanged, this.onSendToLta});
+      {@required this.loading,
+      @required this.searchPreference,
+      @required this.player,
+      this.changedAvatar,
+      this.onImageChanged,
+      this.onSave});
 
   static _ViewModel fromStore(Store<AppState> store) {
     var avatarOption = avatarSelector(store.state);
@@ -55,7 +65,11 @@ class _ViewModel {
         onImageChanged: (file) {
           print('profile_edit_container.viewModel: changed image to file at pat ${file.path} ');
           store.dispatch(new ChangedAvatarAction(file));
-               //store.dispatch(new RemoveTournamentFromBasketAction(file));
+          //store.dispatch(new RemoveTournamentFromBasketAction(file));
+        },
+        onSave: (player, searchPreference, avatar){
+          print('profile_edit_container.viewModel: onSave');
+          store.dispatch(new UpdatePlayerProfileAndSearchPreferenceAction(player: player, searchPreference: searchPreference));
         });
   }
 }

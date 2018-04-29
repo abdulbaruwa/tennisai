@@ -137,7 +137,6 @@ Middleware<AppState> _createLoadUpcomingTournaments(DashboardRepository repo) {
   return stateResult;
 }
 
-
 Middleware<AppState> _createSaveUpcomingTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
@@ -351,6 +350,11 @@ Middleware<AppState> _updatePlayerAndSearchProfile(
     var searchPrefToSave =
         searchPreferenceSelector(store.state).value.toEntity();
     repository.saveSearchPreference(searchPrefToSave);
+
+    if (avatarSelector(store.state).isPresent)
+    {
+      repository.saveProfileAvatar(playerToSave.playerId, avatarSelector(store.state).value);
+    }
   };
 }
 

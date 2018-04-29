@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:async';
 import 'dart:core';
 
@@ -138,6 +139,13 @@ class DashboardRepository {
       fileStorage.saveSearchTournaments(searchTournaments),
       webClient.postSearchTournaments(searchTournaments),
     ]);
+  }
+
+  // Persists Avatar image
+  Future saveProfileAvatar(String playerId, File avatar)
+  {
+    print('dashboard_repository: saveProfileAvatar..TODO..');
+    return Future.wait([webClient.postAvatarImage(playerId, avatar)]);
   }
 
   // Search Preference

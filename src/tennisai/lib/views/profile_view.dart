@@ -108,8 +108,7 @@ class _LabelTextRow extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 12.0),
                         alignment: Alignment.bottomRight,
-                        child: new Text(
-                          value,
+                        child: new Text(value,
                           textAlign: TextAlign.end,
                         )))
               ],

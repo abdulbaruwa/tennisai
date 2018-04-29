@@ -29,7 +29,7 @@ class LabelIntDropDownItemState extends State<LabelIntDropDownItem> {
   @override
   void initState() {
     super.initState();
-    result = widget.inputValue;
+    result = widget.outputValue;
   }
 
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class LabelIntDropDownItemState extends State<LabelIntDropDownItem> {
                           result = value;
                           print(result);
                           widget.outputValue = value;
-                          widget.onChangedFunc(result);
+                          //widget.onChangedFunc(result);
                         });
                       },
                     ),

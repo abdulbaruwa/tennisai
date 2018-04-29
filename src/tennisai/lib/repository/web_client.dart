@@ -200,6 +200,12 @@ class WebClient {
     return new Future.value(true);
   }
 
+  Future<bool> postAvatarImage(String playerId, File avatar)
+  {
+    // TODO: 
+     return new Future.value(true);
+  }
+
   Future<List<TournamentEntity>> fetchSearchTournaments() async {
     return getTournamentsByDefaultSearchPreferences("12");
   }

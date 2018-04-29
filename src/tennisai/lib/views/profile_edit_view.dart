@@ -1,12 +1,13 @@
+import 'dart:io';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../models/models.dart';
-import '../keys/keys.dart';
 import '../models/enums.dart' as _enums;
+import '../keys/keys.dart';
 import '../controls/usercontrols.dart';
-import 'dart:io';
-import 'dart:async';
 
 typedef OnPlayerProfileSaveCallback = Function(Player player, SearchPreference searchPreference);
 typedef OnLocalAvatarImageChangedCallback = Function(File newImage);
@@ -33,13 +34,14 @@ class ProfileEditView extends StatelessWidget {
     var image = await ImagePicker.pickImage(source: ImageSource.gallery);
     onChangeImage(image);
   }
+  
   final File changedAvatar;
   final bool isEditing;
   final Player player;
   final SearchPreference searchPreference;
 
   static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final Function(Player player, SearchPreference searchPreference) onSave;
+  final Function(Player player, SearchPreference searchPreference, File changedAvatar) onSave;
   final Function(File newImage) onChangeImage;
   static final GlobalKey<FormFieldState<String>> _firstNameKey =
       new GlobalKey<FormFieldState<String>>();
@@ -52,13 +54,9 @@ class ProfileEditView extends StatelessWidget {
   static final GlobalKey<FormFieldState<String>> _postCodeKey =
       new GlobalKey<FormFieldState<String>>();
   static final GlobalKey _genderKey = new GlobalKey();
-
-  int quantity = 0;
-  int selectedGender = 0;
-  int miles = 30;
-  int selectedMiles = 30;
-  int selectedGrade = 3;
-  int selectedAgeGroup = 18;
+  
+  static final genderMap ={'female': 0, 'male': 1};
+  static final genderReverseMap ={0: 'Female', 1: 'Male'};
 
   final ValueChanged<int> onChanged;
 
@@ -78,32 +76,33 @@ class ProfileEditView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    
+    
     var genderGroup = new _LabelIntDropDownItem(
         displayIntItems: [0, 1],
         label: 'Gender',
-        output: selectedGender,
+        output: genderMap[searchPreference.gender],
         key: _genderKey,
-        displayFunc: (int i) => i == 0 ? 'Female' : 'Male');
+        displayFunc: (int i) => genderReverseMap[i]);
     var distanceGroup = new _LabelIntDropDownItem(
         displayIntItems: _distancesInMiles,
         label: 'Distance',
-        output: selectedMiles,
+        output: searchPreference.distance,
         displayFunc: (int i) => '$i miles');
     var gradeGroup = new _LabelIntDropDownItem(
         displayIntItems: _grades,
         label: 'Grade',
-        output: selectedGrade,
+        output: searchPreference.grade,
         displayFunc: (int i) => 'Grade $i');
     var tournamentGroup = new _LabelIntDropDownItem(
         displayIntItems: _ageGroups,
         label: 'Age Group',
-        output: selectedAgeGroup,
+        output: searchPreference.ageGroup,
         displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
-    var _statusDropDown = new LabelIntDropDownItem(
-        onChangedFunc: (int i) => print('Status changed to Grade $i'),
+    var _statusDropDown = new _LabelIntDropDownItem(
         displayIntItems: tournamentStatusIndexs,
         label: 'Status',
-        inputValue: 2,
+        output: searchPreference.statusIndex,
         displayFunc: (int i) {
           return tournamentStatus[i].toString();
         });
@@ -130,8 +129,8 @@ class ProfileEditView extends StatelessWidget {
                         grade: gradeGroup.output,
                         distance: distanceGroup.output,
                         ageGroup: tournamentGroup.output,
-                        statusIndex: _statusDropDown.outputValue);
-                    onSave(updatedPlayer, updateSearchPreference);
+                        statusIndex: _statusDropDown.output);
+                    onSave(updatedPlayer, updateSearchPreference, changedAvatar);
                     Navigator.pop(context, _enums.DismissDialogAction.save);
                   })
             ]),
@@ -366,11 +365,8 @@ class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem> {
                       value: result,
                       onChanged: (int value) {
                         setState(() {
-                          var xx = widget.gkey;
-                          print(value);
                           result = value;
                           widget.output = value;
-                          print(widget.output);
                         });
                       },
                     ),
