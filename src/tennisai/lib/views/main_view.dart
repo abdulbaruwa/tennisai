@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,10 +11,11 @@ import '../keys/keys.dart';
 
 class MainView extends StatelessWidget {
   final Player player;
+  final File changedAvatar;
   final List<RankingInfo> rankingInfos;
   final List<MatchResultInfo> matchResultInfos;
 
-  MainView({Key key, this.player, this.rankingInfos, this.matchResultInfos})
+  MainView({Key key, this.player, this.rankingInfos, this.matchResultInfos, this.changedAvatar})
       : super(key: key);
   static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -44,7 +46,7 @@ class MainView extends StatelessWidget {
                   children: <Widget>[
                     new Container(
                         padding: const EdgeInsets.only(left: 10.0, top: 10.0),
-                        child: new PhotoProfileView(player: this.player)),
+                        child: new PhotoProfileView(player: this.player, changedAvatar: this.changedAvatar,)),
                     new SizedBox(height: 10.0),
                     new Text(
                       'Rankings',

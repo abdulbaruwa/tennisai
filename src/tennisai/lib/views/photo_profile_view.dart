@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../keys/keys.dart';
 import '../models/models.dart';
@@ -5,13 +6,14 @@ import '../controls/usercontrols.dart';
 
 class PhotoProfileView extends StatelessWidget {
   final Player player;
-  const PhotoProfileView({Key key, this.player}) : super(key: key);
+  final File changedAvatar;
+  const PhotoProfileView({Key key, this.player, this.changedAvatar}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new ProfileAvatar(playerId: player.playerId),
+          new ProfileAvatar(playerId: player.playerId, latestImage: changedAvatar,),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(

@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../views/basket_child_view.dart';
@@ -11,10 +12,11 @@ final ThemeData _kTheme = new ThemeData(
 class BasketView extends StatelessWidget {
   final Player player;
   final Basket basket;
+  final File changedAvatar;
   final Function(String) onRemoveFromBasket;
   final Function(Basket) onSendToLta;
 
-  BasketView({Key key, this.player, this.basket, this.onRemoveFromBasket, this.onSendToLta}) : super(key: key);
+  BasketView({Key key, this.player, this.basket, this.onRemoveFromBasket, this.onSendToLta, this.changedAvatar }) : super(key: key);
   static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
@@ -35,6 +37,6 @@ class BasketView extends StatelessWidget {
                   Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0,
             ),
             key: _scaffoldKey,
-            body: new BasketChildView(basket: basket, player: player, onRemoveFromBasket: onRemoveFromBasket, onSendToLta: onSendToLta)));
+            body: new BasketChildView(basket: basket, player: player, onRemoveFromBasket: onRemoveFromBasket, onSendToLta: onSendToLta, changedAvatar: changedAvatar)));
   }
 }

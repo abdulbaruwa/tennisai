@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart' show lowerBound;
 import '../models/models.dart';
@@ -12,11 +13,12 @@ final ThemeData _kTheme = new ThemeData(
 class BasketChildView extends StatelessWidget {
   final Basket basket;
   final Player player;
+  final File changedAvatar;
   final Function(String) onRemoveFromBasket;
   final List<Tournament> leaveBehindItems;
   final Function(Basket) onSendToLta;
 
-  BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket, this.onSendToLta}) : super(key: key);
+  BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket, this.onSendToLta, this.changedAvatar}) : super(key: key);
 
   Widget buildListTile(BuildContext context, Tournament item) {
     return new MergeSemantics(
@@ -138,7 +140,7 @@ class BasketChildView extends StatelessWidget {
           child: new SizedBox(
             height: 76.0,
             child: new Row(children: <Widget>[
-              new ProfileAvatar(playerId: player.playerId),
+              new ProfileAvatar(playerId: player.playerId, latestImage: changedAvatar),
               new Expanded(
                 child: new Padding(
                     padding: const EdgeInsets.only(left: 5.0, top: 5.0),
