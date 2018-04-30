@@ -29,9 +29,9 @@ class ProfileEditView extends StatelessWidget {
       this.changedAvatar})
       : super(key: key ?? TennisAiKeys.editProfile);
 
-  Future getImage() async {
+  Future getImage(ImageSource source) async {
     print('Getting image from device');
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker.pickImage(source: source);
     onChangeImage(image);
   }
   
@@ -76,8 +76,7 @@ class ProfileEditView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
-    
-    
+
     var genderGroup = new _LabelIntDropDownItem(
         displayIntItems: [0, 1],
         label: 'Gender',
@@ -157,14 +156,15 @@ class ProfileEditView extends StatelessWidget {
                                       children: <Widget>[
                                         new SimpleDialogOption(
                                           onPressed: () {
-                                            Navigator.pop(
-                                                context, 'Not implemented');
+                                            getImage(ImageSource.camera);
+                                            Navigator.pop(context);
                                           },
                                           child: const Text('Take a picture'),
                                         ),
                                         new SimpleDialogOption(
                                           onPressed: () {
-                                            getImage();
+                                            getImage(ImageSource.gallery);
+                                            Navigator.pop(context);
                                           },
                                           child:
                                               const Text('Select from Gallery'),
