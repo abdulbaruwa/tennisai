@@ -152,7 +152,7 @@ class DashboardView extends StatelessWidget {
                   dense: true,
                   title: new Text(tournament.name,
                       style: new TextStyle(
-                          color: theme.primaryColor, fontSize: 18.0),
+                          color: Colors.indigo, fontSize: 18.0),
                       key: TennisAiKeys.tournamentItemName(
                         tournament.code,
                         describeEnum(page.tabSource),
