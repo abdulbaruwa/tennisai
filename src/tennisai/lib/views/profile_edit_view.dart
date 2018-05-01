@@ -138,9 +138,10 @@ class ProfileEditView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 1.0),
               children: <Widget>[
                 new SizedBox(
-                  height: 96.0,
+                  height: 86.0,
                   child: new Container(
                       color: Colors.white,
+                      padding: EdgeInsets.only(left: 5.0),
                       child: new Row(
                         children: <Widget>[
                           new EditableProfileAvatar(
@@ -176,7 +177,7 @@ class ProfileEditView extends StatelessWidget {
                           new Expanded(
                             child: new Padding(
                                 padding: const EdgeInsets.only(
-                                    left: 2.0, top: 10.0, right: 15.0),
+                                    left: 5.0, top: 10.0, right: 15.0),
                                 child: new Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,

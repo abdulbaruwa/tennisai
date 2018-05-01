@@ -136,14 +136,14 @@ class BasketChildView extends StatelessWidget {
     return new Column(children: <Widget>[
       new Container(
           padding: const EdgeInsets.all(5.0),
-          color: const Color(0xFFFC5CAE9),
+         // color: const Color(0xFFFC5CAE9),
           child: new SizedBox(
             height: 76.0,
             child: new Row(children: <Widget>[
               new ProfileAvatar(playerId: player.playerId, latestImage: changedAvatar),
               new Expanded(
                 child: new Padding(
-                    padding: const EdgeInsets.only(left: 5.0, top: 5.0),
+                    padding: const EdgeInsets.only(left: 10.0, top: 10.0),
                     child: new Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
