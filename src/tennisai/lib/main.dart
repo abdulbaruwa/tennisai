@@ -13,6 +13,16 @@ import 'containers/app_loading.dart';
 import 'views/loading_indicator.dart';
 import 'containers/containers.dart';
 import 'keys/keys.dart';
+import 'views/auth_view.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+GoogleSignIn _googleSignIn = new GoogleSignIn(
+
+  scopes: <String>[
+    'email',
+    'https://www.googleapis.com/auth/contacts.readonly',
+  ],
+);
 
 void main() => runApp(new TennisAiApp());
 
@@ -32,14 +42,14 @@ class TennisAiApp extends StatelessWidget {
             // Widgets will find and use this value as the `Store`.
             routes: {TennisAiRoutes.about: (context) {}},
             home: new StoreBuilder<AppState>(
-                onInit: (store) => _loadState(store),
+                onInit: (store) =>  _loadState(store),
                 builder: (context, store) {
                   return new TennisAiHome();
                 })));
   }
 }
 
-_loadState(Store store) {
+_loadState(Store store) {  
   store.dispatch(new LoadWatchedTournamentsAction());
   store.dispatch(new LoadUpcomingTournamentsAction());
   // TODO playerId will need to be passed in via Auth and cache.
@@ -57,13 +67,17 @@ class TennisAiHome extends StatelessWidget {
     @override
   Widget build(BuildContext context) {
     return new AppLoading(builder: (context, loading) {
-      return loading
+      if(loading.isSignedIn == false){
+        return new AuthView();
+      }
+      return loading.isLoading
           ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)
           : _buildView(context);
     });
   }
 
   Widget _buildView(BuildContext context) {
+    
     return new ActiveTab(
       builder: (BuildContext context, AppTab activeTab) {
         return new Scaffold(

@@ -5,6 +5,8 @@ class TennisAiKeys {
   static final editProfile = const Key('__editProfile__');
   static final snackbar = const Key('__snackbar__');
 
+  static const auth = const Key('__googleAuth__');
+
   // Tabs
   static final tabs = const Key('__tabs__');
   static const homeTab = const Key('__homeTab__');

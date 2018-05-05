@@ -96,6 +96,7 @@ Optional<Basket> basketSelector(AppState state) {
 AppTab activeTabSelector(AppState state) => state.activeTab;
 
 bool isLoadingSelector(AppState state) => state.isLoading;
+bool isSignedInSelector(AppState state) => state.isSignedIn;
 
 bool isEntrantsViewItemsReversedSelector(AppState state) =>
     state.isEntrantsViewItemsReverseSorted;

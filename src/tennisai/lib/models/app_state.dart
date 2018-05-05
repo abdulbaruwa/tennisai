@@ -5,6 +5,7 @@ import 'models.dart';
 @immutable
 class AppState {
   final bool isLoading;
+  final bool isSignedIn;
   final bool isEntrantsViewItemsReverseSorted;
   final List<Player> player;
   final List<File> avatar;
@@ -23,6 +24,7 @@ class AppState {
 
   AppState(
       {this.isLoading = false,
+      this.isSignedIn = false,
       this.player = const [],
       this.avatar = const[],
       this.searchPreference = const [],
@@ -43,6 +45,7 @@ class AppState {
 
   AppState copyWith(
       {bool isLoading,
+      bool isSignedIn,
       List<Player> player,
       List<File> avatar,
       List<SearchPreference> searchPreference,
@@ -57,6 +60,7 @@ class AppState {
       bool activeEntrantsSortOrder}) {
     return new AppState(
         isLoading: isLoading ?? this.isLoading,
+        isSignedIn: isSignedIn ?? this.isSignedIn,
         activeEntrantsSortOrder: activeEntrantsSortOrder ?? activeEntrantsSortOrder,
         avatar: avatar ?? this.avatar,
         player: player ?? this.player,
@@ -73,6 +77,7 @@ class AppState {
   @override
   int get hashCode =>
       isLoading.hashCode ^
+      isSignedIn.hashCode ^
       player.hashCode ^
       avatar.hashCode ^
       basket.hashCode ^
@@ -94,6 +99,7 @@ class AppState {
       other is AppState &&
           runtimeType == other.runtimeType &&
           isLoading == other.isLoading &&
+          isSignedIn == other.isSignedIn &&
           isEntrantsViewItemsReverseSorted == other.isEntrantsViewItemsReverseSorted &&
           activeEntrantsSortOrder == other.activeEntrantsSortOrder &&
           player == other.player &&
@@ -111,6 +117,6 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, player: $player, avatar: $avatar, basket: $basket, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted}';
+    return 'AppState{isLoading: $isLoading, isSignedIn: $isSignedIn, player: $player, avatar: $avatar, basket: $basket, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted}';
   }
 }
