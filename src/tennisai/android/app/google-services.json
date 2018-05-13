@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "968949713477",
+    "firebase_url": "https://tennisaidroid-1526066885073.firebaseio.com",
+    "project_id": "tennisaidroid-1526066885073",
+    "storage_bucket": "tennisaidroid-1526066885073.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:968949713477:android:31ce81542aa15b47",
+        "android_client_info": {
+          "package_name": "com.orunmila.tennisai_public"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968949713477-doa40k8i8sanhl6k9u4vs7j8lt60vufa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orunmila.tennisai_public",
+            "certificate_hash": "4e55bb347e2ac1df5fa2894cfde652a622f7611d"
+          }
+        },
+        {
+          "client_id": "968949713477-iofbgo6h5ngk25cp9kbn3juilp01datr.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "968949713477-qopaq06skdh2ab05jga9cds45t5r7eff.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0sAgbVvK7OWvC2k8-5a519GBNxKEnN7k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968949713477-iofbgo6h5ngk25cp9kbn3juilp01datr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

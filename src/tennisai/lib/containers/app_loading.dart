@@ -4,9 +4,6 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
-import '../views/dashboard_view.dart';
-import '../keys/keys.dart';
-import '../views/loading_indicator.dart';
 
 class AppLoading extends StatelessWidget {
   //final Function(BuildContext context, bool isLoading) builder;

@@ -4,6 +4,7 @@
 .packages
 .pub/
 build/
+src/tennisai/secure/
 ios/.generated/
 packages
 pubspec.lock
