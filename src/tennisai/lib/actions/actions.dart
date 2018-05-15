@@ -131,6 +131,8 @@ class AddWatchedTournamentsAction {
   }
 }
 
+class SignInWithGoogleAction{}
+
 // Dashboard - Entered Tournament
 class EnteredTournamentsNotLoadedAction {}
 
@@ -195,4 +197,8 @@ class SendBasketToLtaBasketAction{
 
 class BasketSentToLtaAction{}
 
+class SignInCompletedAction{
+  final Settings settings;
+  SignInCompletedAction(this.settings);
+}
 // class ResetCacheAction{}

@@ -9,3 +9,4 @@ export 'basket_reducer.dart';
 export 'dashboard_upcoming_reducer.dart';
 export 'match_result_info_reducer.dart';
 export 'ranking_info_reducer.dart';
+export 'auth_reducer.dart';

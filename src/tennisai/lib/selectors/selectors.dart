@@ -19,6 +19,14 @@ List<Tournament> watchedTournamentSelector(AppState state) =>
     state.watchedTournaments;
 List<Tournament> upcomingTournamentSelector(AppState state) => state.upcomingTournaments;
 
+Optional<Settings> settingSelector(AppState state) {
+  try {
+    return new Optional.of(state.settings.first);
+  } catch (e) {
+    return new Optional.absent();
+  }
+}
+
 // TournamentsSelector returns the combined Watched and entered tournament
 List<Tournament> tournamentsSelector(
     AppState state, TournamentDetailsActionSource source) {

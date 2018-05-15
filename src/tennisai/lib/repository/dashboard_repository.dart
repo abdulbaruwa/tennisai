@@ -56,6 +56,9 @@ class DashboardRepository {
     ]);
   }
 
+  saveSettings(Settings setting){
+    // Todo: Persist to secure storage.
+  }
   /// Loads entered Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the enteredTournament from a Web Client.
   Future<List<TournamentEntity>> loadEnteredTournaments() async {

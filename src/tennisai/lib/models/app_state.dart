@@ -20,6 +20,7 @@ class AppState {
   final List<Basket> basket;
   final List<RankingInfo> rankingInfos;
   final List<MatchResultInfo> matchResultInfos;
+  final List<Settings> settings;
   final bool activeEntrantsSortOrder;
 
   AppState(
@@ -38,6 +39,7 @@ class AppState {
       this.activeTab = AppTab.home,
       this.matchResultInfos = const [],
       this.rankingInfos = const [],
+      this.settings = const [],
       this.activeEntrantsSortOrder = false,
       this.isEntrantsViewItemsReverseSorted = false});
 
@@ -55,6 +57,7 @@ class AppState {
       List<Tournament> watchedTournaments,
       List<Tournament> searchTournaments,
       List<Basket> basket,
+      List<Settings> settings,
       AppTab activeTab,
       bool isEntrantsViewItemsReverseSorted,
       bool activeEntrantsSortOrder}) {
@@ -65,6 +68,7 @@ class AppState {
         avatar: avatar ?? this.avatar,
         player: player ?? this.player,
         basket: basket ?? this.basket,
+        settings: settings ?? this.settings,
         searchPreference: searchPreference ?? this.searchPreference,
         activeSearchPreference: activeSearchPreference ?? this.activeSearchPreference,
         tournaments: tournaments ?? this.tournaments,
@@ -91,6 +95,7 @@ class AppState {
       activeEntrantsSortOrder.hashCode ^
       rankingInfos.hashCode ^
       matchResultInfos.hashCode ^
+      settings.hashCode ^
       isEntrantsViewItemsReverseSorted.hashCode;
 
   @override
@@ -113,10 +118,11 @@ class AppState {
           enteredTournaments == other.enteredTournaments &&
           matchResultInfos == other.matchResultInfos &&
           rankingInfos == other.rankingInfos &&
+          settings == other.settings &&
           activeTab == other.activeTab;
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, isSignedIn: $isSignedIn, player: $player, avatar: $avatar, basket: $basket, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted}';
+    return 'AppState{isLoading: $isLoading, isSignedIn: $isSignedIn, player: $player, avatar: $avatar, basket: $basket, searchQueryPreference: $searchPreference, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, settings: $settings}';
   }
 }

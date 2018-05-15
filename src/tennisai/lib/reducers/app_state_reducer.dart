@@ -4,6 +4,8 @@ import 'reducers.dart';
 AppState appReducer(AppState state, action) {
   return new AppState(
       isLoading: loadingReducer(state.isLoading, action),
+      isSignedIn: authStatusReducer(state.isSignedIn, action),
+      settings: authReducer(state.settings, action),
       player: playerReducer(state.player, action),
       avatar: avatarUpdateReducer(state.avatar, action),
       basket: basketReducer(state.basket, action),
@@ -12,7 +14,6 @@ AppState appReducer(AppState state, action) {
       watchedTournaments: dashboardReducer(state.watchedTournaments, action) ,
       upcomingTournaments: dashboardUpcomingReducer(state.upcomingTournaments, action),
       searchTournaments: tournamentSearchReducer(state.searchTournaments, action) ,
-      //tournaments: dashboardReducer(state.tournaments, action) ,
       activeTab: tabsReducer(state.activeTab, action),
       matchResultInfos: matchResultInfoReducer(state.matchResultInfos, action),
       rankingInfos: rankingInfoReducer(state.rankingInfos, action),

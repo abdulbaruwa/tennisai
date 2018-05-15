@@ -13,7 +13,7 @@ import 'containers/app_loading.dart';
 import 'views/loading_indicator.dart';
 import 'containers/containers.dart';
 import 'keys/keys.dart';
-import 'views/auth_view.dart';
+import 'containers/auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 GoogleSignIn _googleSignIn = new GoogleSignIn(
@@ -64,11 +64,11 @@ _loadState(Store store) {
 class TennisAiHome extends StatelessWidget {
   TennisAiHome() : super(key: TennisAiKeys.homeScreen);
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return new AppLoading(builder: (context, loading) {
       if(loading.isSignedIn == false){
-        return new AuthView();
+         return new AuthContainer();
       }
       return loading.isLoading
           ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)

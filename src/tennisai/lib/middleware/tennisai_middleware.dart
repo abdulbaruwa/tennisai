@@ -42,7 +42,12 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final updateProfileAndSearchPref = _updatePlayerAndSearchProfile(repository);
   final changedAvatar = _changedAvatar(repository);
 
+  final signInWithGoogleAction = _authCompleted(repository);
+
   return [
+
+    // Auth
+    new TypedMiddleware<AppState, SignInCompletedAction>(signInWithGoogleAction),
     new TypedMiddleware<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
     new TypedMiddleware<AppState, LoadUpcomingTournamentsAction>(loadUpcomingTournaments),
     new TypedMiddleware<AppState, AddWatchedTournamentsAction>(saveWatchedTournaments),
@@ -77,7 +82,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new TypedMiddleware<AppState, AddTournamentToBasketAction>(saveBasket),
     new TypedMiddleware<AppState, RemoveTournamentFromBasketAction>(saveBasket),
     new TypedMiddleware<AppState, SendBasketToLtaBasketAction>(sendToLtaBasket),
-    new TypedMiddleware<AppState, BasketSentToLtaAction>(clearBasket),
+    new TypedMiddleware<AppState, BasketSentToLtaAction>(clearBasket),  
 
     // Edit profile
     new TypedMiddleware<AppState, UpdatePlayerProfileAndSearchPreferenceAction>(updateProfileAndSearchPref),
@@ -88,12 +93,22 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new TypedMiddleware<AppState, ChangedAvatarAction>(changedAvatar)
   ];
 }
+
+Middleware<AppState> _authCompleted(DashboardRepository repository)
+{
+  return (Store<AppState> store, action, NextDispatcher next){
+    next(action);
+
+    var settings = settingSelector(store.state);
+    settings.ifPresent((toSave) => repository.saveSettings(toSave));
+  };
+}
+
 Middleware<AppState> _changedAvatar(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     print(
         'Middleware._changedAvatar: About to temporary store avatar image');
     next(action);
-    
   };
 }
 

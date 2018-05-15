@@ -28,7 +28,7 @@ class AppLoadViewModel{
   static AppLoadViewModel fromStore(Store<AppState> store){
       return new AppLoadViewModel(
         isLoading: isLoadingSelector(store.state),
-        isSignedIn: isLoadingSelector(store.state)
+        isSignedIn: isSignedInSelector(store.state)
       );
   }
 }
