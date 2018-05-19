@@ -26,29 +26,37 @@ class AuthContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return new StoreConnector<AppState, _ViewModel>(
         converter: _ViewModel.fromStore,
-        onInit: (store) {initSignIn(store);},
+        onInit: (store) {
+          initSignIn(store);
+        },
         builder: (context, vm) {
-          return new AuthView(isSignedIn: vm.signedIn, onGoogleSignInSelected: _handleSignIn);
+          return new AuthView(
+              isSignedIn: vm.signedIn, onGoogleSignInSelected: vm.onGoogleSignInSelected);
         });
   }
 
   void initSignIn(Store store) async {
     print('Attempting to SignIn with Google');
-    _googleSignIn.onCurrentUserChanged.listen((GoogleSignInAccount account) async {
+    _googleSignIn.onCurrentUserChanged
+        .listen((GoogleSignInAccount account) async {
       var aut = await account.authentication;
       print(account.toString());
       print(aut.idToken);
       print(aut.accessToken);
       var azureAuthToken = await getAuthCode(aut.accessToken, aut.idToken);
       print('AzureAuthToken: $azureAuthToken');
-      var setting  = new Settings(accessToken: aut.accessToken, azureAuthToken: azureAuthToken, email: account.email, playerId: account.id, photoUrl: account.photoUrl);
+      var setting = new Settings(
+          accessToken: aut.accessToken,
+          azureAuthToken: azureAuthToken,
+          email: account.email,
+          playerId: account.id,
+          photoUrl: account.photoUrl);
       store.dispatch(new SignInCompletedAction(setting));
     });
-     _googleSignIn.signInSilently(suppressErrors: false).catchError((onError) {
-       print('Silent Sign In Error: $onError');
-       store.dispatch(new GoogleSilentSignInFailedAction());
-     });
-    
+    _googleSignIn.signInSilently(suppressErrors: false).catchError((onError) {
+      print('Silent Sign In Error: $onError');
+      store.dispatch(new GoogleSilentSignInFailedAction());
+    });
   }
 
   Map<String, Object> toJson(String auth, String id) {
@@ -68,7 +76,7 @@ class AuthContainer extends StatelessWidget {
   Future<String> makeHttpPostCall(Uri uri, String jsonRequestBody) async {
     var httpClient = new HttpClient();
     return await httpClient.postUrl(uri).then((request) async {
-      request.headers.contentType = 
+      request.headers.contentType =
           new ContentType("application", "json", charset: "utf-8");
       request.headers.add('zumo-api-version', '2.0.0');
       request.write(jsonRequestBody);
@@ -78,7 +86,6 @@ class AuthContainer extends StatelessWidget {
         return result;
       }
       return '';
-      
     }).catchError((onError) {
       print(onError.toString());
     });
@@ -90,8 +97,7 @@ class AuthContainer extends StatelessWidget {
         'tennisaiservice.azurewebsites.net', '/.auth/login/google');
     var response = await makeHttpPostCall(uri, jsonRequest);
 
-    if(response.isNotEmpty)
-    {
+    if (response.isNotEmpty) {
       // The returned claim returns a json object that contain authenticationToken and azure user with sid. Not interested in the sid for now
       // Will use the provider id as the player id. No support for multiple provider auth for same player.
       return JSON.decode(response)['authenticationToken'] as String;
@@ -99,22 +105,10 @@ class AuthContainer extends StatelessWidget {
     return '';
   }
 
-  
-
-  Future<Null> _handleSignIn() async {
-    try {
-      await _googleSignIn.signIn();
-    } catch (error) {
-      print(error);
-    }
-  }
-
-  
   Future<Null> _handleSignOut() async {
     _googleSignIn.disconnect();
   }
 }
-
 
 class _ViewModel {
   final bool loading;
@@ -134,9 +128,13 @@ class _ViewModel {
         settings: settingsOptions.isEmpty ? null : settingsOptions.value,
         loading: store.state.isLoading,
         signedIn: store.state.isSignedIn,
-        onGoogleSignInSelected: () {
+        onGoogleSignInSelected: () async {
           print('auth_container.viewModel: Google Sign in selected');
-          
+          try {
+            await _googleSignIn.signIn();
+          } catch (error) {
+            print('onGoogleSignInSelected: $error');
+          }
         });
   }
 }
