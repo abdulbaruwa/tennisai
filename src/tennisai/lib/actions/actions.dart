@@ -201,4 +201,6 @@ class SignInCompletedAction{
   final Settings settings;
   SignInCompletedAction(this.settings);
 }
+
+class GoogleSilentSignInFailedAction{}
 // class ResetCacheAction{}

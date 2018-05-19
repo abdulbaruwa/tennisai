@@ -50,15 +50,15 @@ class TennisAiApp extends StatelessWidget {
 }
 
 _loadState(Store store) {  
-  store.dispatch(new LoadWatchedTournamentsAction());
-  store.dispatch(new LoadUpcomingTournamentsAction());
-  // TODO playerId will need to be passed in via Auth and cache.
-  store.dispatch(new LoadPlayerAction("12"));
-  store.dispatch(new LoadBasketAction());
-  store.dispatch(new LoadSearchPreferenceAction());
-  store.dispatch(new LoadSearchTournamentsAction());
-  store.dispatch(new LoadRankingInfosAction());
-  store.dispatch(new LoadMatchResultInfosAction());
+  // store.dispatch(new LoadWatchedTournamentsAction());
+  // store.dispatch(new LoadUpcomingTournamentsAction());
+  // // TODO playerId will need to be passed in via Auth and cache.
+  // store.dispatch(new LoadPlayerAction("12"));
+  // store.dispatch(new LoadBasketAction());
+  // store.dispatch(new LoadSearchPreferenceAction());
+  // store.dispatch(new LoadSearchTournamentsAction());
+  // store.dispatch(new LoadRankingInfosAction());
+  // store.dispatch(new LoadMatchResultInfosAction());
 }
 
 class TennisAiHome extends StatelessWidget {
@@ -67,6 +67,7 @@ class TennisAiHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new AppLoading(builder: (context, loading) {
+      print('appLoading State: ${loading.isSignedIn}');
       if(loading.isSignedIn == false){
          return new AuthContainer();
       }

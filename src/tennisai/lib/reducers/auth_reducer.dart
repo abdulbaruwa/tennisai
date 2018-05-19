@@ -12,10 +12,14 @@ List<Settings> _signInWithGoogleAction(List<Settings> settings, SignInCompletedA
 }
 
 final authStatusReducer = combineReducers<bool>([
-  new TypedReducer<bool, SignInCompletedAction>(
-      _signInCompletedUpdateStatus),
+  new TypedReducer<bool, SignInCompletedAction>(_signInCompletedUpdateStatus),
+  new TypedReducer<bool, GoogleSilentSignInFailedAction>(_googleSilentSignInFailed)
 ]);
 
 bool _signInCompletedUpdateStatus(bool status, SignInCompletedAction action){
   return true;
+}
+
+bool _googleSilentSignInFailed(bool status, GoogleSilentSignInFailedAction action){
+  return false;
 }

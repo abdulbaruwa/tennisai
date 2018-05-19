@@ -3,9 +3,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as httpdart;
-import 'package:http_parser/http_parser.dart';
 import '../models/models.dart';
 import '../paths/paths.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// A class that is meant to represent a Client that would be used to call a Web
 /// Service. It is responsible for fetching and persisting WatchedTournaments to and from the
@@ -22,6 +22,11 @@ class WebClient {
     print('web_client.fetchWatchedTournaments(): About to make service call');
     return getTournamentsFromControllerWithUserId("watched", "12");
   }
+
+  // Future<String> getAuthToken(){
+  //   var flutterSecureStorage = new FlutterSecureStorage();
+  //   return flutterSecureStorage.read(key: "authtoken");
+  // }
 
   Future<List<TournamentEntity>> getTournamentsFromControllerWithUserId(
       String controller, String userId) async {
@@ -47,8 +52,7 @@ class WebClient {
   Future<List<MatchResultInfoEntity>> getMatchResult(String userId) async {
     var httpClient = new HttpClient();
     List<MatchResultInfoEntity> matchResults = [];
-    var uri = new Uri.http(
-        '192.168.1.156:55511', '/TennisAiServiceService/api/tournamentresult', {
+    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/tournamentresult', {
       'id': userId,
     });
     var request = await httpClient.getUrl(uri);
@@ -98,8 +102,7 @@ class WebClient {
     return searchPreferences;
   }
 
-  Future<List<TournamentEntity>> getTournamentsByDefaultSearchPreferences(
-      String playerId) async {
+  Future<List<TournamentEntity>> getTournamentsByDefaultSearchPreferences(String playerId) async {
     List<TournamentEntity> tournaments = [];
     var uri = new Uri.http('192.168.1.156:55511',
         '/TennisAiServiceService/api/tournaments/$playerId/searchpreference');
@@ -134,9 +137,11 @@ class WebClient {
   }
 
   Future<dynamic> makeHttpCall(Uri uri) async {
+    //var authToken = await getAuthToken();
     var httpClient = new HttpClient();
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
+    //request.headers.add('x-zumo-auth', authToken);
     var response = await request.close();
     var responseBody = await response.transform(UTF8.decoder).join();
     var jsonData = JSON.decode(responseBody);
