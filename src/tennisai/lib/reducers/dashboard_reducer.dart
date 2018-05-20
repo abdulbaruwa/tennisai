@@ -27,7 +27,6 @@ List<Tournament> _setNoWatchedTournaments(List<Tournament> watchedTournaments,
 List<Tournament> _addWatchedTournament(
     List<Tournament> watchedTournaments, AddWatchedTournamentsAction action) {
   if (watchedTournaments.contains(action.tournament) == false) {
-    print('Watched tournament contains ${action.tournament.code}: Count is ${watchedTournaments.length}');
     return new List.from(watchedTournaments)..add(action.tournament);
   }
   return watchedTournaments;

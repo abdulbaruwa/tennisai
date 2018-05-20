@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:core';
 
 import 'package:meta/meta.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/models.dart';
 import 'file_storage.dart';
 import 'web_client.dart';
@@ -23,6 +24,11 @@ class DashboardRepository {
     this.webClient = const WebClient(),
   });
 
+  Future<Null> saveAuthToken(String authToken)async{
+    var storage = new FlutterSecureStorage();
+    await storage.write(key: "authToken", value: authToken);
+  }
+  
   Future<List<TournamentEntity>> loadUpcomingTournaments() async {
     try {
       var result = await fileStorage.loadEnteredTournaments();
@@ -58,12 +64,12 @@ class DashboardRepository {
     ]);
   }
 
-  saveSettings(Settings setting){
-    print(setting.toJson());
-    // Todo: Persist to secure storage.
-    //var flutterSecureStorage = new FlutterSecureStorage();
-    //return flutterSecureStorage.write(key: "authtoken", value: setting.azureAuthToken);
-  }
+  // saveSettings(Settings setting){
+  //   print(setting.toJson());
+  //   // Todo: Persist to secure storage.
+  //   var flutterSecureStorage = new FlutterSecureStorage();
+  //   return flutterSecureStorage.write(key: "authtoken", value: setting.azureAuthToken);
+  // }
   /// Loads entered Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the enteredTournament from a Web Client.
   Future<List<TournamentEntity>> loadEnteredTournaments() async {

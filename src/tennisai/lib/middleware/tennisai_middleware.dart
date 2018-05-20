@@ -96,11 +96,24 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
 Middleware<AppState> _authCompleted(DashboardRepository repository)
 {
-  return (Store<AppState> store, action, NextDispatcher next){
+  return (Store<AppState> store, action, NextDispatcher next) async{
     next(action);
 
     var settings = settingSelector(store.state);
-    settings.ifPresent((toSave) => repository.saveSettings(toSave));
+    if(settings.isNotEmpty)
+    {
+      await repository.saveAuthToken(settings.first.azureAuthToken);
+
+      // store.dispatch(new LoadWatchedTournamentsAction());
+      // store.dispatch(new LoadUpcomingTournamentsAction());
+      // // TODO playerId will need to be passed in via Auth and cache.
+      // store.dispatch(new LoadPlayerAction("12"));
+      // store.dispatch(new LoadBasketAction());
+      // store.dispatch(new LoadSearchPreferenceAction());
+      // store.dispatch(new LoadSearchTournamentsAction());
+      // store.dispatch(new LoadRankingInfosAction());
+      // store.dispatch(new LoadMatchResultInfosAction());
+    }
   };
 }
 
@@ -128,8 +141,7 @@ Middleware<AppState> _createSaveWatchedTournaments(DashboardRepository repositor
 
 Middleware<AppState> _createClearBasketAfterSendToLta(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print(
-        'Middleware._createClearBasketAfterSendToLta: About to clear basket repository');
+    print('Middleware._createClearBasketAfterSendToLta: About to clear basket repository');
     next(action);
     var toSave = basketSelector(store.state)
         .map((basket) => basket.toEntity())

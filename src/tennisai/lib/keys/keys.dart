@@ -38,3 +38,8 @@ class TennisAiKeys {
   static final basket = const Key('__profileName__');
 }
 
+class TennisAiConfigs
+{
+  static const String azureHostName =  'tennisaiservice.azurewebsites.net';
+  static const String localHostName = '192.168.1.156:55511';
+}

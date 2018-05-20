@@ -3,6 +3,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as httpdart;
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import '../keys/keys.dart';
 import '../models/models.dart';
 import '../paths/paths.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -15,18 +18,18 @@ import '../paths/paths.dart';
 /// a real server but simply emulates the functionality.
 class WebClient {
   final Duration delay;
-
-  const WebClient([this.delay = const Duration(milliseconds: 3000)]);
+  final String hostAddress;
+  const WebClient([this.delay = const Duration(milliseconds: 3000), this.hostAddress = TennisAiConfigs.azureHostName]);
 
   Future<List<TournamentEntity>> fetchWatchedTournaments() async {
     print('web_client.fetchWatchedTournaments(): About to make service call');
     return getTournamentsFromControllerWithUserId("watched", "12");
   }
 
-  // Future<String> getAuthToken(){
-  //   var flutterSecureStorage = new FlutterSecureStorage();
-  //   return flutterSecureStorage.read(key: "authtoken");
-  // }
+  Future<String> getAuthToken(){
+    var flutterSecureStorage = new FlutterSecureStorage();
+    return flutterSecureStorage.read(key: "authtoken");
+  }
 
   Future<List<TournamentEntity>> getTournamentsFromControllerWithUserId(
       String controller, String userId) async {
@@ -34,7 +37,7 @@ class WebClient {
     List<TournamentEntity> tournaments = [];
     print('GetTournaments called');
     var uri = new Uri.http(
-        '192.168.1.156:55511', '/TennisAiServiceService/api/$controller', {
+        hostAddress, '/api/$controller', {
       'id': userId,
     });
     var request = await httpClient.getUrl(uri);
@@ -52,7 +55,7 @@ class WebClient {
   Future<List<MatchResultInfoEntity>> getMatchResult(String userId) async {
     var httpClient = new HttpClient();
     List<MatchResultInfoEntity> matchResults = [];
-    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/tournamentresult', {
+    var uri = new Uri.http(hostAddress, '/api/tournamentresult', {
       'id': userId,
     });
     var request = await httpClient.getUrl(uri);
@@ -71,7 +74,7 @@ class WebClient {
     var httpClient = new HttpClient();
     List<RankingInfoEntity> matchResults = [];
     var uri = new Uri.http(
-        '192.168.1.156:55511', '/TennisAiServiceService/api/rankinginfo', {
+        hostAddress, '/api/rankinginfo', {
       'id': userId,
     });
     var request = await httpClient.getUrl(uri);
@@ -90,7 +93,7 @@ class WebClient {
       String userId) async {
     List<SearchPreferenceEntity> searchPreferences = [];
     var uri = new Uri.http(
-        '192.168.1.156:55511', '/TennisAiServiceService/api/searchpreference', {
+        hostAddress, '/api/searchpreference', {
       'id': userId,
     });
 
@@ -104,8 +107,8 @@ class WebClient {
 
   Future<List<TournamentEntity>> getTournamentsByDefaultSearchPreferences(String playerId) async {
     List<TournamentEntity> tournaments = [];
-    var uri = new Uri.http('192.168.1.156:55511',
-        '/TennisAiServiceService/api/tournaments/$playerId/searchpreference');
+    var uri = new Uri.http(hostAddress,
+        '/api/tournaments/$playerId/searchpreference');
 
     var jsonData = await makeHttpCall(uri);
 
@@ -116,7 +119,7 @@ class WebClient {
   }
 
   Future<BasketEntity> getBasket(String playerId) async {
-    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/basket/$playerId/getplayerbasket');
+    var uri = new Uri.http(hostAddress, '/api/basket/$playerId/getplayerbasket');
 
     var jsonData = await makeHttpCall(uri);
 
@@ -125,7 +128,7 @@ class WebClient {
   }
 
   Future<List<PlayerEntity>> getPlayers(String playerId) async {
-    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/players/$playerId/getplayerprofile');
+    var uri = new Uri.http(hostAddress, '/api/players/$playerId/getplayerprofile');
     List<PlayerEntity> players = [];
     var jsonData = await makeHttpCall(uri);
 
@@ -234,7 +237,7 @@ class WebClient {
 
   Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(SearchPreference searchPreference) async {
     List<TournamentEntity> tournaments = [];
-    var uri = new Uri.http('192.168.1.156:55511', '/TennisAiServiceService/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/${searchPreference.gender}/${searchPreference.distance}/${searchPreference.statusIndex}/searchall');
+    var uri = new Uri.http(hostAddress, '/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/${searchPreference.gender}/${searchPreference.distance}/${searchPreference.statusIndex}/searchall');
     var jsonData = await makeHttpCall(uri);
 
     for (var json in jsonData) {
@@ -269,14 +272,14 @@ class WebClient {
 
   Future<bool> postBasket(BasketEntity basketEntity) async {
     var jsonRequest =  JSON.encode(basketEntity.toJson());
-    var uri = new Uri.http('192.168.1.156:55511','/TennisAiServiceService/api/basket');
+    var uri = new Uri.http(hostAddress,'/api/basket');
     var response = await makeHttpPostCall(uri, jsonRequest);
     return response;
   }
 
   Future<bool> postToLtaBasket(BasketEntity basketEntity) async {
     var jsonRequest =  JSON.encode(basketEntity.toJson());
-    var uri = new Uri.http('192.168.1.156:55511','/TennisAiServiceService/api/baskettolta');
+    var uri = new Uri.http(hostAddress,'/api/baskettolta');
     var response = await makeHttpPostCall(uri, jsonRequest);
     return response;
   }
