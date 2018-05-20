@@ -54,17 +54,7 @@ bool _isSignedIn(AppState store)
   return store.isSignedIn;
 }
 _loadState(Store store) {
- // if(_isSignedIn(store.state) == false) return;
-
-  store.dispatch(new LoadWatchedTournamentsAction());
-  store.dispatch(new LoadUpcomingTournamentsAction());
-  // // TODO playerId will need to be passed in via Auth and cache.
-  store.dispatch(new LoadPlayerAction("12"));
-  store.dispatch(new LoadBasketAction());
-  store.dispatch(new LoadSearchPreferenceAction());
-  store.dispatch(new LoadSearchTournamentsAction());
-  store.dispatch(new LoadRankingInfosAction());
-  store.dispatch(new LoadMatchResultInfosAction());
+  // Nothing initialized here. Moved init to middleware action fired post auth.
 }
 
 class TennisAiHome extends StatelessWidget {

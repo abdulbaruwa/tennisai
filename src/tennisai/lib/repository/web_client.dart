@@ -13,9 +13,6 @@ import '../paths/paths.dart';
 /// A class that is meant to represent a Client that would be used to call a Web
 /// Service. It is responsible for fetching and persisting WatchedTournaments to and from the
 /// cloud.
-///
-/// Since we're trying to keep this example simple, it doesn't communicate with
-/// a real server but simply emulates the functionality.
 class WebClient {
   final Duration delay;
   final String hostAddress;

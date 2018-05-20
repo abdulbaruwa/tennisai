@@ -104,15 +104,15 @@ Middleware<AppState> _authCompleted(DashboardRepository repository)
     {
       await repository.saveAuthToken(settings.first.azureAuthToken);
 
-      // store.dispatch(new LoadWatchedTournamentsAction());
-      // store.dispatch(new LoadUpcomingTournamentsAction());
-      // // TODO playerId will need to be passed in via Auth and cache.
-      // store.dispatch(new LoadPlayerAction("12"));
-      // store.dispatch(new LoadBasketAction());
-      // store.dispatch(new LoadSearchPreferenceAction());
-      // store.dispatch(new LoadSearchTournamentsAction());
-      // store.dispatch(new LoadRankingInfosAction());
-      // store.dispatch(new LoadMatchResultInfosAction());
+      store.dispatch(new LoadWatchedTournamentsAction());
+      store.dispatch(new LoadUpcomingTournamentsAction());
+      // TODO playerId will need to be passed in via Auth and cache.
+      store.dispatch(new LoadPlayerAction("12"));
+      store.dispatch(new LoadBasketAction());
+      store.dispatch(new LoadSearchPreferenceAction());
+      store.dispatch(new LoadSearchTournamentsAction());
+      store.dispatch(new LoadRankingInfosAction());
+      store.dispatch(new LoadMatchResultInfosAction());
     }
   };
 }
