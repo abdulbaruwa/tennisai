@@ -16,6 +16,7 @@ class LoadingIndicator extends StatelessWidget {
           children: <Widget>[
         new Text('Tennis.Ai', style: Theme.of(context).accentTextTheme.display1),
           new CircularProgressIndicator()]),
-    ));
+    )
+    );
   }
 }

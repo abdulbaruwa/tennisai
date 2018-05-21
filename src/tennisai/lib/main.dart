@@ -17,7 +17,6 @@ import 'containers/auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 GoogleSignIn _googleSignIn = new GoogleSignIn(
-
   scopes: <String>[
     'email',
     'https://www.googleapis.com/auth/contacts.readonly',
@@ -42,17 +41,17 @@ class TennisAiApp extends StatelessWidget {
             // Widgets will find and use this value as the `Store`.
             routes: {TennisAiRoutes.about: (context) {}},
             home: new StoreBuilder<AppState>(
-                onInit: (store) =>  _loadState(store),
+                onInit: (store) => _loadState(store),
                 builder: (context, store) {
                   return new TennisAiHome();
                 })));
   }
 }
 
-bool _isSignedIn(AppState store)
-{
+bool _isSignedIn(AppState store) {
   return store.isSignedIn;
 }
+
 _loadState(Store store) {
   // Nothing initialized here. Moved init to middleware action fired post auth.
 }
@@ -64,17 +63,21 @@ class TennisAiHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return new AppLoading(builder: (context, loading) {
       print('appLoading State: ${loading.isSignedIn}');
-      if(loading.isSignedIn == false){
-         return new AuthContainer();
+      if (loading.isSignedIn == false) {
+        return new AuthContainer();
       }
-      return loading.isLoading
-          ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)
-          : _buildView(context);
+
+      if (loading.isRegisteredUser == false) {
+        print('SHOW REGISTRATION VIEW');
+        return new Registration();
+      } else
+        return loading.isLoading
+            ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)
+            : _buildView(context);
     });
   }
 
   Widget _buildView(BuildContext context) {
-    
     return new ActiveTab(
       builder: (BuildContext context, AppTab activeTab) {
         return new Scaffold(
@@ -100,9 +103,7 @@ Widget _selectActiveTab(BuildContext context, AppTab tab) {
       break;
     case AppTab.search:
       print('About to load Search tab.');
-      return new Container(
-        child: new TournamentSearch()
-      );
+      return new Container(child: new TournamentSearch());
       break;
     case AppTab.profile:
       return new Profile();

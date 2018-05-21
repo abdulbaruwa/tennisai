@@ -14,9 +14,9 @@ import '../paths/paths.dart';
 /// Service. It is responsible for fetching and persisting WatchedTournaments to and from the
 /// cloud.
 class WebClient {
-  final Duration delay;
   final String hostAddress;
-  const WebClient([this.delay = const Duration(milliseconds: 3000), this.hostAddress = TennisAiConfigs.azureHostName]);
+  final Future<String> Function() getToken;
+  const WebClient(this.hostAddress, this.getToken);
 
   Future<List<TournamentEntity>> fetchWatchedTournaments() async {
     print('web_client.fetchWatchedTournaments(): About to make service call');
@@ -149,10 +149,12 @@ class WebClient {
   }
 
   Future<dynamic> makeHttpPostCall(Uri uri, String jsonRequestBody) async {
+    var token = await getToken();
     var httpClient = new HttpClient();
     var request = await httpClient.postUrl(uri);
     request.headers.contentType = new ContentType("application", "json", charset: "utf-8");
     request.headers.add('zumo-api-version', '2.0.0');
+    request.headers.add('x-zumo-auth', token);
     request.write(jsonRequestBody);
     var response = await request.close();
     if(response.statusCode == 200)
@@ -264,7 +266,7 @@ class WebClient {
     List<BasketEntity> tEntities = [];
     tEntities.add(await getBasket(playerId));
     print('before delayed ${tEntities.length}');
-    return new Future.delayed(delay, () => tEntities);
+    return tEntities;
   }
 
   Future<bool> postBasket(BasketEntity basketEntity) async {

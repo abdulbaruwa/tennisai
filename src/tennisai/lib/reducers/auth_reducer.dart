@@ -23,3 +23,15 @@ bool _signInCompletedUpdateStatus(bool status, SignInCompletedAction action){
 bool _googleSilentSignInFailed(bool status, GoogleSilentSignInFailedAction action){
   return false;
 }
+
+final isSignInUserRegisteredReducer = combineReducers<bool>([
+  new TypedReducer<bool, SignInUserIsRegisteredAction>(_signInUserIsRegistered),
+  new TypedReducer<bool, SignInUserNotRegisteredAction>(_signInUserNotIsRegistered),
+]);
+
+bool _signInUserIsRegistered(bool status, SignInUserIsRegisteredAction action) {
+  return true; 
+}
+bool _signInUserNotIsRegistered(bool status, SignInUserNotRegisteredAction action) {
+  return false; 
+}

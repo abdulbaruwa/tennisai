@@ -23,12 +23,13 @@ class AppLoading extends StatelessWidget {
 class AppLoadViewModel{
   bool isLoading;
   bool isSignedIn;
-
-  AppLoadViewModel({this.isLoading, this.isSignedIn});
+  bool isRegisteredUser;
+  AppLoadViewModel({this.isLoading, this.isSignedIn, this.isRegisteredUser});
   static AppLoadViewModel fromStore(Store<AppState> store){
       return new AppLoadViewModel(
         isLoading: isLoadingSelector(store.state),
-        isSignedIn: isSignedInSelector(store.state)
+        isSignedIn: isSignedInSelector(store.state),
+        isRegisteredUser: isRegisteredUserSelector(store.state)
       );
   }
 }

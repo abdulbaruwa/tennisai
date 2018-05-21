@@ -5,6 +5,7 @@ AppState appReducer(AppState state, action) {
   return new AppState(
       isLoading: loadingReducer(state.isLoading, action),
       isSignedIn: authStatusReducer(state.isSignedIn, action),
+      isSignInUserRegistered: isSignInUserRegisteredReducer(state.isSignInUserRegistered, action),
       settings: authReducer(state.settings, action),
       player: playerReducer(state.player, action),
       avatar: avatarUpdateReducer(state.avatar, action),

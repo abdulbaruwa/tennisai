@@ -204,3 +204,20 @@ class SignInCompletedAction{
 
 class GoogleSilentSignInFailedAction{}
 // class ResetCacheAction{}
+
+class CheckSignInUserIsRegisteredAction{
+  final Settings settings;
+  CheckSignInUserIsRegisteredAction(this.settings);
+}
+
+class SignInUserNotRegisteredAction{
+  final Settings settings;
+  SignInUserNotRegisteredAction(this.settings);
+}
+
+class SignInUserIsRegisteredAction{}
+
+class InitStateAction{
+  final String playerId;
+  InitStateAction(this.playerId);
+}

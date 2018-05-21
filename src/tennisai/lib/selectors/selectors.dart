@@ -105,6 +105,7 @@ AppTab activeTabSelector(AppState state) => state.activeTab;
 
 bool isLoadingSelector(AppState state) => state.isLoading;
 bool isSignedInSelector(AppState state) => state.isSignedIn;
+bool isRegisteredUserSelector(AppState state) => state.isSignInUserRegistered;
 
 bool isEntrantsViewItemsReversedSelector(AppState state) =>
     state.isEntrantsViewItemsReverseSorted;

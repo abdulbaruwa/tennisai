@@ -5,6 +5,7 @@ import 'dart:core';
 import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/models.dart';
+import '../keys/keys.dart';
 import 'file_storage.dart';
 import 'web_client.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -18,17 +19,13 @@ import 'web_client.dart';
 class DashboardRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
+  const DashboardRepository({@required this.fileStorage, this.webClient});
 
-  const DashboardRepository({
-    @required this.fileStorage,
-    this.webClient = const WebClient(),
-  });
-
-  Future<Null> saveAuthToken(String authToken)async{
+  Future<Null> saveAuthToken(String authToken) async {
     var storage = new FlutterSecureStorage();
     await storage.write(key: "authToken", value: authToken);
   }
-  
+
   Future<List<TournamentEntity>> loadUpcomingTournaments() async {
     try {
       var result = await fileStorage.loadEnteredTournaments();
@@ -115,6 +112,15 @@ class DashboardRepository {
     }
   }
 
+  Future<List<PlayerEntity>> loadLatestPlayerProfile(String playerId) async {
+    try {
+      return webClient.fetchPlayerProfile(playerId);
+    } catch (e) {
+      print('LoadLatestPlayerProfile: Error $e');
+      return new List<PlayerEntity>();
+    }
+  }
+
   // Persists PlayerProfile to local disk and the web
   Future savePlayerProfile(PlayerEntity playerEntity) {
     return Future.wait([
@@ -156,8 +162,7 @@ class DashboardRepository {
   }
 
   // Persists Avatar image
-  Future saveProfileAvatar(String playerId, File avatar)
-  {
+  Future saveProfileAvatar(String playerId, File avatar) {
     print('dashboard_repository: saveProfileAvatar..TODO..');
     return Future.wait([webClient.postAvatarImage(playerId, avatar)]);
   }
@@ -178,9 +183,11 @@ class DashboardRepository {
     }
   }
 
-  Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(SearchPreference searchPreference){
+  Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(
+      SearchPreference searchPreference) {
     return webClient.loadTournamentsWithSearchPreference(searchPreference);
   }
+
   // Basket
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
@@ -209,6 +216,7 @@ class DashboardRepository {
       webClient.postToLtaBasket(basketEntity),
     ]);
   }
+
   // Main
   /// Loads Ranking Info from File storage. If they don't exist or encounter an
   /// error, it attempts to load the rankingInfo from a Web Client
@@ -242,7 +250,8 @@ class DashboardRepository {
     return fileStorage.saveRankingInfos(rankingInfoEntitys);
   }
 
-  Future saveMatchResultInfos(List<MatchResultInfoEntity> matchResultInfoEntitys) {
+  Future saveMatchResultInfos(
+      List<MatchResultInfoEntity> matchResultInfoEntitys) {
     return fileStorage.saveMatchResultInfos(matchResultInfoEntitys);
   }
 }

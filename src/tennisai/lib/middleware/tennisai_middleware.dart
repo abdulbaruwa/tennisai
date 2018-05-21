@@ -1,12 +1,21 @@
+import 'dart:async';
 import 'package:redux/redux.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import '../models/models.dart';
 import '../actions/actions.dart';
+import '../keys/keys.dart';
 import '../selectors/selectors.dart';
 import '../repository/repository.dart';
-import 'package:path_provider/path_provider.dart';
+
+Future<String> getAuthToken() {
+  var flutterSecureStorage = new FlutterSecureStorage();
+  return flutterSecureStorage.read(key: "authtoken");
+}
 
 List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   DashboardRepository repository = const DashboardRepository(
+    webClient: const WebClient(TennisAiConfigs.azureHostName, getAuthToken),
     fileStorage:
         const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),
   ),
@@ -30,7 +39,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
   final loadSearchTournaments = _createLoadSearchTournaments(repository);
   final saveSearchTournaments = _createSaveSearchTournaments(repository);
-  final loadSearchTournamentsWithPreference = _createLoadSearchTournamentsWithPreference(repository);
+  final loadSearchTournamentsWithPreference =
+      _createLoadSearchTournamentsWithPreference(repository);
 
   final loadBasket = _createLoadBasket(repository);
   final saveBasket = _createSaveBasket(repository);
@@ -43,21 +53,38 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final changedAvatar = _changedAvatar(repository);
 
   final signInWithGoogleAction = _authCompleted(repository);
+  final signInUserNotRegistered = _signInUserNotRegistered(repository);
+  final checkSignInUserIsRegistered = _checkSignInUserIsRegistered(repository);
+  final initStateAction = _initState(repository);
 
   return [
-
     // Auth
-    new TypedMiddleware<AppState, SignInCompletedAction>(signInWithGoogleAction),
-    new TypedMiddleware<AppState, LoadWatchedTournamentsAction>(loadWatchedTournaments),
-    new TypedMiddleware<AppState, LoadUpcomingTournamentsAction>(loadUpcomingTournaments),
-    new TypedMiddleware<AppState, AddWatchedTournamentsAction>(saveWatchedTournaments),
-    new TypedMiddleware<AppState, WatchedTournamentsLoadedAction>(saveWatchedTournaments),
-    new TypedMiddleware<AppState, LoadEnteredTournamentsAction>(loadEnteredTournaments),
-    new TypedMiddleware<AppState, AddEnteredTournamentsAction>(saveEnteredTournaments),
-    new TypedMiddleware<AppState, EnteredTournamentsLoadedAction>(saveEnteredTournaments),
-    new TypedMiddleware<AppState, UpcomingTournamentsLoadedAction>(saveUpcomingTournaments),
+    new TypedMiddleware<AppState, InitStateAction>(initStateAction),
+    new TypedMiddleware<AppState, SignInCompletedAction>(
+        signInWithGoogleAction),
+    new TypedMiddleware<AppState, SignInUserNotRegisteredAction>(
+        signInUserNotRegistered),
+    new TypedMiddleware<AppState, CheckSignInUserIsRegisteredAction>(
+        checkSignInUserIsRegistered),
+    new TypedMiddleware<AppState, LoadWatchedTournamentsAction>(
+        loadWatchedTournaments),
+    new TypedMiddleware<AppState, LoadUpcomingTournamentsAction>(
+        loadUpcomingTournaments),
+    new TypedMiddleware<AppState, AddWatchedTournamentsAction>(
+        saveWatchedTournaments),
+    new TypedMiddleware<AppState, WatchedTournamentsLoadedAction>(
+        saveWatchedTournaments),
+    new TypedMiddleware<AppState, LoadEnteredTournamentsAction>(
+        loadEnteredTournaments),
+    new TypedMiddleware<AppState, AddEnteredTournamentsAction>(
+        saveEnteredTournaments),
+    new TypedMiddleware<AppState, EnteredTournamentsLoadedAction>(
+        saveEnteredTournaments),
+    new TypedMiddleware<AppState, UpcomingTournamentsLoadedAction>(
+        saveUpcomingTournaments),
     new TypedMiddleware<AppState, LoadRankingInfosAction>(loadRankingInfos),
-    new TypedMiddleware<AppState, LoadMatchResultInfosAction>(loadMatchResultInfos),
+    new TypedMiddleware<AppState, LoadMatchResultInfosAction>(
+        loadMatchResultInfos),
     // new TypedMiddleware<AppSate, UpcomingTournamentsLoadedAction>(
     //   saveUpcomingTournaments),
     new TypedMiddleware<AppState, RemoveFromWatchedTournamentsAction>(
@@ -68,24 +95,27 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new TypedMiddleware<AppState, AddPlayerAction>(savePlayerProfile),
 
     // Search Query preference
-    new TypedMiddleware<AppState, LoadSearchPreferenceAction>(
-        loadSearchQuery),
+    new TypedMiddleware<AppState, LoadSearchPreferenceAction>(loadSearchQuery),
     new TypedMiddleware<AppState, AddSearchPreferenceAction>(saveSearchQuery),
 
     // Search Tournament
-    new TypedMiddleware<AppState, LoadSearchTournamentsAction>(loadSearchTournaments),
-    new TypedMiddleware<AppState, SearchTournamentWithPreferenceAction>(loadSearchTournamentsWithPreference),
-    new TypedMiddleware<AppState, AddSearchTournamentsAction>(saveSearchTournaments),
+    new TypedMiddleware<AppState, LoadSearchTournamentsAction>(
+        loadSearchTournaments),
+    new TypedMiddleware<AppState, SearchTournamentWithPreferenceAction>(
+        loadSearchTournamentsWithPreference),
+    new TypedMiddleware<AppState, AddSearchTournamentsAction>(
+        saveSearchTournaments),
     // Basket
     new TypedMiddleware<AppState, LoadBasketAction>(loadBasket),
     new TypedMiddleware<AppState, AddBasketAction>(saveBasket),
     new TypedMiddleware<AppState, AddTournamentToBasketAction>(saveBasket),
     new TypedMiddleware<AppState, RemoveTournamentFromBasketAction>(saveBasket),
     new TypedMiddleware<AppState, SendBasketToLtaBasketAction>(sendToLtaBasket),
-    new TypedMiddleware<AppState, BasketSentToLtaAction>(clearBasket),  
+    new TypedMiddleware<AppState, BasketSentToLtaAction>(clearBasket),
 
     // Edit profile
-    new TypedMiddleware<AppState, UpdatePlayerProfileAndSearchPreferenceAction>(updateProfileAndSearchPref),
+    new TypedMiddleware<AppState, UpdatePlayerProfileAndSearchPreferenceAction>(
+        updateProfileAndSearchPref),
 
     // Main View, Match result and Ranking Info.
     new TypedMiddleware<AppState, RankingInfoLoadedAction>(saveRankingInfos),
@@ -94,38 +124,77 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   ];
 }
 
-Middleware<AppState> _authCompleted(DashboardRepository repository)
-{
-  return (Store<AppState> store, action, NextDispatcher next) async{
+Middleware<AppState> _signInUserNotRegistered(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
+  };
+}
+
+Middleware<AppState> _checkSignInUserIsRegistered(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
+    var settings = action.settings as Settings;
+    var playerProfile =
+        await repository.loadLatestPlayerProfile(settings.playerId);
+    if (playerProfile.isNotEmpty) {
+      // TODO: Ensure we have picked the right profile
+      store.dispatch(new SignInUserIsRegisteredAction());
+    } else {
+      store.dispatch(new SignInUserNotRegisteredAction(settings));
+    }
+
+    //repository.checkSignInUserIsRegistered(action.settings);
+  };
+}
+
+Middleware<AppState> _initState(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
+
+    var playerId = action.playerId;
+
+    store.dispatch(new LoadPlayerAction(playerId));
+    store.dispatch(new LoadWatchedTournamentsAction());
+    store.dispatch(new LoadUpcomingTournamentsAction());
+    store.dispatch(new LoadBasketAction());
+    store.dispatch(new LoadSearchPreferenceAction());
+    store.dispatch(new LoadSearchTournamentsAction());
+    store.dispatch(new LoadRankingInfosAction());
+    store.dispatch(new LoadMatchResultInfosAction());
+  };
+}
+
+Middleware<AppState> _authCompleted(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
 
     var settings = settingSelector(store.state);
-    if(settings.isNotEmpty)
-    {
+    if (settings.isNotEmpty) {
       await repository.saveAuthToken(settings.first.azureAuthToken);
 
-      store.dispatch(new LoadWatchedTournamentsAction());
-      store.dispatch(new LoadUpcomingTournamentsAction());
-      // TODO playerId will need to be passed in via Auth and cache.
-      store.dispatch(new LoadPlayerAction("12"));
-      store.dispatch(new LoadBasketAction());
-      store.dispatch(new LoadSearchPreferenceAction());
-      store.dispatch(new LoadSearchTournamentsAction());
-      store.dispatch(new LoadRankingInfosAction());
-      store.dispatch(new LoadMatchResultInfosAction());
+      // store.dispatch(new LoadWatchedTournamentsAction());
+      // store.dispatch(new LoadUpcomingTournamentsAction());
+      // // TODO playerId will need to be passed in via Auth and cache.
+      // store.dispatch(new LoadPlayerAction("12"));
+      // store.dispatch(new LoadBasketAction());
+      // store.dispatch(new LoadSearchPreferenceAction());
+      // store.dispatch(new LoadSearchTournamentsAction());
+      // store.dispatch(new LoadRankingInfosAction());
+      // store.dispatch(new LoadMatchResultInfosAction());
     }
   };
 }
 
 Middleware<AppState> _changedAvatar(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print(
-        'Middleware._changedAvatar: About to temporary store avatar image');
+    print('Middleware._changedAvatar: About to temporary store avatar image');
     next(action);
   };
 }
 
-Middleware<AppState> _createSaveWatchedTournaments(DashboardRepository repository) {
+Middleware<AppState> _createSaveWatchedTournaments(
+    DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     print(
         'Middleware._createSaveWatchedTournaments: About to save watched Tournaments');
@@ -139,13 +208,14 @@ Middleware<AppState> _createSaveWatchedTournaments(DashboardRepository repositor
   };
 }
 
-Middleware<AppState> _createClearBasketAfterSendToLta(DashboardRepository repository) {
+Middleware<AppState> _createClearBasketAfterSendToLta(
+    DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    print('Middleware._createClearBasketAfterSendToLta: About to clear basket repository');
+    print(
+        'Middleware._createClearBasketAfterSendToLta: About to clear basket repository');
     next(action);
-    var toSave = basketSelector(store.state)
-        .map((basket) => basket.toEntity())
-        .toList();
+    var toSave =
+        basketSelector(store.state).map((basket) => basket.toEntity()).toList();
     repository.saveBasket(toSave.first);
   };
 }
@@ -282,21 +352,20 @@ Middleware<AppState> _createLoadSearchPreference(
   };
 }
 
-Middleware<AppState> _createLoadSearchTournamentsWithPreference(DashboardRepository repository) {
+Middleware<AppState> _createLoadSearchTournamentsWithPreference(
+    DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    
-    var defaultGenderSetting = activeSearchPreferenceSelector(store.state).first?.gender;
+    var defaultGenderSetting =
+        activeSearchPreferenceSelector(store.state).first?.gender;
     // Use the default Gender settings
     SearchPreference activeSearch = action.searchPreference;
     var searchPreference = activeSearch.copyWth(gender: defaultGenderSetting);
 
-    repository
-        .loadTournamentsWithSearchPreference(searchPreference)
-        .then(
+    repository.loadTournamentsWithSearchPreference(searchPreference).then(
       (searchPref) {
         var entities = searchPref.map(Tournament.fromEntity).toList();
-        store.dispatch(new SearchTournamentsLoadedAction(entities),
-        
+        store.dispatch(
+          new SearchTournamentsLoadedAction(entities),
         );
       },
     ).catchError((_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
@@ -356,7 +425,7 @@ Middleware<AppState> _createSaveBasket(DashboardRepository repository) {
   };
 }
 
-Middleware<AppState> _createSendBasketToLta(DashboardRepository repository){
+Middleware<AppState> _createSendBasketToLta(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) async {
     print('About to send Basket to lta');
     next(action);
@@ -378,9 +447,9 @@ Middleware<AppState> _updatePlayerAndSearchProfile(
         searchPreferenceSelector(store.state).value.toEntity();
     repository.saveSearchPreference(searchPrefToSave);
 
-    if (avatarSelector(store.state).isPresent)
-    {
-      repository.saveProfileAvatar(playerToSave.playerId, avatarSelector(store.state).value);
+    if (avatarSelector(store.state).isPresent) {
+      repository.saveProfileAvatar(
+          playerToSave.playerId, avatarSelector(store.state).value);
     }
   };
 }
