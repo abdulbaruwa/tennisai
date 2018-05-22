@@ -27,6 +27,7 @@ bool _googleSilentSignInFailed(bool status, GoogleSilentSignInFailedAction actio
 final isSignInUserRegisteredReducer = combineReducers<bool>([
   new TypedReducer<bool, SignInUserIsRegisteredAction>(_signInUserIsRegistered),
   new TypedReducer<bool, SignInUserNotRegisteredAction>(_signInUserNotIsRegistered),
+  new TypedReducer<bool, RegistrationCancelledAction>(_registrationCancelled)
 ]);
 
 bool _signInUserIsRegistered(bool status, SignInUserIsRegisteredAction action) {
@@ -34,4 +35,8 @@ bool _signInUserIsRegistered(bool status, SignInUserIsRegisteredAction action) {
 }
 bool _signInUserNotIsRegistered(bool status, SignInUserNotRegisteredAction action) {
   return false; 
+}
+
+bool _registrationCancelled(bool status, RegistrationCancelledAction action){
+  return true;
 }

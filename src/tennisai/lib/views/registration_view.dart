@@ -1,19 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import '../models/models.dart';
-import 'tournament_item.dart';
-import '../containers/tournament_details.dart';
-import '../keys/keys.dart';
-import '../controls/usercontrols.dart';
-import '../theme/ktheme.dart';
 
 class RegistrationView extends StatelessWidget {
   final Settings settings;
-  RegistrationView({Key key, this.settings}) : super(key: key);
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
+  final Function() onRegistrationCancelled;
+  RegistrationView({Key key, this.settings, this.onRegistrationCancelled}) : super(key: key);
+  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -78,6 +72,7 @@ class RegistrationView extends StatelessWidget {
         style: new TextStyle(color: Colors.black54),
       ),
       onPressed: () {
+        onRegistrationCancelled();
         Navigator.of(context).pop();
       },
     );

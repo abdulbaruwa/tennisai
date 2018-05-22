@@ -11,3 +11,4 @@ export 'ranking_info.dart';
 export 'match_result_info.dart';
 export 'enums.dart';
 export 'settings.dart';
+export 'registration_info.dart';

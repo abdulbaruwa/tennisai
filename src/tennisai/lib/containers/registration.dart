@@ -5,6 +5,7 @@ import 'package:redux/redux.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/registration_view.dart';
+import '../actions/actions.dart';
 
 class Registration extends StatelessWidget {
   Registration({Key key}) : super(key: key);
@@ -15,7 +16,7 @@ class Registration extends StatelessWidget {
       distinct: true,
       converter: RegistrationViewModel.fromStore, 
       builder: (context, vm){
-        return new RegistrationView();
+        return new RegistrationView(onRegistrationCancelled: vm.onRegistrationCancelled);
       }
     );
   }
@@ -23,10 +24,19 @@ class Registration extends StatelessWidget {
 
 class RegistrationViewModel{
   Settings settings;
-  RegistrationViewModel({this.settings});
+  Function() onRegistrationCancelled;
+  RegistrationViewModel({this.settings, this.onRegistrationCancelled});
   static RegistrationViewModel fromStore(Store<AppState> store){
+    var settings = settingSelector(store.state).first;
+
       return new RegistrationViewModel(
-        settings: settingSelector(store.state).first,
+        settings: settings,
+        onRegistrationCancelled: (){
+          print('Registration cancelled');
+
+          store.dispatch(new RegistrationCancelledAction());
+          store.dispatch(new InitStateAction(settings.playerId));
+        }
       );
   }
 }

@@ -221,3 +221,10 @@ class InitStateAction{
   final String playerId;
   InitStateAction(this.playerId);
 }
+
+class RegistrationCancelledAction{}
+
+class RegistrationSaveAction{
+  final RegistrationInfo registrationInfo;
+  RegistrationSaveAction(this.registrationInfo);
+}
