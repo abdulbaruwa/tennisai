@@ -100,6 +100,7 @@ Optional<Basket> basketSelector(AppState state) {
   }
 }
 
+
 //List<Entrant> _getEntrant
 AppTab activeTabSelector(AppState state) => state.activeTab;
 
@@ -112,3 +113,11 @@ bool isEntrantsViewItemsReversedSelector(AppState state) =>
 
 bool activeEntrantsSortOrderSelector(AppState state) =>
     state.activeEntrantsSortOrder;
+
+Optional<RegistrationInfo> registrationInfoSelector(AppState state) {
+  try {
+    return new Optional.of(state.registrationInfo.first);
+  } catch (e) {
+    return new Optional.absent();
+  }
+}

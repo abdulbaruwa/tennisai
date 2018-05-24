@@ -56,9 +56,13 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final signInUserNotRegistered = _signInUserNotRegistered(repository);
   final checkSignInUserIsRegistered = _checkSignInUserIsRegistered(repository);
   final initStateAction = _initState(repository);
+  final saveRegistrationInfoAction = _saveRegistrationInfo(repository);
 
   return [
     // Auth
+
+    new TypedMiddleware<AppState, RegistrationSaveAction>(
+        saveRegistrationInfoAction),
     new TypedMiddleware<AppState, InitStateAction>(initStateAction),
     new TypedMiddleware<AppState, SignInCompletedAction>(
         signInWithGoogleAction),
@@ -127,6 +131,33 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 Middleware<AppState> _signInUserNotRegistered(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
+  };
+}
+
+Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) async {
+    next(action);
+    var player = playerSelector(store.state);
+    var authSettings = settingSelector(store.state).value;
+    var registrationInfoToSave = registrationInfoSelector(store.state).value;
+    Player playerToSave;
+    if (player.isPresent == true) {
+      playerToSave = player.value.copyWith(
+          firstName: registrationInfoToSave.firstName,
+          lastName: registrationInfoToSave.lastName,
+          ltaNumber: registrationInfoToSave.btmNumber,
+          email: authSettings.email);
+    } else {
+      playerToSave = new Player(
+          firstName: registrationInfoToSave.firstName,
+          lastName: registrationInfoToSave.lastName,
+          ltaNumber: registrationInfoToSave.btmNumber,
+          email: authSettings.email,
+          playerId: authSettings.playerId);
+    }
+    await repository.savePlayerProfile(playerToSave.toEntity());
+    store.dispatch(new SignInUserIsRegisteredAction());
+
   };
 }
 

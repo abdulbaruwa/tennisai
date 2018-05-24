@@ -16,7 +16,7 @@ class Registration extends StatelessWidget {
       distinct: true,
       converter: RegistrationViewModel.fromStore, 
       builder: (context, vm){
-        return new RegistrationView(onRegistrationCancelled: vm.onRegistrationCancelled);
+        return new RegistrationView(onRegistrationCancelled: vm.onRegistrationCancelled, onRegistration: vm.onRegister);
       }
     );
   }
@@ -25,12 +25,17 @@ class Registration extends StatelessWidget {
 class RegistrationViewModel{
   Settings settings;
   Function() onRegistrationCancelled;
-  RegistrationViewModel({this.settings, this.onRegistrationCancelled});
+  Function(RegistrationInfo registerationInfo) onRegister;
+  RegistrationViewModel({this.settings, this.onRegistrationCancelled, this.onRegister});
   static RegistrationViewModel fromStore(Store<AppState> store){
     var settings = settingSelector(store.state).first;
 
       return new RegistrationViewModel(
         settings: settings,
+        onRegister: (registrationInfo){
+          print('Registering player to a login');
+          store.dispatch(new RegistrationSaveAction(registrationInfo));
+        }, 
         onRegistrationCancelled: (){
           print('Registration cancelled');
 

@@ -7,6 +7,7 @@ AppState appReducer(AppState state, action) {
       isSignedIn: authStatusReducer(state.isSignedIn, action),
       isSignInUserRegistered: isSignInUserRegisteredReducer(state.isSignInUserRegistered, action),
       settings: authReducer(state.settings, action),
+      registrationInfo: registerReducer(state.registrationInfo, action),
       player: playerReducer(state.player, action),
       avatar: avatarUpdateReducer(state.avatar, action),
       basket: basketReducer(state.basket, action),

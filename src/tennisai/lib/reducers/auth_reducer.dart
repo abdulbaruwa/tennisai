@@ -40,3 +40,11 @@ bool _signInUserNotIsRegistered(bool status, SignInUserNotRegisteredAction actio
 bool _registrationCancelled(bool status, RegistrationCancelledAction action){
   return true;
 }
+
+final registerReducer = combineReducers<List<RegistrationInfo>>([
+  new TypedReducer<List<RegistrationInfo>, RegistrationSaveAction>(_saveRegistrationInfo),
+]);
+
+List<RegistrationInfo> _saveRegistrationInfo(List<RegistrationInfo> registrationInfo, RegistrationSaveAction action){
+  return new List<RegistrationInfo>()..add(action.registrationInfo);
+}

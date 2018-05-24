@@ -56,6 +56,7 @@ _loadState(Store store) {
   // Nothing initialized here. Moved init to middleware action fired post auth.
 }
 
+
 class TennisAiHome extends StatelessWidget {
   TennisAiHome() : super(key: TennisAiKeys.homeScreen);
 

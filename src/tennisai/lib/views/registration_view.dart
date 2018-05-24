@@ -5,9 +5,23 @@ import '../models/models.dart';
 class RegistrationView extends StatelessWidget {
   final Settings settings;
   final Function() onRegistrationCancelled;
-  RegistrationView({Key key, this.settings, this.onRegistrationCancelled}) : super(key: key);
-  static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  
+  final Function(RegistrationInfo registrationInfo) onRegistration;
+  RegistrationView(
+      {Key key,
+      this.settings,
+      this.onRegistrationCancelled,
+      this.onRegistration})
+      : super(key: key);
+  static final GlobalKey<ScaffoldState> _scaffoldKey =
+      new GlobalKey<ScaffoldState>();
+  static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
+  static final GlobalKey<FormFieldState<String>> _firstNameKey =
+      new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _lastNameKey =
+      new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _btmNumberKey =
+      new GlobalKey<FormFieldState<String>>();
+
   @override
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -21,16 +35,20 @@ class RegistrationView extends StatelessWidget {
 
     final lastName = new TextFormField(
       autofocus: false,
-      obscureText: true,
+      key: _lastNameKey,
+      obscureText: false,
+      onSaved: (value) {},
       decoration: InputDecoration(
         hintText: 'Last Name',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         // border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
     );
+
     final firstName = new TextFormField(
-      autofocus: false,
-      obscureText: true,
+      autofocus: true,
+      obscureText: false,
+      key: _firstNameKey,
       decoration: InputDecoration(
         hintText: 'First Name',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -40,7 +58,9 @@ class RegistrationView extends StatelessWidget {
 
     final btmNumber = new TextFormField(
       autofocus: false,
-      obscureText: true,
+      obscureText: false,
+      key: _btmNumberKey,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
         hintText: 'BTM Number',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
@@ -58,7 +78,13 @@ class RegistrationView extends StatelessWidget {
           minWidth: 200.0,
           height: 42.0,
           onPressed: () {
-            Navigator.of(context).pushNamed('HomePage.tag');
+            if (_formKey.currentState.validate()) {
+              var registrationInfo = new RegistrationInfo(
+                  lastName: _lastNameKey.currentState.value,
+                  firstName: _firstNameKey.currentState.value,
+                  btmNumber: int.parse(_btmNumberKey.currentState.value));
+              onRegistration(registrationInfo);
+            }
           },
           color: Colors.indigoAccent,
           child: new Text('SAVE', style: new TextStyle(color: Colors.white)),
@@ -80,6 +106,8 @@ class RegistrationView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
+          child: new Form(
+        key: _formKey,
         child: ListView(
           shrinkWrap: true,
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
@@ -116,7 +144,7 @@ class RegistrationView extends StatelessWidget {
             forgotLabel
           ],
         ),
-      ),
+      )),
     );
   }
 }
