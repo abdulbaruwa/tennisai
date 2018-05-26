@@ -5,3 +5,9 @@ enum DismissDialogAction {
 }
 
 enum TournamentDetailsActionSource{watching, upcoming, search}
+
+enum PlayerRegistrationStatus{
+  unknown,
+  registered,
+  unregistered
+}

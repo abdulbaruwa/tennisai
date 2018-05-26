@@ -69,7 +69,7 @@ class AuthContainer extends StatelessWidget {
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
     var responseBody = await response.transform(UTF8.decoder).join();
-    var jsonData = JSON.decode(responseBody);
+    var jsonData = json.decode(responseBody);
     return jsonData;
   }
 

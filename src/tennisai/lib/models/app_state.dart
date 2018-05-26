@@ -6,7 +6,7 @@ import 'models.dart';
 class AppState {
   final bool isLoading;
   final bool isSignedIn;
-  final bool isSignInUserRegistered;
+  final PlayerRegistrationStatus isSignInUserRegistered;
   final bool isEntrantsViewItemsReverseSorted;
   final List<Player> player;
   final List<File> avatar;
@@ -28,7 +28,7 @@ class AppState {
   AppState(
       {this.isLoading = false,
       this.isSignedIn = false,
-      this.isSignInUserRegistered= false,
+      this.isSignInUserRegistered = PlayerRegistrationStatus.unknown,
       this.player = const [],
       this.avatar = const[],
       this.searchPreference = const [],
@@ -52,7 +52,7 @@ class AppState {
   AppState copyWith(
       {bool isLoading,
       bool isSignedIn,
-      bool isSignInUserRegistered,
+      PlayerRegistrationStatus isSignInUserRegistered,
       List<Player> player,
       List<File> avatar,
       List<SearchPreference> searchPreference,

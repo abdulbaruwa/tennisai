@@ -24,21 +24,21 @@ bool _googleSilentSignInFailed(bool status, GoogleSilentSignInFailedAction actio
   return false;
 }
 
-final isSignInUserRegisteredReducer = combineReducers<bool>([
-  new TypedReducer<bool, SignInUserIsRegisteredAction>(_signInUserIsRegistered),
-  new TypedReducer<bool, SignInUserNotRegisteredAction>(_signInUserNotIsRegistered),
-  new TypedReducer<bool, RegistrationCancelledAction>(_registrationCancelled)
+final isSignInUserRegisteredReducer = combineReducers<PlayerRegistrationStatus>([
+  new TypedReducer<PlayerRegistrationStatus, SignInUserIsRegisteredAction>(_signInUserIsRegistered),
+  new TypedReducer<PlayerRegistrationStatus, SignInUserNotRegisteredAction>(_signInUserNotIsRegistered),
+  new TypedReducer<PlayerRegistrationStatus, RegistrationCancelledAction>(_registrationCancelled)
 ]);
 
-bool _signInUserIsRegistered(bool status, SignInUserIsRegisteredAction action) {
-  return true; 
+PlayerRegistrationStatus _signInUserIsRegistered(PlayerRegistrationStatus status, SignInUserIsRegisteredAction action) {
+  return PlayerRegistrationStatus.registered; 
 }
-bool _signInUserNotIsRegistered(bool status, SignInUserNotRegisteredAction action) {
-  return false; 
+PlayerRegistrationStatus _signInUserNotIsRegistered(PlayerRegistrationStatus status, SignInUserNotRegisteredAction action) {
+  return PlayerRegistrationStatus.unregistered; 
 }
 
-bool _registrationCancelled(bool status, RegistrationCancelledAction action){
-  return true;
+PlayerRegistrationStatus _registrationCancelled(PlayerRegistrationStatus status, RegistrationCancelledAction action){
+  return PlayerRegistrationStatus.unknown;
 }
 
 final registerReducer = combineReducers<List<RegistrationInfo>>([

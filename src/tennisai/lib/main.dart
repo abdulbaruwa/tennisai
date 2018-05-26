@@ -8,20 +8,11 @@ import 'models/models.dart';
 import 'middleware/tennisai_middleware.dart';
 import 'reducers/app_state_reducer.dart';
 import 'routes.dart';
-import 'actions/actions.dart';
 import 'containers/app_loading.dart';
 import 'views/loading_indicator.dart';
 import 'containers/containers.dart';
 import 'keys/keys.dart';
 import 'containers/auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-
-GoogleSignIn _googleSignIn = new GoogleSignIn(
-  scopes: <String>[
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
-);
 
 void main() => runApp(new TennisAiApp());
 
@@ -48,14 +39,9 @@ class TennisAiApp extends StatelessWidget {
   }
 }
 
-bool _isSignedIn(AppState store) {
-  return store.isSignedIn;
-}
-
 _loadState(Store store) {
   // Nothing initialized here. Moved init to middleware action fired post auth.
 }
-
 
 class TennisAiHome extends StatelessWidget {
   TennisAiHome() : super(key: TennisAiKeys.homeScreen);
@@ -68,13 +54,20 @@ class TennisAiHome extends StatelessWidget {
         return new AuthContainer();
       }
 
-      if (loading.isRegisteredUser == false) {
+      if (loading.isRegisteredUser == PlayerRegistrationStatus.unregistered) {
         print('SHOW REGISTRATION VIEW');
         return new Registration();
-      } else
+      }
+
+      if (loading.isRegisteredUser == PlayerRegistrationStatus.registered) {
         return loading.isLoading
             ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)
             : _buildView(context);
+      }
+
+      if (loading.isRegisteredUser == PlayerRegistrationStatus.unknown) {
+        return new LoadingIndicator(key: TennisAiKeys.homeTabLoading);
+      }
     });
   }
 

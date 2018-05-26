@@ -15,7 +15,7 @@ Future<String> getAuthToken() {
 
 List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   DashboardRepository repository = const DashboardRepository(
-    webClient: const WebClient(TennisAiConfigs.azureHostName, getAuthToken),
+    webClient: const WebClient(TennisAiConfigs.localHostName, getAuthToken),
     fileStorage:
         const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),
   ),
@@ -157,7 +157,6 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
     }
     await repository.savePlayerProfile(playerToSave.toEntity());
     store.dispatch(new SignInUserIsRegisteredAction());
-
   };
 }
 
@@ -166,16 +165,15 @@ Middleware<AppState> _checkSignInUserIsRegistered(
   return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
     var settings = action.settings as Settings;
-    var playerProfile =
-        await repository.loadLatestPlayerProfile(settings.playerId);
+    var playerProfile = await repository.loadLatestPlayerProfile("12");
+    
     if (playerProfile.isNotEmpty) {
-      // TODO: Ensure we have picked the right profile
       store.dispatch(new SignInUserIsRegisteredAction());
+      store.dispatch(new PlayerLoadedAction(new List<Player>()..add(Player.fromEntity(playerProfile.first))));
+      store.dispatch(new InitStateAction('12'));
     } else {
       store.dispatch(new SignInUserNotRegisteredAction(settings));
     }
-
-    //repository.checkSignInUserIsRegistered(action.settings);
   };
 }
 
@@ -183,7 +181,7 @@ Middleware<AppState> _initState(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
 
-    var playerId = action.playerId;
+    var playerId = '12';//action.playerId;
 
     store.dispatch(new LoadPlayerAction(playerId));
     store.dispatch(new LoadWatchedTournamentsAction());
@@ -203,16 +201,7 @@ Middleware<AppState> _authCompleted(DashboardRepository repository) {
     var settings = settingSelector(store.state);
     if (settings.isNotEmpty) {
       await repository.saveAuthToken(settings.first.azureAuthToken);
-
-      // store.dispatch(new LoadWatchedTournamentsAction());
-      // store.dispatch(new LoadUpcomingTournamentsAction());
-      // // TODO playerId will need to be passed in via Auth and cache.
-      // store.dispatch(new LoadPlayerAction("12"));
-      // store.dispatch(new LoadBasketAction());
-      // store.dispatch(new LoadSearchPreferenceAction());
-      // store.dispatch(new LoadSearchTournamentsAction());
-      // store.dispatch(new LoadRankingInfosAction());
-      // store.dispatch(new LoadMatchResultInfosAction());
+      store.dispatch(new CheckSignInUserIsRegisteredAction(settings.value));
     }
   };
 }
@@ -351,7 +340,9 @@ Middleware<AppState> _createLoadPlayerProfile(DashboardRepository repository) {
           new PlayerLoadedAction(entities),
         );
       },
-    ).catchError((_) => store.dispatch(new PlayerNotLoadedAction()));
+    ).catchError((e) { 
+      print(e);
+      store.dispatch(new PlayerNotLoadedAction());});
     next(action);
   };
 }
