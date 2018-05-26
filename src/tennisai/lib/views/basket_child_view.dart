@@ -140,7 +140,7 @@ class BasketChildView extends StatelessWidget {
           child: new SizedBox(
             height: 76.0,
             child: new Row(children: <Widget>[
-              new ProfileAvatar(playerId: player.playerId, latestImage: changedAvatar),
+              new ProfileAvatar(playerId: player.id, latestImage: changedAvatar),
               new Expanded(
                 child: new Padding(
                     padding: const EdgeInsets.only(left: 10.0, top: 10.0),

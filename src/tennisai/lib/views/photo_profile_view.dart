@@ -13,7 +13,7 @@ class PhotoProfileView extends StatelessWidget {
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new ProfileAvatar(playerId: player.playerId, latestImage: changedAvatar,),
+          new ProfileAvatar(playerId: player.id, latestImage: changedAvatar,),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(

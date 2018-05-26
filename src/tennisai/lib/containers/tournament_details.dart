@@ -73,7 +73,7 @@ class _ViewModel {
       },
       onAddToBasket: () { 
             print('Adding tournament with code: ${tournament.code} to basket');
-            var playerId = playerSelector(store.state).first?.playerId;
+            var playerId = playerSelector(store.state).first?.id;
             store.dispatch(new AddTournamentToBasketAction(tournament, playerId));
       } 
       //onWatchUnWatch: () => store.dispatch(new DeleteTodoAction(todo.id)),

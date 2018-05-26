@@ -23,9 +23,8 @@ class WebClient {
   final Future<String> Function() getToken;
   const WebClient(this.hostAddress, this.getToken);
 
-  Future<List<TournamentEntity>> fetchWatchedTournaments() async {
-    print('web_client.fetchWatchedTournaments(): About to make service call');
-    return getTournamentsFromControllerWithUserId("watched", "12");
+  Future<List<TournamentEntity>> fetchWatchedTournaments(String playerId) async {
+    return getTournamentsFromControllerWithUserId("watched", playerId);
   }
 
   Future<String> getAuthToken() {
@@ -63,7 +62,7 @@ class WebClient {
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
     var responseBody = await response.transform(UTF8.decoder).join();
-    var jsonData = JSON.decode(responseBody);
+    var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
       matchResults.add(MatchResultInfoEntity.fromJson(jsonData[i]));
@@ -182,9 +181,9 @@ class WebClient {
     return new Future.value(true);
   }
 
-  Future<List<TournamentEntity>> fetchEnteredTournaments() async {
+  Future<List<TournamentEntity>> fetchEnteredTournaments(String playerId) async {
     print('web_client.fetchEnteredTournaments(): About to make service call');
-    return getTournamentsFromControllerWithUserId("entered", "12");
+    return getTournamentsFromControllerWithUserId("entered", playerId);
   }
 
   /// Mock that returns true or false for success or failure. In this case,
@@ -205,7 +204,10 @@ class WebClient {
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postPlayerProfile(PlayerEntity playerProfile) async {
-    return new Future.value(true);
+    var jsonRequest = json.encode(playerProfile.toJson());
+    var uri = new Uri.http(hostAddress, '/tables/player');
+    var response = await makeHttpPostCall(uri, jsonRequest);
+    return response;
   }
 
   /// Mock that returns true or false for success or failure. In this case,
@@ -240,8 +242,8 @@ class WebClient {
     return new Future.value(true);
   }
 
-  Future<List<TournamentEntity>> fetchSearchTournaments() async {
-    return getTournamentsByDefaultSearchPreferences("12");
+  Future<List<TournamentEntity>> fetchSearchTournaments(String playerId) async {
+    return getTournamentsByDefaultSearchPreferences(playerId);
   }
 
   Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(
@@ -259,23 +261,22 @@ class WebClient {
   }
 
   // Search Preference
-  Future<List<SearchPreferenceEntity>> fetchSearchPreference() async {
-    return getSearchPreference("12");
+  Future<List<SearchPreferenceEntity>> fetchSearchPreference(String playerId) async {
+    return getSearchPreference(playerId);
   }
 
   // RankingInfos
-  Future<List<RankingInfoEntity>> fetchRankingInfos() async {
-    return getRankings("12");
+  Future<List<RankingInfoEntity>> fetchRankingInfos(String playerId) async {
+    return getRankings(playerId);
   }
 
   // MatchResulInfos
-  Future<List<MatchResultInfoEntity>> fetchMatchResultInfos() async {
-    return getMatchResult("12");
+  Future<List<MatchResultInfoEntity>> fetchMatchResultInfos(String playerId) async {
+    return getMatchResult(playerId);
   }
 
   // Basket
-  Future<List<BasketEntity>> fetchBasket() async {
-    var playerId = '12';
+  Future<List<BasketEntity>> fetchBasket(String playerId) async {
     List<BasketEntity> tEntities = [];
     tEntities.add(await getBasket(playerId));
     print('before delayed ${tEntities.length}');
@@ -283,14 +284,14 @@ class WebClient {
   }
 
   Future<bool> postBasket(BasketEntity basketEntity) async {
-    var jsonRequest = JSON.encode(basketEntity.toJson());
+    var jsonRequest = json.encode(basketEntity.toJson());
     var uri = new Uri.http(hostAddress, '/api/basket');
     var response = await makeHttpPostCall(uri, jsonRequest);
     return response;
   }
 
   Future<bool> postToLtaBasket(BasketEntity basketEntity) async {
-    var jsonRequest = JSON.encode(basketEntity.toJson());
+    var jsonRequest = json.encode(basketEntity.toJson());
     var uri = new Uri.http(hostAddress, '/api/baskettolta');
     var response = await makeHttpPostCall(uri, jsonRequest);
     return response;

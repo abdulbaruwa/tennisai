@@ -12,7 +12,7 @@ class Player {
   final String postCode;
   final String address;
   final String county;
-  final String playerId;
+  final String id;
 
   Player(
       {this.firstName,
@@ -24,7 +24,7 @@ class Player {
       this.postCode,
       this.address,
       this.county,
-      this.playerId});
+      this.id});
   final List<Tournament> watchedTournaments = [];
   final List<Tournament> enteredTournaments = [];
 
@@ -40,7 +40,7 @@ class Player {
       String county,
       String playerId}) {
     return new Player(
-        playerId: playerId ?? this.playerId,
+        id: id ?? this.id,
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
         email: email ?? this.email,
@@ -53,7 +53,7 @@ class Player {
 
   @override
   int get hashCode =>
-      playerId.hashCode ^
+      id.hashCode ^
       firstName.hashCode ^
       lastName.hashCode ^
       email.hashCode ^
@@ -69,7 +69,7 @@ class Player {
       identical(this, other) ||
       other is Player &&
           runtimeType == other.runtimeType &&
-          playerId == other.playerId &&
+          id == other.id &&
           firstName == other.firstName &&
           lastName == other.lastName &&
           email == other.email &&
@@ -82,7 +82,7 @@ class Player {
 
   static Player fromEntity(PlayerEntity playerEntity) {
     return new Player(
-      playerId: playerEntity.playerId,
+      id: playerEntity.id,
       firstName: playerEntity.firstName,
       lastName: playerEntity.lastName,
       ltaNumber: playerEntity.ltaNumber,
@@ -97,7 +97,7 @@ class Player {
 
   PlayerEntity toEntity() {
     return new PlayerEntity(
-        playerId: playerId,
+        id: id,
         firstName: firstName,
         lastName: lastName,
         email: email,
@@ -111,13 +111,13 @@ class Player {
 
   @override
   String toString() {
-    return 'Player{playerId: $playerId, firstName: $firstName, lastName: $lastName, email: $email, address: $address, county: $county, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
+    return 'Player{id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, county: $county, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
   }
 }
 
 class PlayerEntity {
   PlayerEntity(
-      {this.playerId,
+      {this.id,
       this.firstName,
       this.lastName,
       this.email,
@@ -129,7 +129,7 @@ class PlayerEntity {
       this.county,
       this.enteredTournaments,
       this.watchedTournaments});
-  String playerId;
+  String id;
   String firstName;
   String lastName;
   String email;
@@ -142,7 +142,7 @@ class PlayerEntity {
 
   Map<String, Object> toJson() {
     return {
-      'playerId': playerId,
+      'id': id,
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
@@ -159,7 +159,7 @@ class PlayerEntity {
   List<TournamentEntity> enteredTournaments = [];
   static PlayerEntity fromJson(Map<String, Object> json) {
     return new PlayerEntity(
-      playerId: json['playerId'] as String,
+      id: json['id'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,

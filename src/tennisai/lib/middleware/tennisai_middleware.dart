@@ -153,7 +153,7 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
           lastName: registrationInfoToSave.lastName,
           ltaNumber: registrationInfoToSave.btmNumber,
           email: authSettings.email,
-          playerId: authSettings.playerId);
+          id: authSettings.playerId);
     }
     await repository.savePlayerProfile(playerToSave.toEntity());
     store.dispatch(new SignInUserIsRegisteredAction());
@@ -165,12 +165,12 @@ Middleware<AppState> _checkSignInUserIsRegistered(
   return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
     var settings = action.settings as Settings;
-    var playerProfile = await repository.loadLatestPlayerProfile("12");
+    var playerProfile = await repository.loadLatestPlayerProfile(settings.playerId);
     
     if (playerProfile.isNotEmpty) {
       store.dispatch(new SignInUserIsRegisteredAction());
       store.dispatch(new PlayerLoadedAction(new List<Player>()..add(Player.fromEntity(playerProfile.first))));
-      store.dispatch(new InitStateAction('12'));
+      store.dispatch(new InitStateAction(settings.playerId));
     } else {
       store.dispatch(new SignInUserNotRegisteredAction(settings));
     }
@@ -181,7 +181,7 @@ Middleware<AppState> _initState(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
 
-    var playerId = '12';//action.playerId;
+    var playerId = action.playerId;
 
     store.dispatch(new LoadPlayerAction(playerId));
     store.dispatch(new LoadWatchedTournamentsAction());
@@ -242,7 +242,8 @@ Middleware<AppState> _createClearBasketAfterSendToLta(
 
 Middleware<AppState> _createLoadUpcomingTournaments(DashboardRepository repo) {
   var stateResult = (Store<AppState> store, action, NextDispatcher next) {
-    repo.loadUpcomingTournaments().then((t) {
+    var playerId = playerSelector(store.state).first?.id;
+    repo.loadUpcomingTournaments(playerId).then((t) {
       var upComingTournament = t.map(Tournament.fromEntity).toList();
       print(
           'Middleware ._createLoadWatchedTournaments: Loading ${upComingTournament.length} Watched tournament');
@@ -272,7 +273,8 @@ Middleware<AppState> _createSaveUpcomingTournaments(
 Middleware<AppState> _createLoadWatchedTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.loadWatchedTournaments().then(
+    var playerId = playerSelector(store.state).first?.id;
+    repository.loadWatchedTournaments(playerId).then(
       (watchedTournaments) {
         var entities = watchedTournaments.map(Tournament.fromEntity).toList();
         print(
@@ -305,7 +307,8 @@ Middleware<AppState> _createSaveEnteredTournaments(
 Middleware<AppState> _createLoadEnteredTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.loadEnteredTournaments().then(
+    var playerId = playerSelector(store.state).first?.id;
+    repository.loadEnteredTournaments(playerId).then(
       (enteredTournaments) {
         var entities = enteredTournaments.map(Tournament.fromEntity).toList();
         print(
@@ -362,7 +365,8 @@ Middleware<AppState> _createSaveSearchPreference(
 Middleware<AppState> _createLoadSearchPreference(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.loadSearchPreference().then(
+    var playerId = playerSelector(store.state).first?.id;
+    repository.loadSearchPreference(playerId).then(
       (searchPref) {
         var entities = searchPref.map(SearchPreference.fromEntity).toList();
         store.dispatch(
@@ -411,7 +415,8 @@ Middleware<AppState> _createSaveSearchTournaments(
 Middleware<AppState> _createLoadSearchTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.loadSearchTournaments().then(
+    var playerId = playerSelector(store.state).first?.id;
+    repository.loadSearchTournaments(playerId).then(
       (searchPref) {
         var entities = searchPref.map(Tournament.fromEntity).toList();
         store.dispatch(
@@ -426,7 +431,8 @@ Middleware<AppState> _createLoadSearchTournaments(
 // Basket
 Middleware<AppState> _createLoadBasket(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.loadBasket().then(
+    var playerId = playerSelector(store.state).first?.id;
+    repository.loadBasket(playerId).then(
       (basket) {
         var entities = basket.map(Basket.fromEntity).toList();
         store.dispatch(
@@ -471,14 +477,15 @@ Middleware<AppState> _updatePlayerAndSearchProfile(
 
     if (avatarSelector(store.state).isPresent) {
       repository.saveProfileAvatar(
-          playerToSave.playerId, avatarSelector(store.state).value);
+          playerToSave.id, avatarSelector(store.state).value);
     }
   };
 }
 
 Middleware<AppState> _createLoadRankingInfos(DashboardRepository repo) {
   var stateResult = (Store<AppState> store, action, NextDispatcher next) {
-    repo.loadRankingInfos().then((t) {
+    var playerId = playerSelector(store.state).first?.id;
+    repo.loadRankingInfos(playerId).then((t) {
       var rankingInfo = t.map(RankingInfo.fromEntity).toList();
       print(
           'Middleware ._createLoadRankingInfos: Loading ${rankingInfo.length} Ranking Info');
@@ -492,7 +499,8 @@ Middleware<AppState> _createLoadRankingInfos(DashboardRepository repo) {
 
 Middleware<AppState> _createLoadMatchResultInfos(DashboardRepository repo) {
   var stateResult = (Store<AppState> store, action, NextDispatcher next) {
-    repo.loadMatchResultInfos().then((t) {
+    var playerId = playerSelector(store.state).first?.id;
+    repo.loadMatchResultInfos(playerId).then((t) {
       var rankingInfos = t.map(MatchResultInfo.fromEntity).toList();
       print(
           'Middleware ._createLoadRankingInfos: Loading ${rankingInfos.length} Ranking Info');

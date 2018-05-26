@@ -40,7 +40,7 @@ class _UserProfile extends StatelessWidget {
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new ProfileAvatar(playerId: player.playerId.toString(), latestImage: changedAvatar),
+          new ProfileAvatar(playerId: player.id.toString(), latestImage: changedAvatar),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(

@@ -26,28 +26,28 @@ class DashboardRepository {
     await storage.write(key: "authToken", value: authToken);
   }
 
-  Future<List<TournamentEntity>> loadUpcomingTournaments() async {
+  Future<List<TournamentEntity>> loadUpcomingTournaments(String playerId) async {
     try {
       var result = await fileStorage.loadEnteredTournaments();
       print('dashboard_repository.loadUpcomingTournaments: Returned Futures');
       return result;
     } catch (e) {
       print('LoadUpcomingTournaments Fetcher in error');
-      var result = webClient.fetchEnteredTournaments();
+      var result = webClient.fetchEnteredTournaments(playerId);
       return result;
     }
   }
 
   /// Loads watched Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
-  Future<List<TournamentEntity>> loadWatchedTournaments() async {
+  Future<List<TournamentEntity>> loadWatchedTournaments(String playerId) async {
     try {
       var res = await fileStorage.loadWatchedTournaments();
       print('Returned ${res.length} entries for loadWatchedTournaments');
       return res;
     } catch (e) {
       print('LoadWatchedTournaments Fetcher in error');
-      var result = await webClient.fetchWatchedTournaments();
+      var result = await webClient.fetchWatchedTournaments(playerId);
       print('LoadWatchedTournaments Fetched');
       return result;
     }
@@ -69,14 +69,14 @@ class DashboardRepository {
   // }
   /// Loads entered Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the enteredTournament from a Web Client.
-  Future<List<TournamentEntity>> loadEnteredTournaments() async {
+  Future<List<TournamentEntity>> loadEnteredTournaments(String playerId) async {
     try {
       var res = await fileStorage.loadEnteredTournaments();
       print('Returne ${res.length} entries for  loadEnteredTournaments ');
       return res;
     } catch (e) {
       print('LoadEnteredTournaments Fetcher in error');
-      var result = webClient.fetchEnteredTournaments();
+      var result = webClient.fetchEnteredTournaments(playerId);
       print('LoadEnteredTournaments Fetched');
       return result;
     }
@@ -132,14 +132,14 @@ class DashboardRepository {
   // Search Preference
   /// Loads Search Preference first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the SearchPrefence from a Web Client
-  Future<List<SearchPreferenceEntity>> loadSearchPreference() async {
+  Future<List<SearchPreferenceEntity>> loadSearchPreference(String playerId) async {
     try {
       var res = await fileStorage.loadSearchPreference();
       print('success ${res.length}');
       return res;
     } catch (e) {
       print('Fetcher in error');
-      var result = webClient.fetchSearchPreference();
+      var result = webClient.fetchSearchPreference(playerId);
       print('Fetched');
       return result;
     }
@@ -170,14 +170,14 @@ class DashboardRepository {
   // Search Preference
   /// Loads Search Preference first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the SearchPrefence from a Web Client
-  Future<List<TournamentEntity>> loadSearchTournaments() async {
+  Future<List<TournamentEntity>> loadSearchTournaments(String playerId) async {
     try {
       var res = await fileStorage.loadSearchTournaments();
       print('success ${res.length}');
       return res;
     } catch (e) {
       print('Fetcher in error');
-      var result = webClient.fetchSearchTournaments();
+      var result = webClient.fetchSearchTournaments(playerId);
       print('Fetched');
       return result;
     }
@@ -191,13 +191,13 @@ class DashboardRepository {
   // Basket
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
-  Future<List<BasketEntity>> loadBasket() async {
+  Future<List<BasketEntity>> loadBasket(String playerId) async {
     try {
       var res = await fileStorage.loadBasket();
       return res;
     } catch (e) {
       print('Fetcher for Basket in error');
-      var result = webClient.fetchBasket();
+      var result = webClient.fetchBasket(playerId);
       print('Basket Fetched');
       return result;
     }
@@ -220,13 +220,13 @@ class DashboardRepository {
   // Main
   /// Loads Ranking Info from File storage. If they don't exist or encounter an
   /// error, it attempts to load the rankingInfo from a Web Client
-  Future<List<RankingInfoEntity>> loadRankingInfos() async {
+  Future<List<RankingInfoEntity>> loadRankingInfos(String playerId) async {
     try {
       var res = await fileStorage.loadRankingInfos();
       return res;
     } catch (e) {
       print('Fetcher for Basket in error');
-      var result = webClient.fetchRankingInfos();
+      var result = webClient.fetchRankingInfos(playerId);
       print('dashboard_repository.loadRankingInfo()..RankingInfos Fetched');
       return result;
     }
@@ -234,13 +234,13 @@ class DashboardRepository {
 
   /// Loads MatchResultInfo from File storage. If they don't exist or encounter an
   /// error, it attempts to load the matchResultInfo from a Web Client
-  Future<List<MatchResultInfoEntity>> loadMatchResultInfos() async {
+  Future<List<MatchResultInfoEntity>> loadMatchResultInfos(String playerId) async {
     try {
       var res = await fileStorage.loadMatchResultInfos();
       return res;
     } catch (e) {
       print('Fetcher for Basket in error');
-      var result = webClient.fetchMatchResultInfos();
+      var result = webClient.fetchMatchResultInfos(playerId);
       print('dashboard_repository.loadRankingInfo()..RankingInfos Fetched');
       return result;
     }

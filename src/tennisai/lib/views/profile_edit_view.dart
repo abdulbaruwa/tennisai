@@ -145,7 +145,7 @@ class ProfileEditView extends StatelessWidget {
                       child: new Row(
                         children: <Widget>[
                           new EditableProfileAvatar(
-                            playerId: player.playerId,
+                            playerId: player.id,
                             source: 'userProfile',
                             defaultImage: changedAvatar,
                             onTap: () {
