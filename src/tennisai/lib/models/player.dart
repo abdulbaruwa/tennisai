@@ -6,6 +6,7 @@ class Player {
   final String firstName;
   final String lastName;
   final String email;
+  final String gender;
   final int ltaRanking;
   final String ltaRating;
   final int ltaNumber;
@@ -18,6 +19,7 @@ class Player {
       {this.firstName,
       this.lastName,
       this.email,
+      this.gender,
       this.ltaNumber,
       this.ltaRanking,
       this.ltaRating,
@@ -32,6 +34,7 @@ class Player {
       {String firstName,
       String lastName,
       String email,
+      String gender,
       int ltaNumber,
       int ltaRanking,
       String ltaRating,
@@ -44,6 +47,7 @@ class Player {
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
         email: email ?? this.email,
+        gender: gender ?? this.gender,
         address: address ?? this.address,
         county: county ?? this.county,
         ltaNumber: ltaNumber ?? this.ltaNumber,
@@ -57,6 +61,7 @@ class Player {
       firstName.hashCode ^
       lastName.hashCode ^
       email.hashCode ^
+      gender.hashCode ^
       address.hashCode ^
       county.hashCode ^
       ltaNumber.hashCode ^
@@ -73,6 +78,7 @@ class Player {
           firstName == other.firstName &&
           lastName == other.lastName &&
           email == other.email &&
+          gender == other.gender &&
           address == other.address &&
           county == other.county &&
           ltaRanking == other.ltaRanking &&
@@ -89,6 +95,7 @@ class Player {
       ltaRanking: playerEntity.ltaRanking,
       ltaRating: playerEntity.ltaRating,
       email: playerEntity.email,
+      gender: playerEntity.gender,
       address: playerEntity.address,
       postCode: playerEntity.postCode,
       county: playerEntity.county,
@@ -101,6 +108,7 @@ class Player {
         firstName: firstName,
         lastName: lastName,
         email: email,
+        gender: gender,
         address: address,
         ltaNumber: ltaNumber,
         ltaRanking: ltaRanking,
@@ -111,7 +119,7 @@ class Player {
 
   @override
   String toString() {
-    return 'Player{id: $id, firstName: $firstName, lastName: $lastName, email: $email, address: $address, county: $county, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
+    return 'Player{id: $id, firstName: $firstName, lastName: $lastName, email: $email, gender: $gender, address: $address, county: $county, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
   }
 }
 
@@ -121,6 +129,7 @@ class PlayerEntity {
       this.firstName,
       this.lastName,
       this.email,
+      this.gender,
       this.ltaNumber,
       this.ltaRanking,
       this.ltaRating,
@@ -133,6 +142,7 @@ class PlayerEntity {
   String firstName;
   String lastName;
   String email;
+  String gender;
   int ltaRanking;
   String ltaRating;
   int ltaNumber;
@@ -146,6 +156,7 @@ class PlayerEntity {
       'firstName': firstName,
       'lastName': lastName,
       'email': email,
+      'gender': gender,
       'ltaNumber': ltaNumber,
       'ltaRanking': ltaRanking,
       'ltaRating': ltaRating,
@@ -163,6 +174,7 @@ class PlayerEntity {
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
+      gender: json['gender'] as String,
       ltaNumber: json['ltaNumber'] as int,
       ltaRanking: json['ltaRanking'] as int,
       ltaRating: json['ltaRating'] as String,

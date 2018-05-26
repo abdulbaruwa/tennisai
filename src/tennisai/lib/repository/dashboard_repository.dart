@@ -112,6 +112,18 @@ class DashboardRepository {
     }
   }
 
+    Future<List<PlayerEntity>> loadPlayerProfileDirect(String playerId) async {
+    try {
+      var result = webClient.fetchPlayerProfile(playerId);
+      print('Fetched');
+      return result;
+    } catch (e) {
+      print('Fetcher in error $e');
+      return new List<PlayerEntity>();
+    }
+  }
+
+
   Future<List<PlayerEntity>> loadLatestPlayerProfile(String playerId) async {
     try {
       return webClient.fetchPlayerProfile(playerId);

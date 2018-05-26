@@ -205,7 +205,7 @@ class WebClient {
   /// it will "Always Succeed"
   Future<bool> postPlayerProfile(PlayerEntity playerProfile) async {
     var jsonRequest = json.encode(playerProfile.toJson());
-    var uri = new Uri.http(hostAddress, '/tables/player');
+    var uri = new Uri.http(hostAddress, '/api/players');
     var response = await makeHttpPostCall(uri, jsonRequest);
     return response;
   }

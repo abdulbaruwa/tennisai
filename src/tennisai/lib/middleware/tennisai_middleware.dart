@@ -32,6 +32,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final saveUpcomingTournaments = _createSaveUpcomingTournaments(repository);
 
   final loadPlayerProfile = _createLoadPlayerProfile(repository);
+  final loadPlayerProfileFromServer = _loadPlayerProfileDirect(repository);
   final savePlayerProfile = _createSavePlayerProfile(repository);
 
   final loadSearchQuery = _createLoadSearchPreference(repository);
@@ -96,6 +97,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
     // Player Profile
     new TypedMiddleware<AppState, LoadPlayerAction>(loadPlayerProfile),
+    new TypedMiddleware<AppState, LoadPlayerFromServerAction>(loadPlayerProfileFromServer),
     new TypedMiddleware<AppState, AddPlayerAction>(savePlayerProfile),
 
     // Search Query preference
@@ -152,11 +154,14 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
           firstName: registrationInfoToSave.firstName,
           lastName: registrationInfoToSave.lastName,
           ltaNumber: registrationInfoToSave.btmNumber,
+          gender: 'male', // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
           email: authSettings.email,
           id: authSettings.playerId);
     }
     await repository.savePlayerProfile(playerToSave.toEntity());
     store.dispatch(new SignInUserIsRegisteredAction());
+    store.dispatch(new PlayerLoadedAction(new List<Player>()..add(playerToSave)));
+    store.dispatch(new InitStateAction(playerToSave.id));
   };
 }
 
@@ -165,11 +170,13 @@ Middleware<AppState> _checkSignInUserIsRegistered(
   return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
     var settings = action.settings as Settings;
-    var playerProfile = await repository.loadLatestPlayerProfile(settings.playerId);
-    
+    var playerProfile =
+        await repository.loadLatestPlayerProfile(settings.playerId);
+
     if (playerProfile.isNotEmpty) {
       store.dispatch(new SignInUserIsRegisteredAction());
-      store.dispatch(new PlayerLoadedAction(new List<Player>()..add(Player.fromEntity(playerProfile.first))));
+      store.dispatch(new PlayerLoadedAction(
+          new List<Player>()..add(Player.fromEntity(playerProfile.first))));
       store.dispatch(new InitStateAction(settings.playerId));
     } else {
       store.dispatch(new SignInUserNotRegisteredAction(settings));
@@ -183,7 +190,7 @@ Middleware<AppState> _initState(DashboardRepository repository) {
 
     var playerId = action.playerId;
 
-    store.dispatch(new LoadPlayerAction(playerId));
+    store.dispatch(new LoadPlayerFromServerAction(playerId));
     store.dispatch(new LoadWatchedTournamentsAction());
     store.dispatch(new LoadUpcomingTournamentsAction());
     store.dispatch(new LoadBasketAction());
@@ -334,6 +341,23 @@ Middleware<AppState> _createSavePlayerProfile(DashboardRepository repository) {
   };
 }
 
+Middleware<AppState> _loadPlayerProfileDirect(DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    repository.loadPlayerProfile(action.playerId).then(
+      (player) {
+        var entities = player.map(Player.fromEntity).toList();
+        store.dispatch(
+          new PlayerLoadedAction(entities),
+        );
+      },
+    ).catchError((e) {
+      print(e);
+      store.dispatch(new PlayerNotLoadedAction());
+    });
+    next(action);
+  };
+}
+
 Middleware<AppState> _createLoadPlayerProfile(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadPlayerProfile(action.playerId).then(
@@ -343,9 +367,10 @@ Middleware<AppState> _createLoadPlayerProfile(DashboardRepository repository) {
           new PlayerLoadedAction(entities),
         );
       },
-    ).catchError((e) { 
+    ).catchError((e) {
       print(e);
-      store.dispatch(new PlayerNotLoadedAction());});
+      store.dispatch(new PlayerNotLoadedAction());
+    });
     next(action);
   };
 }

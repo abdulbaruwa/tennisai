@@ -27,8 +27,8 @@ class PhotoProfileView extends StatelessWidget {
                       key: TennisAiKeys.profileName,
                       style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
                     ),
-                    new Text(player != null ? player.address: '?'),
-                    new Text(player.postCode != null ? player.postCode : '?')
+                    new Text(player.address ?? ''),
+                    new Text(player.postCode ?? '')
                   ],
                 )),
           ),

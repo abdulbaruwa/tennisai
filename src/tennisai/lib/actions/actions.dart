@@ -64,6 +64,11 @@ class LoadPlayerAction {
   LoadPlayerAction(this.playerId);
 }
 
+class LoadPlayerFromServerAction {
+  final String playerId;
+  LoadPlayerFromServerAction(this.playerId);
+}
+
 class AddPlayerAction {
   final Player player;
   AddPlayerAction(this.player);
