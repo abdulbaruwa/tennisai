@@ -244,7 +244,6 @@ class ProfileEditView extends StatelessWidget {
                   fkey: _postCodeKey,
                   value:  player.postCode == null ? '' : player.postCode,
                 ),
-
                 new Container(
                     color: const Color(0xFFF5F5F5),
                     padding: const EdgeInsets.all(10.0),

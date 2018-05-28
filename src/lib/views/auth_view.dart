@@ -31,13 +31,17 @@ class AuthView extends StatelessWidget {
             new Container(
                 padding: EdgeInsets.only(left: 10.0),
                 child: new Text("You are not currently signed in.",
-                    style: Theme.of(context).accentTextTheme.display1.copyWith(color: Colors.white, fontSize: 25.0))),
+                    style: Theme.of(context).accentTextTheme.display1.copyWith(color: Colors.white, fontSize: 25.0, fontFamily: 'AbrilFatface'))),
             new Text('Tennis.Ai',
-                style: Theme.of(context).accentTextTheme.display1.copyWith(color: Colors.white)),
-            new RaisedButton(
-              child: const Text('SIGN IN'),
+                style: Theme.of(context).accentTextTheme.display1.copyWith(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 50.0)),
+                new Center(child: 
+            new ButtonTheme(
+              minWidth: 180.0,
+              height: 50.0,
+              child: new RaisedButton(
+              child:new Text('SIGN IN', style: new TextStyle( fontSize: 20.0)),
               onPressed: isSignedIn == false ? onGoogleSignInSelected  : null,
-            ),
+            ))),
           ],
         ));
   }

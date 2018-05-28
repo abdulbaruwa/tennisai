@@ -14,7 +14,7 @@ class LoadingIndicator extends StatelessWidget {
         new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-        new Text('Tennis.Ai', style: Theme.of(context).accentTextTheme.display1.copyWith(color: Colors.white)),
+        new Text('Tennis.Ai', style: Theme.of(context).accentTextTheme.display1.copyWith(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 50.0)),
           new CircularProgressIndicator()]),
     )
     );
