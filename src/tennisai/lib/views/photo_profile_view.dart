@@ -7,13 +7,19 @@ import '../controls/usercontrols.dart';
 class PhotoProfileView extends StatelessWidget {
   final Player player;
   final File changedAvatar;
-  const PhotoProfileView({Key key, this.player, this.changedAvatar}) : super(key: key);
+  const PhotoProfileView({Key key, this.player, this.changedAvatar})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new ProfileAvatar(playerId: player.id, latestImage: changedAvatar,),
+          new AvatarFromProfileOrLocal(
+            playerId: player.id,
+            latestImage: changedAvatar,
+            profileImageUrl: this.player.profileImageUrl,
+            usePublicProfile: this.player.usePublicProfileImage,
+          ),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(
@@ -23,9 +29,12 @@ class PhotoProfileView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     new Text(
-                      player != null ? '${player.firstName} ${player.lastName}': '',
+                      player != null
+                          ? '${player.firstName} ${player.lastName}'
+                          : '',
                       key: TennisAiKeys.profileName,
-                      style: new TextStyle(fontSize: 18.0, fontWeight: FontWeight.w400),
+                      style: new TextStyle(
+                          fontSize: 18.0, fontWeight: FontWeight.w400),
                     ),
                     new Text(player.address ?? ''),
                     new Text(player.postCode ?? '')

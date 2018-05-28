@@ -18,7 +18,14 @@ class BasketChildView extends StatelessWidget {
   final List<Tournament> leaveBehindItems;
   final Function(Basket) onSendToLta;
 
-  BasketChildView({Key key, this.basket, this.player, this.onRemoveFromBasket, this.onSendToLta, this.changedAvatar}) : super(key: key);
+  BasketChildView(
+      {Key key,
+      this.basket,
+      this.player,
+      this.onRemoveFromBasket,
+      this.onSendToLta,
+      this.changedAvatar})
+      : super(key: key);
 
   Widget buildListTile(BuildContext context, Tournament item) {
     return new MergeSemantics(
@@ -94,7 +101,6 @@ class BasketChildView extends StatelessWidget {
                     child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                      // new Text('Rating', style: new TextStyle(fontSize: 10.0)),
                       new CircleAvatar(
                           radius: 16.0,
                           child: new Text(
@@ -131,16 +137,23 @@ class BasketChildView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Iterable<Widget> listTiles = basket.basketItems == null ? [] : basket.basketItems.map((BasketItem item) => buildDismisableItem(context, item));
+    Iterable<Widget> listTiles = basket.basketItems == null
+        ? []
+        : basket.basketItems
+            .map((BasketItem item) => buildDismisableItem(context, item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
     return new Column(children: <Widget>[
       new Container(
           padding: const EdgeInsets.all(5.0),
-         // color: const Color(0xFFFC5CAE9),
           child: new SizedBox(
             height: 76.0,
             child: new Row(children: <Widget>[
-              new ProfileAvatar(playerId: player.id, latestImage: changedAvatar),
+              new AvatarFromProfileOrLocal(
+                playerId: player.id,
+                latestImage: changedAvatar,
+                profileImageUrl: player.profileImageUrl,
+                usePublicProfile: player.usePublicProfileImage,
+              ),
               new Expanded(
                 child: new Padding(
                     padding: const EdgeInsets.only(left: 10.0, top: 10.0),
