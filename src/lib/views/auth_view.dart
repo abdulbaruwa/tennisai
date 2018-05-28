@@ -31,9 +31,9 @@ class AuthView extends StatelessWidget {
             new Container(
                 padding: EdgeInsets.only(left: 10.0),
                 child: new Text("You are not currently signed in.",
-                    style: Theme.of(context).accentTextTheme.display1)),
+                    style: Theme.of(context).accentTextTheme.display1.copyWith(color: Colors.white, fontSize: 25.0))),
             new Text('Tennis.Ai',
-                style: Theme.of(context).accentTextTheme.display1),
+                style: Theme.of(context).accentTextTheme.display1.copyWith(color: Colors.white)),
             new RaisedButton(
               child: const Text('SIGN IN'),
               onPressed: isSignedIn == false ? onGoogleSignInSelected  : null,

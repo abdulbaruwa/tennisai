@@ -219,11 +219,11 @@ class ProfileEditView extends StatelessWidget {
                     inputType: TextInputType.number),
                 new _LabelTextFormEdit(
                     label: 'LTA Rating',
-                    value: player.ltaRating,
+                    value: player.ltaRating == null ? '' : player.ltaRating,
                     inputType: TextInputType.text),
                 new _LabelTextFormEdit(
                     label: 'LTA Ranking',
-                    value: player.ltaRanking.toString(),
+                    value: player.ltaRanking == null ? '':  player.ltaRanking.toString(),
                     inputType: TextInputType.number),
                 new Container(
                     color: const Color(0xFFF5F5F5),
@@ -235,14 +235,14 @@ class ProfileEditView extends StatelessWidget {
                 new _LabelTextFormEdit(
                   label: 'Street Address',
                   fkey: _addressKey,
-                  value: player.address,
+                  value: player.address == null ? '' : player.address,
                 ),
                 new _LabelTextFormEdit(
                     label: 'County', fkey: _countryKey, value: player.county),
                 new _LabelTextFormEdit(
                   label: 'Post Code',
                   fkey: _postCodeKey,
-                  value: player.postCode,
+                  value:  player.postCode == null ? '' : player.postCode,
                 ),
 
                 new Container(
