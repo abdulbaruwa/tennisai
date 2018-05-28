@@ -14,6 +14,8 @@ class Player {
   final String address;
   final String county;
   final String id;
+  final String profileImageUrl;
+  final bool usePublicProfileImage;
 
   Player(
       {this.firstName,
@@ -26,7 +28,9 @@ class Player {
       this.postCode,
       this.address,
       this.county,
-      this.id});
+      this.id,
+      this.usePublicProfileImage,
+      this.profileImageUrl});
   final List<Tournament> watchedTournaments = [];
   final List<Tournament> enteredTournaments = [];
 
@@ -41,7 +45,9 @@ class Player {
       String postCode,
       String address,
       String county,
-      String playerId}) {
+      String playerId,
+      bool usePublicProfileImage,
+      String profileImageUrl}) {
     return new Player(
         id: id ?? this.id,
         firstName: firstName ?? this.firstName,
@@ -52,7 +58,9 @@ class Player {
         county: county ?? this.county,
         ltaNumber: ltaNumber ?? this.ltaNumber,
         ltaRanking: ltaRanking ?? this.ltaRanking,
-        ltaRating: ltaRating ?? this.ltaRating);
+        ltaRating: ltaRating ?? this.ltaRating,
+        usePublicProfileImage: usePublicProfileImage ?? this.usePublicProfileImage,
+        profileImageUrl: profileImageUrl ?? this.profileImageUrl);
   }
 
   @override
@@ -67,7 +75,9 @@ class Player {
       ltaNumber.hashCode ^
       ltaRanking.hashCode ^
       ltaRating.hashCode ^
-      postCode.hashCode;
+      postCode.hashCode ^
+      usePublicProfileImage.hashCode ^
+      profileImageUrl.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -84,7 +94,9 @@ class Player {
           ltaRanking == other.ltaRanking &&
           ltaRating == other.ltaRating &&
           ltaNumber == other.ltaNumber &&
-          postCode == other.postCode;
+          postCode == other.postCode &&
+          usePublicProfileImage == other.usePublicProfileImage &&
+          profileImageUrl == other.profileImageUrl;
 
   static Player fromEntity(PlayerEntity playerEntity) {
     return new Player(
@@ -99,6 +111,8 @@ class Player {
       address: playerEntity.address,
       postCode: playerEntity.postCode,
       county: playerEntity.county,
+      profileImageUrl: playerEntity.profileImageUrl,
+      usePublicProfileImage: playerEntity.usePublicProfileImage
     );
   }
 
@@ -114,12 +128,14 @@ class Player {
         ltaRanking: ltaRanking,
         ltaRating: ltaRating,
         postCode: postCode,
-        county: county);
+        county: county,
+        usePublicProfileImage: usePublicProfileImage,
+        profileImageUrl: profileImageUrl);
   }
 
   @override
   String toString() {
-    return 'Player{id: $id, firstName: $firstName, lastName: $lastName, email: $email, gender: $gender, address: $address, county: $county, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
+    return 'Player{id: $id, firstName: $firstName, lastName: $lastName, email: $email, gender: $gender, profileImageUrl: $profileImageUrl, usePublicProfileImage: $usePublicProfileImage, address: $address, county: $county, ltaRanking: $ltaRanking, ltaRating: $ltaRating, ltaNumber: $ltaNumber, postCode: $postCode}';
   }
 }
 
@@ -136,7 +152,9 @@ class PlayerEntity {
       this.address,
       this.postCode,
       this.county,
+      this.profileImageUrl,
       this.enteredTournaments,
+      this.usePublicProfileImage,
       this.watchedTournaments});
   String id;
   String firstName;
@@ -149,6 +167,8 @@ class PlayerEntity {
   String postCode;
   String address;
   String county;
+  String profileImageUrl;
+  bool usePublicProfileImage;
 
   Map<String, Object> toJson() {
     return {
@@ -163,6 +183,8 @@ class PlayerEntity {
       'postCode': postCode,
       'address': address,
       'county': county,
+      'profileImageUrl': profileImageUrl,
+      'usePublicProfileImage': usePublicProfileImage
     };
   }
 
@@ -181,6 +203,8 @@ class PlayerEntity {
       postCode: json['postCode'] as String,
       address: json['address'] as String,
       county: json['county'] as String,
+      profileImageUrl: json['profileImageUrl'] as String,
+      usePublicProfileImage: json['usePublicProfileImage'] as bool
     );
   }
 }

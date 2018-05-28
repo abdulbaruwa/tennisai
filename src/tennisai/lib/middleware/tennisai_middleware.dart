@@ -156,6 +156,8 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
           ltaNumber: registrationInfoToSave.btmNumber,
           gender: 'male', // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
           email: authSettings.email,
+          usePublicProfileImage: true,
+          profileImageUrl: authSettings.photoUrl,
           id: authSettings.playerId);
     }
     await repository.savePlayerProfile(playerToSave.toEntity());

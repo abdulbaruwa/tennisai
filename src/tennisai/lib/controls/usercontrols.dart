@@ -45,7 +45,8 @@ class LabelIntDropDownItemState extends State<LabelIntDropDownItem> {
                       items: widget.displayIntItems.map((int value) {
                         return new DropdownMenuItem<int>(
                           value: value,
-                          child: new Align(alignment: Alignment.centerRight,
+                          child: new Align(
+                            alignment: Alignment.centerRight,
                             child: new Text(widget.displayFunc(value)),
                           ),
                         );
@@ -84,37 +85,57 @@ class TopBottomLabel extends StatelessWidget {
   }
 }
 
-class ProfileAvatar extends StatelessWidget{
+class ProfileAvatar extends StatelessWidget {
   final String playerId;
   final File latestImage;
 
   ProfileAvatar({this.playerId, this.latestImage});
-  Widget build(BuildContext context){
-      var networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId), headers: TennisAiPaths.zumoHeader);
-      var latestAvatar = latestImage == null ? null :  new FileImage(latestImage);
-      return new CircleAvatar(
-            radius: 36.0,
-            backgroundImage: latestAvatar ?? networkImage)
-          ;
+  Widget build(BuildContext context) {
+    var networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId),
+        headers: TennisAiPaths.zumoHeader);
+    var latestAvatar = latestImage == null ? null : new FileImage(latestImage);
+    return new CircleAvatar(
+        radius: 36.0, backgroundImage: latestAvatar ?? networkImage);
   }
 }
 
-class EditableProfileAvatar extends StatelessWidget{
+class AvatarFromProfileOrLocal extends StatelessWidget {
+  final String playerId;
+  final File latestImage;
+  final String profileImageUrl;
+  final bool usePublicProfile;
+  AvatarFromProfileOrLocal(
+      {this.playerId, this.usePublicProfile, this.profileImageUrl, this.latestImage});
+  Widget build(BuildContext context) {
+    NetworkImage networkImage;
+    if (usePublicProfile == false && this.profileImageUrl != null) {
+      networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId),
+          headers: TennisAiPaths.zumoHeader);
+    }else{
+      networkImage = new NetworkImage(this.profileImageUrl,headers: TennisAiPaths.zumoHeader);
+    }
+    var latestAvatar = latestImage == null ? null : new FileImage(latestImage);
+    return new CircleAvatar(
+        radius: 36.0, backgroundImage: latestAvatar ?? networkImage);
+  }
+}
+
+class EditableProfileAvatar extends StatelessWidget {
   final String playerId;
   final String source;
   final VoidCallback onTap;
   final File defaultImage;
-  EditableProfileAvatar({this.playerId, this.source, this.onTap, this.defaultImage});
-  Widget build(BuildContext context){
-      var networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId), headers: TennisAiPaths.zumoHeader);
-      var defaultAvatar = defaultImage == null ? null :  new FileImage(defaultImage);
-      return GestureDetector
-      (
+  EditableProfileAvatar(
+      {this.playerId, this.source, this.onTap, this.defaultImage});
+  Widget build(BuildContext context) {
+    var networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId),
+        headers: TennisAiPaths.zumoHeader);
+    var defaultAvatar =
+        defaultImage == null ? null : new FileImage(defaultImage);
+    return GestureDetector(
         onTap: onTap,
         key: TennisAiKeys.profileAvatar(source),
-        child:new CircleAvatar(
-            radius: 36.0,
-            backgroundImage: defaultAvatar ?? networkImage)
-      );
+        child: new CircleAvatar(
+            radius: 36.0, backgroundImage: defaultAvatar ?? networkImage));
   }
 }

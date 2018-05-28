@@ -35,12 +35,10 @@ class _UserProfile extends StatelessWidget {
   const _UserProfile({Key key, this.player, this.changedAvatar}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> headers = {'zumo-api-version': '2.0.0'};
-    final ThemeData theme = Theme.of(context);
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new ProfileAvatar(playerId: player.id.toString(), latestImage: changedAvatar),
+          new AvatarFromProfileOrLocal(playerId: player.id.toString(), latestImage: changedAvatar, profileImageUrl: player.profileImageUrl, usePublicProfile: player.usePublicProfileImage),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(
@@ -139,7 +137,7 @@ Widget _buildPreference(
       ),
       new _LabelTextRow(
         label: 'Lta Rating',
-        value: player.ltaRating,
+        value: player.ltaRating == null ? '' : player.ltaRating,
         key: TennisAiKeys.profileLtaRating,
       ),
       new _LabelTextRow(
