@@ -53,8 +53,8 @@ class _UserProfile extends StatelessWidget {
                       player != null ? '${player.firstName} ${player.lastName}': '',
                       key: TennisAiKeys.profileName,
                     ),
-                    new Text(player != null ? player.address: '?'),
-                    new Text(player.postCode != null ? player.postCode : '?')
+                    new Text(player.address ?? ''),
+                    new Text(player.postCode ?? '')
                   ],
                 )),
           ),
@@ -134,7 +134,7 @@ Widget _buildPreference(
       new _LtaInfo(value: 'LTA INFO'),
       new _LabelTextRow(
         label: 'Lta Number',
-        value: player.ltaNumber.toString(),
+        value: player.ltaNumber == null ? '' : player.ltaNumber.toString(),
         key: TennisAiKeys.profileLtaNumber,
       ),
       new _LabelTextRow(
@@ -144,7 +144,7 @@ Widget _buildPreference(
       ),
       new _LabelTextRow(
         label: 'Lta Ranking',
-        value: player.ltaRanking.toString(),
+        value: player.ltaRanking == null ?  '' : player.ltaRanking.toString(),
         key: TennisAiKeys.profileLtaRanking,
       ),
       new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),

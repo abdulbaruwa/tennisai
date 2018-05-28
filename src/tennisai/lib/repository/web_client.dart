@@ -7,7 +7,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../models/models.dart';
 import '../paths/paths.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class WebCallResponse {
   final int statusCode;
@@ -44,7 +43,7 @@ class WebClient {
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
     var responseBody = await response.transform(UTF8.decoder).join();
-    var jsonData = JSON.decode(responseBody);
+    var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
       tournaments.add(TournamentEntity.fromJson(jsonData[i]));
@@ -80,7 +79,7 @@ class WebClient {
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
     var responseBody = await response.transform(UTF8.decoder).join();
-    var jsonData = JSON.decode(responseBody);
+    var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
       matchResults.add(RankingInfoEntity.fromJson(jsonData[i]));
