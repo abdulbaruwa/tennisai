@@ -500,6 +500,9 @@ Middleware<AppState> _updatePlayerAndSearchProfile(
 
     var searchPrefToSave =
         searchPreferenceSelector(store.state).value.toEntity();
+        if(searchPrefToSave.playerId == null || searchPrefToSave.playerId.isEmpty){
+          searchPrefToSave.playerId = playerToSave.id;
+        }
     repository.saveSearchPreference(searchPrefToSave);
 
     if (avatarSelector(store.state).isPresent) {

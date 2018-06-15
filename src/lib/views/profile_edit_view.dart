@@ -9,7 +9,8 @@ import '../models/enums.dart' as _enums;
 import '../keys/keys.dart';
 import '../controls/usercontrols.dart';
 
-typedef OnPlayerProfileSaveCallback = Function(Player player, SearchPreference searchPreference);
+typedef OnPlayerProfileSaveCallback = Function(
+    Player player, SearchPreference searchPreference);
 typedef OnLocalAvatarImageChangedCallback = Function(File newImage);
 
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
@@ -34,14 +35,16 @@ class ProfileEditView extends StatelessWidget {
     var image = await ImagePicker.pickImage(source: source);
     onChangeImage(image);
   }
-  
+
   final File changedAvatar;
   final bool isEditing;
   final Player player;
   final SearchPreference searchPreference;
 
   static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
-  final Function(Player player, SearchPreference searchPreference, File changedAvatar) onSave;
+  final Function(
+          Player player, SearchPreference searchPreference, File changedAvatar)
+      onSave;
   final Function(File newImage) onChangeImage;
   static final GlobalKey<FormFieldState<String>> _firstNameKey =
       new GlobalKey<FormFieldState<String>>();
@@ -53,10 +56,14 @@ class ProfileEditView extends StatelessWidget {
       new GlobalKey<FormFieldState<String>>();
   static final GlobalKey<FormFieldState<String>> _postCodeKey =
       new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _ratingKey =
+      new GlobalKey<FormFieldState<String>>();
+  static final GlobalKey<FormFieldState<String>> _rankingKey =
+      new GlobalKey<FormFieldState<String>>();
   static final GlobalKey _genderKey = new GlobalKey();
-  
-  static final genderMap ={'female': 0, 'male': 1};
-  static final genderReverseMap ={0: 'Female', 1: 'Male'};
+
+  static final genderMap = {'female': 0, 'male': 1};
+  static final genderReverseMap = {0: 'Female', 1: 'Male'};
 
   final ValueChanged<int> onChanged;
 
@@ -115,21 +122,33 @@ class ProfileEditView extends StatelessWidget {
         child: new Scaffold(
             // backgroundColor: Colors.white70,
             appBar:
-                new AppBar(title: const Text('Edit Profile'), actions: <Widget>[
+                new AppBar(title: const Text('REdit Profile'), actions: <Widget>[
               new FlatButton(
                   child: new Text('SAVE',
                       style:
                           theme.textTheme.body1.copyWith(color: Colors.white)),
                   onPressed: () {
                     var updatedPlayer = player.copyWith(
-                        address: _addressKey.currentState.value,
-                        postCode: _postCodeKey.currentState.value);
+                        address: _addressKey.currentState != null
+                            ? _addressKey.currentState.value
+                            : player.address,
+                        postCode: _postCodeKey.currentState != null
+                            ? _postCodeKey.currentState.value
+                            : player.postCode,
+                        ltaRating: _ratingKey.currentState != null
+                            ? _ratingKey.currentState.value
+                            : player.ltaRating,
+                        ltaRanking: _rankingKey.currentState.value != null
+                            ? int.parse(_rankingKey.currentState.value)
+                            : player.ltaRanking);
                     var updateSearchPreference = new SearchPreference(
                         grade: gradeGroup.output,
                         distance: distanceGroup.output,
                         ageGroup: tournamentGroup.output,
+                        gender: genderGroup.output.toString(),
                         statusIndex: _statusDropDown.output);
-                    onSave(updatedPlayer, updateSearchPreference, changedAvatar);
+                    onSave(
+                        updatedPlayer, updateSearchPreference, changedAvatar);
                     Navigator.pop(context, _enums.DismissDialogAction.save);
                   })
             ]),
@@ -219,11 +238,15 @@ class ProfileEditView extends StatelessWidget {
                     inputType: TextInputType.number),
                 new _LabelTextFormEdit(
                     label: 'LTA Rating',
-                    value: player.ltaRating == null ? '' : player.ltaRating,
-                    inputType: TextInputType.text),
+                    fkey: _ratingKey,
+                    value: player.ltaRating == null
+                        ? ''
+                        : player.ltaRating.toString(),
+                    inputType: TextInputType.numberWithOptions(decimal: true)),
                 new _LabelTextFormEdit(
                     label: 'LTA Ranking',
-                    value: player.ltaRanking == null ? '':  player.ltaRanking.toString(),
+                    fkey: _rankingKey,
+                    value: player.ltaRanking == null ? '' : player.ltaRanking,
                     inputType: TextInputType.number),
                 new Container(
                     color: const Color(0xFFF5F5F5),
@@ -238,11 +261,16 @@ class ProfileEditView extends StatelessWidget {
                   value: player.address == null ? '' : player.address,
                 ),
                 new _LabelTextFormEdit(
-                    label: 'County', fkey: _countryKey, value: player.county),
+                  label: 'County',
+                  fkey: _countryKey,
+                  value: player.county,
+                  inputType: TextInputType.text,
+                ),
                 new _LabelTextFormEdit(
                   label: 'Post Code',
                   fkey: _postCodeKey,
-                  value:  player.postCode == null ? '' : player.postCode,
+                  inputType: TextInputType.text,
+                  value: player.postCode == null ? '' : player.postCode,
                 ),
                 new Container(
                     color: const Color(0xFFF5F5F5),
@@ -281,7 +309,11 @@ class _LabelTextFormEdit extends StatelessWidget {
   final GlobalKey<FormFieldState<String>> fkey;
   final Object value;
   _LabelTextFormEdit(
-      {Key key, this.value, this.label, this.inputType, this.fkey})
+      {Key key,
+      this.value,
+      this.label,
+      this.inputType = TextInputType.text,
+      this.fkey})
       : super(key: key);
 
   Widget build(BuildContext context) {
@@ -300,7 +332,7 @@ class _LabelTextFormEdit extends StatelessWidget {
                         child: new TextFormField(
                             initialValue: value != null ? value.toString() : '',
                             key: fkey,
-                            keyboardType: TextInputType.text,
+                            keyboardType: this.inputType,
                             textAlign: TextAlign.end)))
               ],
             )

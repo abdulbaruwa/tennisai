@@ -200,8 +200,6 @@ class WebClient {
     return tEntities;
   }
 
-  /// Mock that returns true or false for success or failure. In this case,
-  /// it will "Always Succeed"
   Future<bool> postPlayerProfile(PlayerEntity playerProfile) async {
     var jsonRequest = json.encode(playerProfile.toJson());
     var uri = new Uri.http(hostAddress, '/api/players');
@@ -209,10 +207,11 @@ class WebClient {
     return response;
   }
 
-  /// Mock that returns true or false for success or failure. In this case,
-  /// it will "Always Succeed"
   Future<bool> postSearchPreference(SearchPreferenceEntity searchPref) async {
-    return new Future.value(true);
+    var jsonRequest = json.encode(searchPref.toJson());
+    var uri = new Uri.http(hostAddress, '/api/searchpreference');
+    var response = await makeHttpPostCall(uri, jsonRequest);
+    return response;
   }
 
   /// Mock that returns true or false for success or failure. In this case,

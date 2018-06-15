@@ -18,9 +18,10 @@ class SearchPreference {
   final int distance;
   final int ageGroup;
   final int statusIndex;
+  final String playerId;
 
   SearchPreference(
-      {this.ltaNumber, this.grade, this.gender, this.distance, this.ageGroup, this.statusIndex});
+      {this.ltaNumber, this.grade, this.gender, this.distance, this.ageGroup, this.statusIndex, this.playerId});
   @override
   int get hashCode =>
       ltaNumber.hashCode ^
@@ -28,7 +29,8 @@ class SearchPreference {
       gender.hashCode ^
       distance.hashCode ^
       statusIndex.hashCode ^
-      ageGroup.hashCode;
+      ageGroup.hashCode ^
+      playerId.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -40,7 +42,8 @@ class SearchPreference {
           gender == other.gender &&
           ageGroup == other.ageGroup &&
           statusIndex == other.statusIndex &&
-          distance == other.distance;
+          distance == other.distance &&
+          playerId == other.playerId;
 
   static SearchPreference fromEntity(SearchPreferenceEntity searchPrefEntity) {
     return new SearchPreference(
@@ -50,6 +53,7 @@ class SearchPreference {
       ageGroup: searchPrefEntity.ageGroup,
       statusIndex: searchPrefEntity.statusIndex,
       distance: searchPrefEntity.distance,
+      playerId: searchPrefEntity.playerId
     );
   }
 
@@ -60,6 +64,7 @@ class SearchPreference {
     ageGroup: ageGroup ?? this.ageGroup, 
     distance: distance ?? this.distance, 
     grade: distance ?? this.grade, 
+    playerId: playerId ?? this.playerId,
     gender: gender ?? this.gender) ;
   }
 
@@ -71,18 +76,19 @@ class SearchPreference {
       ageGroup: ageGroup,
       statusIndex: statusIndex,
       distance: distance,
+      playerId: playerId
     );
   }
 
   @override
   String toString() {
-    return 'SearchPreference{grade: $grade, gender: $gender, distance: $distance, statusIndex: $statusIndex, ltaNumber: $ltaNumber, ageGroup: $ageGroup}';
+    return 'SearchPreference{grade: $grade, gender: $gender, distance: $distance, statusIndex: $statusIndex, playerId: $playerId, ltaNumber: $ltaNumber, ageGroup: $ageGroup}';
   }
 }
 
 class SearchPreferenceEntity {
   SearchPreferenceEntity(
-      {this.ltaNumber, this.grade, this.gender, this.distance, this.statusIndex, this.ageGroup});
+      {this.ltaNumber, this.grade, this.gender, this.distance, this.statusIndex, this.ageGroup, this.playerId});
   int grade;
   String gender;
   String ltaRating;
@@ -90,6 +96,7 @@ class SearchPreferenceEntity {
   int distance;
   int ageGroup;
   int statusIndex;
+  String playerId;
 
   Map<String, Object> toJson() {
     return {
@@ -99,6 +106,7 @@ class SearchPreferenceEntity {
       'distance': distance,
       'statusIndex': statusIndex,
       'ageGroup': ageGroup,
+      'playerId': playerId,
     };
   }
 
@@ -110,6 +118,7 @@ class SearchPreferenceEntity {
       distance: json['distance'] as int,
       ageGroup: json['ageGroup'] as int,
       statusIndex: json['statusIndex'] as int,
+      playerId: json['playerId'] as String
     );
   }
 }
