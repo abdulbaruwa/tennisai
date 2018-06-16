@@ -14,7 +14,7 @@ final tournamentStatusIndexs = [0, 1, 2, 3, 4, 5, 6];
 class SearchPreference {
   final int ltaNumber;
   final int grade;
-  final String gender;
+  final int gender;
   final int distance;
   final int ageGroup;
   final int statusIndex;
@@ -58,7 +58,7 @@ class SearchPreference {
   }
 
   SearchPreference copyWth(
-      {int ltaNumber, int grade, int distance, int ageGroup, String gender}) {
+      {int ltaNumber, int grade, int distance, int ageGroup, int gender}) {
     return new SearchPreference(ltaNumber: ltaNumber ?? this.ltaNumber, 
     statusIndex: this.statusIndex, 
     ageGroup: ageGroup ?? this.ageGroup, 
@@ -90,7 +90,7 @@ class SearchPreferenceEntity {
   SearchPreferenceEntity(
       {this.ltaNumber, this.grade, this.gender, this.distance, this.statusIndex, this.ageGroup, this.playerId});
   int grade;
-  String gender;
+  int gender;
   String ltaRating;
   int ltaNumber;
   int distance;
@@ -113,7 +113,7 @@ class SearchPreferenceEntity {
   static SearchPreferenceEntity fromJson(Map<String, Object> json) {
     return new SearchPreferenceEntity(
       grade: json['grade'] as int,
-      gender: json['gender'] as String,
+      gender: json['gender'] as int,
       ltaNumber: json['ltaNumber'] as int,
       distance: json['distance'] as int,
       ageGroup: json['ageGroup'] as int,

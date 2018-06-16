@@ -297,4 +297,4 @@ class WebClient {
 }
 
 SearchPreference searchPreference = new SearchPreference(
-    ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 'male', grade: 3);
+    ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 1, grade: 3);

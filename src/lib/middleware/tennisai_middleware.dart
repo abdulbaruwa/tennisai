@@ -154,7 +154,7 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
           firstName: registrationInfoToSave.firstName,
           lastName: registrationInfoToSave.lastName,
           ltaNumber: registrationInfoToSave.btmNumber,
-          gender: 'male', // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
+          gender: registrationInfoToSave.gender, // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
           email: authSettings.email,
           usePublicProfileImage: true,
           profileImageUrl: authSettings.photoUrl,

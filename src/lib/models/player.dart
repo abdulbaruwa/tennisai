@@ -6,7 +6,7 @@ class Player {
   final String firstName;
   final String lastName;
   final String email;
-  final String gender;
+  final int gender;
   final int ltaRanking;
   final String ltaRating;
   final int ltaNumber;
@@ -160,7 +160,7 @@ class PlayerEntity {
   String firstName;
   String lastName;
   String email;
-  String gender;
+  int gender;
   int ltaRanking;
   String ltaRating;
   int ltaNumber;
@@ -196,7 +196,7 @@ class PlayerEntity {
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
       email: json['email'] as String,
-      gender: json['gender'] as String,
+      gender: json['gender'] as int,
       ltaNumber: json['ltaNumber'] as int,
       ltaRanking: json['ltaRanking'] as int,
       ltaRating: json['ltaRating'] as String,

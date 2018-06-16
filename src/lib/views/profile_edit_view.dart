@@ -145,7 +145,7 @@ class ProfileEditView extends StatelessWidget {
                         grade: gradeGroup.output,
                         distance: distanceGroup.output,
                         ageGroup: tournamentGroup.output,
-                        gender: genderGroup.output.toString(),
+                        gender: genderGroup.output,
                         statusIndex: _statusDropDown.output);
                     onSave(
                         updatedPlayer, updateSearchPreference, changedAvatar);
