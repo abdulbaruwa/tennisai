@@ -122,7 +122,7 @@ class ProfileEditView extends StatelessWidget {
         child: new Scaffold(
             // backgroundColor: Colors.white70,
             appBar:
-                new AppBar(title: const Text('REdit Profile'), actions: <Widget>[
+                new AppBar(title: const Text('Edit Profile'), actions: <Widget>[
               new FlatButton(
                   child: new Text('SAVE',
                       style:
@@ -138,13 +138,12 @@ class ProfileEditView extends StatelessWidget {
                         ltaRating: _ratingKey.currentState != null
                             ? _ratingKey.currentState.value
                             : player.ltaRating,
-                        ltaRanking: _rankingKey.currentState.value != null
+                        ltaRanking: (_rankingKey.currentState.value != null)
                             ? int.parse(_rankingKey.currentState.value)
                             : player.ltaRanking);
                     var updateSearchPreference = new SearchPreference(
                         grade: gradeGroup.output,
                         distance: distanceGroup.output,
-                        ageGroup: tournamentGroup.output,
                         gender: genderGroup.output,
                         statusIndex: _statusDropDown.output);
                     onSave(

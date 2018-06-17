@@ -22,9 +22,9 @@ class TennisAiKeys {
   static final upcomingSubTab = const Key('__upcomingSubTab__');
 
   static final tournamentItemName = (String id, String source) =>
-      new Key('TournamentItemName__${id}__${source}');
+      new Key('TournamentItemName__${id}__$source');
   static final tournamentItem =
-      (String id, String source) => new Key('TournamentItem__${id}__${source}');
+      (String id, String source) => new Key('TournamentItem__${id}__$source');
   static final todoItemNote = (String id) => new Key('TodoItem__${id}__Note');
   static final profileAvatar = (String source) => new Key('__${source}_profileAvatar');
 

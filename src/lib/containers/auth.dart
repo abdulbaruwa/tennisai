@@ -68,7 +68,7 @@ class AuthContainer extends StatelessWidget {
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
-    var responseBody = await response.transform(UTF8.decoder).join();
+    var responseBody = await response.transform(utf8.decoder).join();
     var jsonData = json.decode(responseBody);
     return jsonData;
   }
@@ -81,7 +81,7 @@ class AuthContainer extends StatelessWidget {
       request.headers.add('zumo-api-version', '2.0.0');
       request.write(jsonRequestBody);
       var response = await request.close();
-      var result = await response.transform(UTF8.decoder).join("");
+      var result = await response.transform(utf8.decoder).join("");
       if (response.statusCode == 200) {
         return result;
       }
@@ -92,7 +92,7 @@ class AuthContainer extends StatelessWidget {
   }
 
   Future<String> getAuthCode(String auth, String id) async {
-    var jsonRequest = JSON.encode(toJson('', id));
+    var jsonRequest = json.encode(toJson('', id));
     var uri = new Uri.https(
         'tennisaiservice.azurewebsites.net', '/.auth/login/google');
     var response = await makeHttpPostCall(uri, jsonRequest);
@@ -100,7 +100,7 @@ class AuthContainer extends StatelessWidget {
     if (response.isNotEmpty) {
       // The returned claim returns a json object that contain authenticationToken and azure user with sid. Not interested in the sid for now
       // Will use the provider id as the player id. No support for multiple provider auth for same player.
-      return JSON.decode(response)['authenticationToken'] as String;
+      return json.decode(response)['authenticationToken'] as String;
     }
     return '';
   }

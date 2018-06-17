@@ -148,7 +148,7 @@ Widget _buildPreference(
       new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),
       new _LabelTextRow(
           label: 'Gender',
-          value: searchPreference.gender == 'male' ? 'Male' : 'Female'),
+          value: searchPreference.gender == 1 ? 'Male' : 'Female'),
       new _LabelTextRow(
           label: 'Distance', value: '${searchPreference.distance} miles'),
       new _LabelTextRow(

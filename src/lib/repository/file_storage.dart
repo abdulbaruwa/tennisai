@@ -71,7 +71,7 @@ class FileStorage {
     final file = await _getLocalFile(StoreNames.enteredTournaments);
     var enteredTournamentsJson =
         enteredTournaments.map((t) => t.toJson()).toList();
-    print('file_storage.saveEnteredTournaments: json to save ${enteredTournamentsJson}');
+    print('file_storage.saveEnteredTournaments: json to save $enteredTournamentsJson');
     return file.writeAsString(new JsonEncoder()
         .convert({'enteredTournaments': enteredTournamentsJson}));
   }

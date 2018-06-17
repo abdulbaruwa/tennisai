@@ -42,7 +42,7 @@ class WebClient {
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
-    var responseBody = await response.transform(UTF8.decoder).join();
+    var responseBody = await response.transform(utf8.decoder).join();
     var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
@@ -60,7 +60,7 @@ class WebClient {
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
-    var responseBody = await response.transform(UTF8.decoder).join();
+    var responseBody = await response.transform(utf8.decoder).join();
     var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
@@ -78,7 +78,7 @@ class WebClient {
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();
-    var responseBody = await response.transform(UTF8.decoder).join();
+    var responseBody = await response.transform(utf8.decoder).join();
     var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
@@ -149,7 +149,7 @@ class WebClient {
     var response = await request.close();
 
     if (response.statusCode == 200) {
-      var responseBody = await response.transform(UTF8.decoder).join();
+      var responseBody = await response.transform(utf8.decoder).join();
       var jsonDataResponse = json.decode(responseBody);
       return new WebCallResponse(statusCode: response.statusCode, jsonData: jsonDataResponse);
     }

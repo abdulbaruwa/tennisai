@@ -12,8 +12,6 @@ class RegistrationView extends StatelessWidget {
       this.onRegistrationCancelled,
       this.onRegistration})
       : super(key: key);
-  static final GlobalKey<ScaffoldState> _scaffoldKey =
-      new GlobalKey<ScaffoldState>();
   static final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   static final GlobalKey<FormFieldState<String>> _firstNameKey =
       new GlobalKey<FormFieldState<String>>();
