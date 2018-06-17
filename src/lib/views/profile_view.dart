@@ -1,4 +1,4 @@
-import 'dart:io'; 
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../models/models.dart';
 import '../keys/keys.dart';
@@ -9,7 +9,8 @@ class ProfileSection extends StatelessWidget {
   final Player player;
   final File changedAvatar;
   final SearchPreference searchPreference;
-  const ProfileSection({Key key, this.player, this.searchPreference, this.changedAvatar})
+  const ProfileSection(
+      {Key key, this.player, this.searchPreference, this.changedAvatar})
       : super(key: key);
 
   @override
@@ -23,7 +24,8 @@ class ProfileSection extends StatelessWidget {
             children: <Widget>[
               new Padding(
                   padding: const EdgeInsets.only(left: 5.0, top: 5.0),
-                  child: new _UserProfile(player: player, changedAvatar: changedAvatar)),
+                  child: new _UserProfile(
+                      player: player, changedAvatar: changedAvatar)),
             ],
           )));
 }
@@ -32,13 +34,18 @@ class ProfileSection extends StatelessWidget {
 class _UserProfile extends StatelessWidget {
   final Player player;
   final File changedAvatar;
-  const _UserProfile({Key key, this.player, this.changedAvatar}) : super(key: key);
+  const _UserProfile({Key key, this.player, this.changedAvatar})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return new SizedBox(
         height: 76.0,
         child: new Row(children: <Widget>[
-          new AvatarFromProfileOrLocal(playerId: player.id.toString(), latestImage: changedAvatar, profileImageUrl: player.profileImageUrl, usePublicProfile: player.usePublicProfileImage),
+          new AvatarFromProfileOrLocal(
+              playerId: player.id.toString(),
+              latestImage: changedAvatar,
+              profileImageUrl: player.profileImageUrl,
+              usePublicProfile: player.usePublicProfileImage),
           const SizedBox(width: 8.0),
           new Expanded(
             child: new Padding(
@@ -48,7 +55,9 @@ class _UserProfile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     new Text(
-                      player != null ? '${player.firstName} ${player.lastName}': '',
+                      player != null
+                          ? '${player.firstName} ${player.lastName}'
+                          : '',
                       key: TennisAiKeys.profileName,
                     ),
                     new Text(player.address ?? ''),
@@ -109,7 +118,8 @@ class _LabelTextRow extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 10.0, vertical: 12.0),
                         alignment: Alignment.bottomRight,
-                        child: new Text(value,
+                        child: new Text(
+                          value,
                           textAlign: TextAlign.end,
                         )))
               ],
@@ -119,8 +129,8 @@ class _LabelTextRow extends StatelessWidget {
   }
 }
 
-Widget _buildPreference(
-    BuildContext context, Player player, SearchPreference searchPreference, File changedAvatar) {
+Widget _buildPreference(BuildContext context, Player player,
+    SearchPreference searchPreference, File changedAvatar, Function logOut) {
   return new Container(
       child: new ListView(
     children: <Widget>[
@@ -142,7 +152,7 @@ Widget _buildPreference(
       ),
       new _LabelTextRow(
         label: 'Lta Ranking',
-        value: player.ltaRanking == null ?  '' : player.ltaRanking.toString(),
+        value: player.ltaRanking == null ? '' : player.ltaRanking.toString(),
         key: TennisAiKeys.profileLtaRanking,
       ),
       new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),
@@ -159,7 +169,15 @@ Widget _buildPreference(
               ? 'Adult'
               : 'U${searchPreference.ageGroup}'),
       new _LabelTextRow(
-          label: 'Status', value: tournamentStatus[searchPreference == null ? 0 : searchPreference.statusIndex]),
+          label: 'Status',
+          value: tournamentStatus[
+              searchPreference == null ? 0 : searchPreference.statusIndex]),
+      new _LtaInfo(value: 'AUTHENTICATION'),
+      new FlatButton(
+          child: new Text('LOG OUT'),
+          onPressed: () {
+            logOut();
+          })
     ],
   ));
 }
@@ -168,7 +186,13 @@ class ProfileView extends StatelessWidget {
   final Player player;
   final SearchPreference searchPreference;
   final File changedAvatar;
-  const ProfileView({Key key, this.player, this.searchPreference, this.changedAvatar})
+  final Function logOut;
+  const ProfileView(
+      {Key key,
+      this.player,
+      this.searchPreference,
+      this.changedAvatar,
+      this.logOut})
       : super(key: key);
 
   @override
@@ -203,7 +227,8 @@ class ProfileView extends StatelessWidget {
             title: new Text('Preference'),
           ),
           body: new Scrollbar(
-            child: _buildPreference(context, player, searchPreference, changedAvatar),
+            child: _buildPreference(
+                context, player, searchPreference, changedAvatar, logOut),
           ),
         ));
   }

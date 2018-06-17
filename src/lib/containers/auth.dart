@@ -11,14 +11,13 @@ import '../selectors/selectors.dart';
 import '../views/Auth_view.dart';
 import '../actions/actions.dart';
 
-GoogleSignIn _googleSignIn = new GoogleSignIn(
+GoogleSignIn googleSignIn = new GoogleSignIn(
   scopes: <String>[
     'email',
     'https://www.googleapis.com/auth/plus.login',
     'https://www.googleapis.com/auth/contacts.readonly',
   ],
 );
-
 class AuthContainer extends StatelessWidget {
   AuthContainer({Key key}) : super(key: key);
 
@@ -37,7 +36,7 @@ class AuthContainer extends StatelessWidget {
 
   void initSignIn(Store store) async {
     print('Attempting to SignIn with Google');
-    _googleSignIn.onCurrentUserChanged
+    googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount account) async {
       var aut = await account.authentication;
       print(account.toString());
@@ -53,7 +52,7 @@ class AuthContainer extends StatelessWidget {
           photoUrl: account.photoUrl);
       store.dispatch(new SignInCompletedAction(setting));
     });
-    _googleSignIn.signInSilently(suppressErrors: false).catchError((onError) {
+    googleSignIn.signInSilently(suppressErrors: false).catchError((onError) {
       print('Silent Sign In Error: $onError');
       store.dispatch(new GoogleSilentSignInFailedAction());
     });
@@ -106,7 +105,7 @@ class AuthContainer extends StatelessWidget {
   }
 
   Future<Null> _handleSignOut() async {
-    _googleSignIn.disconnect();
+    googleSignIn.disconnect();
   }
 }
 
@@ -131,7 +130,7 @@ class _ViewModel {
         onGoogleSignInSelected: () async {
           print('auth_container.viewModel: Google Sign in selected');
           try {
-            await _googleSignIn.signIn();
+            await googleSignIn.signIn();
           } catch (error) {
             print('onGoogleSignInSelected: $error');
           }

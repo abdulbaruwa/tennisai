@@ -13,8 +13,13 @@ List<Settings> _signInWithGoogleAction(List<Settings> settings, SignInCompletedA
 
 final authStatusReducer = combineReducers<bool>([
   new TypedReducer<bool, SignInCompletedAction>(_signInCompletedUpdateStatus),
-  new TypedReducer<bool, GoogleSilentSignInFailedAction>(_googleSilentSignInFailed)
+  new TypedReducer<bool, GoogleSilentSignInFailedAction>(_googleSilentSignInFailed),
+  new TypedReducer<bool, SignedOutAction>(_signedOut)
 ]);
+
+bool _signedOut(bool status, SignedOutAction action){
+  return false; 
+}
 
 bool _signInCompletedUpdateStatus(bool status, SignInCompletedAction action){
   return true;
