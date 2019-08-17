@@ -51,7 +51,7 @@ class LabelIntDropDownItemState extends State<LabelIntDropDownItem> {
                           ),
                         );
                       }).toList(),
-                      value: result,
+                      value: result ?? widget.inputValue,
                       onChanged: (int value) {
                         setState(() {
                           result = value;
