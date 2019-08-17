@@ -47,8 +47,7 @@ class TournamentDetails extends StatefulWidget {
 class _ViewModel {
   final Tournament tournament;
   final TournamentDetailsActionSource source;
-  final Function onDelete;
-  final Function(bool) toggleCompleted;
+  // final Function(bool) toggleCompleted;
   final Function onAddToWatch;
   final Function onAddToBasket;
   _ViewModel({

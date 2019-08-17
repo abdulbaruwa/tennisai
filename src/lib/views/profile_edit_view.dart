@@ -9,8 +9,7 @@ import '../models/enums.dart' as _enums;
 import '../keys/keys.dart';
 import '../controls/usercontrols.dart';
 
-typedef OnPlayerProfileSaveCallback = Function(
-    Player player, SearchPreference searchPreference);
+typedef OnPlayerProfileSaveCallback = Function(Player player, SearchPreference searchPreference);
 typedef OnLocalAvatarImageChangedCallback = Function(File newImage);
 
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
@@ -65,7 +64,7 @@ class ProfileEditView extends StatelessWidget {
   static final genderMap = {'female': 0, 'male': 1};
   static final genderReverseMap = {0: 'Female', 1: 'Male'};
 
-  final ValueChanged<int> onChanged;
+  final ValueChanged<int> onChanged = null;
 
   void showDemoDialog<T>({BuildContext context, Widget child}) {
     showDialog<T>(
@@ -145,6 +144,7 @@ class ProfileEditView extends StatelessWidget {
                         grade: gradeGroup.output,
                         distance: distanceGroup.output,
                         gender: genderGroup.output,
+                        ageGroup: tournamentGroup.output,
                         statusIndex: _statusDropDown.output);
                     onSave(
                         updatedPlayer, updateSearchPreference, changedAvatar);

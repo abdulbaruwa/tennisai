@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -11,6 +12,7 @@ import '../selectors/selectors.dart';
 import '../views/Auth_view.dart';
 import '../actions/actions.dart';
 
+final FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignIn googleSignIn = new GoogleSignIn(
   scopes: <String>[
     'email',

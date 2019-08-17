@@ -15,7 +15,7 @@ class BasketChildView extends StatelessWidget {
   final Player player;
   final File changedAvatar;
   final Function(String) onRemoveFromBasket;
-  final List<Tournament> leaveBehindItems;
+  final List<Tournament> leaveBehindItems = new List<Tournament>();
   final Function(Basket) onSendToLta;
 
   BasketChildView(

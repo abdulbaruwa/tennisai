@@ -48,7 +48,7 @@ class TournamentDetailsView extends StatelessWidget {
               animation: controller,
               builder: (BuildContext context, Widget child) {
                 return new Transform(
-                  transform: new Matrix4.rotationZ(controller.value * 0.5 * math.PI),
+                  transform: new Matrix4.rotationZ(controller.value * 0.5 * math.pi),
                   alignment: FractionalOffset.center,
                   child: new Icon(controller.isDismissed ? Icons.share : Icons.close),
                 );

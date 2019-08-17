@@ -2,27 +2,29 @@ name: tennisai
 description: A new Flutter project.
 
 dependencies:
-  meta: '>=1.1.0 <2.0.0'
   redux: ^3.0.0
   flutter_redux: ^0.5.0
   flutter:
     sdk: flutter
+  firebase_auth:
   image_picker: 0.4.1
   intl: ^0.15.2
-  path_provider: ">=0.2.1+1 <0.3.0"
+  path_provider: "1.2.0"
   uuid: 'any'
   google_sign_in: "^3.0.3"
   flutter_secure_storage: "^3.1.0"
+  http: '>=0.11.1 <0.12.0' 
+  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.0
 
 dev_dependencies:
-  mockito: 2.2.3
+  mockito: 4.1.0
   flutter_test:
     sdk: flutter
-  integration_tests:
-    path: ./integration_tests
+  # integration_tests:
+    # path: ./integration_tests
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
