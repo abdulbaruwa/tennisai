@@ -20,6 +20,7 @@ GoogleSignIn googleSignIn = new GoogleSignIn(
     'https://www.googleapis.com/auth/contacts.readonly',
   ],
 );
+
 class AuthContainer extends StatelessWidget {
   AuthContainer({Key key}) : super(key: key);
 
@@ -36,6 +37,10 @@ class AuthContainer extends StatelessWidget {
         });
   }
 
+  bool localSignIn(Store store){
+    return false;
+  }
+  
   void initSignIn(Store store) async {
     print('Attempting to SignIn with Google');
     googleSignIn.onCurrentUserChanged

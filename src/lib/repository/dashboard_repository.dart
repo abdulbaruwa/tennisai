@@ -25,7 +25,8 @@ class DashboardRepository {
     await storage.write(key: "authToken", value: authToken);
   }
 
-  Future<List<TournamentEntity>> loadUpcomingTournaments(String playerId) async {
+  Future<List<TournamentEntity>> loadUpcomingTournaments(
+      String playerId) async {
     try {
       var result = await fileStorage.loadEnteredTournaments();
       print('dashboard_repository.loadUpcomingTournaments: Returned Futures');
@@ -60,12 +61,14 @@ class DashboardRepository {
     ]);
   }
 
-  // saveSettings(Settings setting){
-  //   print(setting.toJson());
-  //   // Todo: Persist to secure storage.
-  //   var flutterSecureStorage = new FlutterSecureStorage();
-  //   return flutterSecureStorage.write(key: "authtoken", value: setting.azureAuthToken);
-  // }
+  saveSettings(Settings setting) {
+    print(setting.toJson());
+    // Todo: Persist to secure storage.
+    var flutterSecureStorage = new FlutterSecureStorage();
+    return flutterSecureStorage.write(
+        key: "authtoken", value: setting.azureAuthToken);
+  }
+
   /// Loads entered Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the enteredTournament from a Web Client.
   Future<List<TournamentEntity>> loadEnteredTournaments(String playerId) async {
@@ -95,6 +98,11 @@ class DashboardRepository {
     ]);
   }
 
+  Future<List<Settings>> loadPlayerSettingsFromDevice() async {
+    var playerSettings = await fileStorage.loadPlayerSettings();
+    return playerSettings;
+  }
+
   // Player Profile
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
@@ -111,7 +119,7 @@ class DashboardRepository {
     }
   }
 
-    Future<List<PlayerEntity>> loadPlayerProfileDirect(String playerId) async {
+  Future<List<PlayerEntity>> loadPlayerProfileDirect(String playerId) async {
     try {
       var result = webClient.fetchPlayerProfile(playerId);
       print('Fetched');
@@ -122,7 +130,6 @@ class DashboardRepository {
     }
   }
 
-
   Future<List<PlayerEntity>> loadLatestPlayerProfile(String playerId) async {
     try {
       return webClient.fetchPlayerProfile(playerId);
@@ -130,6 +137,10 @@ class DashboardRepository {
       print('LoadLatestPlayerProfile: Error $e');
       return new List<PlayerEntity>();
     }
+  }
+
+  Future savePlayerSettings(Settings playerSettings) {
+    return fileStorage.savePlayerSettings(playerSettings);
   }
 
   // Persists PlayerProfile to local disk and the web
@@ -143,7 +154,8 @@ class DashboardRepository {
   // Search Preference
   /// Loads Search Preference first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the SearchPrefence from a Web Client
-  Future<List<SearchPreferenceEntity>> loadSearchPreference(String playerId) async {
+  Future<List<SearchPreferenceEntity>> loadSearchPreference(
+      String playerId) async {
     try {
       var res = await fileStorage.loadSearchPreference();
       print('success ${res.length}');
@@ -245,7 +257,8 @@ class DashboardRepository {
 
   /// Loads MatchResultInfo from File storage. If they don't exist or encounter an
   /// error, it attempts to load the matchResultInfo from a Web Client
-  Future<List<MatchResultInfoEntity>> loadMatchResultInfos(String playerId) async {
+  Future<List<MatchResultInfoEntity>> loadMatchResultInfos(
+      String playerId) async {
     try {
       var res = await fileStorage.loadMatchResultInfos();
       return res;

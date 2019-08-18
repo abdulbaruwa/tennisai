@@ -11,7 +11,8 @@ enum StoreNames {
   preference,
   basket,
   rankingInfos,
-  matchResultInfos
+  matchResultInfos,
+  settings
 }
 
 /// Loads and saves a List of Tournament using a text file stored on the device.
@@ -94,6 +95,15 @@ class FileStorage {
     }
   }
 
+  Future<List<Settings>> loadPlayerSettings() async {
+    final file = await _getLocalFile(StoreNames.settings);
+    if(! await file.exists() )return new List<Settings>();
+    final string = await file.readAsString();
+    final json = new JsonDecoder().convert(string);
+    final settingss = json['playerSettings'] as Map<String, dynamic>;
+
+     return new List<Settings>()..add(Settings.fromJson(settingss));
+  }
   // Player Profile
   Future<List<PlayerEntity>> loadPlayerProfile() async {
     final file = await _getLocalFile(StoreNames.profile);
@@ -112,6 +122,13 @@ class FileStorage {
     var playerProfileJson = player.toJson();
     return file.writeAsString(
         new JsonEncoder().convert({'playerProfile': playerProfileJson}));
+  }
+
+  Future<File> savePlayerSettings(Settings player) async {
+    final file = await _getLocalFile(StoreNames.settings);
+    var playerSettingsJson = player.toJson();
+    return file.writeAsString(
+        new JsonEncoder().convert({'playerSettings': playerSettingsJson}));
   }
 
   Future<List<SearchPreferenceEntity>> loadSearchPreference() async {

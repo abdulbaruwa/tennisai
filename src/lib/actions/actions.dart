@@ -69,6 +69,12 @@ class LoadPlayerFromServerAction {
   LoadPlayerFromServerAction(this.playerId);
 }
 
+class LoadPlayerSettingsFromDeviceAction {
+  LoadPlayerSettingsFromDeviceAction();
+}
+
+class NoPlayerSettingsFoundOnDeviceAction{}
+
 class AddPlayerAction {
   final Player player;
   AddPlayerAction(this.player);

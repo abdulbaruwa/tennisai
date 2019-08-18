@@ -47,4 +47,18 @@ class Settings {
       'azureAuthToken' : azureAuthToken
     };
   }   
+
+   static Settings fromJson(Map<String, Object> json) {
+    return new Settings(
+      accessToken: json['accessToke'] as String,
+      refreshToken: json['refreshToken'] as String,
+      deviceToken: json['deviceToken'] as String,
+      email: json['email'] as String,
+      photoUrl: json['photoUrl'] as String,
+      registrationComplete: json['registrationComplete'] as bool,
+      playerId: json['playerId'] as String,
+      azureUserId: json['azureUserId'] as int,
+      azureAuthToken: json['azureAuthToken'] as String
+    );
+  }
 }

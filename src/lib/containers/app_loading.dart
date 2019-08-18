@@ -23,13 +23,15 @@ class AppLoading extends StatelessWidget {
 class AppLoadViewModel{
   bool isLoading;
   bool isSignedIn;
+  bool isLoadingLocalState;
   PlayerRegistrationStatus isRegisteredUser;
-  AppLoadViewModel({this.isLoading, this.isSignedIn, this.isRegisteredUser});
+  AppLoadViewModel({this.isLoading, this.isSignedIn, this.isRegisteredUser, this.isLoadingLocalState});
   static AppLoadViewModel fromStore(Store<AppState> store){
       return new AppLoadViewModel(
         isLoading: isLoadingSelector(store.state),
         isSignedIn: isSignedInSelector(store.state),
-        isRegisteredUser: isRegisteredUserSelector(store.state)
+        isRegisteredUser: isRegisteredUserSelector(store.state),
+        isLoadingLocalState: isLoadingLocalSession(store.state)
       );
   }
 }

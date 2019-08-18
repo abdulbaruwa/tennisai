@@ -13,6 +13,7 @@ import 'views/loading_indicator.dart';
 import 'containers/containers.dart';
 import 'keys/keys.dart';
 import 'containers/auth.dart';
+import 'actions/actions.dart';
 
 void main() => runApp(new TennisAiApp());
 
@@ -41,6 +42,7 @@ class TennisAiApp extends StatelessWidget {
 
 _loadState(Store store) {
   // Nothing initialized here. Moved init to middleware action fired post auth.
+  store.dispatch(new LoadPlayerSettingsFromDeviceAction());
 }
 
 class TennisAiHome extends StatelessWidget {
@@ -50,7 +52,8 @@ class TennisAiHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return new AppLoading(builder: (context, loading) {
       print('appLoading State: ${loading.isSignedIn}');
-      if (loading.isSignedIn == false) {
+      if ( loading.isSignedIn == false && loading.isLoadingLocalState == false) {
+        print('Load AuthContainer');
         return new AuthContainer();
       }
 

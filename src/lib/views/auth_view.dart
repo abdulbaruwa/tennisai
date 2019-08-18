@@ -12,7 +12,7 @@ GoogleSignIn _googleSignIn = new GoogleSignIn(
 class AuthView extends StatelessWidget {
   final bool isSignedIn;
   final Function onGoogleSignInSelected;
-  AuthView({Key key, this.isSignedIn, this.onGoogleSignInSelected})
+  AuthView({Key key, this.isSignedIn,  this.onGoogleSignInSelected})
       : super(key: key);
 
   @override
@@ -26,11 +26,12 @@ class AuthView extends StatelessWidget {
           children: <Widget>[
             new Container(
                 padding: EdgeInsets.only(left: 10.0),
-                child: new Text("You are not currently signed in.",
+                child:  new Text("You are not currently signed in.",
                     style: Theme.of(context).accentTextTheme.display1.copyWith(
                         color: Colors.white,
                         fontSize: 25.0,
-                        fontFamily: 'AbrilFatface'))),
+                        fontFamily: 'AbrilFatface')) 
+                        ),
             new Text('Tennis.Ai',
                 style: Theme.of(context).accentTextTheme.display1.copyWith(
                     color: Colors.white,

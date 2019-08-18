@@ -6,6 +6,7 @@ import 'models.dart';
 class AppState {
   final bool isLoading;
   final bool isSignedIn;
+  final bool isLoadingLocalState;
   final PlayerRegistrationStatus isSignInUserRegistered;
   final bool isEntrantsViewItemsReverseSorted;
   final List<Player> player;
@@ -28,6 +29,7 @@ class AppState {
   AppState(
       {this.isLoading = false,
       this.isSignedIn = false,
+      this.isLoadingLocalState = true,
       this.isSignInUserRegistered = PlayerRegistrationStatus.unknown,
       this.player = const [],
       this.avatar = const[],
@@ -52,6 +54,7 @@ class AppState {
   AppState copyWith(
       {bool isLoading,
       bool isSignedIn,
+      bool isLoadingLocalState,
       PlayerRegistrationStatus isSignInUserRegistered,
       List<Player> player,
       List<File> avatar,
@@ -70,6 +73,7 @@ class AppState {
     return new AppState(
         isLoading: isLoading ?? this.isLoading,
         isSignedIn: isSignedIn ?? this.isSignedIn,
+        isLoadingLocalState: isLoadingLocalState ?? this.isLoadingLocalState,
         isSignInUserRegistered:isSignInUserRegistered ?? this.isSignInUserRegistered,
         activeEntrantsSortOrder: activeEntrantsSortOrder ?? activeEntrantsSortOrder,
         avatar: avatar ?? this.avatar,
@@ -90,6 +94,7 @@ class AppState {
   int get hashCode =>
       isLoading.hashCode ^
       isSignedIn.hashCode ^
+      isLoadingLocalState.hashCode ^
       isSignInUserRegistered.hashCode ^
       player.hashCode ^
       avatar.hashCode ^
@@ -115,6 +120,7 @@ class AppState {
           runtimeType == other.runtimeType &&
           isLoading == other.isLoading &&
           isSignedIn == other.isSignedIn &&
+          isLoadingLocalState == other.isLoadingLocalState &&
           isSignInUserRegistered == other.isSignInUserRegistered &&
           isEntrantsViewItemsReverseSorted == other.isEntrantsViewItemsReverseSorted &&
           activeEntrantsSortOrder == other.activeEntrantsSortOrder &&
@@ -135,6 +141,6 @@ class AppState {
 
   @override
   String toString() {
-    return 'AppState{isLoading: $isLoading, isSignedIn: $isSignedIn,  isSignedInUserRegistered: $isSignInUserRegistered, player: $player, avatar: $avatar, basket: $basket, searchQueryPreference: $searchPreference, registrationInfo: $registrationInfo, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, settings: $settings}';
+    return 'AppState{isLoading: $isLoading, isSignedIn: $isSignedIn, isLoadingLocalState: $isLoadingLocalState, isSignedInUserRegistered: $isSignInUserRegistered, player: $player, avatar: $avatar, basket: $basket, searchQueryPreference: $searchPreference, registrationInfo: $registrationInfo, tournaments: $tournaments, searchTournaments: $searchTournaments, watchedTournaments: $watchedTournaments, enteredTournaments: $enteredTournaments, activeTab: $activeTab, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, activeEntrantsSortOrder: $activeEntrantsSortOrder,  matchResultInfos: $matchResultInfos, rankingInfos:$rankingInfos, isEntrantsViewItemsReverseSorted: $isEntrantsViewItemsReverseSorted, settings: $settings}';
   }
 }

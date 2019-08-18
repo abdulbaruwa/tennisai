@@ -33,6 +33,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
   final loadPlayerProfile = _createLoadPlayerProfile(repository);
   final loadPlayerProfileFromServer = _loadPlayerProfileDirect(repository);
+  final loadPlayerSettingsFromDevice = _loadPlayerSettingsFromDevice(repository);
   final savePlayerProfile = _createSavePlayerProfile(repository);
 
   final loadSearchQuery = _createLoadSearchPreference(repository);
@@ -99,6 +100,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new TypedMiddleware<AppState, LoadPlayerAction>(loadPlayerProfile),
     new TypedMiddleware<AppState, LoadPlayerFromServerAction>(loadPlayerProfileFromServer),
     new TypedMiddleware<AppState, AddPlayerAction>(savePlayerProfile),
+    new TypedMiddleware<AppState, LoadPlayerSettingsFromDeviceAction>(loadPlayerSettingsFromDevice),
 
     // Search Query preference
     new TypedMiddleware<AppState, LoadSearchPreferenceAction>(loadSearchQuery),
@@ -160,6 +162,7 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
           profileImageUrl: authSettings.photoUrl,
           id: authSettings.playerId);
     }
+
     await repository.savePlayerProfile(playerToSave.toEntity());
     store.dispatch(new SignInUserIsRegisteredAction());
     store.dispatch(new PlayerLoadedAction(new List<Player>()..add(playerToSave)));
@@ -209,7 +212,9 @@ Middleware<AppState> _authCompleted(DashboardRepository repository) {
 
     var settings = settingSelector(store.state);
     if (settings.isNotEmpty) {
-      await repository.saveAuthToken(settings.first.azureAuthToken);
+      var playerSettings = settings.first;
+      await repository.savePlayerSettings(playerSettings);
+      await repository.saveAuthToken(playerSettings.azureAuthToken);
       store.dispatch(new CheckSignInUserIsRegisteredAction(settings.value));
     }
   };
@@ -340,6 +345,20 @@ Middleware<AppState> _createSavePlayerProfile(DashboardRepository repository) {
     var toSave = playerSelector(store.state).value.toEntity();
 
     repository.savePlayerProfile(toSave);
+  };
+}
+
+Middleware<AppState> _loadPlayerSettingsFromDevice(DashboardRepository repository){
+  return (Store<AppState> store, action, NextDispatcher next) {
+    repository.loadPlayerSettingsFromDevice().then((playerSettings){
+       if(playerSettings.isNotEmpty){
+        store.dispatch(new SignInCompletedAction(playerSettings.first));
+       }
+       else{
+         store.dispatch(new NoPlayerSettingsFoundOnDeviceAction());
+       }
+    });
+    next(action);
   };
 }
 
