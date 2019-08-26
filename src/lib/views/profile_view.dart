@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:swagger/api.dart';
 import '../models/models.dart';
 import '../keys/keys.dart';
 import '../containers/profile_edit_container.dart';
@@ -60,8 +61,8 @@ class _UserProfile extends StatelessWidget {
                           : '',
                       key: TennisAiKeys.profileName,
                     ),
-                    new Text(player.address ?? ''),
-                    new Text(player.postCode ?? '')
+                    new Text(player.address != null ? player.address.line1 : ''),
+                    new Text(player.address != null ? player.address.postCode : ''),
                   ],
                 )),
           ),
@@ -158,20 +159,17 @@ Widget _buildPreference(BuildContext context, Player player,
       new _LtaInfo(value: 'TOURNAMENT SEARCH PREFERENCE'),
       new _LabelTextRow(
           label: 'Gender',
-          value: searchPreference.gender == 1 ? 'Male' : 'Female'),
+          value: searchPreference.gender),
       new _LabelTextRow(
           label: 'Distance', value: '${searchPreference.distance} miles'),
       new _LabelTextRow(
           label: 'Grade', value: searchPreference.grade.toString()),
       new _LabelTextRow(
           label: 'Age Group',
-          value: searchPreference.ageGroup > 18
-              ? 'Adult'
-              : 'U${searchPreference.ageGroup}'),
+          value: searchPreference.ageGroup),
       new _LabelTextRow(
           label: 'Status',
-          value: tournamentStatus[
-              searchPreference == null ? 0 : searchPreference.statusIndex]),
+          value: searchPreference.tournamentStatus),
       new _LtaInfo(value: 'AUTHENTICATION'),
       new FlatButton(
           child: new Text('LOG OUT'),

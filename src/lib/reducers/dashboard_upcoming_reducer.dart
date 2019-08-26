@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:redux/redux.dart';
 import '../actions/actions.dart';
-import '../models/models.dart';
+import 'package:swagger/api.dart';
 
 final dashboardUpcomingReducer = combineReducers<List<Tournament>>([
   new TypedReducer<List<Tournament>, EnteredTournamentsLoadedAction>(

@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:swagger/api.dart';
 
 import '../models/models.dart';
 import '../containers/tournament_entrants.dart';
@@ -155,7 +156,7 @@ class TournamentDetailsView extends StatelessWidget {
                           new _TextItem(text: 'Status'),
                           new Container(
                             padding: const EdgeInsets.only(left: 30.0, top: 5.0),
-                            child:  new Text('${tournament.status}',
+                            child:  new Text('${tournament.tournamentStatus}',
                                     style: Theme
                                         .of(context)
                                         .textTheme
@@ -205,7 +206,7 @@ class TournamentDetailsView extends StatelessWidget {
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold),
                                     text:
-                                        '${new DateFormat("yMMMEd").format(tournament.startDate)}',
+                                        '${new DateFormat("yMMMEd").format(tournament.startDateTime)}',
                                   ),
                                 ]),
                           )),
@@ -223,7 +224,7 @@ class TournamentDetailsView extends StatelessWidget {
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold),
                                     text:
-                                        '${  new DateFormat("yMMMEd").format(tournament.endDate)}',
+                                        '${  new DateFormat("yMMMEd").format(tournament.endDateTime)}',
                                   ),
                                 ]),
                           )),
@@ -241,7 +242,7 @@ class TournamentDetailsView extends StatelessWidget {
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold),
                                     text: tournament.entryCloseDate != null
-                                        ? '${new DateFormat("yMMMEd").format(tournament.entryCloseDate)}'
+                                        ? '${new DateFormat("yMMMEd").format(tournament.entryCloseDateTime)}'
                                         : '',
                                   ),
                                 ]),

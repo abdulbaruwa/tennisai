@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import '../models/models.dart';
+import 'package:swagger/api.dart';
+
 import '../views/basket_child_view.dart';
 
 final ThemeData _kTheme = new ThemeData(

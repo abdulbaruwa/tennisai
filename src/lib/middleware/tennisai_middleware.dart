@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:redux/redux.dart';
+import 'package:swagger/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import '../models/models.dart';
@@ -33,7 +34,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
   final loadPlayerProfile = _createLoadPlayerProfile(repository);
   final loadPlayerProfileFromServer = _loadPlayerProfileDirect(repository);
-  final loadPlayerSettingsFromDevice = _loadPlayerSettingsFromDevice(repository);
+  final loadPlayerSettingsFromDevice =
+      _loadPlayerSettingsFromDevice(repository);
   final savePlayerProfile = _createSavePlayerProfile(repository);
 
   final loadSearchQuery = _createLoadSearchPreference(repository);
@@ -98,9 +100,11 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
     // Player Profile
     new TypedMiddleware<AppState, LoadPlayerAction>(loadPlayerProfile),
-    new TypedMiddleware<AppState, LoadPlayerFromServerAction>(loadPlayerProfileFromServer),
+    new TypedMiddleware<AppState, LoadPlayerFromServerAction>(
+        loadPlayerProfileFromServer),
     new TypedMiddleware<AppState, AddPlayerAction>(savePlayerProfile),
-    new TypedMiddleware<AppState, LoadPlayerSettingsFromDeviceAction>(loadPlayerSettingsFromDevice),
+    new TypedMiddleware<AppState, LoadPlayerSettingsFromDeviceAction>(
+        loadPlayerSettingsFromDevice),
 
     // Search Query preference
     new TypedMiddleware<AppState, LoadSearchPreferenceAction>(loadSearchQuery),
@@ -146,26 +150,26 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
     var registrationInfoToSave = registrationInfoSelector(store.state).value;
     Player playerToSave;
     if (player.isPresent == true) {
-      playerToSave = player.value.copyWith(
-          firstName: registrationInfoToSave.firstName,
-          lastName: registrationInfoToSave.lastName,
-          ltaNumber: registrationInfoToSave.btmNumber,
-          email: authSettings.email);
+      playerToSave.firstName = registrationInfoToSave.firstName;
+      playerToSave.lastName = registrationInfoToSave.lastName;
+      playerToSave.ltaNumber = registrationInfoToSave.btmNumber;
+      playerToSave.email = authSettings.email;
     } else {
-      playerToSave = new Player(
-          firstName: registrationInfoToSave.firstName,
-          lastName: registrationInfoToSave.lastName,
-          ltaNumber: registrationInfoToSave.btmNumber,
-          gender: registrationInfoToSave.gender, // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
-          email: authSettings.email,
-          usePublicProfileImage: true,
-          profileImageUrl: authSettings.photoUrl,
-          id: authSettings.playerId);
+      playerToSave = new Player();
+      playerToSave.firstName = registrationInfoToSave.firstName;
+      playerToSave.lastName = registrationInfoToSave.lastName;
+      playerToSave.ltaNumber = registrationInfoToSave.btmNumber;
+      playerToSave.gender = registrationInfoToSave.gender; // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
+      playerToSave.email = authSettings.email;
+      playerToSave.usePublicProfileImage = true;
+      playerToSave.profileImageUrl = authSettings.photoUrl;
+      playerToSave.id = authSettings.playerId;
     }
 
-    await repository.savePlayerProfile(playerToSave.toEntity());
+    await repository.savePlayerProfile(playerToSave);
     store.dispatch(new SignInUserIsRegisteredAction());
-    store.dispatch(new PlayerLoadedAction(new List<Player>()..add(playerToSave)));
+    store.dispatch(
+        new PlayerLoadedAction(new List<Player>()..add(playerToSave)));
     store.dispatch(new InitStateAction(playerToSave.id));
   };
 }
@@ -180,8 +184,8 @@ Middleware<AppState> _checkSignInUserIsRegistered(
 
     if (playerProfile.isNotEmpty) {
       store.dispatch(new SignInUserIsRegisteredAction());
-      store.dispatch(new PlayerLoadedAction(
-          new List<Player>()..add(Player.fromEntity(playerProfile.first))));
+      store.dispatch(
+          new PlayerLoadedAction(new List<Player>()..add(playerProfile.first)));
       store.dispatch(new InitStateAction(settings.playerId));
     } else {
       store.dispatch(new SignInUserNotRegisteredAction(settings));
@@ -234,7 +238,7 @@ Middleware<AppState> _createSaveWatchedTournaments(
         'Middleware._createSaveWatchedTournaments: About to save watched Tournaments');
     next(action);
     var toSave = watchedTournamentSelector(store.state)
-        .map((watchedTournament) => watchedTournament.toEntity())
+        .map((watchedTournament) => watchedTournament)
         .toList();
     print(
         'Middleware._createSaveWatchedTournaments: Saved ${toSave.length} Watched tournament');
@@ -248,8 +252,7 @@ Middleware<AppState> _createClearBasketAfterSendToLta(
     print(
         'Middleware._createClearBasketAfterSendToLta: About to clear basket repository');
     next(action);
-    var toSave =
-        basketSelector(store.state).map((basket) => basket.toEntity()).toList();
+    var toSave = basketSelector(store.state).map((basket) => basket).toList();
     repository.saveBasket(toSave.first);
   };
 }
@@ -257,12 +260,11 @@ Middleware<AppState> _createClearBasketAfterSendToLta(
 Middleware<AppState> _createLoadUpcomingTournaments(DashboardRepository repo) {
   var stateResult = (Store<AppState> store, action, NextDispatcher next) {
     var playerId = playerSelector(store.state).first?.id;
-    repo.loadUpcomingTournaments(playerId).then((t) {
-      var upComingTournament = t.map(Tournament.fromEntity).toList();
+    repo.loadUpcomingTournaments(playerId).then((upComingTournaments) {
       print(
-          'Middleware ._createLoadWatchedTournaments: Loading ${upComingTournament.length} Watched tournament');
+          'Middleware ._createLoadWatchedTournaments: Loading ${upComingTournaments.length} Watched tournament');
       store.dispatch(
-        new UpcomingTournamentsLoadedAction(upComingTournament),
+        new UpcomingTournamentsLoadedAction(upComingTournaments),
       );
     });
   };
@@ -276,7 +278,7 @@ Middleware<AppState> _createSaveUpcomingTournaments(
         'Middleware._createSaveUpcomingTournaments: About to save entered tournament');
     next(action);
     var toSave = upcomingTournamentSelector(store.state)
-        .map((upcomingTournament) => upcomingTournament.toEntity())
+        .map((upcomingTournament) => upcomingTournament)
         .toList();
     print(
         'Middleware._createSaveUpcomingTournaments: Saved ${toSave.length} Entered tournament');
@@ -290,11 +292,10 @@ Middleware<AppState> _createLoadWatchedTournaments(
     var playerId = playerSelector(store.state).first?.id;
     repository.loadWatchedTournaments(playerId).then(
       (watchedTournaments) {
-        var entities = watchedTournaments.map(Tournament.fromEntity).toList();
         print(
-            'Middleware ._createLoadWatchedTournaments: Loading ${entities.length} Watched tournament');
+            'Middleware ._createLoadWatchedTournaments: Loading ${watchedTournaments.length} Watched tournament');
         store.dispatch(
-          new WatchedTournamentsLoadedAction(entities),
+          new WatchedTournamentsLoadedAction(watchedTournaments),
         );
       },
     ).catchError(
@@ -310,7 +311,7 @@ Middleware<AppState> _createSaveEnteredTournaments(
         'Middleware._createSaveEnteredTournaments: About to save entered tournament');
     next(action);
     var toSave = enteredTournamentSelector(store.state)
-        .map((enteredTournament) => enteredTournament.toEntity())
+        .map((enteredTournament) => enteredTournament)
         .toList();
     print(
         'Middleware._createSaveEnteredTournaments: Saved ${toSave.length} Entered tournament');
@@ -324,11 +325,10 @@ Middleware<AppState> _createLoadEnteredTournaments(
     var playerId = playerSelector(store.state).first?.id;
     repository.loadEnteredTournaments(playerId).then(
       (enteredTournaments) {
-        var entities = enteredTournaments.map(Tournament.fromEntity).toList();
         print(
             'Middleware._createLoadEnteredTournaments: returned ${enteredTournaments.length}');
         store.dispatch(
-          new EnteredTournamentsLoadedAction(entities),
+          new EnteredTournamentsLoadedAction(enteredTournaments),
         );
       },
     ).catchError(
@@ -342,21 +342,21 @@ Middleware<AppState> _createSavePlayerProfile(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     print('About to save player profile');
     next(action);
-    var toSave = playerSelector(store.state).value.toEntity();
+    var toSave = playerSelector(store.state).value;
 
     repository.savePlayerProfile(toSave);
   };
 }
 
-Middleware<AppState> _loadPlayerSettingsFromDevice(DashboardRepository repository){
+Middleware<AppState> _loadPlayerSettingsFromDevice(
+    DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    repository.loadPlayerSettingsFromDevice().then((playerSettings){
-       if(playerSettings.isNotEmpty){
+    repository.loadPlayerSettingsFromDevice().then((playerSettings) {
+      if (playerSettings.isNotEmpty) {
         store.dispatch(new SignInCompletedAction(playerSettings.first));
-       }
-       else{
-         store.dispatch(new NoPlayerSettingsFoundOnDeviceAction());
-       }
+      } else {
+        store.dispatch(new NoPlayerSettingsFoundOnDeviceAction());
+      }
     });
     next(action);
   };
@@ -365,10 +365,9 @@ Middleware<AppState> _loadPlayerSettingsFromDevice(DashboardRepository repositor
 Middleware<AppState> _loadPlayerProfileDirect(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadPlayerProfile(action.playerId).then(
-      (player) {
-        var entities = player.map(Player.fromEntity).toList();
+      (players) {
         store.dispatch(
-          new PlayerLoadedAction(entities),
+          new PlayerLoadedAction(players),
         );
       },
     ).catchError((e) {
@@ -382,10 +381,9 @@ Middleware<AppState> _loadPlayerProfileDirect(DashboardRepository repository) {
 Middleware<AppState> _createLoadPlayerProfile(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     repository.loadPlayerProfile(action.playerId).then(
-      (player) {
-        var entities = player.map(Player.fromEntity).toList();
+      (players) {
         store.dispatch(
-          new PlayerLoadedAction(entities),
+          new PlayerLoadedAction(players),
         );
       },
     ).catchError((e) {
@@ -402,7 +400,7 @@ Middleware<AppState> _createSaveSearchPreference(
   return (Store<AppState> store, action, NextDispatcher next) {
     print('About to save search Query preference');
     next(action);
-    var toSave = searchPreferenceSelector(store.state).value.toEntity();
+    var toSave = searchPreferenceSelector(store.state).value;
 
     repository.saveSearchPreference(toSave);
   };
@@ -413,10 +411,9 @@ Middleware<AppState> _createLoadSearchPreference(
   return (Store<AppState> store, action, NextDispatcher next) {
     var playerId = playerSelector(store.state).first?.id;
     repository.loadSearchPreference(playerId).then(
-      (searchPref) {
-        var entities = searchPref.map(SearchPreference.fromEntity).toList();
+      (searchPrefs) {
         store.dispatch(
-          new SearchPreferenceLoadedAction(entities),
+          new SearchPreferenceLoadedAction(searchPrefs),
         );
       },
     ).catchError((_) => store.dispatch(new SearchPreferenceNotLoadedAction()));
@@ -431,18 +428,33 @@ Middleware<AppState> _createLoadSearchTournamentsWithPreference(
         activeSearchPreferenceSelector(store.state).first?.gender;
     // Use the default Gender settings
     SearchPreference activeSearch = action.searchPreference;
-    var searchPreference = activeSearch.copyWth(gender: defaultGenderSetting);
+    var searchPreference = _searchPreferenceCopyWith(
+        item: activeSearch, gender: defaultGenderSetting);
 
     repository.loadTournamentsWithSearchPreference(searchPreference).then(
       (searchPref) {
-        var entities = searchPref.map(Tournament.fromEntity).toList();
         store.dispatch(
-          new SearchTournamentsLoadedAction(entities),
+          new SearchTournamentsLoadedAction(searchPref),
         );
       },
     ).catchError((_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
     next(action);
   };
+}
+
+SearchPreference _searchPreferenceCopyWith(
+    {SearchPreference item,
+    int ltaNumber,
+    int grade,
+    int distance,
+    int ageGroup,
+    String gender}) {
+  var searchPreference = new SearchPreference();
+  searchPreference.tournamentStatus = item.tournamentStatus;
+  searchPreference.ageGroup = ageGroup ?? item.ageGroup;
+  searchPreference.distance = distance ?? item.distance;
+  searchPreference.grade = distance ?? item.grade;
+  gender = gender ?? item.gender;
 }
 
 // Search for Tournaments
@@ -451,9 +463,8 @@ Middleware<AppState> _createSaveSearchTournaments(
   return (Store<AppState> store, action, NextDispatcher next) {
     print('About to save search Query preference');
     next(action);
-    var toSave = searchTournamentsSelector(store.state)
-        .map((search) => search.toEntity())
-        .toList();
+    var toSave =
+        searchTournamentsSelector(store.state).map((search) => search).toList();
     repository.saveSearchTournaments(toSave);
   };
 }
@@ -464,9 +475,8 @@ Middleware<AppState> _createLoadSearchTournaments(
     var playerId = playerSelector(store.state).first?.id;
     repository.loadSearchTournaments(playerId).then(
       (searchPref) {
-        var entities = searchPref.map(Tournament.fromEntity).toList();
         store.dispatch(
-          new SearchTournamentsLoadedAction(entities),
+          new SearchTournamentsLoadedAction(searchPref),
         );
       },
     ).catchError((_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
@@ -480,9 +490,8 @@ Middleware<AppState> _createLoadBasket(DashboardRepository repository) {
     var playerId = playerSelector(store.state).first?.id;
     repository.loadBasket(playerId).then(
       (basket) {
-        var entities = basket.map(Basket.fromEntity).toList();
         store.dispatch(
-          new BasketLoadedAction(entities),
+          new BasketLoadedAction(basket),
         );
       },
     ).catchError((_) => store.dispatch(new BasketNotLoadedAction()));
@@ -494,7 +503,7 @@ Middleware<AppState> _createSaveBasket(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     print('About to save Basket');
     next(action);
-    var toSave = basketSelector(store.state).value.toEntity();
+    var toSave = basketSelector(store.state).value;
     repository.saveBasket(toSave);
   };
 }
@@ -503,7 +512,7 @@ Middleware<AppState> _createSendBasketToLta(DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) async {
     print('About to send Basket to lta');
     next(action);
-    var toSave = basketSelector(store.state).value.toEntity();
+    var toSave = basketSelector(store.state).value;
     await repository.saveToLtaBasket(toSave);
     store.dispatch(new BasketSentToLtaAction());
   };
@@ -514,14 +523,10 @@ Middleware<AppState> _updatePlayerAndSearchProfile(
   return (Store<AppState> store, action, NextDispatcher next) {
     print('About to save player profile and search pref');
     next(action);
-    var playerToSave = playerSelector(store.state).value.toEntity();
+    var playerToSave = playerSelector(store.state).value;
     repository.savePlayerProfile(playerToSave);
 
-    var searchPrefToSave =
-        searchPreferenceSelector(store.state).value.toEntity();
-        if(searchPrefToSave.playerId == null || searchPrefToSave.playerId.isEmpty){
-          searchPrefToSave.playerId = playerToSave.id;
-        }
+    var searchPrefToSave = searchPreferenceSelector(store.state).value;
     repository.saveSearchPreference(searchPrefToSave);
 
     if (avatarSelector(store.state).isPresent) {
@@ -534,8 +539,7 @@ Middleware<AppState> _updatePlayerAndSearchProfile(
 Middleware<AppState> _createLoadRankingInfos(DashboardRepository repo) {
   var stateResult = (Store<AppState> store, action, NextDispatcher next) {
     var playerId = playerSelector(store.state).first?.id;
-    repo.loadRankingInfos(playerId).then((t) {
-      var rankingInfo = t.map(RankingInfo.fromEntity).toList();
+    repo.loadRankingInfos(playerId).then((rankingInfo) {
       print(
           'Middleware ._createLoadRankingInfos: Loading ${rankingInfo.length} Ranking Info');
       store.dispatch(
@@ -549,8 +553,7 @@ Middleware<AppState> _createLoadRankingInfos(DashboardRepository repo) {
 Middleware<AppState> _createLoadMatchResultInfos(DashboardRepository repo) {
   var stateResult = (Store<AppState> store, action, NextDispatcher next) {
     var playerId = playerSelector(store.state).first?.id;
-    repo.loadMatchResultInfos(playerId).then((t) {
-      var rankingInfos = t.map(MatchResultInfo.fromEntity).toList();
+    repo.loadMatchResultInfos(playerId).then((rankingInfos) {
       print(
           'Middleware ._createLoadRankingInfos: Loading ${rankingInfos.length} Ranking Info');
       store.dispatch(
@@ -566,7 +569,7 @@ Middleware<AppState> _createSaveRankingInfos(DashboardRepository repository) {
     print('Middleware._createSaveRankingInfos: About to save ranking info');
     next(action);
     var toSave = rankingInfosSelector(store.state)
-        .map((enteredTournament) => enteredTournament.toEntity())
+        .map((enteredTournament) => enteredTournament)
         .toList();
     print(
         'Middleware._createSaveEnteredTournaments: Saved ${toSave.length} Entered tournament');
@@ -581,10 +584,40 @@ Middleware<AppState> _createSaveMatchResultInfos(
         'Middleware._createSaveMatchResultInfos: About to save Match result info');
     next(action);
     var toSave = matchResultInfosSelector(store.state)
-        .map((matchResultInfo) => matchResultInfo.toEntity())
+        .map((matchResultInfo) => matchResultInfo)
         .toList();
     print(
         'Middleware._createSaveMatchResultIfnos: Saved ${toSave.length} Match results');
     repository.saveMatchResultInfos(toSave);
   };
+}
+
+Player _playerCopyWith(
+    {Player item,
+    String firstName,
+    String lastName,
+    String email,
+    String gender,
+    int ltaNumber,
+    int ltaRanking,
+    String ltaRating,
+    String postCode,
+    String address,
+    String county,
+    String id,
+    bool usePublicProfileImage,
+    String profileImageUrl}) {
+  var player = new Player();
+  player.id = id ?? item.id;
+  player.firstName = firstName ?? item.firstName;
+  player.lastName = lastName ?? item.lastName;
+  player.email = email ?? item.email;
+  player.gender = gender ?? item.gender;
+  player.address = address ?? item.address;
+  player.ltaNumber = ltaNumber ?? item.ltaNumber;
+  player.ltaRanking = ltaRanking ?? item.ltaRanking;
+  player.ltaRating = ltaRating ?? item.ltaRating;
+  player.usePublicProfileImage =
+      usePublicProfileImage ?? item.usePublicProfileImage;
+  player.profileImageUrl = profileImageUrl ?? item.profileImageUrl;
 }

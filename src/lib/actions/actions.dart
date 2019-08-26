@@ -1,5 +1,6 @@
 import 'dart:io';
 import '../models/models.dart';
+import 'package:swagger/api.dart';
 // Main
 class LoadRankingInfosAction{}
 

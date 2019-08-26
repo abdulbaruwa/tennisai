@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:swagger/api.dart';
+
+
+import '../models/enums.dart' as _enums;
+import '../models/model_mixens.dart';
 import 'tournament_search.dart';
 import '../controls/usercontrols.dart';
-import '../models/models.dart';
 
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
-
-final List<int> _ageGroups = [12, 14, 16, 18, 100];
-
-final List<int> _grades = [1, 2, 3, 4, 5, 6];
 
 final ThemeData _kTheme = new ThemeData(
   brightness: Brightness.light,
@@ -69,28 +69,27 @@ class SearchTabState extends State<TournamentSearchView> {
       inputValue: widget.searchPreference.distance,
       displayFunc: (int i) => '$i miles');
 
-    LabelIntDropDownItem _ageGroupDropDown = new LabelIntDropDownItem(
-      onChangedFunc: (int i) => print('Value Changed to $i'),
-      displayIntItems: _ageGroups,
+    LabelEnumDropDownItem _ageGroupDropDown = new LabelEnumDropDownItem(
+      onChangedFunc: (String i) => print('Value Changed to $i'),
+      displayIntItems: _enums.AgeGroups,
       label: 'Age Group',
       inputValue: widget.searchPreference.ageGroup,
       displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
 
     LabelIntDropDownItem _gradeDropDown = new LabelIntDropDownItem(
       onChangedFunc: (int i) => print('Grade changed to Grade $i'),
-      displayIntItems: _grades,
+      displayIntItems: _enums.Grades,
       label: 'Grade',
       inputValue: widget.searchPreference.grade,
       displayFunc: (int i) => 'Grade $i');
 
-    LabelIntDropDownItem _statusDropDown = new LabelIntDropDownItem(
-      onChangedFunc: (int i) => print('Status changed to Grade $i'),
-      displayIntItems: tournamentStatusIndexs,
+    LabelEnumDropDownItem _statusDropDown = new LabelEnumDropDownItem(
+      displayIntItems: _enums.TournamentStatus,
       label: 'Status',
-      inputValue: widget.searchPreference.statusIndex ?? 1,
-      displayFunc: (int i)
+      inputValue: widget.searchPreference.tournamentStatus,
+      displayFunc: (String i)
       {
-        return tournamentStatus[i].toString();
+        return i;
       });
 
     final PersistentBottomSheetController<Null> bottomSheet = _scaffoldKey
@@ -134,12 +133,12 @@ class SearchTabState extends State<TournamentSearchView> {
     _bottomSheet.closed.whenComplete(() {
       if (mounted) {
         setState(() {
-          var searchPref = new SearchPreference(
+          var searchPref = newSearchPreference(
               ageGroup: _ageGroupDropDown.outputValue ?? widget.searchPreference?.ageGroup,
               grade: _gradeDropDown.outputValue ?? widget.searchPreference?.grade,
               distance: _distanceInMilesDropDown.outputValue ?? widget.searchPreference?.distance,
               gender: widget.searchPreference.gender,
-              statusIndex: _statusDropDown.outputValue ?? widget.searchPreference?.statusIndex);
+              tournamentStatus: _statusDropDown.outputValue ?? widget.searchPreference?.tournamentStatus);
           widget.onSearchPreferenceChanged(searchPref);
           _bottomSheet = null;
         });

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:swagger/api.dart';
 import '../actions/actions.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';

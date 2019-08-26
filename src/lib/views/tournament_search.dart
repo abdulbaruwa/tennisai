@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import "package:intl/intl.dart";
+import 'package:intl/intl.dart';
+import 'package:swagger/api.dart';
 
 import '../containers/tournament_details.dart';
 import '../models/models.dart';
@@ -68,7 +69,7 @@ class TournamentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var tournamentDate =
-        "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
+        "${new DateFormat("yMMMEd").format(tournament.startDateTime)} to ${ new DateFormat("yMMMEd").format(tournament.endDateTime)}";
     return new GestureDetector(
       onTap: onTap,
       child: new Column(

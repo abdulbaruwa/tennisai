@@ -3,20 +3,17 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:swagger/api.dart';
 
-import '../models/models.dart';
 import '../models/enums.dart' as _enums;
 import '../keys/keys.dart';
 import '../controls/usercontrols.dart';
+import '../models/model_mixens.dart';
 
 typedef OnPlayerProfileSaveCallback = Function(Player player, SearchPreference searchPreference);
 typedef OnLocalAvatarImageChangedCallback = Function(File newImage);
 
 final List<int> _distancesInMiles = [10, 30, 50, 100, 200, 500];
-
-final List<int> _ageGroups = [12, 14, 16, 18, 100];
-
-final List<int> _grades = [1, 2, 3, 4, 5, 6];
 
 class ProfileEditView extends StatelessWidget {
   ProfileEditView(
@@ -83,10 +80,10 @@ class ProfileEditView extends StatelessWidget {
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
 
-    var genderGroup = new _LabelIntDropDownItem(
-        displayIntItems: [0, 1],
+    var genderGroup = new _LabelEnumDropDownItem(
+        displayIntItems: ['Female','Male'],
         label: 'Gender',
-        output: genderMap[searchPreference.gender],
+        output: searchPreference.gender,
         key: _genderKey,
         displayFunc: (int i) => genderReverseMap[i]);
     var distanceGroup = new _LabelIntDropDownItem(
@@ -95,21 +92,21 @@ class ProfileEditView extends StatelessWidget {
         output: searchPreference.distance,
         displayFunc: (int i) => '$i miles');
     var gradeGroup = new _LabelIntDropDownItem(
-        displayIntItems: _grades,
+        displayIntItems: _enums.Grades,
         label: 'Grade',
         output: searchPreference.grade,
         displayFunc: (int i) => 'Grade $i');
-    var tournamentGroup = new _LabelIntDropDownItem(
-        displayIntItems: _ageGroups,
+    var tournamentGroup = new _LabelEnumDropDownItem(
+        displayIntItems: _enums.AgeGroups,
         label: 'Age Group',
         output: searchPreference.ageGroup,
-        displayFunc: (int i) => i < 100 ? 'U$i' : 'Adult');
-    var _statusDropDown = new _LabelIntDropDownItem(
-        displayIntItems: tournamentStatusIndexs,
+        displayFunc: (String i) => i);
+    var _statusDropDown = new _LabelEnumDropDownItem(
+        displayIntItems: _enums.TournamentStatus,
         label: 'Status',
-        output: searchPreference.statusIndex,
-        displayFunc: (int i) {
-          return tournamentStatus[i].toString();
+        output: searchPreference.tournamentStatus,
+        displayFunc: (String i) {
+          return i;
         });
 
     return new Theme(
@@ -127,25 +124,27 @@ class ProfileEditView extends StatelessWidget {
                       style:
                           theme.textTheme.body1.copyWith(color: Colors.white)),
                   onPressed: () {
-                    var updatedPlayer = player.copyWith(
-                        address: _addressKey.currentState != null
+                    var updatedAddress = addressCopyWith(
+                      line1: _addressKey.currentState != null
                             ? _addressKey.currentState.value
-                            : player.address,
-                        postCode: _postCodeKey.currentState != null
+                            : player.address.line1,
+                            postCode: _postCodeKey.currentState != null
                             ? _postCodeKey.currentState.value
-                            : player.postCode,
+                            : player.address.postCode,
+                    );
+                    var updatedPlayer = playerCopyWith(
                         ltaRating: _ratingKey.currentState != null
                             ? _ratingKey.currentState.value
                             : player.ltaRating,
                         ltaRanking: (_rankingKey.currentState.value != null)
                             ? int.parse(_rankingKey.currentState.value)
                             : player.ltaRanking);
-                    var updateSearchPreference = new SearchPreference(
+                    var updateSearchPreference = newSearchPreference(
                         grade: gradeGroup.output,
                         distance: distanceGroup.output,
                         gender: genderGroup.output,
                         ageGroup: tournamentGroup.output,
-                        statusIndex: _statusDropDown.output);
+                        tournamentStatus: _statusDropDown.output);
                     onSave(
                         updatedPlayer, updateSearchPreference, changedAvatar);
                     Navigator.pop(context, _enums.DismissDialogAction.save);
@@ -257,19 +256,19 @@ class ProfileEditView extends StatelessWidget {
                 new _LabelTextFormEdit(
                   label: 'Street Address',
                   fkey: _addressKey,
-                  value: player.address == null ? '' : player.address,
+                  value: player.address != null ? player.address.line1 : '',
                 ),
                 new _LabelTextFormEdit(
                   label: 'County',
                   fkey: _countryKey,
-                  value: player.county,
+                  value: player.address.county,
                   inputType: TextInputType.text,
                 ),
                 new _LabelTextFormEdit(
                   label: 'Post Code',
                   fkey: _postCodeKey,
                   inputType: TextInputType.text,
-                  value: player.postCode == null ? '' : player.postCode,
+                  value: player.address != null ? player.address.postCode : '',
                 ),
                 new Container(
                     color: const Color(0xFFF5F5F5),
@@ -361,7 +360,6 @@ class _LabelIntDropDownItem extends StatefulWidget {
   _LabelIntDropDownItemState createState() => new _LabelIntDropDownItemState();
 }
 
-//  State for Row with Label and Selectable drop down
 class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem> {
   int result;
   @override
@@ -395,6 +393,73 @@ class _LabelIntDropDownItemState extends State<_LabelIntDropDownItem> {
                       }).toList(),
                       value: result,
                       onChanged: (int value) {
+                        setState(() {
+                          result = value;
+                          widget.output = value;
+                        });
+                      },
+                    ),
+                  ),
+                )))
+      ],
+    );
+  }
+}
+
+class _LabelEnumDropDownItem extends StatefulWidget {
+  _LabelEnumDropDownItem(
+      {Key key,
+      this.displayFunc,
+      this.displayIntItems,
+      this.label,
+      this.gkey,
+      this.output})
+      : super(key: key);
+  var displayFunc;
+  final label;
+
+  final GlobalKey gkey;
+  List<String> displayIntItems;
+  String output;
+
+  @override
+  _LabelEnumDropDownItemState createState() => new _LabelEnumDropDownItemState();
+}
+
+//  State for Row with Label and Selectable drop down
+class _LabelEnumDropDownItemState extends State<_LabelEnumDropDownItem> {
+  String result;
+  @override
+  void initState() {
+    super.initState();
+    result = widget.output;
+  }
+
+  Widget build(BuildContext context) {
+    return new Row(
+      children: <Widget>[
+        new Text(widget.label),
+        new Expanded(
+            child: new Container(
+                alignment: Alignment.bottomRight,
+                child: new DropdownButtonHideUnderline(
+                  child: new Container(
+                    child: new DropdownButton<String>(
+                      items: widget.displayIntItems.map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          key: widget.gkey,
+                          child: new Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: new Text(
+                              widget.displayFunc(value),
+                              key: widget.gkey,
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      value: result,
+                      onChanged: ( value) {
                         setState(() {
                           result = value;
                           widget.output = value;

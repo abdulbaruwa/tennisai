@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart' show lowerBound;
-import '../models/models.dart';
+import 'package:swagger/api.dart';
 import '../controls/usercontrols.dart';
 
 final ThemeData _kTheme = new ThemeData(
@@ -44,7 +44,7 @@ class BasketChildView extends StatelessWidget {
                   ))
             ])),
         title: new Text(item.name),
-        subtitle: new Text(item.status),
+        subtitle: new Text(item.tournamentStatus),
         trailing: new Text('£${item.cost.toString()}'),
       ),
     );

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:core';
 
+import 'package:swagger/api.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/models.dart';
@@ -25,7 +26,7 @@ class DashboardRepository {
     await storage.write(key: "authToken", value: authToken);
   }
 
-  Future<List<TournamentEntity>> loadUpcomingTournaments(
+  Future<List<Tournament>> loadUpcomingTournaments(
       String playerId) async {
     try {
       var result = await fileStorage.loadEnteredTournaments();
@@ -40,7 +41,7 @@ class DashboardRepository {
 
   /// Loads watched Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
-  Future<List<TournamentEntity>> loadWatchedTournaments(String playerId) async {
+  Future<List<Tournament>> loadWatchedTournaments(String playerId) async {
     try {
       var res = await fileStorage.loadWatchedTournaments();
       print('Returned ${res.length} entries for loadWatchedTournaments');
@@ -54,7 +55,7 @@ class DashboardRepository {
   }
 
   // Persists watchedTournament to local disk and the web
-  Future saveWatchedTournaments(List<TournamentEntity> tournamentEntitys) {
+  Future saveWatchedTournaments(List<Tournament> tournamentEntitys) {
     return Future.wait([
       fileStorage.saveWatchedTournaments(tournamentEntitys),
       webClient.postWatchedTournaments(tournamentEntitys),
@@ -71,7 +72,7 @@ class DashboardRepository {
 
   /// Loads entered Tournaments first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the enteredTournament from a Web Client.
-  Future<List<TournamentEntity>> loadEnteredTournaments(String playerId) async {
+  Future<List<Tournament>> loadEnteredTournaments(String playerId) async {
     try {
       var res = await fileStorage.loadEnteredTournaments();
       print('Returne ${res.length} entries for  loadEnteredTournaments ');
@@ -85,14 +86,14 @@ class DashboardRepository {
   }
 
   // Persists watchedTournament to local disk and the web
-  Future saveEnteredTournaments(List<TournamentEntity> tournamentEntitys) {
+  Future saveEnteredTournaments(List<Tournament> tournamentEntitys) {
     return Future.wait([
       fileStorage.saveEnteredTournaments(tournamentEntitys),
       webClient.postEnteredTournaments(tournamentEntitys),
     ]);
   }
 
-  Future saveUpcomingTournaments(List<TournamentEntity> tournamentEntitys) {
+  Future saveUpcomingTournaments(List<Tournament> tournamentEntitys) {
     return Future.wait([
       webClient.postEnteredTournaments(tournamentEntitys),
     ]);
@@ -106,7 +107,7 @@ class DashboardRepository {
   // Player Profile
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
-  Future<List<PlayerEntity>> loadPlayerProfile(String playerId) async {
+  Future<List<Player>> loadPlayerProfile(String playerId) async {
     try {
       var res = await fileStorage.loadPlayerProfile();
       print('success ${res.length}');
@@ -119,23 +120,23 @@ class DashboardRepository {
     }
   }
 
-  Future<List<PlayerEntity>> loadPlayerProfileDirect(String playerId) async {
+  Future<List<Player>> loadPlayerProfileDirect(String playerId) async {
     try {
       var result = webClient.fetchPlayerProfile(playerId);
       print('Fetched');
       return result;
     } catch (e) {
       print('Fetcher in error $e');
-      return new List<PlayerEntity>();
+      return new List<Player>();
     }
   }
 
-  Future<List<PlayerEntity>> loadLatestPlayerProfile(String playerId) async {
+  Future<List<Player>> loadLatestPlayerProfile(String playerId) async {
     try {
       return webClient.fetchPlayerProfile(playerId);
     } catch (e) {
       print('LoadLatestPlayerProfile: Error $e');
-      return new List<PlayerEntity>();
+      return new List<Player>();
     }
   }
 
@@ -144,7 +145,7 @@ class DashboardRepository {
   }
 
   // Persists PlayerProfile to local disk and the web
-  Future savePlayerProfile(PlayerEntity playerEntity) {
+  Future savePlayerProfile(Player playerEntity) {
     return Future.wait([
       fileStorage.savePlayerProfile(playerEntity),
       webClient.postPlayerProfile(playerEntity),
@@ -154,7 +155,7 @@ class DashboardRepository {
   // Search Preference
   /// Loads Search Preference first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the SearchPrefence from a Web Client
-  Future<List<SearchPreferenceEntity>> loadSearchPreference(
+  Future<List<SearchPreference>> loadSearchPreference(
       String playerId) async {
     try {
       var res = await fileStorage.loadSearchPreference();
@@ -169,7 +170,7 @@ class DashboardRepository {
   }
 
   // Persists SearchPreference to local disk and the web
-  Future saveSearchPreference(SearchPreferenceEntity searchPrefEntity) {
+  Future saveSearchPreference(SearchPreference searchPrefEntity) {
     return Future.wait([
       fileStorage.saveSearchPreference(searchPrefEntity),
       webClient.postSearchPreference(searchPrefEntity),
@@ -177,7 +178,7 @@ class DashboardRepository {
   }
 
   // Persists SearchPreference to local disk and the web
-  Future saveSearchTournaments(List<TournamentEntity> searchTournaments) {
+  Future saveSearchTournaments(List<Tournament> searchTournaments) {
     return Future.wait([
       fileStorage.saveSearchTournaments(searchTournaments),
       webClient.postSearchTournaments(searchTournaments),
@@ -193,7 +194,7 @@ class DashboardRepository {
   // Search Preference
   /// Loads Search Preference first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the SearchPrefence from a Web Client
-  Future<List<TournamentEntity>> loadSearchTournaments(String playerId) async {
+  Future<List<Tournament>> loadSearchTournaments(String playerId) async {
     try {
       var res = await fileStorage.loadSearchTournaments();
       print('success ${res.length}');
@@ -206,7 +207,7 @@ class DashboardRepository {
     }
   }
 
-  Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(
+  Future<List<Tournament>> loadTournamentsWithSearchPreference(
       SearchPreference searchPreference) {
     return webClient.loadTournamentsWithSearchPreference(searchPreference);
   }
@@ -214,7 +215,7 @@ class DashboardRepository {
   // Basket
   /// Loads Player Profile first from File storage. If they don't exist or encounter an
   /// error, it attempts to load the watchedTournament from a Web Client
-  Future<List<BasketEntity>> loadBasket(String playerId) async {
+  Future<List<Basket>> loadBasket(String playerId) async {
     try {
       var res = await fileStorage.loadBasket();
       return res;
@@ -227,14 +228,14 @@ class DashboardRepository {
   }
 
   // Persists PlayerProfile to local disk and the web
-  Future saveBasket(BasketEntity basketEntity) {
+  Future saveBasket(Basket basketEntity) {
     return Future.wait([
       fileStorage.saveBasket(basketEntity),
       webClient.postBasket(basketEntity),
     ]);
   }
 
-  Future saveToLtaBasket(BasketEntity basketEntity) {
+  Future saveToLtaBasket(Basket basketEntity) {
     return Future.wait([
       webClient.postToLtaBasket(basketEntity),
     ]);
@@ -243,7 +244,7 @@ class DashboardRepository {
   // Main
   /// Loads Ranking Info from File storage. If they don't exist or encounter an
   /// error, it attempts to load the rankingInfo from a Web Client
-  Future<List<RankingInfoEntity>> loadRankingInfos(String playerId) async {
+  Future<List<RankingInfo>> loadRankingInfos(String playerId) async {
     try {
       var res = await fileStorage.loadRankingInfos();
       return res;
@@ -257,7 +258,7 @@ class DashboardRepository {
 
   /// Loads MatchResultInfo from File storage. If they don't exist or encounter an
   /// error, it attempts to load the matchResultInfo from a Web Client
-  Future<List<MatchResultInfoEntity>> loadMatchResultInfos(
+  Future<List<MatchResultInfo>> loadMatchResultInfos(
       String playerId) async {
     try {
       var res = await fileStorage.loadMatchResultInfos();
@@ -270,12 +271,12 @@ class DashboardRepository {
     }
   }
 
-  Future saveRankingInfos(List<RankingInfoEntity> rankingInfoEntitys) {
+  Future saveRankingInfos(List<RankingInfo> rankingInfoEntitys) {
     return fileStorage.saveRankingInfos(rankingInfoEntitys);
   }
 
   Future saveMatchResultInfos(
-      List<MatchResultInfoEntity> matchResultInfoEntitys) {
+      List<MatchResultInfo> matchResultInfoEntitys) {
     return fileStorage.saveMatchResultInfos(matchResultInfoEntitys);
   }
 }

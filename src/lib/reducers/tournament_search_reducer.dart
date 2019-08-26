@@ -1,6 +1,6 @@
 import 'package:redux/redux.dart';
+import 'package:swagger/api.dart';
 import '../actions/actions.dart';
-import '../models/models.dart';
 
 final tournamentSearchReducer = combineReducers<List<Tournament>>([
   new TypedReducer<List<Tournament>, SearchTournamentsLoadedAction>(_setLoadedSearchTournaments),

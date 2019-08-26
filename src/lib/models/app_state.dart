@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:meta/meta.dart';
+import 'package:swagger/api.dart';
 import 'models.dart';
 
 @immutable
@@ -32,7 +33,7 @@ class AppState {
       this.isLoadingLocalState = true,
       this.isSignInUserRegistered = PlayerRegistrationStatus.unknown,
       this.player = const [],
-      this.avatar = const[],
+      this.avatar = const [],
       this.searchPreference = const [],
       this.activeSearchPreference = const [],
       this.enteredTournaments = const [],
@@ -74,19 +75,22 @@ class AppState {
         isLoading: isLoading ?? this.isLoading,
         isSignedIn: isSignedIn ?? this.isSignedIn,
         isLoadingLocalState: isLoadingLocalState ?? this.isLoadingLocalState,
-        isSignInUserRegistered:isSignInUserRegistered ?? this.isSignInUserRegistered,
-        activeEntrantsSortOrder: activeEntrantsSortOrder ?? activeEntrantsSortOrder,
+        isSignInUserRegistered:
+            isSignInUserRegistered ?? this.isSignInUserRegistered,
+        activeEntrantsSortOrder:
+            activeEntrantsSortOrder ?? activeEntrantsSortOrder,
         avatar: avatar ?? this.avatar,
         player: player ?? this.player,
         basket: basket ?? this.basket,
         settings: settings ?? this.settings,
         searchPreference: searchPreference ?? this.searchPreference,
-        activeSearchPreference: activeSearchPreference ?? this.activeSearchPreference,
+        activeSearchPreference:
+            activeSearchPreference ?? this.activeSearchPreference,
         tournaments: tournaments ?? this.tournaments,
         searchTournaments: searchTournaments ?? this.searchTournaments,
         watchedTournaments: watchedTournaments ?? this.watchedTournaments,
         enteredTournaments: enteredTournaments ?? this.enteredTournaments,
-        registrationInfo:  registrationInfo ?? this.registrationInfo,
+        registrationInfo: registrationInfo ?? this.registrationInfo,
         activeTab: activeTab ?? this.activeTab);
   }
 
@@ -122,7 +126,8 @@ class AppState {
           isSignedIn == other.isSignedIn &&
           isLoadingLocalState == other.isLoadingLocalState &&
           isSignInUserRegistered == other.isSignInUserRegistered &&
-          isEntrantsViewItemsReverseSorted == other.isEntrantsViewItemsReverseSorted &&
+          isEntrantsViewItemsReverseSorted ==
+              other.isEntrantsViewItemsReverseSorted &&
           activeEntrantsSortOrder == other.activeEntrantsSortOrder &&
           player == other.player &&
           avatar == other.avatar &&

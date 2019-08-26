@@ -139,3 +139,69 @@ class EditableProfileAvatar extends StatelessWidget {
             radius: 36.0, backgroundImage: defaultAvatar ?? networkImage));
   }
 }
+
+
+class LabelEnumDropDownItem extends StatefulWidget {
+  LabelEnumDropDownItem(
+      {Key key,
+      this.displayFunc,
+      this.onChangedFunc,
+      this.displayIntItems,
+      this.label,
+      this.inputValue,
+      this.outputValue})
+      : super(key: key);
+  var displayFunc;
+  Function(String) onChangedFunc;
+  final label;
+  List<String> displayIntItems;
+  String inputValue;
+  String outputValue;
+  @override
+  LabelEnumDropDownItemState createState() => new LabelEnumDropDownItemState();
+}
+
+//  State for Row with Label and Selectable drop down
+class LabelEnumDropDownItemState extends State<LabelEnumDropDownItem> {
+  String result;
+  @override
+  void initState() {
+    super.initState();
+    result = widget.outputValue;
+  }
+
+  Widget build(BuildContext context) {
+    return new Row(
+      children: <Widget>[
+        new Text(widget.label),
+        new Expanded(
+            child: new Container(
+                alignment: Alignment.bottomRight,
+                child: new DropdownButtonHideUnderline(
+                  child: new Container(
+                    child: new DropdownButton<String>(
+                      items: widget.displayIntItems.map((String value) {
+                        return new DropdownMenuItem<String>(
+                          value: value,
+                          child: new Align(
+                            alignment: Alignment.centerRight,
+                            child: new Text(widget.displayFunc(value)),
+                          ),
+                        );
+                      }).toList(),
+                      value: result ?? widget.inputValue,
+                      onChanged: (String value) {
+                        setState(() {
+                          result = value;
+                          print(result);
+                          widget.outputValue = value;
+                          //widget.onChangedFunc(result);
+                        });
+                      },
+                    ),
+                  ),
+                )))
+      ],
+    );
+  }
+}

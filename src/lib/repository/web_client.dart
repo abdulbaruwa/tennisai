@@ -1,11 +1,10 @@
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
+import 'package:swagger/api.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as httpdart;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-import '../models/models.dart';
 import '../paths/paths.dart';
 
 class WebCallResponse {
@@ -22,7 +21,7 @@ class WebClient {
   final Future<String> Function() getToken;
   const WebClient(this.hostAddress, this.getToken);
 
-  Future<List<TournamentEntity>> fetchWatchedTournaments(String playerId) async {
+  Future<List<Tournament>> fetchWatchedTournaments(String playerId) async {
     return getTournamentsFromControllerWithUserId("watched", playerId);
   }
 
@@ -31,10 +30,10 @@ class WebClient {
     return flutterSecureStorage.read(key: "authtoken");
   }
 
-  Future<List<TournamentEntity>> getTournamentsFromControllerWithUserId(
+  Future<List<Tournament>> getTournamentsFromControllerWithUserId(
       String controller, String userId) async {
     var httpClient = new HttpClient();
-    List<TournamentEntity> tournaments = [];
+    List<Tournament> tournaments = [];
     print('GetTournaments called');
     var uri = new Uri.http(hostAddress, '/api/$controller', {
       'id': userId,
@@ -46,14 +45,14 @@ class WebClient {
     var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
-      tournaments.add(TournamentEntity.fromJson(jsonData[i]));
+      tournaments.add(Tournament.fromJson(jsonData[i]));
     }
     return tournaments;
   }
 
-  Future<List<MatchResultInfoEntity>> getMatchResult(String userId) async {
+  Future<List<MatchResultInfo>> getMatchResult(String userId) async {
     var httpClient = new HttpClient();
-    List<MatchResultInfoEntity> matchResults = [];
+    List<MatchResultInfo> matchResults = [];
     var uri = new Uri.http(hostAddress, '/api/tournamentresult', {
       'id': userId,
     });
@@ -64,14 +63,14 @@ class WebClient {
     var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
-      matchResults.add(MatchResultInfoEntity.fromJson(jsonData[i]));
+      matchResults.add(MatchResultInfo.fromJson(jsonData[i]));
     }
     return matchResults;
   }
 
-  Future<List<RankingInfoEntity>> getRankings(String userId) async {
+  Future<List<RankingInfo>> getRankings(String userId) async {
     var httpClient = new HttpClient();
-    List<RankingInfoEntity> matchResults = [];
+    List<RankingInfo> matchResults = [];
     var uri = new Uri.http(hostAddress, '/api/rankinginfo', {
       'id': userId,
     });
@@ -82,14 +81,14 @@ class WebClient {
     var jsonData = json.decode(responseBody);
 
     for (int i = 0; i < jsonData.length; i++) {
-      matchResults.add(RankingInfoEntity.fromJson(jsonData[i]));
+      matchResults.add(RankingInfo.fromJson(jsonData[i]));
     }
     return matchResults;
   }
 
-  Future<List<SearchPreferenceEntity>> getSearchPreference(
+  Future<List<SearchPreference>> getSearchPreference(
       String userId) async {
-    List<SearchPreferenceEntity> searchPreferences = [];
+    List<SearchPreference> searchPreferences = [];
     var uri = new Uri.http(hostAddress, '/api/searchpreference', {
       'id': userId,
     });
@@ -98,43 +97,43 @@ class WebClient {
 
     for (int i = 0; i < response.jsonData.length; i++) {
       searchPreferences
-          .add(SearchPreferenceEntity.fromJson(response.jsonData[i]));
+          .add(SearchPreference.fromJson(response.jsonData[i]));
     }
     return searchPreferences;
   }
 
-  Future<List<TournamentEntity>> getTournamentsByDefaultSearchPreferences(
+  Future<List<Tournament>> getTournamentsByDefaultSearchPreferences(
       String playerId) async {
-    List<TournamentEntity> tournaments = [];
+    List<Tournament> tournaments = [];
     var uri = new Uri.http(
         hostAddress, '/api/tournaments/$playerId/searchpreference');
 
     var response = await makeHttpCall(uri);
 
     for (var json in response.jsonData) {
-      tournaments.add(TournamentEntity.fromJson(json));
+      tournaments.add(Tournament.fromJson(json));
     }
     return tournaments;
   }
 
-  Future<BasketEntity> getBasket(String playerId) async {
+  Future<Basket> getBasket(String playerId) async {
     var uri =
         new Uri.http(hostAddress, '/api/basket/$playerId/getplayerbasket');
 
     var response = await makeHttpCall(uri);
 
-    var basket = BasketEntity.fromJson(response.jsonData);
+    var basket = Basket.fromJson(response.jsonData);
     return basket;
   }
 
-  Future<List<PlayerEntity>> getPlayers(String playerId) async {
+  Future<List<Player>> getPlayers(String playerId) async {
     var uri =
         new Uri.http(hostAddress, '/api/players/$playerId/getplayerprofile');
-    List<PlayerEntity> players = [];
+    List<Player> players = [];
     var response = await makeHttpCall(uri);
     if (response.statusCode == 200) {
       for (var json in response.jsonData) {
-        players.add(PlayerEntity.fromJson(json));
+        players.add(Player.fromJson(json));
       }
     }
     return players;
@@ -176,11 +175,11 @@ class WebClient {
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postWatchedTournaments(
-      List<TournamentEntity> watchedTournaments) async {
+      List<Tournament> watchedTournaments) async {
     return new Future.value(true);
   }
 
-  Future<List<TournamentEntity>> fetchEnteredTournaments(String playerId) async {
+  Future<List<Tournament>> fetchEnteredTournaments(String playerId) async {
     print('web_client.fetchEnteredTournaments(): About to make service call');
     return getTournamentsFromControllerWithUserId("entered", playerId);
   }
@@ -188,26 +187,26 @@ class WebClient {
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postEnteredTournaments(
-      List<TournamentEntity> enteredTournaments) async {
+      List<Tournament> enteredTournaments) async {
     return new Future.value(true);
   }
 
   // Player Profile
-  Future<List<PlayerEntity>> fetchPlayerProfile(String playerId) async {
-    List<PlayerEntity> tEntities = [];
+  Future<List<Player>> fetchPlayerProfile(String playerId) async {
+    List<Player> tEntities = [];
     tEntities.addAll(await getPlayers(playerId));
 
     return tEntities;
   }
 
-  Future<bool> postPlayerProfile(PlayerEntity playerProfile) async {
+  Future<bool> postPlayerProfile(Player playerProfile) async {
     var jsonRequest = json.encode(playerProfile.toJson());
     var uri = new Uri.http(hostAddress, '/api/players');
     var response = await makeHttpPostCall(uri, jsonRequest);
     return response;
   }
 
-  Future<bool> postSearchPreference(SearchPreferenceEntity searchPref) async {
+  Future<bool> postSearchPreference(SearchPreference searchPref) async {
     var jsonRequest = json.encode(searchPref.toJson());
     var uri = new Uri.http(hostAddress, '/api/searchpreference');
     var response = await makeHttpPostCall(uri, jsonRequest);
@@ -217,7 +216,7 @@ class WebClient {
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postSearchTournaments(
-      List<TournamentEntity> searchTounaments) async {
+      List<Tournament> searchTounaments) async {
     return new Future.value(true);
   }
 
@@ -240,61 +239,58 @@ class WebClient {
     return new Future.value(true);
   }
 
-  Future<List<TournamentEntity>> fetchSearchTournaments(String playerId) async {
+  Future<List<Tournament>> fetchSearchTournaments(String playerId) async {
     return getTournamentsByDefaultSearchPreferences(playerId);
   }
 
-  Future<List<TournamentEntity>> loadTournamentsWithSearchPreference(
+  Future<List<Tournament>> loadTournamentsWithSearchPreference(
       SearchPreference searchPreference) async {
-    List<TournamentEntity> tournaments = [];
+    List<Tournament> tournaments = [];
     var uri = new Uri.http(hostAddress,
-        '/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/${searchPreference.gender}/${searchPreference.distance}/${searchPreference.statusIndex}/searchall');
+        '/api/tournaments/${searchPreference.ageGroup}/${searchPreference.grade}/${searchPreference.gender}/${searchPreference.distance}/${searchPreference.tournamentStatus}/searchall');
     var response = await makeHttpCall(uri);
     if (response.statusCode == 200) {
       for (var json in response.jsonData) {
-        tournaments.add(TournamentEntity.fromJson(json));
+        tournaments.add(Tournament.fromJson(json));
       }
     }
     return tournaments;
   }
 
   // Search Preference
-  Future<List<SearchPreferenceEntity>> fetchSearchPreference(String playerId) async {
+  Future<List<SearchPreference>> fetchSearchPreference(String playerId) async {
     return getSearchPreference(playerId);
   }
 
   // RankingInfos
-  Future<List<RankingInfoEntity>> fetchRankingInfos(String playerId) async {
+  Future<List<RankingInfo>> fetchRankingInfos(String playerId) async {
     return getRankings(playerId);
   }
 
   // MatchResulInfos
-  Future<List<MatchResultInfoEntity>> fetchMatchResultInfos(String playerId) async {
+  Future<List<MatchResultInfo>> fetchMatchResultInfos(String playerId) async {
     return getMatchResult(playerId);
   }
 
   // Basket
-  Future<List<BasketEntity>> fetchBasket(String playerId) async {
-    List<BasketEntity> tEntities = [];
+  Future<List<Basket>> fetchBasket(String playerId) async {
+    List<Basket> tEntities = [];
     tEntities.add(await getBasket(playerId));
     print('before delayed ${tEntities.length}');
     return tEntities;
   }
 
-  Future<bool> postBasket(BasketEntity basketEntity) async {
+  Future<bool> postBasket(Basket basketEntity) async {
     var jsonRequest = json.encode(basketEntity.toJson());
     var uri = new Uri.http(hostAddress, '/api/basket');
     var response = await makeHttpPostCall(uri, jsonRequest);
     return response;
   }
 
-  Future<bool> postToLtaBasket(BasketEntity basketEntity) async {
+  Future<bool> postToLtaBasket(Basket basketEntity) async {
     var jsonRequest = json.encode(basketEntity.toJson());
     var uri = new Uri.http(hostAddress, '/api/baskettolta');
     var response = await makeHttpPostCall(uri, jsonRequest);
     return response;
   }
 }
-
-SearchPreference searchPreference = new SearchPreference(
-    ltaNumber: 723492222, ageGroup: 19, distance: 50, gender: 1, grade: 3);

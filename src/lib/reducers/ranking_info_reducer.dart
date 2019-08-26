@@ -1,5 +1,5 @@
 import 'package:redux/redux.dart';
-import '../models/models.dart';
+import 'package:swagger/api.dart';
 import '../actions/actions.dart';
 
 final rankingInfoReducer = combineReducers<List<RankingInfo>>([

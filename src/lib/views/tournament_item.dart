@@ -1,9 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:swagger/api.dart';
 
 import '../controls/usercontrols.dart';
-import '../models/models.dart';
 import '../keys/keys.dart';
 
 // A card to display tournament details
@@ -22,7 +22,7 @@ class TournamentItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var tournamentDate =
-        "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}";
+        "${new DateFormat("yMMMEd").format(tournament.startDateTime)} to ${ new DateFormat("yMMMEd").format(tournament.endDateTime)}";
 
     return new GestureDetector(
       onTap: onTap,
@@ -65,7 +65,7 @@ class TournamentItem extends StatelessWidget {
               )),
               new Expanded(
                   child: new TopBottomLabel(
-                value: '${tournament.status}',
+                value: '${tournament.tournamentStatus}',
                 label: 'Status',
               )),
               new Expanded(

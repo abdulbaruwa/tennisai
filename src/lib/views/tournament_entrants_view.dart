@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/tournament.dart';
+import 'package:swagger/api.dart';
 import '../models/models.dart';
 
 class TournamentEntrantsView extends StatelessWidget {

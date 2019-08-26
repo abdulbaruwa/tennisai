@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
+import 'package:swagger/api.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/basket_view.dart';

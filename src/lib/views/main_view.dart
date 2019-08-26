@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../models/models.dart';
+import 'package:swagger/api.dart';
 import 'photo_profile_view.dart';
 import '../theme/ktheme.dart';
 import '../containers/app_loading.dart';
@@ -227,7 +227,7 @@ class MainView extends StatelessWidget {
               alignment: Alignment.center,
               child: new Padding(
                   padding: const EdgeInsets.only(right: 1.0),
-                  child: new Text(matchResultInfo.points.toString(),
+                  child: new Text(matchResultInfo.toString(),
                       style: new TextStyle(fontSize: 12.0)))),
           new Container(
               child: new Container(

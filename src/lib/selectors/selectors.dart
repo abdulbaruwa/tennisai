@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:swagger/api.dart';
 import '../utils/optional.dart';
 import '../models/models.dart';
 

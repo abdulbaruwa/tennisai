@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:swagger/api.dart';
 
 import '../models/models.dart';
 import 'tournament_item.dart';
@@ -164,7 +165,7 @@ class DashboardView extends StatelessWidget {
               ),
               new Padding(
                 child: new Text(
-                  "${new DateFormat("yMMMEd").format(tournament.startDate)} to ${ new DateFormat("yMMMEd").format(tournament.endDate)}",
+                  "${new DateFormat("yMMMEd").format(tournament.startDateTime)} to ${ new DateFormat("yMMMEd").format(tournament.endDateTime)}",
 
                   textAlign: TextAlign.left,
                   //textScaleFactor: 1.0,
@@ -184,7 +185,7 @@ class DashboardView extends StatelessWidget {
                   )),
                   new Expanded(
                       child: new TopBottomLabel(
-                    value: '${tournament.status}',
+                    value: '${tournament.tournamentStatus}',
                     label: 'Status',
                   )),
                   new Expanded(

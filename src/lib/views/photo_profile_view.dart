@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import '../keys/keys.dart';
-import '../models/models.dart';
+import 'package:swagger/api.dart';
 import '../controls/usercontrols.dart';
 
 class PhotoProfileView extends StatelessWidget {
@@ -36,8 +36,8 @@ class PhotoProfileView extends StatelessWidget {
                       style: new TextStyle(
                           fontSize: 18.0, fontWeight: FontWeight.w400),
                     ),
-                    new Text(player.address ?? ''),
-                    new Text(player.postCode ?? '')
+                    new Text(player.address != null ? player.address.line1 : '' ),
+                    new Text(player.address != null ? player.address.postCode : '' ),
                   ],
                 )),
           ),
