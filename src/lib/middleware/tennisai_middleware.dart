@@ -39,7 +39,6 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final savePlayerProfile = _createSavePlayerProfile(repository);
 
   final loadSearchQuery = _createLoadSearchPreference(repository);
-  final saveSearchQuery = _createSaveSearchPreference(repository);
 
   final loadSearchTournaments = _createLoadSearchTournaments(repository);
   final saveSearchTournaments = _createSaveSearchTournaments(repository);
@@ -108,7 +107,6 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
 
     // Search Query preference
     new TypedMiddleware<AppState, LoadSearchPreferenceAction>(loadSearchQuery),
-    new TypedMiddleware<AppState, AddSearchPreferenceAction>(saveSearchQuery),
 
     // Search Tournament
     new TypedMiddleware<AppState, LoadSearchTournamentsAction>(
@@ -159,7 +157,8 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
       playerToSave.firstName = registrationInfoToSave.firstName;
       playerToSave.lastName = registrationInfoToSave.lastName;
       playerToSave.ltaNumber = registrationInfoToSave.btmNumber;
-      playerToSave.gender = registrationInfoToSave.gender; // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
+      playerToSave.gender = registrationInfoToSave
+          .gender; // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
       playerToSave.email = authSettings.email;
       playerToSave.usePublicProfileImage = true;
       playerToSave.profileImageUrl = authSettings.photoUrl;
@@ -394,29 +393,17 @@ Middleware<AppState> _createLoadPlayerProfile(DashboardRepository repository) {
   };
 }
 
-// Player Profile
-Middleware<AppState> _createSaveSearchPreference(
-    DashboardRepository repository) {
-  return (Store<AppState> store, action, NextDispatcher next) {
-    print('About to save search Query preference');
-    next(action);
-    var toSave = searchPreferenceSelector(store.state).value;
-
-    repository.saveSearchPreference(toSave);
-  };
-}
-
 Middleware<AppState> _createLoadSearchPreference(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
-    var playerId = playerSelector(store.state).first?.id;
-    repository.loadSearchPreference(playerId).then(
-      (searchPrefs) {
-        store.dispatch(
-          new SearchPreferenceLoadedAction(searchPrefs),
-        );
-      },
-    ).catchError((_) => store.dispatch(new SearchPreferenceNotLoadedAction()));
+    var player = playerSelector(store.state).first;
+    if (player != null) {
+      store.dispatch(new SearchPreferenceLoadedAction(
+          new List<SearchPreference>()..add(player.defaultSearchPreference)));
+    } else {
+      store.dispatch(new SearchPreferenceNotLoadedAction());
+    }
+
     next(action);
   };
 }
@@ -525,9 +512,6 @@ Middleware<AppState> _updatePlayerAndSearchProfile(
     next(action);
     var playerToSave = playerSelector(store.state).value;
     repository.savePlayerProfile(playerToSave);
-
-    var searchPrefToSave = searchPreferenceSelector(store.state).value;
-    repository.saveSearchPreference(searchPrefToSave);
 
     if (avatarSelector(store.state).isPresent) {
       repository.saveProfileAvatar(

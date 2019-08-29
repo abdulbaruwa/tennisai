@@ -86,22 +86,6 @@ class WebClient {
     return matchResults;
   }
 
-  Future<List<SearchPreference>> getSearchPreference(
-      String userId) async {
-    List<SearchPreference> searchPreferences = [];
-    var uri = new Uri.http(hostAddress, '/api/searchpreference', {
-      'id': userId,
-    });
-
-    var response = await makeHttpCall(uri);
-
-    for (int i = 0; i < response.jsonData.length; i++) {
-      searchPreferences
-          .add(SearchPreference.fromJson(response.jsonData[i]));
-    }
-    return searchPreferences;
-  }
-
   Future<List<Tournament>> getTournamentsByDefaultSearchPreferences(
       String playerId) async {
     List<Tournament> tournaments = [];
@@ -255,11 +239,6 @@ class WebClient {
       }
     }
     return tournaments;
-  }
-
-  // Search Preference
-  Future<List<SearchPreference>> fetchSearchPreference(String playerId) async {
-    return getSearchPreference(playerId);
   }
 
   // RankingInfos

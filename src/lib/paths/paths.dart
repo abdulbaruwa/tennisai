@@ -1,6 +1,6 @@
 
 class TennisAiPaths{
-  static final server = '192.168.1.156:55511';
+  static final server = '192.168.1.156:53429';
   static final rootUri = '/TennisAiServiceService/api';
   static final imagePath  = (String id) => 'http://$server/$rootUri/players/$id/getplayerimage';
   static final imageUploadPath  = (String id) => '$rootUri/players/$id/uploadsinglefile';
