@@ -11,13 +11,14 @@ class Settings {
   final String playerId;
   final int azureUserId;
   final String azureAuthToken;
+  final String name;
 
-  Settings({this.accessToken, this.refreshToken, this.deviceToken, this.email, this.photoUrl, this.registrationComplete, this.playerId, this.azureUserId, this.azureAuthToken});
+  Settings({this.accessToken, this.refreshToken, this.deviceToken, this.email, this.photoUrl, this.registrationComplete, this.playerId, this.azureUserId, this.azureAuthToken, this.name});
 
  
   @override
   int get hashCode =>
-      accessToken.hashCode ^ refreshToken.hashCode ^ deviceToken.hashCode ^ email.hashCode ^ photoUrl.hashCode ^ registrationComplete.hashCode ^ playerId.hashCode ^ azureUserId.hashCode ^ azureAuthToken.hashCode;
+      accessToken.hashCode ^ refreshToken.hashCode ^ deviceToken.hashCode ^ email.hashCode ^ photoUrl.hashCode ^ registrationComplete.hashCode ^ playerId.hashCode ^ azureUserId.hashCode ^ azureAuthToken.hashCode ^ name.hashCode;
 
   @override
   bool operator ==(Object other) =>
@@ -32,6 +33,7 @@ class Settings {
           registrationComplete == other.registrationComplete &&
           playerId == other.playerId &&
           azureUserId == other.azureUserId &&
+          name == other.name &&
           azureAuthToken == other.azureAuthToken;
 
   Map<String, Object> toJson() {
@@ -44,6 +46,7 @@ class Settings {
       'registrationComplete': registrationComplete,
       'playerId': playerId,
       'azureUserId' : azureUserId,
+      'name' : name,
       'azureAuthToken' : azureAuthToken
     };
   }   
@@ -58,6 +61,7 @@ class Settings {
       registrationComplete: json['registrationComplete'] as bool,
       playerId: json['playerId'] as String,
       azureUserId: json['azureUserId'] as int,
+      name: json['name'] as String,
       azureAuthToken: json['azureAuthToken'] as String
     );
   }

@@ -4,3 +4,4 @@ export 'app_tab.dart';
 export 'enums.dart';
 export 'settings.dart';
 export 'registration_info.dart';
+export 'IdGenerator.dart';

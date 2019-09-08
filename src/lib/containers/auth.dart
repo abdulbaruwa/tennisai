@@ -49,16 +49,22 @@ class AuthContainer extends StatelessWidget {
       print(account.toString());
       print(aut.idToken);
       print(aut.accessToken);
+
       var azureAuthToken = await getAuthCode(aut.accessToken, aut.idToken);
+
       print('AzureAuthToken: $azureAuthToken');
+
+      var playerId = IdGenerator().newPlayerId(account.id);
       var setting = new Settings(
           accessToken: aut.accessToken,
           azureAuthToken: azureAuthToken,
           email: account.email,
-          playerId: account.id,
+          playerId: playerId,
+          name: account.displayName,
           photoUrl: account.photoUrl);
       store.dispatch(new SignInCompletedAction(setting));
     });
+    
     googleSignIn.signInSilently(suppressErrors: false).catchError((onError) {
       print('Silent Sign In Error: $onError');
       store.dispatch(new GoogleSilentSignInFailedAction());

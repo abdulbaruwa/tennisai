@@ -110,15 +110,13 @@ class WebClient {
     return basket;
   }
 
-  Future<List<Player>> getPlayers(String playerId) async {
+  Future<List<Player>> getPlayerProfile(String playerId) async {
     var uri =
         new Uri.http(hostAddress, '/api/players/$playerId/getplayerprofile');
     List<Player> players = [];
     var response = await makeHttpCall(uri);
     if (response.statusCode == 200) {
-      for (var json in response.jsonData) {
-        players.add(Player.fromJson(json));
-      }
+        players.add(Player.fromJson(response.jsonData));
     }
     return players;
   }
@@ -178,7 +176,7 @@ class WebClient {
   // Player Profile
   Future<List<Player>> fetchPlayerProfile(String playerId) async {
     List<Player> tEntities = [];
-    tEntities.addAll(await getPlayers(playerId));
+    tEntities.addAll(await getPlayerProfile(playerId));
 
     return tEntities;
   }
@@ -205,7 +203,6 @@ class WebClient {
   }
 
   Future<bool> postAvatarImage(String playerId, File avatar) async {
-    // TODO:
     var uri = new Uri.http(
         TennisAiPaths.server, TennisAiPaths.imageUploadPath(playerId));
     var request = httpdart.MultipartRequest('POST', uri);

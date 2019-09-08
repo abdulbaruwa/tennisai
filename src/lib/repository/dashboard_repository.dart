@@ -16,10 +16,13 @@ import 'web_client.dart';
 /// How and where it stores the entities should confined to this layer, and the
 /// Domain layer of your app should only access this repository, not a database
 /// or the web directly.
+/// 
+
 class DashboardRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
-  const DashboardRepository({@required this.fileStorage, this.webClient});
+  final PlayersApi Function() getPlayerClient;
+  const DashboardRepository({@required this.fileStorage, this.webClient, this.getPlayerClient });
 
   Future<Null> saveAuthToken(String authToken) async {
     var storage = new FlutterSecureStorage();
@@ -122,8 +125,7 @@ class DashboardRepository {
 
   Future<List<Player>> loadPlayerProfileDirect(String playerId) async {
     try {
-      var result = webClient.fetchPlayerProfile(playerId);
-      print('Fetched');
+      var result = webClient.getPlayerProfile(playerId);
       return result;
     } catch (e) {
       print('Fetcher in error $e');
@@ -131,14 +133,15 @@ class DashboardRepository {
     }
   }
 
-  Future<List<Player>> loadLatestPlayerProfile(String playerId) async {
-    try {
-      return webClient.fetchPlayerProfile(playerId);
-    } catch (e) {
-      print('LoadLatestPlayerProfile: Error $e');
-      return new List<Player>();
-    }
-  }
+  // Future<List<Player>> loadLatestPlayerProfile(String playerId) async {
+  //   try {
+  //     var playerProfileDirect = await this.getPlayerClient().getPlayerProfile(playerId);
+  //     return webClient.fetchPlayerProfile(playerId);
+  //   } catch (e) {
+  //     print('LoadLatestPlayerProfile: Error $e');
+  //     return new List<Player>();
+  //   }
+  // }
 
   Future savePlayerSettings(Settings playerSettings) {
     return fileStorage.savePlayerSettings(playerSettings);

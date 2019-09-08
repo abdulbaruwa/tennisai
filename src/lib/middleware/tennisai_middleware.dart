@@ -14,8 +14,13 @@ Future<String> getAuthToken() {
   return flutterSecureStorage.read(key: "authtoken");
 }
 
+PlayersApi  getApiClient(){
+  return new PlayersApi();
+}
+
 List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   DashboardRepository repository = const DashboardRepository(
+    getPlayerClient: getApiClient,
     webClient: const WebClient(TennisAiConfigs.localHostName, getAuthToken),
     fileStorage:
         const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),
@@ -146,7 +151,9 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
     var player = playerSelector(store.state);
     var authSettings = settingSelector(store.state).value;
     var registrationInfoToSave = registrationInfoSelector(store.state).value;
+
     Player playerToSave;
+    
     if (player.isPresent == true) {
       playerToSave.firstName = registrationInfoToSave.firstName;
       playerToSave.lastName = registrationInfoToSave.lastName;
@@ -157,12 +164,11 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
       playerToSave.firstName = registrationInfoToSave.firstName;
       playerToSave.lastName = registrationInfoToSave.lastName;
       playerToSave.ltaNumber = registrationInfoToSave.btmNumber;
-      playerToSave.gender = registrationInfoToSave
-          .gender; // TODO: to be  passed in via registrationInfo, will need modification to the registrationView.
+      playerToSave.gender = registrationInfoToSave.gender; 
       playerToSave.email = authSettings.email;
       playerToSave.usePublicProfileImage = true;
       playerToSave.profileImageUrl = authSettings.photoUrl;
-      playerToSave.id = authSettings.playerId;
+      playerToSave.id =  authSettings.playerId;
     }
 
     await repository.savePlayerProfile(playerToSave);
@@ -179,7 +185,7 @@ Middleware<AppState> _checkSignInUserIsRegistered(
     next(action);
     var settings = action.settings as Settings;
     var playerProfile =
-        await repository.loadLatestPlayerProfile(settings.playerId);
+        await repository.loadPlayerProfile(settings.playerId);
 
     if (playerProfile.isNotEmpty) {
       store.dispatch(new SignInUserIsRegisteredAction());
@@ -199,13 +205,13 @@ Middleware<AppState> _initState(DashboardRepository repository) {
     var playerId = action.playerId;
 
     store.dispatch(new LoadPlayerFromServerAction(playerId));
-    store.dispatch(new LoadWatchedTournamentsAction());
-    store.dispatch(new LoadUpcomingTournamentsAction());
-    store.dispatch(new LoadBasketAction());
-    store.dispatch(new LoadSearchPreferenceAction());
-    store.dispatch(new LoadSearchTournamentsAction());
-    store.dispatch(new LoadRankingInfosAction());
-    store.dispatch(new LoadMatchResultInfosAction());
+    // store.dispatch(new LoadWatchedTournamentsAction());
+    // store.dispatch(new LoadUpcomingTournamentsAction());
+    // store.dispatch(new LoadBasketAction());
+    // store.dispatch(new LoadSearchPreferenceAction());
+    // store.dispatch(new LoadSearchTournamentsAction());
+    // store.dispatch(new LoadRankingInfosAction());
+    // store.dispatch(new LoadMatchResultInfosAction());
   };
 }
 
