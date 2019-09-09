@@ -12,15 +12,14 @@ import '../keys/keys.dart';
 class MainView extends StatelessWidget {
   final Player player;
   final File changedAvatar;
-  final List<RankingInfo> rankingInfos;
   final List<MatchResultInfo> matchResultInfos;
 
-  MainView({Key key, this.player, this.rankingInfos, this.matchResultInfos, this.changedAvatar})
+  MainView({Key key, this.player, this.matchResultInfos, this.changedAvatar})
       : super(key: key);
   static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Widget _buildView(BuildContext context) {
-    Iterable<Widget> listTiles = rankingInfos.map((RankingInfo item) => buildRankingInfoItem(context, item));
+    Iterable<Widget> listTiles =  player.rankingInfos.map((RankingInfo item) => buildRankingInfoItem(context, item));
     Iterable<Widget> matcheResultsTiles = matchResultInfos.map((MatchResultInfo item) => buildEventItem(context, item));
     listTiles = ListTile.divideTiles(context: context, tiles: listTiles);
 
