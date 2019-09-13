@@ -68,7 +68,7 @@ class PlayersApi {
     }
 
     // create path and map variables
-    String path = "/api/Players/{playerId}/getmatchresults".replaceAll("{format}","json").replaceAll("{" + "playerId" + "}", playerId.toString());
+    String path = "/api/Players/{playerId}/matchresults".replaceAll("{format}","json").replaceAll("{" + "playerId" + "}", playerId.toString());
 
     // query params
     List<QueryParam> queryParams = [];

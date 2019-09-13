@@ -64,7 +64,7 @@ Class | Method | HTTP request | Description
 *BasketsApi* | [**createPlayerBasket**](docs//BasketsApi.md#createplayerbasket) | **POST** /api/Baskets | 
 *BasketsApi* | [**getPlayerBasket**](docs//BasketsApi.md#getplayerbasket) | **GET** /api/Baskets/{playerId}/getplayerbasket | 
 *PlayersApi* | [**createPlayer**](docs//PlayersApi.md#createplayer) | **POST** /api/Players | 
-*PlayersApi* | [**getMatchResults**](docs//PlayersApi.md#getmatchresults) | **GET** /api/Players/{playerId}/getmatchresults | 
+*PlayersApi* | [**getMatchResults**](docs//PlayersApi.md#getmatchresults) | **GET** /api/Players/{playerId}/matchresults | 
 *PlayersApi* | [**getPlayerProfile**](docs//PlayersApi.md#getplayerprofile) | **GET** /api/Players/{playerId}/getplayerprofile | 
 *PlayersApi* | [**getPlayerTournaments**](docs//PlayersApi.md#getplayertournaments) | **GET** /api/Players/{playerId}/getplayertournaments | 
 *SeedingApi* | [**seedPlayer**](docs//SeedingApi.md#seedplayer) | **GET** /api/Seeding/SeedPlayer | 

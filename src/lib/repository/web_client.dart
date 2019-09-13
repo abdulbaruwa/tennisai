@@ -50,12 +50,10 @@ class WebClient {
     return tournaments;
   }
 
-  Future<List<MatchResultInfo>> getMatchResult(String userId) async {
+  Future<List<MatchResultInfo>> getMatchResult(String playerId) async {
     var httpClient = new HttpClient();
     List<MatchResultInfo> matchResults = [];
-    var uri = new Uri.http(hostAddress, '/api/tournamentresult', {
-      'id': userId,
-    });
+    var uri = new Uri.http(hostAddress, '/api/players/$playerId/matchresults');
     var request = await httpClient.getUrl(uri);
     request.headers.add('zumo-api-version', '2.0.0');
     var response = await request.close();

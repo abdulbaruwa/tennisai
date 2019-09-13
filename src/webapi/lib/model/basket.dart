@@ -16,11 +16,14 @@ class Basket {
 
   String id = null;
   
+
+  String cosmosEntityName = null;
+  
   Basket();
 
   @override
   String toString() {
-    return 'Basket[basketItems=$basketItems, totalCost=$totalCost, ltaNumber=$ltaNumber, playerId=$playerId, id=$id, ]';
+    return 'Basket[basketItems=$basketItems, totalCost=$totalCost, ltaNumber=$ltaNumber, playerId=$playerId, id=$id, cosmosEntityName=$cosmosEntityName, ]';
   }
 
   Basket.fromJson(Map<String, dynamic> json) {
@@ -40,6 +43,9 @@ class Basket {
     id =
         json['id']
     ;
+    cosmosEntityName =
+        json['cosmosEntityName']
+    ;
   }
 
   Map<String, dynamic> toJson() {
@@ -48,7 +54,8 @@ class Basket {
       'totalCost': totalCost,
       'ltaNumber': ltaNumber,
       'playerId': playerId,
-      'id': id
+      'id': id,
+      'cosmosEntityName': cosmosEntityName
      };
   }
 

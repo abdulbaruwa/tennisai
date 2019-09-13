@@ -58,11 +58,14 @@ class Player {
 
   SearchPreference defaultSearchPreference = null;
   
+
+  String cosmosEntityName = null;
+  
   Player();
 
   @override
   String toString() {
-    return 'Player[id=$id, firstName=$firstName, lastName=$lastName, gender=$gender, ltaNumber=$ltaNumber, ltaRanking=$ltaRanking, ltaRating=$ltaRating, address=$address, authenticationId=$authenticationId, email=$email, isAdmin=$isAdmin, deviceToken=$deviceToken, devicePlatform=$devicePlatform, notificationRegistrationId=$notificationRegistrationId, profileImageUrl=$profileImageUrl, userId=$userId, usePublicProfileImage=$usePublicProfileImage, rankingInfos=$rankingInfos, defaultSearchPreference=$defaultSearchPreference, ]';
+    return 'Player[id=$id, firstName=$firstName, lastName=$lastName, gender=$gender, ltaNumber=$ltaNumber, ltaRanking=$ltaRanking, ltaRating=$ltaRating, address=$address, authenticationId=$authenticationId, email=$email, isAdmin=$isAdmin, deviceToken=$deviceToken, devicePlatform=$devicePlatform, notificationRegistrationId=$notificationRegistrationId, profileImageUrl=$profileImageUrl, userId=$userId, usePublicProfileImage=$usePublicProfileImage, rankingInfos=$rankingInfos, defaultSearchPreference=$defaultSearchPreference, cosmosEntityName=$cosmosEntityName, ]';
   }
 
   Player.fromJson(Map<String, dynamic> json) {
@@ -128,6 +131,9 @@ class Player {
       
       new SearchPreference.fromJson(json['defaultSearchPreference'])
 ;
+    cosmosEntityName =
+        json['cosmosEntityName']
+    ;
   }
 
   Map<String, dynamic> toJson() {
@@ -150,7 +156,8 @@ class Player {
       'userId': userId,
       'usePublicProfileImage': usePublicProfileImage,
       'rankingInfos': rankingInfos,
-      'defaultSearchPreference': defaultSearchPreference
+      'defaultSearchPreference': defaultSearchPreference,
+      'cosmosEntityName': cosmosEntityName
      };
   }
 

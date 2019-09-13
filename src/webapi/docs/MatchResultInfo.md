@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | [optional] [default to null]
 **tournamentDate** | [**DateTime**](DateTime.md) |  | [optional] [default to null]
+**tournamentDateString** | **String** |  | [optional] [default to null]
 **ageGroup** | **String** |  | [optional] [default to null]
 **grade** | **int** |  | [optional] [default to null]
 **tournamentName** | **String** |  | [optional] [default to null]
@@ -19,6 +20,7 @@ Name | Type | Description | Notes
 **points** | **int** |  | [optional] [default to null]
 **appliedToRanking** | **bool** |  | [optional] [default to null]
 **playerId** | **String** |  | [optional] [default to null]
+**cosmosEntityName** | **String** |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

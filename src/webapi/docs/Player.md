@@ -27,6 +27,7 @@ Name | Type | Description | Notes
 **usePublicProfileImage** | **bool** |  | [optional] [default to null]
 **rankingInfos** | [**List&lt;RankingInfo&gt;**](RankingInfo.md) |  | [optional] [default to []]
 **defaultSearchPreference** | [**SearchPreference**](SearchPreference.md) |  | [optional] [default to null]
+**cosmosEntityName** | **String** |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

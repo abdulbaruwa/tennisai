@@ -211,7 +211,7 @@ Middleware<AppState> _initState(DashboardRepository repository) {
     // store.dispatch(new LoadSearchPreferenceAction());
     // store.dispatch(new LoadSearchTournamentsAction());
     // store.dispatch(new LoadRankingInfosAction());
-    // store.dispatch(new LoadMatchResultInfosAction());
+    store.dispatch(new LoadMatchResultInfosAction());
   };
 }
 

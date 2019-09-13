@@ -82,11 +82,14 @@ class Tournament {
 
   double cost = null;
   
+
+  String cosmosEntityName = null;
+  
   Tournament();
 
   @override
   String toString() {
-    return 'Tournament[id=$id, name=$name, grade=$grade, ageGroup=$ageGroup, gender=$gender, startDateTime=$startDateTime, endDateTime=$endDateTime, startDate=$startDate, endDate=$endDate, location=$location, motivationalAvatar=$motivationalAvatar, numberOfEntrants=$numberOfEntrants, entrants=$entrants, highestPlayerRating=$highestPlayerRating, site=$site, organiserName=$organiserName, organiserPhone=$organiserPhone, organiserEmail=$organiserEmail, entryCloseDateTime=$entryCloseDateTime, entryCloseDate=$entryCloseDate, code=$code, statusIndex=$statusIndex, tournamentStatus=$tournamentStatus, address=$address, town=$town, postCode=$postCode, cost=$cost, ]';
+    return 'Tournament[id=$id, name=$name, grade=$grade, ageGroup=$ageGroup, gender=$gender, startDateTime=$startDateTime, endDateTime=$endDateTime, startDate=$startDate, endDate=$endDate, location=$location, motivationalAvatar=$motivationalAvatar, numberOfEntrants=$numberOfEntrants, entrants=$entrants, highestPlayerRating=$highestPlayerRating, site=$site, organiserName=$organiserName, organiserPhone=$organiserPhone, organiserEmail=$organiserEmail, entryCloseDateTime=$entryCloseDateTime, entryCloseDate=$entryCloseDate, code=$code, statusIndex=$statusIndex, tournamentStatus=$tournamentStatus, address=$address, town=$town, postCode=$postCode, cost=$cost, cosmosEntityName=$cosmosEntityName, ]';
   }
 
   Tournament.fromJson(Map<String, dynamic> json) {
@@ -166,6 +169,9 @@ class Tournament {
     cost =
         json['cost']
     ;
+    cosmosEntityName =
+        json['cosmosEntityName']
+    ;
   }
 
   Map<String, dynamic> toJson() {
@@ -196,7 +202,8 @@ class Tournament {
       'address': address,
       'town': town,
       'postCode': postCode,
-      'cost': cost
+      'cost': cost,
+      'cosmosEntityName': cosmosEntityName
      };
   }
 

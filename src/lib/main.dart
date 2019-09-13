@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 
+import 'package:flutter/foundation.dart' show defaultTargetPlatform;
+import 'package:flutter/foundation.dart' show TargetPlatform;
+
+import 'package:appcenter/appcenter.dart';
+import 'package:appcenter_analytics/appcenter_analytics.dart';
+import 'package:appcenter_crashes/appcenter_crashes.dart';
+
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'models/models.dart';
@@ -22,6 +29,7 @@ class TennisAiApp extends StatelessWidget {
       initialState: new AppState.loading(),
       middleware: createStoreWatchedTournamentsMiddleware());
 
+
   @override
   Widget build(BuildContext context) {
     return new StoreProvider(
@@ -41,6 +49,13 @@ class TennisAiApp extends StatelessWidget {
 }
 
 _loadState(Store store) {
+   
+   String _appCenterIdentifier = defaultTargetPlatform == TargetPlatform.iOS
+      ? "3037d80f-XXXXXXXXXXX-adb968c67880"
+      : "eefdadc1-c166-43c2-ba95-07857a96c7a6";
+
+  AppCenter.start(_appCenterIdentifier, [AppCenterAnalytics.id, AppCenterCrashes.id]);
+
   // Nothing initialized here. Moved init to middleware action fired post auth.
   store.dispatch(new LoadPlayerSettingsFromDeviceAction());
 }

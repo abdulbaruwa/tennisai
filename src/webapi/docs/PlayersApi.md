@@ -10,7 +10,7 @@ All URIs are relative to *https://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createPlayer**](PlayersApi.md#createPlayer) | **POST** /api/Players | 
-[**getMatchResults**](PlayersApi.md#getMatchResults) | **GET** /api/Players/{playerId}/getmatchresults | 
+[**getMatchResults**](PlayersApi.md#getMatchResults) | **GET** /api/Players/{playerId}/matchresults | 
 [**getPlayerProfile**](PlayersApi.md#getPlayerProfile) | **GET** /api/Players/{playerId}/getplayerprofile | 
 [**getPlayerTournaments**](PlayersApi.md#getPlayerTournaments) | **GET** /api/Players/{playerId}/getplayertournaments | 
 

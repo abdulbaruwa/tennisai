@@ -226,7 +226,7 @@ class MainView extends StatelessWidget {
               alignment: Alignment.center,
               child: new Padding(
                   padding: const EdgeInsets.only(right: 1.0),
-                  child: new Text(matchResultInfo.toString(),
+                  child: new Text(matchResultInfo.points.toString(),
                       style: new TextStyle(fontSize: 12.0)))),
           new Container(
               child: new Container(
