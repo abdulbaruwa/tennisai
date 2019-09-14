@@ -8,7 +8,7 @@ trigger:
 
 # Flutter build
 variables:
-  projectDirectory: tennisai/src
+  projectDirectory: src
 
 jobs:
   - job: Android
