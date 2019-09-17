@@ -12,7 +12,7 @@ GoogleSignIn _googleSignIn = new GoogleSignIn(
 class AuthView extends StatelessWidget {
   final bool isSignedIn;
   final Function onGoogleSignInSelected;
-  AuthView({Key key, this.isSignedIn,  this.onGoogleSignInSelected})
+  AuthView({Key key, this.isSignedIn, this.onGoogleSignInSelected})
       : super(key: key);
 
   @override
@@ -26,37 +26,48 @@ class AuthView extends StatelessWidget {
           children: <Widget>[
             new Container(
                 padding: EdgeInsets.only(left: 10.0),
-                child:  new Text("You are not currently signed in.",
+                child: new Text("You are not currently signed in.",
                     style: Theme.of(context).accentTextTheme.display1.copyWith(
                         color: Colors.white,
                         fontSize: 25.0,
-                        fontFamily: 'AbrilFatface')) 
-                        ),
+                        fontFamily: 'AbrilFatface'))),
             new Text('Tennis.Ai',
                 style: Theme.of(context).accentTextTheme.display1.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 50.0)),
             new Center(
-              child: new ButtonTheme(
-                  minWidth: 100.0,
-                  height: 40.0,
-                  child: new RaisedButton(
-                    color: Color(0xFFFFFFFF),
-                    child: new Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        new Image.asset('assets/btn_google3.png'),
-                        new Text('Sign in with Google')
-                      ],
-                    ),
-
-                    onPressed:
-                        isSignedIn == false ? onGoogleSignInSelected : null,
-                  )),
+              child: OutlineButton(
+                splashColor: Colors.grey,
+                onPressed: isSignedIn == false ? onGoogleSignInSelected : null,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(40)),
+                highlightElevation: 0,
+                borderSide: BorderSide(color: Colors.grey),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Image(
+                          image: AssetImage("assets/google_logo.png"),
+                          height: 35.0),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: Text(
+                          'Sign in with Google',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
-        //    new Image.asset('assets/btn_google_signin_dark_normal_xhdpi.9.png')
           ],
         ));
   }

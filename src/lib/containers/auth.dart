@@ -33,14 +33,15 @@ class AuthContainer extends StatelessWidget {
         },
         builder: (context, vm) {
           return new AuthView(
-              isSignedIn: vm.signedIn, onGoogleSignInSelected: vm.onGoogleSignInSelected);
+              isSignedIn: vm.signedIn,
+              onGoogleSignInSelected: vm.onGoogleSignInSelected);
         });
   }
 
-  bool localSignIn(Store store){
+  bool localSignIn(Store store) {
     return false;
   }
-  
+
   void initSignIn(Store store) async {
     print('Attempting to SignIn with Google');
     googleSignIn.onCurrentUserChanged
@@ -50,6 +51,15 @@ class AuthContainer extends StatelessWidget {
       print(aut.idToken);
       print(aut.accessToken);
 
+      GoogleSignInAuthentication googleAuth = await account.authentication;
+
+      AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+      
       var azureAuthToken = await getAuthCode(aut.accessToken, aut.idToken);
 
       print('AzureAuthToken: $azureAuthToken');
@@ -64,11 +74,14 @@ class AuthContainer extends StatelessWidget {
           photoUrl: account.photoUrl);
       store.dispatch(new SignInCompletedAction(setting));
     });
-    
-    googleSignIn.signInSilently(suppressErrors: false).catchError((onError) {
-      print('Silent Sign In Error: $onError');
-      store.dispatch(new GoogleSilentSignInFailedAction());
-    });
+
+    GoogleSignInAccount account = googleSignIn.currentUser;
+    if (account == null) {
+      googleSignIn.signInSilently(suppressErrors: false).catchError((onError) {
+        print('Silent Sign In Error: $onError');
+        store.dispatch(new GoogleSilentSignInFailedAction());
+      });
+    }
   }
 
   Map<String, Object> toJson(String auth, String id) {

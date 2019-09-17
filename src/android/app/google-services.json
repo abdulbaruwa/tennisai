@@ -8,6 +8,43 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:968949713477:android:b4c140c0f9a299cbc7312c",
+        "android_client_info": {
+          "package_name": "com.orunmila.tennisai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "968949713477-7khdoadgmbsguhmfupbvqbqg2rhobfb5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orunmila.tennisai",
+            "certificate_hash": "df336ad36cbdf31c041fe1c7c3c4a0a8e3e312b2"
+          }
+        },
+        {
+          "client_id": "968949713477-iofbgo6h5ngk25cp9kbn3juilp01datr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0sAgbVvK7OWvC2k8-5a519GBNxKEnN7k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "968949713477-iofbgo6h5ngk25cp9kbn3juilp01datr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:968949713477:android:31ce81542aa15b47",
         "android_client_info": {
           "package_name": "com.orunmila.tennisai_public"
@@ -25,10 +62,6 @@
         {
           "client_id": "968949713477-iofbgo6h5ngk25cp9kbn3juilp01datr.apps.googleusercontent.com",
           "client_type": 3
-        },
-        {
-          "client_id": "968949713477-qopaq06skdh2ab05jga9cds45t5r7eff.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -37,20 +70,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 2,
           "other_platform_oauth_client": [
             {
               "client_id": "968949713477-iofbgo6h5ngk25cp9kbn3juilp01datr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
-        },
-        "ads_service": {
-          "status": 2
         }
       }
     }
