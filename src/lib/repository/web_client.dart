@@ -22,7 +22,10 @@ class WebClient {
   const WebClient(this.hostAddress, this.getToken);
 
   Future<List<Tournament>> fetchWatchedTournaments(String playerId) async {
+    
+
     return getTournamentsFromControllerWithUserId("watched", playerId);
+
   }
 
   Future<String> getAuthToken() {
@@ -84,6 +87,8 @@ class WebClient {
     return matchResults;
   }
 
+  
+
   Future<List<Tournament>> getTournamentsByDefaultSearchPreferences(
       String playerId) async {
     List<Tournament> tournaments = [];
@@ -98,6 +103,7 @@ class WebClient {
     return tournaments;
   }
 
+
   Future<Basket> getBasket(String playerId) async {
     var uri =
         new Uri.http(hostAddress, '/api/basket/$playerId/getplayerbasket');
@@ -108,9 +114,9 @@ class WebClient {
     return basket;
   }
 
-  Future<List<Player>> getPlayerProfile(String playerId) async {
+  Future<List<Player>> playerprofile(String playerId) async {
     var uri =
-        new Uri.http(hostAddress, '/api/players/$playerId/getplayerprofile');
+        new Uri.http(hostAddress, '/api/players/$playerId/playerprofile');
     List<Player> players = [];
     var response = await makeHttpCall(uri);
     if (response.statusCode == 200) {
@@ -174,7 +180,7 @@ class WebClient {
   // Player Profile
   Future<List<Player>> fetchPlayerProfile(String playerId) async {
     List<Player> tEntities = [];
-    tEntities.addAll(await getPlayerProfile(playerId));
+    tEntities.addAll(await playerprofile(playerId));
 
     return tEntities;
   }

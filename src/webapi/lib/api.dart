@@ -20,15 +20,16 @@ part 'api/tournaments_api.dart';
 part 'model/address.dart';
 part 'model/basket.dart';
 part 'model/basket_item.dart';
+part 'model/entered_tournaments.dart';
 part 'model/entrant.dart';
 part 'model/match_result_info.dart';
 part 'model/player.dart';
-part 'model/player_tournaments.dart';
 part 'model/problem_details.dart';
 part 'model/ranking_info.dart';
 part 'model/search_preference.dart';
 part 'model/tournament.dart';
 part 'model/tournament_info.dart';
+part 'model/watched_tournaments.dart';
 
 
 ApiClient defaultApiClient = new ApiClient();

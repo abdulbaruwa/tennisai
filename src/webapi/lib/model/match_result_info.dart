@@ -8,9 +8,6 @@ class MatchResultInfo {
   DateTime tournamentDate = null;
   
 
-  String tournamentDateString = null;
-  
-
   String ageGroup = null;
   //enum ageGroupEnum {  Under12,  Under16,  Under18,  Adult,  };
 
@@ -44,7 +41,7 @@ class MatchResultInfo {
 
   @override
   String toString() {
-    return 'MatchResultInfo[id=$id, tournamentDate=$tournamentDate, tournamentDateString=$tournamentDateString, ageGroup=$ageGroup, grade=$grade, tournamentName=$tournamentName, tournamentCode=$tournamentCode, tournamentId=$tournamentId, result=$result, points=$points, appliedToRanking=$appliedToRanking, playerId=$playerId, cosmosEntityName=$cosmosEntityName, ]';
+    return 'MatchResultInfo[id=$id, tournamentDate=$tournamentDate, ageGroup=$ageGroup, grade=$grade, tournamentName=$tournamentName, tournamentCode=$tournamentCode, tournamentId=$tournamentId, result=$result, points=$points, appliedToRanking=$appliedToRanking, playerId=$playerId, cosmosEntityName=$cosmosEntityName, ]';
   }
 
   MatchResultInfo.fromJson(Map<String, dynamic> json) {
@@ -53,9 +50,6 @@ class MatchResultInfo {
         json['id']
     ;
     tournamentDate = json['tournamentDate'] == null ? null : DateTime.parse(json['tournamentDate']);
-    tournamentDateString =
-        json['tournamentDateString']
-    ;
     ageGroup =
         json['ageGroup']
     ;
@@ -92,7 +86,6 @@ class MatchResultInfo {
     return {
       'id': id,
       'tournamentDate': tournamentDate == null ? '' : tournamentDate.toUtc().toIso8601String(),
-      'tournamentDateString': tournamentDateString,
       'ageGroup': ageGroup,
       'grade': grade,
       'tournamentName': tournamentName,

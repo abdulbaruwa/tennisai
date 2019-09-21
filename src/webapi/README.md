@@ -64,9 +64,10 @@ Class | Method | HTTP request | Description
 *BasketsApi* | [**createPlayerBasket**](docs//BasketsApi.md#createplayerbasket) | **POST** /api/Baskets | 
 *BasketsApi* | [**getPlayerBasket**](docs//BasketsApi.md#getplayerbasket) | **GET** /api/Baskets/{playerId}/getplayerbasket | 
 *PlayersApi* | [**createPlayer**](docs//PlayersApi.md#createplayer) | **POST** /api/Players | 
+*PlayersApi* | [**enteredTournaments**](docs//PlayersApi.md#enteredtournaments) | **GET** /api/Players/{playerId}/enteredtournaments | 
 *PlayersApi* | [**getMatchResults**](docs//PlayersApi.md#getmatchresults) | **GET** /api/Players/{playerId}/matchresults | 
-*PlayersApi* | [**getPlayerProfile**](docs//PlayersApi.md#getplayerprofile) | **GET** /api/Players/{playerId}/getplayerprofile | 
-*PlayersApi* | [**getPlayerTournaments**](docs//PlayersApi.md#getplayertournaments) | **GET** /api/Players/{playerId}/getplayertournaments | 
+*PlayersApi* | [**playerProfile**](docs//PlayersApi.md#playerprofile) | **GET** /api/Players/{playerId}/playerprofile | 
+*PlayersApi* | [**watchedTournaments**](docs//PlayersApi.md#watchedtournaments) | **GET** /api/Players/{playerId}/watchedtournaments | 
 *SeedingApi* | [**seedPlayer**](docs//SeedingApi.md#seedplayer) | **GET** /api/Seeding/SeedPlayer | 
 *SeedingApi* | [**seedTournaments**](docs//SeedingApi.md#seedtournaments) | **GET** /api/Seeding/SeedTournaments | 
 *TournamentsApi* | [**byPreference**](docs//TournamentsApi.md#bypreference) | **GET** /api/Tournaments/{playerId}/bypreference | 
@@ -79,15 +80,16 @@ Class | Method | HTTP request | Description
  - [Address](docs//Address.md)
  - [Basket](docs//Basket.md)
  - [BasketItem](docs//BasketItem.md)
+ - [EnteredTournaments](docs//EnteredTournaments.md)
  - [Entrant](docs//Entrant.md)
  - [MatchResultInfo](docs//MatchResultInfo.md)
  - [Player](docs//Player.md)
- - [PlayerTournaments](docs//PlayerTournaments.md)
  - [ProblemDetails](docs//ProblemDetails.md)
  - [RankingInfo](docs//RankingInfo.md)
  - [SearchPreference](docs//SearchPreference.md)
  - [Tournament](docs//Tournament.md)
  - [TournamentInfo](docs//TournamentInfo.md)
+ - [WatchedTournaments](docs//WatchedTournaments.md)
 
 
 ## Documentation For Authorization

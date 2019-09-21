@@ -18,7 +18,7 @@ class ApiClient {
   final _RegList = new RegExp(r'^List<(.*)>$');
   final _RegMap = new RegExp(r'^Map<String,(.*)>$');
 
-  ApiClient({this.basePath: "https://localhost"}) {
+  ApiClient({this.basePath: "http://192.168.1.156:53429"}) {
     // Setup authentications (key: authentication name, value: authentication).
   }
 
@@ -43,14 +43,14 @@ class ApiClient {
           return new Basket.fromJson(value);
         case 'BasketItem':
           return new BasketItem.fromJson(value);
+        case 'EnteredTournaments':
+          return new EnteredTournaments.fromJson(value);
         case 'Entrant':
           return new Entrant.fromJson(value);
         case 'MatchResultInfo':
           return new MatchResultInfo.fromJson(value);
         case 'Player':
           return new Player.fromJson(value);
-        case 'PlayerTournaments':
-          return new PlayerTournaments.fromJson(value);
         case 'ProblemDetails':
           return new ProblemDetails.fromJson(value);
         case 'RankingInfo':
@@ -61,6 +61,8 @@ class ApiClient {
           return new Tournament.fromJson(value);
         case 'TournamentInfo':
           return new TournamentInfo.fromJson(value);
+        case 'WatchedTournaments':
+          return new WatchedTournaments.fromJson(value);
         default:
           {
             Match match;

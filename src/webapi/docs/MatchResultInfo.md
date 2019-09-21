@@ -10,7 +10,6 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | [optional] [default to null]
 **tournamentDate** | [**DateTime**](DateTime.md) |  | [optional] [default to null]
-**tournamentDateString** | **String** |  | [optional] [default to null]
 **ageGroup** | **String** |  | [optional] [default to null]
 **grade** | **int** |  | [optional] [default to null]
 **tournamentName** | **String** |  | [optional] [default to null]

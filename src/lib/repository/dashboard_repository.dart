@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:core';
 
+import 'package:tennisai/middleware/tennisai_middleware.dart';
 import 'package:swagger/api.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -125,7 +126,7 @@ class DashboardRepository {
 
   Future<List<Player>> loadPlayerProfileDirect(String playerId) async {
     try {
-      var result = webClient.getPlayerProfile(playerId);
+      var result = webClient.playerprofile(playerId);
       return result;
     } catch (e) {
       print('Fetcher in error $e');
