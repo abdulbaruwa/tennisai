@@ -37,11 +37,26 @@ class TournamentInfo {
 
   double cost = null;
   
+
+  String tournamentStatus = null;
+  //enum tournamentStatusEnum {  Upcoming,  AcceptingEntries,  ClosedForEntries,  WithdrawalDatePassed,  InProgress,  PendingResults,  ResultsAvailable,  };
+
+  int numberOfEntrants = null;
+  
+
+  String organiserEmail = null;
+  
+
+  String organiserPhone = null;
+  
+
+  DateTime entryCloseDateTime = null;
+  
   TournamentInfo();
 
   @override
   String toString() {
-    return 'TournamentInfo[tournamentId=$tournamentId, name=$name, grade=$grade, ageGroup=$ageGroup, gender=$gender, startDateTime=$startDateTime, endDateTime=$endDateTime, code=$code, address=$address, town=$town, postCode=$postCode, cost=$cost, ]';
+    return 'TournamentInfo[tournamentId=$tournamentId, name=$name, grade=$grade, ageGroup=$ageGroup, gender=$gender, startDateTime=$startDateTime, endDateTime=$endDateTime, code=$code, address=$address, town=$town, postCode=$postCode, cost=$cost, tournamentStatus=$tournamentStatus, numberOfEntrants=$numberOfEntrants, organiserEmail=$organiserEmail, organiserPhone=$organiserPhone, entryCloseDateTime=$entryCloseDateTime, ]';
   }
 
   TournamentInfo.fromJson(Map<String, dynamic> json) {
@@ -78,6 +93,19 @@ class TournamentInfo {
     cost =
         json['cost']
     ;
+    tournamentStatus =
+        json['tournamentStatus']
+    ;
+    numberOfEntrants =
+        json['numberOfEntrants']
+    ;
+    organiserEmail =
+        json['organiserEmail']
+    ;
+    organiserPhone =
+        json['organiserPhone']
+    ;
+    entryCloseDateTime = json['entryCloseDateTime'] == null ? null : DateTime.parse(json['entryCloseDateTime']);
   }
 
   Map<String, dynamic> toJson() {
@@ -93,7 +121,12 @@ class TournamentInfo {
       'address': address,
       'town': town,
       'postCode': postCode,
-      'cost': cost
+      'cost': cost,
+      'tournamentStatus': tournamentStatus,
+      'numberOfEntrants': numberOfEntrants,
+      'organiserEmail': organiserEmail,
+      'organiserPhone': organiserPhone,
+      'entryCloseDateTime': entryCloseDateTime == null ? '' : entryCloseDateTime.toUtc().toIso8601String()
      };
   }
 

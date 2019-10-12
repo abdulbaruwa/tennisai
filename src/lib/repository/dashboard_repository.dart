@@ -17,49 +17,52 @@ import 'web_client.dart';
 /// How and where it stores the entities should confined to this layer, and the
 /// Domain layer of your app should only access this repository, not a database
 /// or the web directly.
-/// 
+///
 
 class DashboardRepository {
   final FileStorage fileStorage;
   final WebClient webClient;
   final PlayersApi Function() getPlayerClient;
-  const DashboardRepository({@required this.fileStorage, this.webClient, this.getPlayerClient });
+  final TournamentsApi Function() getTournamentClient;
+  const DashboardRepository(
+      {@required this.fileStorage,
+      this.webClient,
+      this.getPlayerClient,
+      this.getTournamentClient});
 
   Future<Null> saveAuthToken(String authToken) async {
     var storage = new FlutterSecureStorage();
     await storage.write(key: "authToken", value: authToken);
   }
 
-  Future<List<Tournament>> loadUpcomingTournaments(
-      String playerId) async {
+  Future<List<TournamentInfo>> loadUpcomingTournaments(String playerId) async {
     try {
       var result = await fileStorage.loadEnteredTournaments();
       print('dashboard_repository.loadUpcomingTournaments: Returned Futures');
       return result;
     } catch (e) {
       print('LoadUpcomingTournaments Fetcher in error');
-      var result = webClient.fetchEnteredTournaments(playerId);
-      return result;
+      var result = await PlayersApi().enteredTournaments(playerId);
+      return result.tournaments;
     }
   }
 
-  /// Loads watched Tournaments first from File storage. If they don't exist or encounter an
-  /// error, it attempts to load the watchedTournament from a Web Client
-  Future<List<Tournament>> loadWatchedTournaments(String playerId) async {
+  Future<List<TournamentInfo>> loadWatchedTournaments(String playerId) async {
     try {
       var res = await fileStorage.loadWatchedTournaments();
       print('Returned ${res.length} entries for loadWatchedTournaments');
       return res;
     } catch (e) {
       print('LoadWatchedTournaments Fetcher in error');
-      var result = await webClient.fetchWatchedTournaments(playerId);
+      var result = await getApiClient().watchedTournaments(playerId);
+      // var result = await webClient.fetchWatchedTournaments(playerId);
       print('LoadWatchedTournaments Fetched');
-      return result;
+      return result.tournaments;
     }
   }
 
   // Persists watchedTournament to local disk and the web
-  Future saveWatchedTournaments(List<Tournament> tournamentEntitys) {
+  Future saveWatchedTournaments(List<TournamentInfo> tournamentEntitys) {
     return Future.wait([
       fileStorage.saveWatchedTournaments(tournamentEntitys),
       webClient.postWatchedTournaments(tournamentEntitys),
@@ -74,30 +77,20 @@ class DashboardRepository {
         key: "authtoken", value: setting.azureAuthToken);
   }
 
-  /// Loads entered Tournaments first from File storage. If they don't exist or encounter an
-  /// error, it attempts to load the enteredTournament from a Web Client.
-  Future<List<Tournament>> loadEnteredTournaments(String playerId) async {
-    try {
-      var res = await fileStorage.loadEnteredTournaments();
-      print('Returne ${res.length} entries for  loadEnteredTournaments ');
-      return res;
-    } catch (e) {
-      print('LoadEnteredTournaments Fetcher in error');
-      var result = webClient.fetchEnteredTournaments(playerId);
-      print('LoadEnteredTournaments Fetched');
-      return result;
-    }
+  Future<List<Entrant>> loadTournamentEntrants(String tournamentId) async {
+    var result = TournamentsApi().entrants(tournamentId);
+    return result;
   }
 
   // Persists watchedTournament to local disk and the web
-  Future saveEnteredTournaments(List<Tournament> tournamentEntitys) {
+  Future saveEnteredTournaments(List<TournamentInfo> tournamentEntitys) {
     return Future.wait([
       fileStorage.saveEnteredTournaments(tournamentEntitys),
       webClient.postEnteredTournaments(tournamentEntitys),
     ]);
   }
 
-  Future saveUpcomingTournaments(List<Tournament> tournamentEntitys) {
+  Future saveUpcomingTournaments(List<TournamentInfo> tournamentEntitys) {
     return Future.wait([
       webClient.postEnteredTournaments(tournamentEntitys),
     ]);
@@ -155,7 +148,7 @@ class DashboardRepository {
       webClient.postPlayerProfile(playerEntity),
     ]);
   }
-  
+
   // Persists SearchPreference to local disk and the web
   Future saveSearchTournaments(List<Tournament> searchTournaments) {
     return Future.wait([
@@ -237,8 +230,7 @@ class DashboardRepository {
 
   /// Loads MatchResultInfo from File storage. If they don't exist or encounter an
   /// error, it attempts to load the matchResultInfo from a Web Client
-  Future<List<MatchResultInfo>> loadMatchResultInfos(
-      String playerId) async {
+  Future<List<MatchResultInfo>> loadMatchResultInfos(String playerId) async {
     try {
       var res = await fileStorage.loadMatchResultInfos();
       return res;
@@ -254,8 +246,7 @@ class DashboardRepository {
     return fileStorage.saveRankingInfos(rankingInfoEntitys);
   }
 
-  Future saveMatchResultInfos(
-      List<MatchResultInfo> matchResultInfoEntitys) {
+  Future saveMatchResultInfos(List<MatchResultInfo> matchResultInfoEntitys) {
     return fileStorage.saveMatchResultInfos(matchResultInfoEntitys);
   }
 }

@@ -2,37 +2,37 @@ import 'package:redux/redux.dart';
 import '../actions/actions.dart';
 import 'package:swagger/api.dart';
 
-final dashboardReducer = combineReducers<List<Tournament>>([
-  new TypedReducer<List<Tournament>, WatchedTournamentsLoadedAction>(
+final dashboardReducer = combineReducers<List<TournamentInfo>>([
+  new TypedReducer<List<TournamentInfo>, WatchedTournamentsLoadedAction>(
       _setLoadedWatchedTournaments),
-  new TypedReducer<List<Tournament>, WatchedTournamentsNotLoadedAction>(
+  new TypedReducer<List<TournamentInfo>, WatchedTournamentsNotLoadedAction>(
       _setNoWatchedTournaments),
-  new TypedReducer<List<Tournament>, AddWatchedTournamentsAction>(
+  new TypedReducer<List<TournamentInfo>, AddWatchedTournamentsAction>(
       _addWatchedTournament),
-  new TypedReducer<List<Tournament>, RemoveFromWatchedTournamentsAction>(
+  new TypedReducer<List<TournamentInfo>, RemoveFromWatchedTournamentsAction>(
       _removeFromWatchedTournaments),
 ]);
 
-List<Tournament> _setLoadedWatchedTournaments(
-    List<Tournament> watchedTournaments,
+List<TournamentInfo> _setLoadedWatchedTournaments(
+    List<TournamentInfo> watchedTournaments,
     WatchedTournamentsLoadedAction action) {
     return action.watchedTournaments;
 }
 
-List<Tournament> _setNoWatchedTournaments(List<Tournament> watchedTournaments,
+List<TournamentInfo> _setNoWatchedTournaments(List<TournamentInfo> watchedTournaments,
     WatchedTournamentsNotLoadedAction action) {
   return [];
 }
 
-List<Tournament> _addWatchedTournament(
-    List<Tournament> watchedTournaments, AddWatchedTournamentsAction action) {
+List<TournamentInfo> _addWatchedTournament(
+    List<TournamentInfo> watchedTournaments, AddWatchedTournamentsAction action) {
   if (watchedTournaments.contains(action.tournament) == false) {
     return new List.from(watchedTournaments)..add(action.tournament);
   }
   return watchedTournaments;
 }
 
-List<Tournament> _removeFromWatchedTournaments(List<Tournament> watchedTournaments, RemoveFromWatchedTournamentsAction action) {
+List<TournamentInfo> _removeFromWatchedTournaments(List<TournamentInfo> watchedTournaments, RemoveFromWatchedTournamentsAction action) {
   return watchedTournaments
       .where((watchedTournament) =>
           watchedTournament.code != action.tournamentCode)

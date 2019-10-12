@@ -52,6 +52,10 @@ class AddSearchPreferenceAction {
   AddSearchPreferenceAction(this.searchPreference);
 }
 
+class LoadTournamentEntrantsAction{
+  final String tournamentId;
+  LoadTournamentEntrantsAction(this.tournamentId);
+}
 class SearchPreferenceNotLoadedAction {}
 
 class SearchPreferenceLoadedAction {
@@ -126,7 +130,7 @@ class RemoveFromWatchedTournamentsAction {
 class WatchedTournamentsNotLoadedAction {}
 
 class WatchedTournamentsLoadedAction {
-  final List<Tournament> watchedTournaments;
+  final List<TournamentInfo> watchedTournaments;
 
   WatchedTournamentsLoadedAction(this.watchedTournaments);
 }
@@ -134,7 +138,7 @@ class WatchedTournamentsLoadedAction {
 class LoadWatchedTournamentsAction {}
 
 class AddWatchedTournamentsAction {
-  final Tournament tournament;
+  final TournamentInfo tournament;
   AddWatchedTournamentsAction(this.tournament);
 
    @override
@@ -149,13 +153,13 @@ class SignInWithGoogleAction{}
 class EnteredTournamentsNotLoadedAction {}
 
 class EnteredTournamentsLoadedAction {
-  final List<Tournament> enteredTournaments;
+  final List<TournamentInfo> enteredTournaments;
 
   EnteredTournamentsLoadedAction(this.enteredTournaments);
 }
 
 class UpcomingTournamentsLoadedAction {
-  final List<Tournament> upcomingTournaments;
+  final List<TournamentInfo> upcomingTournaments;
 
   UpcomingTournamentsLoadedAction(this.upcomingTournaments);
 }
@@ -192,7 +196,7 @@ class AddBasketAction {
 }
 
 class AddTournamentToBasketAction{
-  final Tournament tournament;
+  final TournamentInfo tournament;
   final String playerId;
   AddTournamentToBasketAction(this.tournament, this.playerId);
 }

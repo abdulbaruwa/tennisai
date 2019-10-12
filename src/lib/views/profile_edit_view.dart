@@ -102,7 +102,7 @@ class ProfileEditView extends StatelessWidget {
         output: searchPreference.ageGroup,
         displayFunc: (String i) => i);
     var _statusDropDown = new _LabelEnumDropDownItem(
-        displayIntItems: _enums.TournamentStatus,
+        displayIntItems: _enums.TournamentStatusTypes,
         label: 'Status',
         output: searchPreference.tournamentStatus,
         displayFunc: (String i) {

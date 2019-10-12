@@ -161,19 +161,14 @@ class WebClient {
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postWatchedTournaments(
-      List<Tournament> watchedTournaments) async {
+      List<TournamentInfo> watchedTournaments) async {
     return new Future.value(true);
-  }
-
-  Future<List<Tournament>> fetchEnteredTournaments(String playerId) async {
-    print('web_client.fetchEnteredTournaments(): About to make service call');
-    return getTournamentsFromControllerWithUserId("entered", playerId);
   }
 
   /// Mock that returns true or false for success or failure. In this case,
   /// it will "Always Succeed"
   Future<bool> postEnteredTournaments(
-      List<Tournament> enteredTournaments) async {
+      List<TournamentInfo> enteredTournaments) async {
     return new Future.value(true);
   }
 

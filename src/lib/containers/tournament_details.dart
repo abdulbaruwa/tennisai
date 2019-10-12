@@ -46,7 +46,7 @@ class TournamentDetails extends StatefulWidget {
 }
 
 class _ViewModel {
-  final Tournament tournament;
+  final TournamentInfo tournament;
   final TournamentDetailsActionSource source;
   // final Function(bool) toggleCompleted;
   final Function onAddToWatch;
@@ -69,7 +69,7 @@ class _ViewModel {
       source: source,
       onAddToWatch: () { 
             print('Adding tournament with code: ${tournament.code} to watchlist');
-            store.dispatch(new AddWatchedTournamentsAction(tournament));
+            store.dispatch(new AddWatchedTournamentsAction(TournamentInfo.fromJson(tournament.toJson())));
       },
       onAddToBasket: () { 
             print('Adding tournament with code: ${tournament.code} to basket');

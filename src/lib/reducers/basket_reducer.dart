@@ -65,7 +65,7 @@ double aggregateCost(List<BasketItem> basketItems) {
   return totalCost;
 }
 
-BasketItem _fromTournament(Tournament tournament, String playerId) {
+BasketItem _fromTournament(TournamentInfo tournament, String playerId) {
   var basket = new BasketItem();
   {
     basket.tournamentName = tournament.name;

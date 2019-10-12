@@ -3,28 +3,28 @@ import 'package:redux/redux.dart';
 import '../actions/actions.dart';
 import 'package:swagger/api.dart';
 
-final dashboardUpcomingReducer = combineReducers<List<Tournament>>([
-  new TypedReducer<List<Tournament>, EnteredTournamentsLoadedAction>(
+final dashboardUpcomingReducer = combineReducers<List<TournamentInfo>>([
+  new TypedReducer<List<TournamentInfo>, EnteredTournamentsLoadedAction>(
       _setLoadedEnteredTournaments),
-  new TypedReducer<List<Tournament>, UpcomingTournamentsLoadedAction>(
+  new TypedReducer<List<TournamentInfo>, UpcomingTournamentsLoadedAction>(
       _setLoadedUpcomingTournaments),
-  new TypedReducer<List<Tournament>, EnteredTournamentsNotLoadedAction>(
+  new TypedReducer<List<TournamentInfo>, EnteredTournamentsNotLoadedAction>(
       _setNoEnteredTournaments),
 ]);
 
-List<Tournament> _setLoadedEnteredTournaments(
-    List<Tournament> enteredTournaments,
+List<TournamentInfo> _setLoadedEnteredTournaments(
+    List<TournamentInfo> enteredTournaments,
     EnteredTournamentsLoadedAction action) {
   return action.enteredTournaments;
 }
 
-List<Tournament> _setLoadedUpcomingTournaments(
-    List<Tournament> upcomingTournaments,
+List<TournamentInfo> _setLoadedUpcomingTournaments(
+    List<TournamentInfo> upcomingTournaments,
     UpcomingTournamentsLoadedAction action) {
   return action.upcomingTournaments;
 }
 
-List<Tournament> _setNoEnteredTournaments(List<Tournament> enteredTournaments,
+List<TournamentInfo> _setNoEnteredTournaments(List<TournamentInfo> enteredTournaments,
     EnteredTournamentsNotLoadedAction action) {
   return [];
 }

@@ -31,13 +31,13 @@ class FileStorage {
     
   );
   
-  Future<List<Tournament>> loadWatchedTournaments() async {
+  Future<List<TournamentInfo>> loadWatchedTournaments() async {
     final file = await _getLocalFile(StoreNames.watchedTournaments);
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
     final watchedTournaments =
         (json['watchedTournaments'] as List<Map<String, dynamic>>)
-            .map((tournament) => Tournament.fromJson(tournament))
+            .map((tournament) => TournamentInfo.fromJson(tournament))
             .toList();
 
     print('file_storage.LoadEnteredTournaments returned ${watchedTournaments.length}');
@@ -45,7 +45,7 @@ class FileStorage {
   }
 
   Future<File> saveWatchedTournaments(
-      List<Tournament> watchedTournaments) async {
+      List<TournamentInfo> watchedTournaments) async {
     print('file_storage.saveWatchedTournaments: passed ${watchedTournaments.length} entries');
     final file = await _getLocalFile(StoreNames.watchedTournaments);
     var watchedTournamentsJson =
@@ -55,20 +55,20 @@ class FileStorage {
         .convert({'watchedTournaments': watchedTournamentsJson}));
   }
 
-  Future<List<Tournament>> loadEnteredTournaments() async {
+  Future<List<TournamentInfo>> loadEnteredTournaments() async {
     final file = await _getLocalFile(StoreNames.enteredTournaments);
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
     final enteredTournaments =
         (json['enteredTournaments'] as List<Map<String, dynamic>>)
-            .map((tournament) => Tournament.fromJson(tournament))
+            .map((tournament) => TournamentInfo.fromJson(tournament))
             .toList();
     print('file_storage.LoadEnteredTournaments: returned ${enteredTournaments.length} entries');
     return enteredTournaments;
   }
 
   Future<File> saveEnteredTournaments(
-      List<Tournament> enteredTournaments) async {
+      List<TournamentInfo> enteredTournaments) async {
     print('file_storage.saveEnteredTournaments: passed ${enteredTournaments.length} entries');
     final file = await _getLocalFile(StoreNames.enteredTournaments);
     var enteredTournamentsJson =

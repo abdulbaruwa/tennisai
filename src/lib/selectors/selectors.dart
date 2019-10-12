@@ -14,11 +14,11 @@ Optional<SearchPreference> activeSearchPreferenceSelector(AppState state) {
 List<RankingInfo> rankingInfosSelector(AppState state) => state.rankingInfos;
 List<MatchResultInfo> matchResultInfosSelector(AppState state) => state.matchResultInfos;
 
-List<Tournament> enteredTournamentSelector(AppState state) =>
+List<TournamentInfo> enteredTournamentSelector(AppState state) =>
     state.enteredTournaments;
-List<Tournament> watchedTournamentSelector(AppState state) =>
+List<TournamentInfo> watchedTournamentSelector(AppState state) =>
     state.watchedTournaments;
-List<Tournament> upcomingTournamentSelector(AppState state) => state.upcomingTournaments;
+List<TournamentInfo> upcomingTournamentSelector(AppState state) => state.upcomingTournaments;
 
 Optional<Settings> settingSelector(AppState state) {
   try {
@@ -28,23 +28,22 @@ Optional<Settings> settingSelector(AppState state) {
   }
 }
 
-// TournamentsSelector returns the combined Watched and entered tournament
-List<Tournament> tournamentsSelector(
+List<TournamentInfo> tournamentsSelector(
     AppState state, TournamentDetailsActionSource source) {
   if (source == TournamentDetailsActionSource.upcoming) {
     return state.upcomingTournaments;
   }
-  if (source == TournamentDetailsActionSource.watching) {
-    return state.watchedTournaments;
-  }
-  if (source == TournamentDetailsActionSource.search) {
-    return state.searchTournaments;
-  }
+  // if (source == TournamentDetailsActionSource.watching) {
+  //   return state.watchedTournaments;
+  // }
+  // if (source == TournamentDetailsActionSource.search) {
+  //   return state.searchTournaments;
+  // }
   return [];
 }
 
-Optional<Tournament> tournamentSelector(
-    List<Tournament> tournaments, String code) {
+Optional<TournamentInfo> tournamentSelector(
+    List<TournamentInfo> tournaments, String code) {
   try {
     return new Optional.of(tournaments.firstWhere((t) => t.code == code));
   } catch (e) {
@@ -52,15 +51,9 @@ Optional<Tournament> tournamentSelector(
   }
 }
 
-List<Entrant> tournamentEntrantsSelector(
-    Tournament tournament, bool sortOrder) {
-  var entrants = tournament.entrants;
-
-  entrants.sort((a, b) => sortOrder
-      ? b.ranking.compareTo(a.ranking)
-      : a.ranking.compareTo(b.ranking));
-
-  return entrants;
+List<Entrant> tournamentEntrantsSelector(TournamentInfo tournament, bool sortOrder) {
+  // Call api to get entrants from here.
+  return new List<Entrant>();
 }
 
 

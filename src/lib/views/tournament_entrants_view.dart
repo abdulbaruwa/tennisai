@@ -3,7 +3,7 @@ import 'package:swagger/api.dart';
 import '../models/models.dart';
 
 class TournamentEntrantsView extends StatelessWidget {
-  final Tournament tournament;
+  final TournamentInfo tournament;
   final List<Entrant> entrants;
   final bool activeEntrantSortOrder;
   final Function() onSortSelected;

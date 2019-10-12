@@ -14,13 +14,18 @@ Future<String> getAuthToken() {
   return flutterSecureStorage.read(key: "authtoken");
 }
 
-PlayersApi  getApiClient(){
+PlayersApi getApiClient() {
   return new PlayersApi();
+}
+
+TournamentsApi getTournamentApiClient(){
+  return new TournamentsApi();
 }
 
 List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   DashboardRepository repository = const DashboardRepository(
     getPlayerClient: getApiClient,
+    getTournamentClient: getTournamentApiClient,
     webClient: const WebClient(TennisAiConfigs.localHostName, getAuthToken),
     fileStorage:
         const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),
@@ -44,11 +49,12 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   final savePlayerProfile = _createSavePlayerProfile(repository);
 
   final loadSearchQuery = _createLoadSearchPreference(repository);
-
   final loadSearchTournaments = _createLoadSearchTournaments(repository);
   final saveSearchTournaments = _createSaveSearchTournaments(repository);
   final loadSearchTournamentsWithPreference =
       _createLoadSearchTournamentsWithPreference(repository);
+
+  final loadTournamentEntrantsQuery = _createLoadTournamentEntrants(repository);
 
   final loadBasket = _createLoadBasket(repository);
   final saveBasket = _createSaveBasket(repository);
@@ -110,6 +116,9 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     new TypedMiddleware<AppState, LoadPlayerSettingsFromDeviceAction>(
         loadPlayerSettingsFromDevice),
 
+    new TypedMiddleware<AppState, LoadTournamentEntrantsAction>(
+        loadTournamentEntrantsQuery),
+
     // Search Query preference
     new TypedMiddleware<AppState, LoadSearchPreferenceAction>(loadSearchQuery),
 
@@ -153,7 +162,7 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
     var registrationInfoToSave = registrationInfoSelector(store.state).value;
 
     Player playerToSave;
-    
+
     if (player.isPresent == true) {
       playerToSave.firstName = registrationInfoToSave.firstName;
       playerToSave.lastName = registrationInfoToSave.lastName;
@@ -164,11 +173,11 @@ Middleware<AppState> _saveRegistrationInfo(DashboardRepository repository) {
       playerToSave.firstName = registrationInfoToSave.firstName;
       playerToSave.lastName = registrationInfoToSave.lastName;
       playerToSave.ltaNumber = registrationInfoToSave.btmNumber;
-      playerToSave.gender = registrationInfoToSave.gender; 
+      playerToSave.gender = registrationInfoToSave.gender;
       playerToSave.email = authSettings.email;
       playerToSave.usePublicProfileImage = true;
       playerToSave.profileImageUrl = authSettings.photoUrl;
-      playerToSave.id =  authSettings.playerId;
+      playerToSave.id = authSettings.playerId;
     }
 
     await repository.savePlayerProfile(playerToSave);
@@ -184,8 +193,7 @@ Middleware<AppState> _checkSignInUserIsRegistered(
   return (Store<AppState> store, action, NextDispatcher next) async {
     next(action);
     var settings = action.settings as Settings;
-    var playerProfile =
-        await repository.loadPlayerProfile(settings.playerId);
+    var playerProfile = await repository.loadPlayerProfile(settings.playerId);
 
     if (playerProfile.isNotEmpty) {
       store.dispatch(new SignInUserIsRegisteredAction());
@@ -276,6 +284,18 @@ Middleware<AppState> _createLoadUpcomingTournaments(DashboardRepository repo) {
   return stateResult;
 }
 
+Middleware<AppState> _createLoadTournamentEntrants(
+    DashboardRepository repository) {
+  return (Store<AppState> store, action, NextDispatcher next) {
+    if(action is LoadTournamentEntrantsAction){
+      repository.loadTournamentEntrants(action.tournamentId);
+    }
+    print('Middleware._createLoadTournamentEntrants');
+    next(action);
+  };
+}
+
+
 Middleware<AppState> _createSaveUpcomingTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
@@ -290,6 +310,7 @@ Middleware<AppState> _createSaveUpcomingTournaments(
     repository.saveEnteredTournaments(toSave);
   };
 }
+
 
 Middleware<AppState> _createLoadWatchedTournaments(
     DashboardRepository repository) {
@@ -328,7 +349,8 @@ Middleware<AppState> _createLoadEnteredTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var playerId = playerSelector(store.state).first?.id;
-    repository.loadEnteredTournaments(playerId).then(
+
+    repository.loadUpcomingTournaments(playerId).then(
       (enteredTournaments) {
         print(
             'Middleware._createLoadEnteredTournaments: returned ${enteredTournaments.length}');

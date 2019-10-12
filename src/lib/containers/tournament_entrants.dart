@@ -28,7 +28,7 @@ class TournamentEntrants extends StatelessWidget {
 
 class _ViewModel {
   final bool loading;
-  final Tournament tournament;
+  final TournamentInfo tournament;
   final List<Entrant> entrants;
   final Function() onSortSelected;
   final bool activeSortOrder;

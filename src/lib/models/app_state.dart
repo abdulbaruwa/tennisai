@@ -16,10 +16,10 @@ class AppState {
   final List<SearchPreference> activeSearchPreference;
   final List<Tournament> tournaments;
   final AppTab activeTab;
-  final List<Tournament> enteredTournaments;
-  final List<Tournament> watchedTournaments;
+  final List<TournamentInfo> enteredTournaments;
+  final List<TournamentInfo> watchedTournaments;
   final List<Tournament> searchTournaments;
-  final List<Tournament> upcomingTournaments;
+  final List<TournamentInfo> upcomingTournaments;
   final List<Basket> basket;
   final List<RankingInfo> rankingInfos;
   final List<MatchResultInfo> matchResultInfos;
@@ -62,9 +62,9 @@ class AppState {
       List<SearchPreference> searchPreference,
       List<SearchPreference> activeSearchPreference,
       List<Tournament> tournaments,
-      List<Tournament> enteredTournaments,
-      List<Tournament> watchedTournaments,
-      List<Tournament> searchTournaments,
+      List<TournamentInfo> enteredTournaments,
+      List<TournamentInfo> watchedTournaments,
+      List<TournamentInfo> searchTournaments,
       List<Basket> basket,
       List<Settings> settings,
       List<RegistrationInfo> registrationInfo,

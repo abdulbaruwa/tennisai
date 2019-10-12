@@ -28,9 +28,9 @@ class Dashboard extends StatelessWidget {
 
 class _ViewModel {
   final bool loading;
-  final List<Tournament> enteredTournaments;
-  final List<Tournament> watchedTournaments;
-  final Function(Tournament) onRemoveFromWatchList;
+  final List<TournamentInfo> enteredTournaments;
+  final List<TournamentInfo> watchedTournaments;
+  final Function(TournamentInfo) onRemoveFromWatchList;
   _ViewModel(
       {@required this.loading,
       @required this.enteredTournaments,

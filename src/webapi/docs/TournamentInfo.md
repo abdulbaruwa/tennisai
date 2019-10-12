@@ -20,6 +20,11 @@ Name | Type | Description | Notes
 **town** | **String** |  | [optional] [default to null]
 **postCode** | **String** |  | [optional] [default to null]
 **cost** | **double** |  | [optional] [default to null]
+**tournamentStatus** | **String** |  | [optional] [default to null]
+**numberOfEntrants** | **int** |  | [optional] [default to null]
+**organiserEmail** | **String** |  | [optional] [default to null]
+**organiserPhone** | **String** |  | [optional] [default to null]
+**entryCloseDateTime** | [**DateTime**](DateTime.md) |  | [optional] [default to null]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -15,7 +15,7 @@ class TournamentItem extends StatelessWidget {
   const TournamentItem(
       {@required this.tournament, @required this.source, @required this.onTap});
 
-  final Tournament tournament;
+  final TournamentInfo tournament;
   final VoidCallback onTap;
   final String source;
 
@@ -39,7 +39,7 @@ class TournamentItem extends StatelessWidget {
                       color: Theme.of(context).primaryColor, fontSize: 18.0),
                   key:
                       TennisAiKeys.tournamentItemName(tournament.code, source)),
-              subtitle: new Text(tournament.location),
+              subtitle: new Text(tournament.town),
             ),
             padding: const EdgeInsets.only(
                 left: 1.0, right: 1.0, top: 1.0, bottom: 1.0),

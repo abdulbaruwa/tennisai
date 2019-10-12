@@ -84,7 +84,7 @@ class SearchTabState extends State<TournamentSearchView> {
       displayFunc: (int i) => 'Grade $i');
 
     LabelEnumDropDownItem _statusDropDown = new LabelEnumDropDownItem(
-      displayIntItems: _enums.TournamentStatus,
+      displayIntItems: _enums.TournamentStatusTypes,
       label: 'Status',
       inputValue: widget.searchPreference.tournamentStatus,
       displayFunc: (String i)

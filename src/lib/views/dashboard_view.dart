@@ -18,9 +18,9 @@ class _Page {
 }
 
 class DashboardView extends StatelessWidget {
-  final List<Tournament> watchedTournaments;
-  final List<Tournament> enteredTournaments;
-  final Function(Tournament) onRemoveFromWatchList; 
+  final List<TournamentInfo> watchedTournaments;
+  final List<TournamentInfo> enteredTournaments;
+  final Function(TournamentInfo) onRemoveFromWatchList; 
   DashboardView(
       {Key key,
       @required this.watchedTournaments,
@@ -32,7 +32,7 @@ class DashboardView extends StatelessWidget {
   Widget build(BuildContext context) {
     print('dashboard_view: Total items watched ${watchedTournaments.length}');
     print('dashboard_view: Total items entered ${enteredTournaments.length}');
-    final Map<_Page, List<Tournament>> _allPages = <_Page, List<Tournament>>{
+    final Map<_Page, List<TournamentInfo>> _allPages = <_Page, List<TournamentInfo>>{
       new _Page(
           label: 'UPCOMING',
           tabSource: TournamentDetailsActionSource.upcoming,
@@ -78,7 +78,7 @@ class DashboardView extends StatelessWidget {
                         .divideTiles(
                             color: Theme.of(context).primaryColor,
                             context: context,
-                            tiles: _allPages[page].map((Tournament data) {
+                            tiles: _allPages[page].map((TournamentInfo data) {
                               return getTabForSource(context, page, data);
                             }).toList())
                         .toList(),
@@ -91,7 +91,7 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget getTabForSource(
-      BuildContext context, _Page page, Tournament tournament) {
+      BuildContext context, _Page page, TournamentInfo tournament) {
         
     if (page.tabSource == TournamentDetailsActionSource.watching) {
       print('dasbhoard_view.getTabForSource: tabSource: ${page.tabSource}, ${page.label}, tournament.name: ${tournament.name}');
@@ -106,7 +106,7 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget buildDismisableItem(
-      BuildContext context, Tournament tournament, _Page page) {
+      BuildContext context, TournamentInfo tournament, _Page page) {
     final ThemeData theme = Theme.of(context);
     return new GestureDetector(
         onTap: () => _onTap(context, tournament, page.tabSource),
@@ -158,7 +158,7 @@ class DashboardView extends StatelessWidget {
                         tournament.code,
                         describeEnum(page.tabSource),
                       )),
-                  subtitle: new Text(tournament.location),
+                  subtitle: new Text(tournament.address),
                 ),
                 padding: const EdgeInsets.only(
                     left: 1.0, right: 1.0, top: 1.0, bottom: 1.0),
@@ -217,7 +217,7 @@ class DashboardView extends StatelessWidget {
         ));
   }
 
-  void _onTap(BuildContext context, Tournament tournament,
+  void _onTap(BuildContext context, TournamentInfo tournament,
       TournamentDetailsActionSource source) {
     Navigator.of(context).push(new MaterialPageRoute(
           builder: (_) =>

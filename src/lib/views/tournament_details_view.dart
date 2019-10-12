@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:swagger/api.dart';
@@ -7,7 +8,7 @@ import '../models/models.dart';
 import '../containers/tournament_entrants.dart';
 
 class TournamentDetailsView extends StatelessWidget {
-  final Tournament tournament;
+  final TournamentInfo tournament;
   final TournamentDetailsActionSource source;
   static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   final AnimationController controller; // =  new AnimationController(
@@ -32,12 +33,12 @@ class TournamentDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> floaters = new List<Widget>();
     var totalButtons = 0;
-    if(tournament.statusIndex == 1) {
+    if(tournament.tournamentStatus == describeEnum(TournamentStatus.AcceptingEntries)) {
       totalButtons = 2;
       floaters.add(createfloatButtoner(context, Icons.flag, 0, totalButtons, this.onAddToWatch));
       floaters.add(createfloatButtoner(context, Icons.add_shopping_cart, 1, totalButtons, this.onAddToBasket));
     }
-    else if(tournament.statusIndex <= 2){
+    else if(tournament.tournamentStatus  == describeEnum(TournamentStatus.Upcoming)){
       totalButtons = 1;
       floaters.add(createfloatButtoner(context, Icons.flag, 0, totalButtons, this.onAddToWatch));
     }
@@ -241,7 +242,7 @@ class TournamentDetailsView extends StatelessWidget {
                                   new TextSpan(
                                     style: new TextStyle(
                                         fontWeight: FontWeight.bold),
-                                    text: tournament.entryCloseDate != null
+                                    text: tournament.entryCloseDateTime != null
                                         ? '${new DateFormat("yMMMEd").format(tournament.entryCloseDateTime)}'
                                         : '',
                                   ),
@@ -286,7 +287,7 @@ class TournamentDetailsView extends StatelessWidget {
         );
   }
 
-  void showTournamentEntrantsPage(BuildContext context, Tournament tournament,TournamentDetailsActionSource source) {
+  void showTournamentEntrantsPage(BuildContext context, TournamentInfo tournament,TournamentDetailsActionSource source) {
     Navigator.of(context).push(new MaterialPageRoute(
           builder: (_) =>
               new TournamentEntrants(id: tournament.code, source: source),
