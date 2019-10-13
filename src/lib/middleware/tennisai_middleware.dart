@@ -5,7 +5,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import '../models/models.dart';
 import '../actions/actions.dart';
-import '../keys/keys.dart';
 import '../selectors/selectors.dart';
 import '../repository/repository.dart';
 
@@ -26,7 +25,7 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   DashboardRepository repository = const DashboardRepository(
     getPlayerClient: getApiClient,
     getTournamentClient: getTournamentApiClient,
-    webClient: const WebClient(TennisAiConfigs.localHostName, getAuthToken),
+    // webClient: const WebClient(TennisAiConfigs.localHostName, getAuthToken),
     fileStorage:
         const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),
   ),
@@ -488,13 +487,13 @@ Middleware<AppState> _createLoadSearchTournaments(
     DashboardRepository repository) {
   return (Store<AppState> store, action, NextDispatcher next) {
     var playerId = playerSelector(store.state).first?.id;
-    repository.loadSearchTournaments(playerId).then(
-      (searchPref) {
-        store.dispatch(
-          new SearchTournamentsLoadedAction(searchPref),
-        );
-      },
-    ).catchError((_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
+    // repository.loadSearchTournaments(playerId).then(
+    //   (searchPref) {
+    //     store.dispatch(
+    //       new SearchTournamentsLoadedAction(searchPref),
+    //     );
+    //   },
+    // ).catchError((_) => store.dispatch(new SearchTournamentsNotLoadedAction()));
     next(action);
   };
 }

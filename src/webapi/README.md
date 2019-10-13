@@ -44,13 +44,14 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:swagger/api.dart';
 
 
-var api_instance = new BasketsApi();
+var api_instance = new PlayersApi();
+var playerId = playerId_example; // String | 
 var basketDto = new Basket(); // Basket | 
 
 try {
-    api_instance.createPlayerBasket(basketDto);
+    api_instance.checkOutBasket(playerId, basketDto);
 } catch (e) {
-    print("Exception when calling BasketsApi->createPlayerBasket: $e\n");
+    print("Exception when calling PlayersApi->checkOutBasket: $e\n");
 }
 
 ```
@@ -61,13 +62,16 @@ All URIs are relative to *https://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*BasketsApi* | [**createPlayerBasket**](docs//BasketsApi.md#createplayerbasket) | **POST** /api/Baskets | 
-*BasketsApi* | [**getPlayerBasket**](docs//BasketsApi.md#getplayerbasket) | **GET** /api/Baskets/{playerId}/getplayerbasket | 
+*PlayersApi* | [**checkOutBasket**](docs//PlayersApi.md#checkoutbasket) | **POST** /api/Players/{playerId}/checkoutbasket | 
+*PlayersApi* | [**createEnteredTournament**](docs//PlayersApi.md#createenteredtournament) | **POST** /api/Players/{playerId}/createenteredtournament | 
 *PlayersApi* | [**createPlayer**](docs//PlayersApi.md#createplayer) | **POST** /api/Players | 
-*PlayersApi* | [**enteredTournaments**](docs//PlayersApi.md#enteredtournaments) | **GET** /api/Players/{playerId}/enteredtournaments | 
-*PlayersApi* | [**getMatchResults**](docs//PlayersApi.md#getmatchresults) | **GET** /api/Players/{playerId}/matchresults | 
-*PlayersApi* | [**playerProfile**](docs//PlayersApi.md#playerprofile) | **GET** /api/Players/{playerId}/playerprofile | 
-*PlayersApi* | [**watchedTournaments**](docs//PlayersApi.md#watchedtournaments) | **GET** /api/Players/{playerId}/watchedtournaments | 
+*PlayersApi* | [**createPlayerBasket**](docs//PlayersApi.md#createplayerbasket) | **POST** /api/Players/{playerId}/createplayerbasket | 
+*PlayersApi* | [**createWatchedTournament**](docs//PlayersApi.md#createwatchedtournament) | **POST** /api/Players/{playerId}/createwatchedtournament | 
+*PlayersApi* | [**getEnteredTournaments**](docs//PlayersApi.md#getenteredtournaments) | **GET** /api/Players/{playerId}/getenteredtournaments | 
+*PlayersApi* | [**getMatchResults**](docs//PlayersApi.md#getmatchresults) | **GET** /api/Players/{playerId}/getmatchresults | 
+*PlayersApi* | [**getPlayerBasket**](docs//PlayersApi.md#getplayerbasket) | **GET** /api/Players/{playerId}/getplayerbasket | 
+*PlayersApi* | [**getPlayerProfile**](docs//PlayersApi.md#getplayerprofile) | **GET** /api/Players/{playerId}/getplayerprofile | 
+*PlayersApi* | [**getWatchedTournaments**](docs//PlayersApi.md#getwatchedtournaments) | **GET** /api/Players/{playerId}/getwatchedtournaments | 
 *SeedingApi* | [**seedPlayer**](docs//SeedingApi.md#seedplayer) | **GET** /api/Seeding/SeedPlayer | 
 *SeedingApi* | [**seedTournaments**](docs//SeedingApi.md#seedtournaments) | **GET** /api/Seeding/SeedTournaments | 
 *TournamentsApi* | [**byPreference**](docs//TournamentsApi.md#bypreference) | **GET** /api/Tournaments/{playerId}/bypreference | 

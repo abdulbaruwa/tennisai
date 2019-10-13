@@ -21,12 +21,12 @@ import 'web_client.dart';
 
 class DashboardRepository {
   final FileStorage fileStorage;
-  final WebClient webClient;
+  // final WebClient webClient;
   final PlayersApi Function() getPlayerClient;
   final TournamentsApi Function() getTournamentClient;
   const DashboardRepository(
       {@required this.fileStorage,
-      this.webClient,
+      // this.webClient,
       this.getPlayerClient,
       this.getTournamentClient});
 
@@ -42,7 +42,7 @@ class DashboardRepository {
       return result;
     } catch (e) {
       print('LoadUpcomingTournaments Fetcher in error');
-      var result = await PlayersApi().enteredTournaments(playerId);
+      var result = await PlayersApi().getEnteredTournaments(playerId);
       return result.tournaments;
     }
   }
@@ -54,7 +54,7 @@ class DashboardRepository {
       return res;
     } catch (e) {
       print('LoadWatchedTournaments Fetcher in error');
-      var result = await getApiClient().watchedTournaments(playerId);
+      var result = await getApiClient().getWatchedTournaments(playerId);
       // var result = await webClient.fetchWatchedTournaments(playerId);
       print('LoadWatchedTournaments Fetched');
       return result.tournaments;
@@ -65,7 +65,7 @@ class DashboardRepository {
   Future saveWatchedTournaments(List<TournamentInfo> tournamentEntitys) {
     return Future.wait([
       fileStorage.saveWatchedTournaments(tournamentEntitys),
-      webClient.postWatchedTournaments(tournamentEntitys),
+      // webClient.postWatchedTournaments(tournamentEntitys),
     ]);
   }
 
@@ -86,16 +86,10 @@ class DashboardRepository {
   Future saveEnteredTournaments(List<TournamentInfo> tournamentEntitys) {
     return Future.wait([
       fileStorage.saveEnteredTournaments(tournamentEntitys),
-      webClient.postEnteredTournaments(tournamentEntitys),
+      // webClient.postEnteredTournaments(tournamentEntitys),
     ]);
   }
-
-  Future saveUpcomingTournaments(List<TournamentInfo> tournamentEntitys) {
-    return Future.wait([
-      webClient.postEnteredTournaments(tournamentEntitys),
-    ]);
-  }
-
+ 
   Future<List<Settings>> loadPlayerSettingsFromDevice() async {
     var playerSettings = await fileStorage.loadPlayerSettings();
     return playerSettings;
@@ -111,16 +105,17 @@ class DashboardRepository {
       return res;
     } catch (e) {
       print('Fetcher in error');
-      var result = webClient.fetchPlayerProfile(playerId);
+
+      var result = await PlayersApi().getPlayerProfile(playerId);
       print('Fetched');
-      return result;
+      return new List<Player>()..add(result);
     }
   }
 
   Future<List<Player>> loadPlayerProfileDirect(String playerId) async {
     try {
-      var result = webClient.playerprofile(playerId);
-      return result;
+      var result = await PlayersApi().getPlayerProfile(playerId);
+      return new List<Player>()..add(result);
     } catch (e) {
       print('Fetcher in error $e');
       return new List<Player>();
@@ -145,7 +140,7 @@ class DashboardRepository {
   Future savePlayerProfile(Player playerEntity) {
     return Future.wait([
       fileStorage.savePlayerProfile(playerEntity),
-      webClient.postPlayerProfile(playerEntity),
+      PlayersApi().createPlayer(playerDto: playerEntity)
     ]);
   }
 
@@ -153,35 +148,31 @@ class DashboardRepository {
   Future saveSearchTournaments(List<Tournament> searchTournaments) {
     return Future.wait([
       fileStorage.saveSearchTournaments(searchTournaments),
-      webClient.postSearchTournaments(searchTournaments),
     ]);
   }
 
   // Persists Avatar image
   Future saveProfileAvatar(String playerId, File avatar) {
-    print('dashboard_repository: saveProfileAvatar..TODO..');
-    return Future.wait([webClient.postAvatarImage(playerId, avatar)]);
+    return new Future.value(true);
   }
 
-  // Search Preference
-  /// Loads Search Preference first from File storage. If they don't exist or encounter an
-  /// error, it attempts to load the SearchPrefence from a Web Client
-  Future<List<Tournament>> loadSearchTournaments(String playerId) async {
-    try {
-      var res = await fileStorage.loadSearchTournaments();
-      print('success ${res.length}');
-      return res;
-    } catch (e) {
-      print('Fetcher in error');
-      var result = webClient.fetchSearchTournaments(playerId);
-      print('Fetched');
-      return result;
-    }
-  }
+  // // Search Preference
+  // /// Loads Search Preference first from File storage. If they don't exist or encounter an
+  // /// error, it attempts to load the SearchPrefence from a Web Client
+  // Future<List<Tournament>> loadSearchTournaments(String playerId) async {
+  //   try {
+  //     var res = await fileStorage.loadSearchTournaments();
+  //     return res;
+  //   } catch (e) {
+  //     print('Fetcher in error');
+  //     var result = webClient.fetchSearchTournaments(playerId);
+  //     print('Fetched');
+  //     return result;
+  //   }
+  // }
 
-  Future<List<Tournament>> loadTournamentsWithSearchPreference(
-      SearchPreference searchPreference) {
-    return webClient.loadTournamentsWithSearchPreference(searchPreference);
+  Future<List<Tournament>> loadTournamentsWithSearchPreference(SearchPreference searchPreference) {    
+    return Future.value(new List<Tournament>());
   }
 
   // Basket
@@ -193,23 +184,24 @@ class DashboardRepository {
       return res;
     } catch (e) {
       print('Fetcher for Basket in error');
-      var result = webClient.fetchBasket(playerId);
-      print('Basket Fetched');
-      return result;
+      
+      var result = await getApiClient().getPlayerBasket(playerId);
+      return new List<Basket>()..add(result);
     }
   }
 
   // Persists PlayerProfile to local disk and the web
   Future saveBasket(Basket basketEntity) {
     return Future.wait([
-      fileStorage.saveBasket(basketEntity),
-      webClient.postBasket(basketEntity),
+      fileStorage.saveBasket(basketEntity)
     ]);
   }
 
   Future saveToLtaBasket(Basket basketEntity) {
     return Future.wait([
-      webClient.postToLtaBasket(basketEntity),
+      // TODO
+      // getPlayerClient().postBasketToLta(basketEntity),
+
     ]);
   }
 
@@ -222,9 +214,9 @@ class DashboardRepository {
       return res;
     } catch (e) {
       print('Fetcher for Basket in error');
-      var result = webClient.fetchRankingInfos(playerId);
+      // var result = webClient.fetchRankingInfos(playerId);
       print('dashboard_repository.loadRankingInfo()..RankingInfos Fetched');
-      return result;
+      return new List<RankingInfo>();
     }
   }
 
@@ -236,9 +228,9 @@ class DashboardRepository {
       return res;
     } catch (e) {
       print('Fetcher for Basket in error');
-      var result = webClient.fetchMatchResultInfos(playerId);
+      // var result = webClient.fetchMatchResultInfos(playerId);
       print('dashboard_repository.loadRankingInfo()..RankingInfos Fetched');
-      return result;
+      return new List<MatchResultInfo>();
     }
   }
 
