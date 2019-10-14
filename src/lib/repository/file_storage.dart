@@ -28,9 +28,8 @@ class FileStorage {
   const FileStorage(
     this.tag,
     this.getDirectory,
-    
   );
-  
+
   Future<List<TournamentInfo>> loadWatchedTournaments() async {
     final file = await _getLocalFile(StoreNames.watchedTournaments);
     final string = await file.readAsString();
@@ -40,17 +39,20 @@ class FileStorage {
             .map((tournament) => TournamentInfo.fromJson(tournament))
             .toList();
 
-    print('file_storage.LoadEnteredTournaments returned ${watchedTournaments.length}');
+    print(
+        'file_storage.LoadEnteredTournaments returned ${watchedTournaments.length}');
     return watchedTournaments;
   }
 
   Future<File> saveWatchedTournaments(
       List<TournamentInfo> watchedTournaments) async {
-    print('file_storage.saveWatchedTournaments: passed ${watchedTournaments.length} entries');
+    print(
+        'file_storage.saveWatchedTournaments: passed ${watchedTournaments.length} entries');
     final file = await _getLocalFile(StoreNames.watchedTournaments);
     var watchedTournamentsJson =
         watchedTournaments.map((t) => t.toJson()).toList();
-    print('file_storage.saveWatchedTournaments: json to save $watchedTournamentsJson');
+    print(
+        'file_storage.saveWatchedTournaments: json to save $watchedTournamentsJson');
     return file.writeAsString(new JsonEncoder()
         .convert({'watchedTournaments': watchedTournamentsJson}));
   }
@@ -63,17 +65,20 @@ class FileStorage {
         (json['enteredTournaments'] as List<Map<String, dynamic>>)
             .map((tournament) => TournamentInfo.fromJson(tournament))
             .toList();
-    print('file_storage.LoadEnteredTournaments: returned ${enteredTournaments.length} entries');
+    print(
+        'file_storage.LoadEnteredTournaments: returned ${enteredTournaments.length} entries');
     return enteredTournaments;
   }
 
   Future<File> saveEnteredTournaments(
       List<TournamentInfo> enteredTournaments) async {
-    print('file_storage.saveEnteredTournaments: passed ${enteredTournaments.length} entries');
+    print(
+        'file_storage.saveEnteredTournaments: passed ${enteredTournaments.length} entries');
     final file = await _getLocalFile(StoreNames.enteredTournaments);
     var enteredTournamentsJson =
         enteredTournaments.map((t) => t.toJson()).toList();
-    print('file_storage.saveEnteredTournaments: json to save $enteredTournamentsJson');
+    print(
+        'file_storage.saveEnteredTournaments: json to save $enteredTournamentsJson');
     return file.writeAsString(new JsonEncoder()
         .convert({'enteredTournaments': enteredTournamentsJson}));
   }
@@ -90,32 +95,39 @@ class FileStorage {
     return file.delete();
   }
 
-  Future cleanFiles() async{
-    for (var file in StoreNames.values ){
+  Future cleanFiles() async {
+    for (var file in StoreNames.values) {
       await clean(file);
     }
   }
 
   Future<List<Settings>> loadPlayerSettings() async {
     final file = await _getLocalFile(StoreNames.settings);
-    if(! await file.exists() )return new List<Settings>();
+    if (!await file.exists()) return new List<Settings>();
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
     final settingss = json['playerSettings'] as Map<String, dynamic>;
 
-     return new List<Settings>()..add(Settings.fromJson(settingss));
+    return new List<Settings>()..add(Settings.fromJson(settingss));
   }
+
   // Player Profile
   Future<List<Player>> loadPlayerProfile() async {
     final file = await _getLocalFile(StoreNames.profile);
-    final string = await file.readAsString();
-    final json = new JsonDecoder().convert(string);
-    final playerProfileEntity =
-        (json['playerProfile'] as List<Map<String, dynamic>>)
-            .map((player) => Player.fromJson(player))
-            .toList();
+    if (!await file.exists()) return new List<Player>();
 
-    return playerProfileEntity;
+    try {
+      final string = await file.readAsString();
+      final json = new JsonDecoder().convert(string);
+      final playerProfileEntity =
+          (json['playerProfile'] as List<Map<String, dynamic>>)
+              .map((player) => Player.fromJson(player))
+              .toList();
+
+      return playerProfileEntity;
+    } catch (e) {
+      return new List<Player>();
+    }
   }
 
   Future<File> savePlayerProfile(Player player) async {
@@ -144,8 +156,7 @@ class FileStorage {
     return searchPrefEntity;
   }
 
-  Future<File> saveSearchPreference(
-      SearchPreference searchPrefEntity) async {
+  Future<File> saveSearchPreference(SearchPreference searchPrefEntity) async {
     final file = await _getLocalFile(StoreNames.preference);
     var searchPrefJson = searchPrefEntity.toJson();
     return file.writeAsString(
@@ -195,38 +206,45 @@ class FileStorage {
     final string = await file.readAsString();
     final json = new JsonDecoder().convert(string);
     final rankingInfoEntity = (json['rankingInfos'] as Map<String, dynamic>);
-    return new List<RankingInfo>()..add(RankingInfo.fromJson(rankingInfoEntity));
+    return new List<RankingInfo>()
+      ..add(RankingInfo.fromJson(rankingInfoEntity));
   }
 
   // MatchResultInfo
   Future<List<MatchResultInfo>> loadMatchResultInfos() async {
     final file = await _getLocalFile(StoreNames.matchResultInfos);
-    final string = await file.readAsString();
-    final json = new JsonDecoder().convert(string);
-    final matchResultInfoEntity = (json['matchResultInfos'] as Map<String, dynamic>);
-    return new List<MatchResultInfo>()..add(MatchResultInfo.fromJson(matchResultInfoEntity));
+    if (!await file.exists()) return new List<MatchResultInfo>();
+    try {
+      final string = await file.readAsString();
+      final json = new JsonDecoder().convert(string);
+      final matchResultInfoEntity =
+          (json['matchResultInfos'] as Map<String, dynamic>);
+      return new List<MatchResultInfo>()
+        ..add(MatchResultInfo.fromJson(matchResultInfoEntity));
+    } catch (e) {
+      return new List<MatchResultInfo>();
+    }
   }
 
-  Future<File> saveRankingInfos(
-      List<RankingInfo> rankingInfos) async {
-    print('file_storage.saveRankingInfos: passed ${rankingInfos.length} entries');
+  Future<File> saveRankingInfos(List<RankingInfo> rankingInfos) async {
+    print(
+        'file_storage.saveRankingInfos: passed ${rankingInfos.length} entries');
     final file = await _getLocalFile(StoreNames.rankingInfos);
-    var rankingInfosJson =
-        rankingInfos.map((t) => t.toJson()).toList();
+    var rankingInfosJson = rankingInfos.map((t) => t.toJson()).toList();
     print('file_storage.saveRankingInfos: json to save $rankingInfosJson');
-    return file.writeAsString(new JsonEncoder()
-        .convert({'rankingInfos': rankingInfosJson}));
+    return file.writeAsString(
+        new JsonEncoder().convert({'rankingInfos': rankingInfosJson}));
   }
 
   Future<File> saveMatchResultInfos(
       List<MatchResultInfo> matchResultInfos) async {
-    print('file_storage.saveMatchResults: passed ${matchResultInfos.length} entries');
+    print(
+        'file_storage.saveMatchResults: passed ${matchResultInfos.length} entries');
     final file = await _getLocalFile(StoreNames.matchResultInfos);
-    var matchResultInfoJson =
-        matchResultInfos.map((t) => t.toJson()).toList();
-    print('file_storage.saveMatchResultInfo: json to save $matchResultInfoJson');
-    return file.writeAsString(new JsonEncoder()
-        .convert({'matchResultInfos': matchResultInfoJson}));
+    var matchResultInfoJson = matchResultInfos.map((t) => t.toJson()).toList();
+    print(
+        'file_storage.saveMatchResultInfo: json to save $matchResultInfoJson');
+    return file.writeAsString(
+        new JsonEncoder().convert({'matchResultInfos': matchResultInfoJson}));
   }
-
 }

@@ -212,12 +212,12 @@ Middleware<AppState> _initState(DashboardRepository repository) {
     var playerId = action.playerId;
 
     store.dispatch(new LoadPlayerFromServerAction(playerId));
-    // store.dispatch(new LoadWatchedTournamentsAction());
-    // store.dispatch(new LoadUpcomingTournamentsAction());
-    // store.dispatch(new LoadBasketAction());
-    // store.dispatch(new LoadSearchPreferenceAction());
+    store.dispatch(new LoadWatchedTournamentsAction());
+    store.dispatch(new LoadUpcomingTournamentsAction());
+    store.dispatch(new LoadBasketAction());
+    store.dispatch(new LoadSearchPreferenceAction());
     // store.dispatch(new LoadSearchTournamentsAction());
-    // store.dispatch(new LoadRankingInfosAction());
+    store.dispatch(new LoadRankingInfosAction());
     store.dispatch(new LoadMatchResultInfosAction());
   };
 }
