@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import '../views/loading.dart';
 
-class SignUpView extends StatelessWidget {
+class SignInView extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _firstName = new TextEditingController();
-  final TextEditingController _lastName = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
 
-SignUpView({Key key}): super(key:key);
+  SignInView({Key key}) : super(key: key);
 
   bool _autoValidate = false;
   bool _loadingVisible = false;
@@ -28,42 +26,6 @@ SignUpView({Key key}): super(key:key);
               height: 120.0,
             ),
           )),
-    );
-
-    final firstName = TextFormField(
-      autofocus: false,
-      textCapitalization: TextCapitalization.words,
-      controller: _firstName,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Icon(
-            Icons.person,
-            color: Colors.grey,
-          ), // icon is 48px widget.
-        ), // icon is 48px widget.
-        hintText: 'First Name',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final lastName = TextFormField(
-      autofocus: false,
-      textCapitalization: TextCapitalization.words,
-      controller: _lastName,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Icon(
-            Icons.person,
-            color: Colors.grey,
-          ), // icon is 48px widget.
-        ), // icon is 48px widget.
-        hintText: 'Last Name',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
     );
 
     final email = TextFormField(
@@ -102,36 +64,41 @@ SignUpView({Key key}): super(key:key);
       ),
     );
 
-    final signUpButton = Padding(
+    final loginButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          // _emailSignUp(
-          //     firstName: _firstName.text,
-          //     lastName: _lastName.text,
-          //     email: _email.text,
-          //     password: _password.text,
-          //     context: context);
+          // _emailLogin(email: _email.text, password: _password.text, context: context);
         },
         padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
-        child: Text('SIGN UP', style: TextStyle(color: Colors.white)),
+        child: Text('SIGN IN', style: TextStyle(color: Colors.white)),
       ),
     );
 
-    final signInLabel = FlatButton(
+    final forgotLabel = FlatButton(
       child: Text(
-        'Have an Account? Sign In.',
+        'Forgot password?',
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/signin');
+        Navigator.pushNamed(context, '/forgot-password');
       },
     );
-    
+
+    final signUpLabel = FlatButton(
+      child: Text(
+        'Create an Account',
+        style: TextStyle(color: Colors.black54),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/signup');
+      },
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: LoadingScreen(
@@ -148,16 +115,13 @@ SignUpView({Key key}): super(key:key);
                     children: <Widget>[
                       logo,
                       SizedBox(height: 48.0),
-                      firstName,
-                      SizedBox(height: 24.0),
-                      lastName,
-                      SizedBox(height: 24.0),
                       email,
                       SizedBox(height: 24.0),
                       password,
                       SizedBox(height: 12.0),
-                      signUpButton,
-                      signInLabel
+                      loginButton,
+                      forgotLabel,
+                      signUpLabel
                     ],
                   ),
                 ),
@@ -167,4 +131,5 @@ SignUpView({Key key}): super(key:key);
           inAsyncCall: _loadingVisible),
     );
   }
+
 }

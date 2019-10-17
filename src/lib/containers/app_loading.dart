@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:tennisai/views/sign_up_view.dart';
+import 'package:tennisai/views/sign_in_view.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 
@@ -13,12 +14,12 @@ class AppLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return new StoreConnector<AppState, AppLoadViewModel>(
-    //   distinct: true,
-    //   converter: AppLoadViewModel.fromStore, 
-    //   builder: builder,
-    // );
-    return new SignInScreen();
+    return new StoreConnector<AppState, AppLoadViewModel>(
+      distinct: true,
+      converter: AppLoadViewModel.fromStore, 
+      builder: builder,
+    );
+    // return new SignInView();
   }
 }
 
