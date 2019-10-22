@@ -5,3 +5,4 @@ export 'enums.dart';
 export 'settings.dart';
 export 'registration_info.dart';
 export 'IdGenerator.dart';
+export 'email_sign_up_info.dart';

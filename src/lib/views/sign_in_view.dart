@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tennisai/models/email_sign_up_info.dart';
 import '../views/loading.dart';
+import '../utils/validator.dart';
 
 class SignInView extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

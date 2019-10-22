@@ -246,3 +246,9 @@ class RegistrationSaveAction{
   final RegistrationInfo registrationInfo;
   RegistrationSaveAction(this.registrationInfo);
 }
+
+class SignUpCompletedAction{
+  final String email;
+  final String uid;
+  SignUpCompletedAction(this.email, this.uid);
+}

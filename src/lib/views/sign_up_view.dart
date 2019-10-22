@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../views/loading.dart';
+import 'package:tennisai/models/email_sign_up_info.dart';
+import '../utils/validator.dart';
 
 class SignUpView extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -8,8 +10,9 @@ class SignUpView extends StatelessWidget {
   final TextEditingController _lastName = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
+  final Function(EmailSignUpInfo signUpInfo) onSignUp;
 
-SignUpView({Key key}): super(key:key);
+  SignUpView({Key key, this.onSignUp}) : super(key: key);
 
   bool _autoValidate = false;
   bool _loadingVisible = false;
@@ -22,7 +25,7 @@ SignUpView({Key key}): super(key:key);
           radius: 60.0,
           child: ClipOval(
             child: Image.asset(
-              'assets/images/default.png',
+              'assets/default.png',
               fit: BoxFit.cover,
               width: 120.0,
               height: 120.0,
@@ -34,6 +37,7 @@ SignUpView({Key key}): super(key:key);
       autofocus: false,
       textCapitalization: TextCapitalization.words,
       controller: _firstName,
+      validator: Validator.validateName,
       decoration: InputDecoration(
         prefixIcon: Padding(
           padding: EdgeInsets.only(left: 5.0),
@@ -52,6 +56,7 @@ SignUpView({Key key}): super(key:key);
       autofocus: false,
       textCapitalization: TextCapitalization.words,
       controller: _lastName,
+      validator: Validator.validateName,
       decoration: InputDecoration(
         prefixIcon: Padding(
           padding: EdgeInsets.only(left: 5.0),
@@ -70,6 +75,7 @@ SignUpView({Key key}): super(key:key);
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       controller: _email,
+      validator: Validator.validateName,
       decoration: InputDecoration(
         prefixIcon: Padding(
           padding: EdgeInsets.only(left: 5.0),
@@ -109,12 +115,13 @@ SignUpView({Key key}): super(key:key);
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          // _emailSignUp(
-          //     firstName: _firstName.text,
-          //     lastName: _lastName.text,
-          //     email: _email.text,
-          //     password: _password.text,
-          //     context: context);
+          var emailSignUp = new EmailSignUpInfo(
+              firstName: _firstName.text,
+              lastName: _lastName.text,
+              email: _email.text,
+              password: _password.text);
+
+          this.onSignUp(emailSignUp);
         },
         padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
@@ -131,7 +138,7 @@ SignUpView({Key key}): super(key:key);
         Navigator.pushNamed(context, '/signin');
       },
     );
-    
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: LoadingScreen(
