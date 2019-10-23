@@ -5,7 +5,7 @@ import 'package:tennisai/models/email_sign_up_info.dart';
 import '../utils/validator.dart';
 
 class SignUpView extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _firstName = new TextEditingController();
   final TextEditingController _lastName = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
@@ -37,7 +37,6 @@ class SignUpView extends StatelessWidget {
       autofocus: false,
       textCapitalization: TextCapitalization.words,
       controller: _firstName,
-      validator: Validator.validateName,
       decoration: InputDecoration(
         prefixIcon: Padding(
           padding: EdgeInsets.only(left: 5.0),

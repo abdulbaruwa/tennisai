@@ -7,10 +7,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:tennisai/containers/email_sign_up_container.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/Auth_view.dart';
 import '../actions/actions.dart';
+import '../views/sign_up_view.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignIn googleSignIn = new GoogleSignIn(
@@ -35,6 +37,7 @@ class AuthContainer extends StatelessWidget {
           return new AuthView(
               isSignedIn: vm.signedIn,
               onGoogleSignInSelected: vm.onGoogleSignInSelected);
+// return new SignUpView();
         });
   }
 

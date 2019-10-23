@@ -46,12 +46,12 @@ class AuthView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 new Container(
+                  padding: EdgeInsets.only(bottom: 20),
                   child: OutlineButton(
-                    padding: EdgeInsets.only(bottom: 20),
                     splashColor: Colors.grey,
                     onPressed: () {
-                      Navigator.of(context).push(new MaterialPageRoute(
-                          builder: (_) => new EmailSignUp()));
+                      Navigator.push (context, new MaterialPageRoute(
+                          builder: (BuildContext context) => new EmailSignUp()));
                     },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40)),
