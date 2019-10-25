@@ -62,7 +62,7 @@ class AuthContainer extends StatelessWidget {
       );
 
       FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-      
+
       var azureAuthToken = await getAuthCode(aut.accessToken, aut.idToken);
 
       print('AzureAuthToken: $azureAuthToken');
@@ -148,8 +148,7 @@ class _ViewModel {
       {@required this.loading,
       @required this.settings,
       @required this.signedIn,
-      this.onGoogleSignInSelected
-});
+      this.onGoogleSignInSelected});
 
   static _ViewModel fromStore(Store<AppState> store) {
     var settingsOptions = settingSelector(store.state);

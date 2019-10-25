@@ -4,6 +4,8 @@ enum DismissDialogAction {
   save,
 }
 
+enum AuthMethod {unknown, email, google}
+
 enum TournamentDetailsActionSource { watching, upcoming, search }
 
 enum PlayerRegistrationStatus { unknown, registered, unregistered }

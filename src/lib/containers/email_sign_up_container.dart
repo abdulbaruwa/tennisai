@@ -33,7 +33,7 @@ class EmailSignUpViewModel {
           .createUserWithEmailAndPassword(
               email: signUpInfo.email, password: signUpInfo.password)
           .then((user) {
-        print('Firebase user created with uid {user.user.uid');
+        print('Firebase user created with uid {user.user.uid}');
         store.dispatch(
             new SignUpCompletedAction(signUpInfo.email, user.user.uid));
       }).catchError((onError) {

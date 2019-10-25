@@ -63,7 +63,7 @@ class TennisAiHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return new AppLoading(builder: (context, loading) {
       print('appLoading State: ${loading.isSignedIn}');
-      if ( loading.isSignedIn == false && loading.isLoadingLocalState == false) {
+      if ( loading.isSignedIn == false && loading.isLoadingLocalState == false && loading.authMethod == AuthMethod.unknown) {
         print('Load AuthContainer');
         return new AuthContainer();
       }
@@ -120,8 +120,6 @@ Widget _selectActiveTab(BuildContext context, AppTab tab) {
       return new Container(child: const Text('Unknown tab'));
   }
 }
-
-enum Actions { Increment }
 
 class TabItem {
   const TabItem({this.title, this.icon});

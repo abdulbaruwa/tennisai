@@ -28,14 +28,16 @@ class AppLoadViewModel{
   bool isLoading;
   bool isSignedIn;
   bool isLoadingLocalState;
+  AuthMethod authMethod;
   PlayerRegistrationStatus isRegisteredUser;
-  AppLoadViewModel({this.isLoading, this.isSignedIn, this.isRegisteredUser, this.isLoadingLocalState});
+  AppLoadViewModel({this.isLoading, this.isSignedIn, this.isRegisteredUser, this.isLoadingLocalState, this.authMethod});
   static AppLoadViewModel fromStore(Store<AppState> store){
       return new AppLoadViewModel(
         isLoading: isLoadingSelector(store.state),
         isSignedIn: isSignedInSelector(store.state),
         isRegisteredUser: isRegisteredUserSelector(store.state),
-        isLoadingLocalState: isLoadingLocalSession(store.state)
+        isLoadingLocalState: isLoadingLocalSession(store.state),
+        authMethod: authMethodSelector(store.state)
       );
   }
 }

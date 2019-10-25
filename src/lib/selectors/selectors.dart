@@ -100,6 +100,7 @@ AppTab activeTabSelector(AppState state) => state.activeTab;
 bool isLoadingSelector(AppState state) => state.isLoading;
 bool isLoadingLocalSession(AppState state) => state.isLoadingLocalState;
 bool isSignedInSelector(AppState state) => state.isSignedIn;
+AuthMethod authMethodSelector(AppState state) => state.authMethod;
 PlayerRegistrationStatus isRegisteredUserSelector(AppState state) => state.isSignInUserRegistered;
 
 bool isEntrantsViewItemsReversedSelector(AppState state) =>
