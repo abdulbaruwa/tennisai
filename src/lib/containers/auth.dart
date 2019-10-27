@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:tennisai/containers/email_sign_up_container.dart';
+import 'package:tennisai/views/landing_view.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/Auth_view.dart';
@@ -34,10 +35,10 @@ class AuthContainer extends StatelessWidget {
           initSignIn(store);
         },
         builder: (context, vm) {
-          return new AuthView(
-              isSignedIn: vm.signedIn,
-              onGoogleSignInSelected: vm.onGoogleSignInSelected);
-// return new SignUpView();
+          // return new AuthView(
+          //     isSignedIn: vm.signedIn,
+          //     onGoogleSignInSelected: vm.onGoogleSignInSelected);
+          return new LandingView();
         });
   }
 
