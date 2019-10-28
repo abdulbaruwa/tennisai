@@ -1,7 +1,6 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:tennisai/containers/email_sign_up_container.dart';
+import '../controls/usercontrols.dart';
 
 GoogleSignIn _googleSignIn = new GoogleSignIn(
   scopes: <String>[
@@ -124,46 +123,123 @@ class LandingState extends State<LandingView> {
     final PersistentBottomSheetController<Null> bottomSheet = _scaffoldKey
         .currentState
         .showBottomSheet((BuildContext bottomSheetContext) {
-      return new Row(
-        verticalDirection: VerticalDirection.down,
-        children: <Widget>[
-          new Expanded(
-            child: new Container(
-                height: 300.0,
-                child: new Column(
-                  children: <Widget>[
-                    RaisedButton(
-                      onPressed: (){},
-                      child:
-                      Padding(
+      return new Container(
+        child: new Container(
+            height: 250.0,
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Row(children: <Widget>[
+                  Expanded(
+                      child: RaisedButton(
+                          onPressed: () {},
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Stack(
+                              children: <Widget>[
+                                Image(
+                                    image: AssetImage("assets/google_logo.png"),
+                                    height: 35.0),
+                                Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: Text(
+                                          'Sign in with Google',
+                                          style: TextStyle(
+                                            fontSize: 20,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      )
+                                    ])
+                              ],
+                            ),
+                          )))
+                ]),
+                RaisedButton(
+                    onPressed: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                      child: Stack(
+                        children: <Widget>[
+                          Icon(Icons.email, size: 35.0),
+                          Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 10),
+                                  child: Text(
+                                    'Sign in with Email',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.black12,
+                                    ),
+                                  ),
+                                )
+                              ])
+                        ],
+                      ),
+                    )),
+                Container(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(padding: const EdgeInsets.only(top: 3), child: CustomPaint(painter: Drawhorizontalline())),
+                          Text(
+                            'or',
+                            style: TextStyle(fontSize: 20, color: Colors.black),
+                          ),
+                          Container(padding: const EdgeInsets.only(top: 3), child: CustomPaint(painter: Drawhorizontalline())),
+                        ])),
+                FlatButton(
+                    onPressed: () {},
+                    child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Image(image: AssetImage("assets/google_logo.png"), height: 35.0),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),
-                            child: Text(
-                              'Sign in with Google',
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.grey,
+                            child: RichText(
+                              text: TextSpan(
+                                text: 'Already a member?',
+                                style:
+                                    TextStyle(fontSize: 18, color: Colors.black),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: ' Log in',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold)),
+                                ],
                               ),
                             ),
                           )
                         ],
                       ),
                     )),
-                  ],
-                )),
-          )
-        ],
+              ],
+            )),
       );
     });
 
     setState(() {
       _bottomSheet = bottomSheet;
+    });
+
+    _bottomSheet.closed.whenComplete(() {
+      if (mounted) {
+        setState(() {
+          _bottomSheet = null;
+        });
+      }
     });
   }
 }
