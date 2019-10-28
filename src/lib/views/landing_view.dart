@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../controls/usercontrols.dart';
@@ -36,14 +38,19 @@ class LandingState extends State<LandingView> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
   PersistentBottomSheetController<Null> _bottomSheet;
+  bool _visible = false;
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 5), () => _show());
+  }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Timer(Duration(seconds: 2), () =>
-  //     _showPersistentButtom()
-  //  );
-  // }
+  void _show() {
+    print('Showing');
+    setState(() {
+      _visible = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,182 +83,172 @@ class LandingState extends State<LandingView> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 50.0)),
-                      new Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          new Container(
-                            padding: EdgeInsets.only(bottom: 20),
-                            child: OutlineButton(
-                              splashColor: Colors.grey,
-                              onPressed: _bottomSheet == null
-                                  ? _showPersistentButton
-                                  : null,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(40)),
-                              highlightElevation: 0,
-                              borderSide: BorderSide(color: Colors.grey),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                      AnimatedOpacity(
+                          opacity: _visible ? 1.0 : 0.0,
+                          duration: Duration(milliseconds: 500),
+                          child: new Container(
+                            child: new Container(
+                             color: Colors.white10, 
+                                height: 250.0,
+                                child: new Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
                                   children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 10),
-                                      child: Text(
-                                        'Sign in with Email',
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                          color: Colors.grey,
-                                        ),
-                                      ),
-                                    )
+                                    Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Row(children: <Widget>[
+                                          Expanded(
+                                              child: RaisedButton(
+                                                  onPressed: () {},
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 10, 0, 10),
+                                                    child: Stack(
+                                                      children: <Widget>[
+                                                        Image(
+                                                            image: AssetImage(
+                                                                "assets/google_logo.png"),
+                                                            height: 35.0),
+                                                        Row(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: <Widget>[
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            10,
+                                                                        top: 5),
+                                                                child: Text(
+                                                                  'Sign in with Google',
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    color: Colors
+                                                                        .blueGrey,
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ])
+                                                      ],
+                                                    ),
+                                                  )))
+                                        ])),
+                                    Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: RaisedButton(
+                                            onPressed: () {},
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 10, 0, 10),
+                                              child: Stack(
+                                                children: <Widget>[
+                                                  Icon(Icons.email,
+                                                      color: Colors.blueGrey,
+                                                      size: 35.0),
+                                                  Row(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: <Widget>[
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 10,
+                                                                  top: 5),
+                                                          child: Text(
+                                                            'Sign in with Email',
+                                                            style: TextStyle(
+                                                              fontSize: 20,
+                                                              color: Colors
+                                                                  .blueGrey,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ])
+                                                ],
+                                              ),
+                                            ))),
+                                    Container(
+                                        padding: const EdgeInsets.only(
+                                            top: 10, bottom: 10),
+                                        child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: <Widget>[
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3),
+                                                  child: CustomPaint(
+                                                      painter:
+                                                          Drawhorizontalline())),
+                                              Text(
+                                                'or',
+                                                style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.black),
+                                              ),
+                                              Container(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          top: 3),
+                                                  child: CustomPaint(
+                                                      painter:
+                                                          Drawhorizontalline())),
+                                            ])),
+                                    FlatButton(
+                                        onPressed: () {},
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              0, 10, 0, 10),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: RichText(
+                                                  text: TextSpan(
+                                                    text: 'Already a member?',
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        color: Colors.blueGrey),
+                                                    children: <TextSpan>[
+                                                      TextSpan(
+                                                          text: ' Log in',
+                                                          style: TextStyle(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        )),
                                   ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
+                                )),
+                          )),
                     ],
                   )))
         ]));
-  }
-
-  void _showPersistentButton() {
-    final PersistentBottomSheetController<Null> bottomSheet = _scaffoldKey
-        .currentState
-        .showBottomSheet((BuildContext bottomSheetContext) {
-      return new Container(
-        child: new Container(
-            height: 250.0,
-            child: new Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Row(children: <Widget>[
-                      Expanded(
-                          child: RaisedButton(
-                              onPressed: () {},
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                                child: Stack(
-                                  children: <Widget>[
-                                    Image(
-                                        image: AssetImage(
-                                            "assets/google_logo.png"),
-                                        height: 35.0),
-                                    Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 10, top: 5),
-                                            child: Text(
-                                              'Sign in with Google',
-                                              style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.blueGrey,
-                                              ),
-                                            ),
-                                          )
-                                        ])
-                                  ],
-                                ),
-                              )))
-                    ])),
-                Container(padding: const EdgeInsets.only(left: 10, right: 10), child:
-                RaisedButton(
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(Icons.email, color: Colors.blueGrey, size: 35.0),
-                          Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 10, top: 5),
-                                  child: Text(
-                                    'Sign in with Email',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.blueGrey,
-                                    ),
-                                  ),
-                                )
-                              ])
-                        ],
-                      ),
-                    ))),
-                Container(
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Container(
-                              padding: const EdgeInsets.only(top: 3),
-                              child:
-                                  CustomPaint(painter: Drawhorizontalline())),
-                          Text(
-                            'or',
-                            style: TextStyle(fontSize: 20, color: Colors.black),
-                          ),
-                          Container(
-                              padding: const EdgeInsets.only(top: 3),
-                              child:
-                                  CustomPaint(painter: Drawhorizontalline())),
-                        ])),
-                FlatButton(
-                    onPressed: () {},
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(left: 10),
-                            child: RichText(
-                              text: TextSpan(
-                                text: 'Already a member?',
-                                style: TextStyle(
-                                    fontSize: 18, color: Colors.blueGrey),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                      text: ' Log in',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    )),
-              ],
-            )),
-      );
-    });
-
-    setState(() {
-      _bottomSheet = bottomSheet;
-    });
-
-    _bottomSheet.closed.whenComplete(() {
-      if (mounted) {
-        setState(() {
-          _bottomSheet = null;
-        });
-      }
-    });
   }
 }
