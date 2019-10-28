@@ -130,73 +130,85 @@ class LandingState extends State<LandingView> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Row(children: <Widget>[
-                  Expanded(
-                      child: RaisedButton(
-                          onPressed: () {},
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-                            child: Stack(
-                              children: <Widget>[
-                                Image(
-                                    image: AssetImage("assets/google_logo.png"),
-                                    height: 35.0),
-                                Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10),
-                                        child: Text(
-                                          'Sign in with Google',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      )
-                                    ])
-                              ],
-                            ),
-                          )))
-                ]),
+                Container(padding: const EdgeInsets.only(left: 10, right: 10),
+                    child: Row(children: <Widget>[
+                      Expanded(
+                          child: RaisedButton(
+                              onPressed: () {},
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                child: Stack(
+                                  children: <Widget>[
+                                    Image(
+                                        image: AssetImage(
+                                            "assets/google_logo.png"),
+                                        height: 35.0),
+                                    Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 10, top: 5),
+                                            child: Text(
+                                              'Sign in with Google',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.blueGrey,
+                                              ),
+                                            ),
+                                          )
+                                        ])
+                                  ],
+                                ),
+                              )))
+                    ])),
+                Container(padding: const EdgeInsets.only(left: 10, right: 10), child:
                 RaisedButton(
                     onPressed: () {},
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
                       child: Stack(
                         children: <Widget>[
-                          Icon(Icons.email, size: 35.0),
+                          Icon(Icons.email, color: Colors.blueGrey, size: 35.0),
                           Row(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.only(left: 10),
+                                  padding:
+                                      const EdgeInsets.only(left: 10, top: 5),
                                   child: Text(
                                     'Sign in with Email',
                                     style: TextStyle(
                                       fontSize: 20,
-                                      color: Colors.black12,
+                                      color: Colors.blueGrey,
                                     ),
                                   ),
                                 )
                               ])
                         ],
                       ),
-                    )),
+                    ))),
                 Container(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(padding: const EdgeInsets.only(top: 3), child: CustomPaint(painter: Drawhorizontalline())),
+                          Container(
+                              padding: const EdgeInsets.only(top: 3),
+                              child:
+                                  CustomPaint(painter: Drawhorizontalline())),
                           Text(
                             'or',
                             style: TextStyle(fontSize: 20, color: Colors.black),
                           ),
-                          Container(padding: const EdgeInsets.only(top: 3), child: CustomPaint(painter: Drawhorizontalline())),
+                          Container(
+                              padding: const EdgeInsets.only(top: 3),
+                              child:
+                                  CustomPaint(painter: Drawhorizontalline())),
                         ])),
                 FlatButton(
                     onPressed: () {},
@@ -211,8 +223,8 @@ class LandingState extends State<LandingView> {
                             child: RichText(
                               text: TextSpan(
                                 text: 'Already a member?',
-                                style:
-                                    TextStyle(fontSize: 18, color: Colors.black),
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.blueGrey),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: ' Log in',
