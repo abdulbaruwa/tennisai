@@ -38,7 +38,10 @@ class AuthContainer extends StatelessWidget {
           // return new AuthView(
           //     isSignedIn: vm.signedIn,
           //     onGoogleSignInSelected: vm.onGoogleSignInSelected);
-          return new LandingView();
+          return new LandingView(
+              isSignedIn: vm.signedIn,
+              onGoogleSignInSelected: vm.onGoogleSignInSelected,
+              onEmailSignInSelected: vm.onGoogleSignInSelected,);
         });
   }
 

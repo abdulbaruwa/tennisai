@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tennisai/containers/email_sign_up_container.dart';
 import '../controls/usercontrols.dart';
 
 GoogleSignIn _googleSignIn = new GoogleSignIn(
@@ -37,7 +37,6 @@ class LandingView extends StatefulWidget {
 class LandingState extends State<LandingView> {
   static final GlobalKey<ScaffoldState> _scaffoldKey =
       new GlobalKey<ScaffoldState>();
-  PersistentBottomSheetController<Null> _bottomSheet;
   bool _visible = false;
   @override
   void initState() {
@@ -46,7 +45,6 @@ class LandingState extends State<LandingView> {
   }
 
   void _show() {
-    print('Showing');
     setState(() {
       _visible = true;
     });
@@ -77,8 +75,7 @@ class LandingState extends State<LandingView> {
                                     Container(padding: const EdgeInsets.only(bottom: 10 ),
                                       child: Text('Welcome',style:TextStyle(fontSize:30,color: Colors.white,))),
                                     Container(padding: const EdgeInsets.only(top: 10, bottom: 10 ),
-                                      child: Text("You're only a few steps away from joining Tennis.Ai",style:TextStyle(fontSize:16,color: Colors.white,)))
-                                  ,
+                                      child: Text("You're only a few steps away from joining Tennis.Ai",style:TextStyle(fontSize:16,color: Colors.white,))),
                       AnimatedOpacity(
                           opacity: _visible ? 1.0 : 0.0,
                           duration: Duration(milliseconds: 500),
@@ -98,7 +95,7 @@ class LandingState extends State<LandingView> {
                                         child: Row(children: <Widget>[
                                           Expanded(
                                               child: RaisedButton(
-                                                  onPressed: () {},
+                                                  onPressed: widget.isSignedIn == false ? widget.onGoogleSignInSelected : null,
                                                   child: Padding(
                                                     padding: const EdgeInsets
                                                         .fromLTRB(0, 10, 0, 10),
@@ -131,7 +128,10 @@ class LandingState extends State<LandingView> {
                                         padding: const EdgeInsets.only(
                                             left: 10, right: 10),
                                         child: RaisedButton(
-                                            onPressed: () {},
+                                         onPressed: () {
+                      Navigator.push (context, new MaterialPageRoute(
+                          builder: (BuildContext context) => new EmailSignUp()));
+                    },
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(
@@ -141,25 +141,22 @@ class LandingState extends State<LandingView> {
                                                   Icon(Icons.email,
                                                       color: Colors.blueGrey,
                                                       size: 35.0),
-                                                  Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
+                                                  Row(mainAxisSize:
+                                                      MainAxisSize.max,
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment
+                                                      MainAxisAlignment
                                                               .center,
                                                       children: <Widget>[
                                                         Padding(
                                                           padding:
-                                                              const EdgeInsets
-                                                                      .only(
+                                                              const EdgeInsets.only(
                                                                   left: 10,
                                                                   top: 5),
                                                           child: Text(
                                                             'Sign in with Email',
                                                             style: TextStyle(
-                                                              fontSize: 20,
-                                                              color: Colors
-                                                                  .blueGrey,
+                                                            fontSize: 20,
+                                                            color: Colors.blueGrey,
                                                             ),
                                                           ),
                                                         )

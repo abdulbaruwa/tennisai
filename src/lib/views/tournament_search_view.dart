@@ -30,7 +30,6 @@ class SearchTabState extends State<TournamentSearchView> {
   static final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   PersistentBottomSheetController<Null> _bottomSheet;
 
-
   @override
   Widget build(BuildContext context) {
     
