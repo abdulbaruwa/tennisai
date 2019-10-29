@@ -65,16 +65,6 @@ class LandingState extends State<LandingView> {
                   child: new Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      new Container(
-                          padding: EdgeInsets.only(left: 10.0),
-                          child: new Text("You are not currently signed in",
-                              style: Theme.of(context)
-                                  .accentTextTheme
-                                  .display1
-                                  .copyWith(
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                      fontFamily: 'AbrilFatface'))),
                       new Text('Tennis.Ai',
                           style: Theme.of(context)
                               .accentTextTheme
@@ -83,12 +73,18 @@ class LandingState extends State<LandingView> {
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 50.0)),
+                                  Column(children: <Widget>[
+                                    Container(padding: const EdgeInsets.only(bottom: 10 ),
+                                      child: Text('Welcome',style:TextStyle(fontSize:30,color: Colors.white,))),
+                                    Container(padding: const EdgeInsets.only(top: 10, bottom: 10 ),
+                                      child: Text("You're only a few steps away from joining Tennis.Ai",style:TextStyle(fontSize:16,color: Colors.white,)))
+                                  ,
                       AnimatedOpacity(
                           opacity: _visible ? 1.0 : 0.0,
                           duration: Duration(milliseconds: 500),
                           child: new Container(
+                            color: Colors.white,
                             child: new Container(
-                             color: Colors.white10, 
                                 height: 250.0,
                                 child: new Column(
                                   mainAxisAlignment:
@@ -122,20 +118,8 @@ class LandingState extends State<LandingView> {
                                                             children: <Widget>[
                                                               Padding(
                                                                 padding:
-                                                                    const EdgeInsets
-                                                                            .only(
-                                                                        left:
-                                                                            10,
-                                                                        top: 5),
-                                                                child: Text(
-                                                                  'Sign in with Google',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        20,
-                                                                    color: Colors
-                                                                        .blueGrey,
-                                                                  ),
+                                                                    const EdgeInsets.only(left:10,top: 5),
+                                                                child: Text('Sign in with Google',style:TextStyle(fontSize:20,color: Colors.blueGrey,),
                                                                 ),
                                                               )
                                                             ])
@@ -233,10 +217,7 @@ class LandingState extends State<LandingView> {
                                                     children: <TextSpan>[
                                                       TextSpan(
                                                           text: ' Log in',
-                                                          style: TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold)),
+                                                          style: TextStyle(fontWeight: FontWeight                                                                      .bold)),
                                                     ],
                                                   ),
                                                 ),
@@ -246,7 +227,7 @@ class LandingState extends State<LandingView> {
                                         )),
                                   ],
                                 )),
-                          )),
+                          ))]),
                     ],
                   )))
         ]));
