@@ -230,7 +230,7 @@ Middleware<AppState> _authCompleted(DashboardRepository repository) {
     if (settings.isNotEmpty) {
       var playerSettings = settings.first;
       await repository.savePlayerSettings(playerSettings);
-      await repository.saveAuthToken(playerSettings.azureAuthToken);
+      await repository.saveAuthToken(playerSettings.azureAuthToken ?? '');
       store.dispatch(new CheckSignInUserIsRegisteredAction(settings.value));
     }
   };

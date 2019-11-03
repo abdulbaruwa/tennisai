@@ -105,18 +105,37 @@ class AvatarFromProfileOrLocal extends StatelessWidget {
   final String profileImageUrl;
   final bool usePublicProfile;
   AvatarFromProfileOrLocal(
-      {this.playerId, this.usePublicProfile, this.profileImageUrl, this.latestImage});
+      {this.playerId,
+      this.usePublicProfile,
+      this.profileImageUrl,
+      this.latestImage});
   Widget build(BuildContext context) {
     NetworkImage networkImage;
-    if (usePublicProfile == false && this.profileImageUrl != null) {
-      networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId),
-          headers: TennisAiPaths.zumoHeader);
-    }else{
-      networkImage = new NetworkImage(this.profileImageUrl,headers: TennisAiPaths.zumoHeader);
+    if (this.profileImageUrl != null) {
+      if (usePublicProfile == false) {
+        networkImage = new NetworkImage(TennisAiPaths.imagePath(playerId),
+            headers: TennisAiPaths.zumoHeader);
+      } else {
+        networkImage = new NetworkImage(this.profileImageUrl,
+            headers: TennisAiPaths.zumoHeader);
+      }
+
+      var latestAvatar =
+          latestImage == null ? null : new FileImage(latestImage);
+      return new CircleAvatar(
+          radius: 36.0, backgroundImage: latestAvatar ?? networkImage);
+    } else {
+      return new CircleAvatar(
+          radius: 36.0,
+          child: ClipOval(
+            child: Image.asset(
+              'assets/default.png',
+              fit: BoxFit.cover,
+              width: 120.0,
+              height: 120.0,
+            ),
+          ));
     }
-    var latestAvatar = latestImage == null ? null : new FileImage(latestImage);
-    return new CircleAvatar(
-        radius: 36.0, backgroundImage: latestAvatar ?? networkImage);
   }
 }
 
@@ -139,7 +158,6 @@ class EditableProfileAvatar extends StatelessWidget {
             radius: 36.0, backgroundImage: defaultAvatar ?? networkImage));
   }
 }
-
 
 class LabelEnumDropDownItem extends StatefulWidget {
   LabelEnumDropDownItem(
@@ -206,7 +224,6 @@ class LabelEnumDropDownItemState extends State<LabelEnumDropDownItem> {
   }
 }
 
-
 class Drawhorizontalline extends CustomPainter {
   Paint _paint;
 
@@ -219,7 +236,7 @@ class Drawhorizontalline extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-      canvas.drawLine(Offset(-90.0, 0.0), Offset(90.0, 0.0), _paint);
+    canvas.drawLine(Offset(-90.0, 0.0), Offset(90.0, 0.0), _paint);
   }
 
   @override
