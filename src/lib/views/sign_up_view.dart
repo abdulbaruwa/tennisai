@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../views/loading.dart';
 import 'package:tennisai/models/email_sign_up_info.dart';
 import '../utils/validator.dart';
 
 class SignUpView extends StatelessWidget {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _firstName = new TextEditingController();
-  final TextEditingController _lastName = new TextEditingController();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
   final Function(EmailSignUpInfo signUpInfo) onSignUp;
@@ -31,43 +28,6 @@ class SignUpView extends StatelessWidget {
               height: 120.0,
             ),
           )),
-    );
-
-    final firstName = TextFormField(
-      autofocus: false,
-      textCapitalization: TextCapitalization.words,
-      controller: _firstName,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Icon(
-            Icons.person,
-            color: Colors.grey,
-          ), // icon is 48px widget.
-        ), // icon is 48px widget.
-        hintText: 'First Name',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final lastName = TextFormField(
-      autofocus: false,
-      textCapitalization: TextCapitalization.words,
-      controller: _lastName,
-      validator: Validator.validateName,
-      decoration: InputDecoration(
-        prefixIcon: Padding(
-          padding: EdgeInsets.only(left: 5.0),
-          child: Icon(
-            Icons.person,
-            color: Colors.grey,
-          ), // icon is 48px widget.
-        ), // icon is 48px widget.
-        hintText: 'Last Name',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
     );
 
     final email = TextFormField(
@@ -115,8 +75,6 @@ class SignUpView extends StatelessWidget {
         ),
         onPressed: () {
           var emailSignUp = new EmailSignUpInfo(
-              firstName: _firstName.text,
-              lastName: _lastName.text,
               email: _email.text,
               password: _password.text);
 
@@ -140,7 +98,7 @@ class SignUpView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: LoadingScreen(
+      body: Container(
           child: Form(
             key: _formKey,
             autovalidate: _autoValidate,
@@ -154,10 +112,6 @@ class SignUpView extends StatelessWidget {
                     children: <Widget>[
                       logo,
                       SizedBox(height: 48.0),
-                      firstName,
-                      SizedBox(height: 24.0),
-                      lastName,
-                      SizedBox(height: 24.0),
                       email,
                       SizedBox(height: 24.0),
                       password,
@@ -170,7 +124,7 @@ class SignUpView extends StatelessWidget {
               ),
             ),
           ),
-          inAsyncCall: _loadingVisible),
+          ),
     );
   }
 }

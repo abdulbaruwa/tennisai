@@ -7,15 +7,15 @@ import 'package:flutter/foundation.dart' show TargetPlatform;
 
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:tennisai/reducers/auth_reducer.dart';
+import 'package:tennisai/views/sign_up_view.dart';
 import 'models/models.dart';
 import 'middleware/tennisai_middleware.dart';
 import 'reducers/app_state_reducer.dart';
 import 'routes.dart';
-import 'containers/app_loading.dart';
 import 'views/loading_indicator.dart';
 import 'containers/containers.dart';
 import 'keys/keys.dart';
-import 'containers/auth.dart';
 import 'actions/actions.dart';
 
 void main() => runApp(new TennisAiApp());
@@ -64,8 +64,18 @@ class TennisAiHome extends StatelessWidget {
     return new AppLoading(builder: (context, loading) {
       print('appLoading State: ${loading.isSignedIn}');
       if ( loading.isSignedIn == false && loading.isLoadingLocalState == false && loading.authMethod == AuthMethod.unknown) {
+        
+        if(loading.showSignUpOption){
+          print('Load SignUpContainer');
+            return new EmailSignUp();
+        }
+
         print('Load AuthContainer');
         return new AuthContainer();
+      }
+
+      if(loading.authMethod == AuthMethod.email && loading.isSignedIn == false){
+        return new SignIn();
       }
 
       if (loading.isRegisteredUser == PlayerRegistrationStatus.unregistered) {

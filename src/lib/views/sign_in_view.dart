@@ -8,8 +8,9 @@ class SignInView extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _email = new TextEditingController();
   final TextEditingController _password = new TextEditingController();
+  final Function(EmailSignUpInfo signInInfo) onSignIn;
 
-  SignInView({Key key}) : super(key: key);
+  SignInView({Key key, this.onSignIn}) : super(key: key);
 
   bool _autoValidate = false;
   bool _loadingVisible = false;
@@ -22,7 +23,7 @@ class SignInView extends StatelessWidget {
           radius: 60.0,
           child: ClipOval(
             child: Image.asset(
-              'assets/images/default.png',
+              'assets/default.png',
               fit: BoxFit.cover,
               width: 120.0,
               height: 120.0,
@@ -73,6 +74,12 @@ class SignInView extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
+          var emailSignIn = new EmailSignUpInfo(
+              email: _email.text,
+              password: _password.text);
+
+          this.onSignIn(emailSignIn);
+
           // _emailLogin(email: _email.text, password: _password.text, context: context);
         },
         padding: EdgeInsets.all(12),
@@ -103,7 +110,7 @@ class SignInView extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: LoadingScreen(
+      body: Container(
           child: Form(
             key: _formKey,
             autovalidate: _autoValidate,
@@ -130,7 +137,7 @@ class SignInView extends StatelessWidget {
               ),
             ),
           ),
-          inAsyncCall: _loadingVisible),
+          ),
     );
   }
 

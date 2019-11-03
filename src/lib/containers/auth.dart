@@ -7,13 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import 'package:tennisai/containers/email_sign_up_container.dart';
 import 'package:tennisai/views/landing_view.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
-import '../views/Auth_view.dart';
 import '../actions/actions.dart';
-import '../views/sign_up_view.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignIn googleSignIn = new GoogleSignIn(
@@ -39,9 +36,10 @@ class AuthContainer extends StatelessWidget {
           //     isSignedIn: vm.signedIn,
           //     onGoogleSignInSelected: vm.onGoogleSignInSelected);
           return new LandingView(
-              isSignedIn: vm.signedIn,
-              onGoogleSignInSelected: vm.onGoogleSignInSelected,
-              onEmailSignInSelected: vm.onGoogleSignInSelected,);
+            isSignedIn: vm.signedIn,
+            onGoogleSignInSelected: vm.onGoogleSignInSelected,
+            onEmailSignInSelected: vm.onEmailSignUpSelected,
+          );
         });
   }
 
@@ -147,12 +145,14 @@ class _ViewModel {
   final bool signedIn;
   final Settings settings;
   final Function onGoogleSignInSelected;
+  final Function onEmailSignUpSelected;
 
   _ViewModel(
       {@required this.loading,
       @required this.settings,
       @required this.signedIn,
-      this.onGoogleSignInSelected});
+      this.onGoogleSignInSelected,
+      this.onEmailSignUpSelected});
 
   static _ViewModel fromStore(Store<AppState> store) {
     var settingsOptions = settingSelector(store.state);
@@ -160,6 +160,10 @@ class _ViewModel {
         settings: settingsOptions.isEmpty ? null : settingsOptions.value,
         loading: store.state.isLoading,
         signedIn: store.state.isSignedIn,
+        onEmailSignUpSelected: () {
+          print('auth_container.viewModel: ShowSignUpAction');
+          store.dispatch(ShowSignUpAction());
+        },
         onGoogleSignInSelected: () async {
           print('auth_container.viewModel: Google Sign in selected');
           try {

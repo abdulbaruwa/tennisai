@@ -1,4 +1,6 @@
 export 'active_tab.dart';
+export 'app_loading.dart';
+export 'auth.dart';
 export 'dashboard.dart';
 export 'tab_selector.dart';
 export 'profile.dart';
@@ -8,3 +10,5 @@ export 'basket_container.dart';
 export 'profile_edit_container.dart';
 export 'main_tab.dart';
 export 'registration.dart';
+export 'sign_in.dart';
+export 'email_sign_up_container.dart';

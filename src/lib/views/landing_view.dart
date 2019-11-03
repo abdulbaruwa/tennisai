@@ -128,10 +128,11 @@ class LandingState extends State<LandingView> {
                                         padding: const EdgeInsets.only(
                                             left: 10, right: 10),
                                         child: RaisedButton(
-                                         onPressed: () {
-                      Navigator.push (context, new MaterialPageRoute(
-                          builder: (BuildContext context) => new EmailSignUp()));
-                    },
+                                        onPressed: widget.isSignedIn == false ? widget.onEmailSignInSelected : null,
+                                        //  onPressed: () {
+                                        //   Navigator.push(context, new MaterialPageRoute(
+                                        //       builder: (BuildContext context) => new EmailSignUp()));
+                                        //     },
                                             child: Padding(
                                               padding:
                                                   const EdgeInsets.fromLTRB(

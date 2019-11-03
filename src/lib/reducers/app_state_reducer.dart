@@ -5,7 +5,9 @@ AppState appReducer(AppState state, action) {
   return new AppState(
       isLoading: loadingReducer(state.isLoading, action),
       isSignedIn: authStatusReducer(state.isSignedIn, action),
+      showSignUpOption: showSignUpOpionReducer(state.isSignedIn, action),
       isLoadingLocalState: isLoadingLocalStateReducer(state.isLoadingLocalState, action),
+      authMethod: authMethodReducer(state.authMethod, action),
       isSignInUserRegistered: isSignInUserRegisteredReducer(state.isSignInUserRegistered, action),
       settings: authReducer(state.settings, action),
       registrationInfo: registerReducer(state.registrationInfo, action),

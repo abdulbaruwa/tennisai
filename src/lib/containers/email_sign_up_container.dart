@@ -37,7 +37,7 @@ class EmailSignUpViewModel {
         store.dispatch(
             new SignUpCompletedAction(signUpInfo.email, user.user.uid));
       }).catchError((onError) {
-        print('Error signing up user: {onError}');
+        print('Error signing up user: $onError');
       });
     });
   }

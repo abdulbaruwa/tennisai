@@ -247,6 +247,8 @@ class RegistrationSaveAction{
   RegistrationSaveAction(this.registrationInfo);
 }
 
+class ShowSignUpAction{}
+
 class SignUpCompletedAction{
   final String email;
   final String uid;
