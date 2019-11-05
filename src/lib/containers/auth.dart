@@ -162,7 +162,7 @@ class _ViewModel {
         signedIn: store.state.isSignedIn,
         onEmailSignUpSelected: () {
           print('auth_container.viewModel: ShowSignUpAction');
-          store.dispatch(ShowSignUpAction());
+          store.dispatch(NavigateToEmailSignUpAction());
         },
         onGoogleSignInSelected: () async {
           print('auth_container.viewModel: Google Sign in selected');

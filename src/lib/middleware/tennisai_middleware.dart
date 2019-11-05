@@ -3,6 +3,7 @@ import 'package:redux/redux.dart';
 import 'package:swagger/api.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:tennisai/middleware/navigation_middleware.dart';
 import '../models/models.dart';
 import '../actions/actions.dart';
 import '../selectors/selectors.dart';
@@ -25,7 +26,6 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
   DashboardRepository repository = const DashboardRepository(
     getPlayerClient: getApiClient,
     getTournamentClient: getTournamentApiClient,
-    // webClient: const WebClient(TennisAiConfigs.localHostName, getAuthToken),
     fileStorage:
         const FileStorage('Tennis_Ai_app_', getApplicationDocumentsDirectory),
   ),
@@ -143,7 +143,8 @@ List<Middleware<AppState>> createStoreWatchedTournamentsMiddleware([
     // Main View, Match result and Ranking Info.
     new TypedMiddleware<AppState, RankingInfoLoadedAction>(saveRankingInfos),
     new TypedMiddleware<AppState, MatchResultInfo>(saveMatchResultInfos),
-    new TypedMiddleware<AppState, ChangedAvatarAction>(changedAvatar)
+    new TypedMiddleware<AppState, ChangedAvatarAction>(changedAvatar),
+    NavigationMiddleware()
   ];
 }
 

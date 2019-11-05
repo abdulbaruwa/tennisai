@@ -52,8 +52,6 @@ class LandingState extends State<LandingView> {
 
   @override
   Widget build(BuildContext context) {
-    //initSignIn();
-
     return new Scaffold(
         key: _scaffoldKey,
         body: new Row(children: <Widget>[

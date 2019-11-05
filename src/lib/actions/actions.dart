@@ -254,3 +254,5 @@ class SignUpCompletedAction{
   final String uid;
   SignUpCompletedAction(this.email, this.uid);
 }
+
+class NavigateToEmailSignUpAction{}
