@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../views/loading.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tennisai/models/email_sign_up_info.dart';
 
-class ForgotPasswordView extends StatelessWidget {
+class SignInView extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _email = new TextEditingController();
+  final TextEditingController _password = new TextEditingController();
+  final Function(EmailSignUpInfo signInInfo) onSignIn;
+
+  SignInView({Key key, this.onSignIn}) : super(key: key);
 
   bool _autoValidate = false;
   bool _loadingVisible = false;
-
-ForgotPasswordView({Key key}) : super(key: key);
 
   Widget build(BuildContext context) {
     final logo = Hero(
@@ -45,34 +47,68 @@ ForgotPasswordView({Key key}) : super(key: key);
       ),
     );
 
-    final forgotPasswordButton = Padding(
+    final password = TextFormField(
+      autofocus: false,
+      obscureText: true,
+      controller: _password,
+      decoration: InputDecoration(
+        prefixIcon: Padding(
+          padding: EdgeInsets.only(left: 5.0),
+          child: Icon(
+            Icons.lock,
+            color: Colors.grey,
+          ), // icon is 48px widget.
+        ), // icon is 48px widget.
+        hintText: 'Password',
+        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
+    );
+
+    final loginButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
         onPressed: () {
-          // _forgotPassword(email: _email.text, context: context);
+          var emailSignIn = new EmailSignUpInfo(
+              email: _email.text,
+              password: _password.text);
+
+          this.onSignIn(emailSignIn);
+
+          // _emailLogin(email: _email.text, password: _password.text, context: context);
         },
         padding: EdgeInsets.all(12),
         color: Theme.of(context).primaryColor,
-        child: Text('FORGOT PASSWORD', style: TextStyle(color: Colors.white)),
+        child: Text('SIGN IN', style: TextStyle(color: Colors.white)),
       ),
     );
 
-    final signInLabel = FlatButton(
+    final forgotLabel = FlatButton(
       child: Text(
-        'Sign In',
+        'Forgot password?',
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/signin');
+        Navigator.pushNamed(context, '/forgot-password');
+      },
+    );
+
+    final signUpLabel = FlatButton(
+      child: Text(
+        'Create an Account',
+        style: TextStyle(color: Colors.black54),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, '/signup');
       },
     );
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: LoadingScreen(
+      body: Container(
           child: Form(
             key: _formKey,
             autovalidate: _autoValidate,
@@ -87,16 +123,20 @@ ForgotPasswordView({Key key}) : super(key: key);
                       logo,
                       SizedBox(height: 48.0),
                       email,
+                      SizedBox(height: 24.0),
+                      password,
                       SizedBox(height: 12.0),
-                      forgotPasswordButton,
-                      signInLabel
+                      loginButton,
+                      forgotLabel,
+                      signUpLabel
                     ],
                   ),
                 ),
               ),
             ),
           ),
-          inAsyncCall: _loadingVisible),
+          ),
     );
   }
+
 }

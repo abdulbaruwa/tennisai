@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:redux/redux.dart';
-import 'package:tennisai/views/sign_in_view.dart';
-import '../models/models.dart';
-import '../actions/actions.dart';
+import 'package:tennisai/actions/actions.dart';
+import 'package:tennisai/models/models.dart';
+import 'package:tennisai/views/auth/sign_in_view.dart';
 
 class SignIn extends StatelessWidget {
   SignIn({Key key}) : super(key: key);

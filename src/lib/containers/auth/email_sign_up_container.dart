@@ -3,9 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:redux/redux.dart';
-import 'package:tennisai/views/sign_up_view.dart';
-import '../models/models.dart';
-import '../actions/actions.dart';
+import 'package:tennisai/actions/actions.dart';
+import 'package:tennisai/models/app_state.dart';
+import 'package:tennisai/models/email_sign_up_info.dart';
+import 'package:tennisai/views/auth/sign_up_view.dart';
 
 class EmailSignUp extends StatelessWidget {
   EmailSignUp({Key key}) : super(key: key);

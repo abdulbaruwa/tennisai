@@ -7,17 +7,27 @@ final authReducer = combineReducers<List<Settings>>([
       _signInWithGoogleAction),
 ]);
 
-List<Settings> _signInWithGoogleAction(
-    List<Settings> settings, SignInCompletedAction action) {
-  return new List<Settings>()..add(action.settings);
-}
-
 final authStatusReducer = combineReducers<bool>([
   new TypedReducer<bool, SignInCompletedAction>(_signInCompletedUpdateStatus),
   new TypedReducer<bool, GoogleSilentSignInFailedAction>(
       _googleSilentSignInFailed),
   new TypedReducer<bool, SignedOutAction>(_signedOut)
 ]);
+
+final isSignInUserRegisteredReducer =
+    combineReducers<PlayerRegistrationStatus>([
+  new TypedReducer<PlayerRegistrationStatus, SignInUserIsRegisteredAction>(
+      _signInUserIsRegistered),
+  new TypedReducer<PlayerRegistrationStatus, SignInUserNotRegisteredAction>(
+      _signInUserNotIsRegistered),
+  new TypedReducer<PlayerRegistrationStatus, RegistrationCancelledAction>(
+      _registrationCancelled)
+]);
+
+List<Settings> _signInWithGoogleAction(
+    List<Settings> settings, SignInCompletedAction action) {
+  return new List<Settings>()..add(action.settings);
+}
 
 bool _signedOut(bool status, SignedOutAction action) {
   return false;
@@ -31,16 +41,6 @@ bool _googleSilentSignInFailed(
     bool status, GoogleSilentSignInFailedAction action) {
   return false;
 }
-
-final isSignInUserRegisteredReducer =
-    combineReducers<PlayerRegistrationStatus>([
-  new TypedReducer<PlayerRegistrationStatus, SignInUserIsRegisteredAction>(
-      _signInUserIsRegistered),
-  new TypedReducer<PlayerRegistrationStatus, SignInUserNotRegisteredAction>(
-      _signInUserNotIsRegistered),
-  new TypedReducer<PlayerRegistrationStatus, RegistrationCancelledAction>(
-      _registrationCancelled)
-]);
 
 PlayerRegistrationStatus _signInUserIsRegistered(
     PlayerRegistrationStatus status, SignInUserIsRegisteredAction action) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tennisai/models/email_sign_up_info.dart';
-import '../utils/validator.dart';
+import 'package:tennisai/utils/validator.dart';
 
 class SignUpView extends StatelessWidget {
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

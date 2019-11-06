@@ -7,10 +7,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'package:tennisai/actions/actions.dart';
+import 'package:tennisai/models/models.dart';
+import 'package:tennisai/selectors/selectors.dart';
 import 'package:tennisai/views/landing_view.dart';
-import '../models/models.dart';
-import '../selectors/selectors.dart';
-import '../actions/actions.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 GoogleSignIn googleSignIn = new GoogleSignIn(

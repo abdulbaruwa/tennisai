@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/foundation.dart' show defaultTargetPlatform;
-import 'package:flutter/foundation.dart' show TargetPlatform;
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
+import 'containers/auth/auth.dart';
+import 'containers/auth/email_sign_up_container.dart';
+import 'containers/auth/registration.dart';
+import 'containers/auth/sign_in.dart';
 import 'models/models.dart';
 import 'middleware/tennisai_middleware.dart';
 import 'reducers/app_state_reducer.dart';

@@ -2,10 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
-import '../models/models.dart';
-import '../selectors/selectors.dart';
-import '../views/registration_view.dart';
-import '../actions/actions.dart';
+import 'package:tennisai/actions/actions.dart';
+import 'package:tennisai/models/app_state.dart';
+import 'package:tennisai/models/registration_info.dart';
+import 'package:tennisai/models/settings.dart';
+import 'package:tennisai/selectors/selectors.dart';
+import 'package:tennisai/views/registration_view.dart';
 
 class Registration extends StatelessWidget {
   Registration({Key key}) : super(key: key);

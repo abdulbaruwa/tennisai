@@ -9,7 +9,6 @@ import '../actions/actions.dart';
 import '../models/models.dart';
 import '../selectors/selectors.dart';
 import '../views/profile_view.dart';
-import '../containers/auth.dart' as authenticate;
 
 class Profile extends StatelessWidget {
   Profile({Key key}) : super(key: key);
@@ -42,14 +41,14 @@ class _ViewModel {
         changedAvatar: avatarOption.isPresent ? avatarOption.value : null,
         searchPreference: searchPreferenceSelector(store.state).value,
         onLogOut: ()async {
-          print('Logging out');
-          if(authenticate.googleSignIn != null)
-          {
-            print('De-authenticating with Google');
-            await authenticate.googleSignIn.disconnect();
-            store.dispatch(new SignedOutAction());
-            print('De-authentication complete');
-          }
+          // print('Logging out');
+          // if(authenticate.googleSignIn != null)
+          // {
+          //   print('De-authenticating with Google');
+          //   await authenticate.googleSignIn.disconnect();
+          //   store.dispatch(new SignedOutAction());
+          //   print('De-authentication complete');
+          // }
 
         });
         
