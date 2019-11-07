@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:redux/redux.dart';
 import 'package:tennisai/actions/actions.dart';
+import 'package:tennisai/actions/auth_actions.dart';
 import 'package:tennisai/models/models.dart';
 import 'package:tennisai/views/auth/sign_in_view.dart';
 
@@ -45,6 +46,7 @@ class SignInViewModel {
               photoUrl: result.user.photoUrl);
 
             store.dispatch(new SignInCompletedAction(setting));
+            store.dispatch(new NavigateToRegistrationAction());
 
         }).catchError((onError) {
           print('Error getting auth token for signed in user $onError');

@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 import 'package:tennisai/actions/actions.dart';
+import 'package:tennisai/actions/auth_actions.dart';
 import 'package:tennisai/models/models.dart';
 import 'package:tennisai/selectors/selectors.dart';
 import 'package:tennisai/views/landing_view.dart';
@@ -49,6 +50,7 @@ class AuthContainer extends StatelessWidget {
 
   void initSignIn(Store store) async {
     print('Attempting to SignIn with Google');
+    
     googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount account) async {
       var aut = await account.authentication;
@@ -62,8 +64,6 @@ class AuthContainer extends StatelessWidget {
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-
-      FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
 
       var azureAuthToken = await getAuthCode(aut.accessToken, aut.idToken);
 
@@ -168,6 +168,9 @@ class _ViewModel {
           print('auth_container.viewModel: Google Sign in selected');
           try {
             await googleSignIn.signIn();
+            if(settingsOptions.value == null && settingsOptions.value?.registrationComplete == false){
+              store.dispatch(new NavigateToRegistrationAction());
+            }
           } catch (error) {
             print('onGoogleSignInSelected: $error');
           }

@@ -5,4 +5,5 @@ class TennisAiRoutes {
   static final editProfile = '/editProfile';
   static final signUp = '/signUp';
   static final signIn = '/signIn';
+  static final registration = '/registration';
 }

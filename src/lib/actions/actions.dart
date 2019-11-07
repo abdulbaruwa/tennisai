@@ -249,10 +249,3 @@ class RegistrationSaveAction{
 
 class ShowSignUpAction{}
 
-class SignUpCompletedAction{
-  final String email;
-  final String uid;
-  SignUpCompletedAction(this.email, this.uid);
-}
-
-class NavigateToEmailSignUpAction{}

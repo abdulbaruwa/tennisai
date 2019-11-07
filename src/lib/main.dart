@@ -30,9 +30,11 @@ class TennisAiApp extends StatelessWidget {
         child: new MaterialApp(
           title: 'Tennis Ai',
           routes: {
-            TennisAiRoutes.signIn: (BuildContext context) => new EmailSignUp(),
-            TennisAiRoutes.signUp: (BuildContext context) => new SignIn()
-            },
+            TennisAiRoutes.signIn: (BuildContext context) => new SignIn(),
+            TennisAiRoutes.signUp: (BuildContext context) => new EmailSignUp(),
+            TennisAiRoutes.registration: (BuildContext context) =>
+                new Registration()
+          },
           navigatorKey: TennisAiKeys.navKey,
           home: new StoreBuilder<AppState>(
               onInit: (store) => _loadState(store),
@@ -54,37 +56,26 @@ class TennisAiHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return new AppLoading(builder: (context, loading) {
       print('appLoading State: ${loading.isSignedIn}');
-      if (loading.isSignedIn == false &&
-          loading.isLoadingLocalState == false &&
-          loading.authMethod == AuthMethod.unknown) {
-        if (loading.showSignUpOption) {
-          print('Load SignUpContainer');
-          return new EmailSignUp();
-        }
-
+      if (loading.isSignedIn == false && loading.isLoadingLocalState == false) {
         print('Load AuthContainer');
         return new AuthContainer();
       }
 
-      if (loading.authMethod == AuthMethod.email &&
-          loading.isSignedIn == false) {
-        return new SignIn();
-      }
-
-      if (loading.isRegisteredUser == PlayerRegistrationStatus.unregistered) {
+      if (loading.isSignedIn &&
+          loading.isLoadingLocalState &&
+          loading.isRegisteredUser != PlayerRegistrationStatus.registered) {
         print('SHOW REGISTRATION VIEW');
         return new Registration();
       }
 
       if (loading.isRegisteredUser == PlayerRegistrationStatus.registered) {
-        return loading.isLoading
+        return loading.isLoading &&
+                loading.isLoadingLocalState &&
+                loading.isSignedIn
             ? new LoadingIndicator(key: TennisAiKeys.homeTabLoading)
             : _buildView(context);
       }
-
-      if (loading.isRegisteredUser == PlayerRegistrationStatus.unknown) {
-        return new LoadingIndicator(key: TennisAiKeys.homeTabLoading);
-      }
+      return new LoadingIndicator(key: TennisAiKeys.homeTabLoading);
     });
   }
 
